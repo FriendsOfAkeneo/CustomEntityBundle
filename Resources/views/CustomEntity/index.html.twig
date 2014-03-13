@@ -10,7 +10,7 @@
         {{ elements.createBtn(
             customEntityName,
             path(createRoute, {customEntityName: customEntityName}),
-            'dialog'
+            quickCreate ? 'dialog' : ''
         ) }}
     {% endset %}
 

@@ -5,7 +5,7 @@
 {% block content %}
     {{ JSFV(form) }}
     {{ form_start(form, {
-        'action': path(editRoute, { id: form.vars.value.id, customEntityName: customEntityName}),
+        'action': formAction,
         'attr': {
             'data-updated-title': 'confirmation.leave'|trans,
             'data-updated-message': 'confirmation.discard changes'|trans({ '%entity%': customEntityName|trans })

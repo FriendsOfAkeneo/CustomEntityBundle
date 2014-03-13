@@ -306,7 +306,7 @@ class Configuration implements ConfigurationInterface
                 'base_template'                     => 'PimCustomEntityBundle::layout.html.twig',
                 'edit_template'                     => 'PimCustomEntityBundle:CustomEntity:edit.html.twig',
                 'index_template'                    => 'PimCustomEntityBundle:CustomEntity:index.html.twig',
-                'create_template'                   => 'PimCustomEntityBundle:CustomEntity:quickcreate.html.twig',
+                'create_template'                   => 'PimCustomEntityBundle:CustomEntity:edit.html.twig',
                 'create_form_type'                  => null,
                 'create_form_options'               => null,
                 'create_default_properties'         => array(),

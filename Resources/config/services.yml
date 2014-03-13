@@ -1,10 +1,12 @@
 parameters:
-    pim_custom_entity.configuration.registry.class:       Pim\Bundle\CustomEntityBundle\Configuration\Registry
-    pim_custom_entity.configuration.default.class:        Pim\Bundle\CustomEntityBundle\Configuration\Configuration
-    pim_custom_entity.controller.class:                   Pim\Bundle\CustomEntityBundle\Controller\Controller
-    pim_custom_entity.controller.strategy.crud.class:     Pim\Bundle\CustomEntityBundle\Controller\Strategy\CrudStrategy
-    pim_custom_entity.manager.orm.class:                  Pim\Bundle\CustomEntityBundle\Manager\OrmManager
-    pim_custom_entity.type.filter.custom_entity.class:    Pim\Bundle\CustomEntityBundle\Form\CustomEntityFilterType
+    pim_custom_entity.configuration.registry.class:                Pim\Bundle\CustomEntityBundle\Configuration\Registry
+    pim_custom_entity.configuration.default.class:                 Pim\Bundle\CustomEntityBundle\Configuration\Configuration
+    pim_custom_entity.configuration.quick_create.class:            Pim\Bundle\CustomEntityBundle\Configuration\QuickCreateConfiguration
+    pim_custom_entity.controller.class:                            Pim\Bundle\CustomEntityBundle\Controller\Controller
+    pim_custom_entity.controller.strategy.crud.class:              Pim\Bundle\CustomEntityBundle\Controller\Strategy\CrudStrategy
+    pim_custom_entity.controller.strategy.quick_create_crud.class: Pim\Bundle\CustomEntityBundle\Controller\Strategy\QuickCreateCrudStrategy
+    pim_custom_entity.manager.orm.class:                           Pim\Bundle\CustomEntityBundle\Manager\OrmManager
+    pim_custom_entity.type.filter.custom_entity.class:             Pim\Bundle\CustomEntityBundle\Form\CustomEntityFilterType
 
 services:
     pim_custom_entity.configuration.registry:
@@ -24,6 +26,10 @@ services:
             - '@templating'
             - '@router'
             - '@translator'
+
+    pim_custom_entity.controller.strategy.quick_create_crud:
+        parent: pim_custom_entity.controller.strategy.crud
+        class: %pim_custom_entity.controller.strategy.quick_create_crud.class%
 
     pim_custom_entity.manager.orm:
         class: %pim_custom_entity.manager.orm.class%

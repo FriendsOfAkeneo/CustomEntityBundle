@@ -5,7 +5,7 @@
 {% endspaceless %}
 
 {{ form_start(form, {
-    'action': path(createRoute, {customEntityName: customEntityName}),
+    'action': formAction,
     'class': 'form-inline',
     'attr': {
         'data-title': (customEntityName ~ '.create')|trans,

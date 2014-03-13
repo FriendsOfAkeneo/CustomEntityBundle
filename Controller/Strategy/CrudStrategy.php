@@ -2,15 +2,15 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Controller\Strategy;
 
+use Pim\Bundle\CustomEntityBundle\Configuration\ConfigurationInterface;
+use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Translation\TranslatorInterface;
-use Pim\Bundle\CustomEntityBundle\Configuration\ConfigurationInterface;
 
 /**
  * Base strategy for custom entity controllers
@@ -103,15 +103,7 @@ class CrudStrategy implements StrategyInterface
 
                 $this->addFlash($request, 'success', sprintf('flash.%s.created', $configuration->getName()));
 
-                $response = array(
-                    'status' => 1,
-                    'url' => $this->router->generate(
-                        $configuration->getCreateRedirectRoute($entity),
-                        $configuration->getCreateRedirectRouteParameters($entity)
-                    )
-                );
-
-                return new Response(json_encode($response));
+                return $this->getCreateActionResponse($configuration, $request, $entity);
             }
         }
 
@@ -119,7 +111,15 @@ class CrudStrategy implements StrategyInterface
             $configuration,
             $request,
             $configuration->getCreateTemplate(),
-            array('form' => $form->createView())
+            array(
+                'form' => $form->createView(), 
+                'formAction' => $this->router->generate(
+                    $configuration->getCreateRoute(), 
+                    array(
+                        'customEntityName' => $configuration->getName()
+                    )
+                )
+            )
         );
     }
 
@@ -148,12 +148,7 @@ class CrudStrategy implements StrategyInterface
                 $configuration->getManager()->save($entity);
                 $this->addFlash($request, 'success', sprintf('flash.%s.updated', $configuration->getName()));
 
-                return new RedirectResponse(
-                    $this->router->generate(
-                        $configuration->getEditRedirectRoute($entity),
-                        $configuration->getEditRedirectRouteParameters($entity)
-                    )
-                );
+                return $this->getEditActionResponse($configuration, $request, $entity);
             }
         }
 
@@ -161,7 +156,16 @@ class CrudStrategy implements StrategyInterface
             $configuration,
             $request,
             $configuration->getEditTemplate(),
-            array('form' => $form->createView())
+            array(
+                'form' => $form->createView(), 
+                'formAction' => $this->router->generate(
+                    $configuration->getEditRoute(), 
+                    array(
+                        'id' => $entity->getId(),
+                        'customEntityName' => $configuration->getName()
+                    )
+                )
+            )
         );
     }
 
@@ -239,7 +243,47 @@ class CrudStrategy implements StrategyInterface
             'indexRoute'       => $configuration->getIndexRoute(),
             'editRoute'        => $configuration->getEditRoute(),
             'createRoute'      => $configuration->getCreateRoute(),
-            'removeRoute'      => $configuration->getRemoveRoute()
+            'removeRoute'      => $configuration->getRemoveRoute(),
+            'quickCreate'      => false
+        );
+    }
+
+
+    /**
+     * Returns the response sent after a successful update
+     * 
+     * @param ConfigurationInterface $configuration
+     * @param Request $request
+     * @param object $entity
+     * 
+     * @return Response
+     */
+    protected function getEditActionResponse(ConfigurationInterface $configuration, Request $request, $entity)
+    {
+        return new RedirectResponse(
+            $this->router->generate(
+                $configuration->getEditRedirectRoute($entity),
+                $configuration->getEditRedirectRouteParameters($entity)
+            )
+        );
+    }
+
+    /**
+     * Returns the response sent after a successful update
+     * 
+     * @param ConfigurationInterface $configuration
+     * @param Request $request
+     * @param object $entity
+     * 
+     * @return Response
+     */
+    protected function getCreateActionResponse(ConfigurationInterface $configuration, Request $request, $entity)
+    {
+        return new RedirectResponse(
+            $this->router->generate(
+                $configuration->getCreateRedirectRoute($entity),
+                $configuration->getCreateRedirectRouteParameters($entity)
+            )
         );
     }
 
