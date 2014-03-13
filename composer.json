@@ -1,0 +1,32 @@
+{
+    "name": "akeneo/custom-entity-bundle",
+    "type": "symfony-bundle",
+    "description": "Akeneo PIM Excel connector bundle",
+    "keywords": ["pim", "akeneo", "ecommerce", "integration"],
+    "homepage": "http://akeneo.com",
+    "license": "OSL-3.0",
+    "authors": [
+        {
+            "name": "Antoine Guigan",
+            "email": "antoine@akeneo.com",
+            "homepage": "http://akeneo.com"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/akeneo/pim-community-dev.git"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "akeneo/pim-community-dev": "~1.1"
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "autoload": {
+        "psr-0": { "Pim\\Bundle\\ExcelConnectorBundle\\": "" }
+    },
+    "target-dir": "Pim/Bundle/ExcelConnectorBundle"
+}
