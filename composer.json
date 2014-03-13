@@ -1,7 +1,7 @@
 {
     "name": "akeneo/custom-entity-bundle",
     "type": "symfony-bundle",
-    "description": "Akeneo PIM Excel connector bundle",
+    "description": "Akeneo PIM Custom entity bundle",
     "keywords": ["pim", "akeneo", "ecommerce", "integration"],
     "homepage": "http://akeneo.com",
     "license": "OSL-3.0",
