@@ -26,12 +26,12 @@
         "bin-dir": "bin"
     },
     "autoload": {
-        "psr-0": { "Pim\\Bundle\\ExcelConnectorBundle\\": "" }
+        "psr-0": { "Pim\\Bundle\\CustomEntityBundle\\": "" }
     },
-    "target-dir": "Pim/Bundle/ExcelConnectorBundle",
+    "target-dir": "Pim/Bundle/CustomEntityBundle",
     "extra": {
         "branch-alias": {
-            "dev-feature/optional_quick_create": "1.1.x-dev"
+            "dev-master": "1.1.x-dev"
         }
     }
 }
