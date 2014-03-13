@@ -11,12 +11,39 @@ namespace Pim\Bundle\CustomEntityBundle\Configuration;
  */
 class QuickCreateConfiguration extends Configuration
 {
+    /**
+     * {@inheritdoc}
+     */
+    public function getCreateRedirectRoute($entity)
+    {
+        return $this->options['edit_after_create']
+            ? $this->options['edit_route']
+            : $this->options['index_route'];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getCreateRedirectRouteParameters($entity)
+    {
+        $parameters = array('customEntityName' => $this->getName());
+        if ($this->options['edit_after_create']) {
+            $parameters['id'] = $entity->getId();
+        }
+
+        return $parameters;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     protected function setDefaultOptions(\Symfony\Component\OptionsResolver\OptionsResolverInterface $optionsResolver)
     {
         parent::setDefaultOptions($optionsResolver);
         $optionsResolver->setDefaults(
             array(
                 'create_template' => 'PimCustomEntityBundle:CustomEntity:quickcreate.html.twig',
+                'edit_after_create'                 => true,
             )
         );
     }

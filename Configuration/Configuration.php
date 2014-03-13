@@ -172,9 +172,7 @@ class Configuration implements ConfigurationInterface
      */
     public function getCreateRedirectRoute($entity)
     {
-        return $this->options['edit_after_create']
-            ? $this->options['edit_route']
-            : $this->options['index_route'];
+        return $this->options['index_route'];
     }
 
     /**
@@ -182,12 +180,7 @@ class Configuration implements ConfigurationInterface
      */
     public function getCreateRedirectRouteParameters($entity)
     {
-        $parameters = array('customEntityName' => $this->getName());
-        if ($this->options['edit_after_create']) {
-            $parameters['id'] = $entity->getId();
-        }
-
-        return $parameters;
+        return array('customEntityName' => $this->getName(), 'id' => $entity->getId());
     }
 
     /**
@@ -304,9 +297,9 @@ class Configuration implements ConfigurationInterface
         $optionsResolver->setDefaults(
             array(
                 'base_template'                     => 'PimCustomEntityBundle::layout.html.twig',
-                'edit_template'                     => 'PimCustomEntityBundle:CustomEntity:edit.html.twig',
+                'edit_template'                     => 'PimCustomEntityBundle:CustomEntity:form.html.twig',
                 'index_template'                    => 'PimCustomEntityBundle:CustomEntity:index.html.twig',
-                'create_template'                   => 'PimCustomEntityBundle:CustomEntity:edit.html.twig',
+                'create_template'                   => 'PimCustomEntityBundle:CustomEntity:form.html.twig',
                 'create_form_type'                  => null,
                 'create_form_options'               => null,
                 'create_default_properties'         => array(),
@@ -315,7 +308,6 @@ class Configuration implements ConfigurationInterface
                 'create_route'                      => 'pim_customentity_create',
                 'edit_route'                        => 'pim_customentity_edit',
                 'remove_route'                      => 'pim_customentity_remove',
-                'edit_after_create'                 => true,
                 'edit_form_options'                 => array(),
                 'find_options'                      => array(),
                 'query_builder_options'             => array(),

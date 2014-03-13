@@ -2,6 +2,10 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Controller\Strategy;
 
+use Pim\Bundle\CustomEntityBundle\Configuration\ConfigurationInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
 /**
  * CRUD strategy with quick create
  *
@@ -11,6 +15,9 @@ namespace Pim\Bundle\CustomEntityBundle\Controller\Strategy;
  */
 class QuickCreateCrudStrategy extends CrudStrategy
 {
+    /**
+     * {@inheritdoc}
+     */
     protected function getCreateActionResponse(ConfigurationInterface $configuration, Request $request, $entity)
     {
         $response = array(
@@ -24,7 +31,10 @@ class QuickCreateCrudStrategy extends CrudStrategy
         return new Response(json_encode($response));
     }
 
-    protected function getViewVars(\Pim\Bundle\CustomEntityBundle\Configuration\ConfigurationInterface $configuration, \Symfony\Component\HttpFoundation\Request $request)
+    /**
+     * {@inheritdoc}
+     */
+    protected function getViewVars(ConfigurationInterface $configuration, Request $request)
     {
         $vars = parent::getViewVars($configuration, $request);
         $vars['quickCreate'] = true;
