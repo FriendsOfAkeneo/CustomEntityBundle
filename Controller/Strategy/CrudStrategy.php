@@ -112,9 +112,9 @@ class CrudStrategy implements StrategyInterface
             $request,
             $configuration->getCreateTemplate(),
             array(
-                'form' => $form->createView(), 
+                'form' => $form->createView(),
                 'formAction' => $this->router->generate(
-                    $configuration->getCreateRoute(), 
+                    $configuration->getCreateRoute(),
                     array(
                         'customEntityName' => $configuration->getName()
                     )
@@ -157,9 +157,9 @@ class CrudStrategy implements StrategyInterface
             $request,
             $configuration->getEditTemplate(),
             array(
-                'form' => $form->createView(), 
+                'form' => $form->createView(),
                 'formAction' => $this->router->generate(
-                    $configuration->getEditRoute(), 
+                    $configuration->getEditRoute(),
                     array(
                         'id' => $entity->getId(),
                         'customEntityName' => $configuration->getName()
@@ -248,14 +248,13 @@ class CrudStrategy implements StrategyInterface
         );
     }
 
-
     /**
      * Returns the response sent after a successful update
-     * 
+     *
      * @param ConfigurationInterface $configuration
-     * @param Request $request
-     * @param object $entity
-     * 
+     * @param Request                $request
+     * @param object                 $entity
+     *
      * @return Response
      */
     protected function getEditActionResponse(ConfigurationInterface $configuration, Request $request, $entity)
@@ -270,11 +269,11 @@ class CrudStrategy implements StrategyInterface
 
     /**
      * Returns the response sent after a successful update
-     * 
+     *
      * @param ConfigurationInterface $configuration
-     * @param Request $request
-     * @param object $entity
-     * 
+     * @param Request                $request
+     * @param object                 $entity
+     *
      * @return Response
      */
     protected function getCreateActionResponse(ConfigurationInterface $configuration, Request $request, $entity)
