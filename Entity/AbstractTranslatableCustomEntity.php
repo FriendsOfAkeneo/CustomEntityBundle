@@ -27,11 +27,6 @@ abstract class AbstractTranslatableCustomEntity extends AbstractCustomEntity imp
     protected $locale;
 
     /**
-     * @var AbstractTranslation
-     */
-    private $translation;
-
-    /**
      * Constructor
      */
     public function __construct()
@@ -54,7 +49,22 @@ abstract class AbstractTranslatableCustomEntity extends AbstractCustomEntity imp
      */
     public function getTranslation()
     {
-        return $this->translation;
+        if (null === $this->locale) {
+            return;
+        }
+
+        foreach ($this->translations as $translation) {
+            if ($this->locale === $translation->getLocale()) {
+                return $translation;
+            }
+        }
+
+        $class = $this->getTranslationFQCN();
+        $translation = new $class;
+        $translation->setLocale($this->locale);
+        $this->addTranslation($translation);
+
+        return $translation;
     }
 
     /**
@@ -62,18 +72,7 @@ abstract class AbstractTranslatableCustomEntity extends AbstractCustomEntity imp
      */
     public function setLocale($locale)
     {
-        foreach ($this->translations as $translation) {
-            if ($locale === $translation->getLocale()) {
-                $this->translation = $translation;
-            }
-        }
-
-        if (null === $this->translation) {
-            $class = $this->getTranslationFQCN();
-            $this->translation = new $class;
-            $this->translation->setLocale($locale);
-            $this->addTranslation($this->translation);
-        }
+        $this->locale = $locale;
     }
 
     /**
@@ -114,5 +113,18 @@ abstract class AbstractTranslatableCustomEntity extends AbstractCustomEntity imp
         $this->code = $code;
 
         return $this;
+    }
+
+    /**
+     * Convert to string
+     * 
+     * @return string
+     */
+    public function __toString()
+    {
+        $translation = $this->getTranslation();
+        return ($translation && (string) $translation)
+            ? (string) $translation
+            : (string) $this->code;
     }
 }
