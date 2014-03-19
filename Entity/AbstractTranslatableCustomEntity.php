@@ -5,6 +5,7 @@ namespace Pim\Bundle\CustomEntityBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Pim\Bundle\TranslationBundle\Entity\AbstractTranslation;
 use Pim\Bundle\TranslationBundle\Entity\TranslatableInterface;
+use Symfony\Component\PropertyAccess\PropertyAccessor;
 
 /**
  * Abstract custom entity
@@ -40,6 +41,7 @@ abstract class AbstractTranslatableCustomEntity extends AbstractCustomEntity imp
     public function addTranslation(AbstractTranslation $translation)
     {
         if (!$this->translations->contains($translation)) {
+            $translation->setForeignKey($this);
             $this->translations->add($translation);
         }
     }
