@@ -23,7 +23,7 @@ class TranslatableCustomEntityRepository extends ReferableEntityRepository
     public function createDatagridQueryBuilder($alias = 'o')
     {
         return $this->createQueryBuilder($alias)
-            ->leftJoin("$alias.translations", 'translations')
-            ->select("$alias, translations");
+            ->leftJoin("$alias.translations", 'translation')
+            ->select("$alias, translation");
     }
 }
