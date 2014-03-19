@@ -17,8 +17,6 @@ use Pim\Bundle\CustomEntityBundle\Manager\ManagerInterface;
  *
  *   - base_template:               The base template from which all templates are extended
  *   - index_template:              The template for the index action
- *   - query_builder_options:       Options passed to the manager for generating the index QueryBuilder
- *   - datagrid_namespace:          The namespace for the datagrid
  *   - find_options:                Options passed to the manager for finding entities
  *   - edit_route:                  The edit route
  *   - edit_template:               The edit template
@@ -30,7 +28,6 @@ use Pim\Bundle\CustomEntityBundle\Manager\ManagerInterface;
  *                                  the edit_form_options will be used
  *   - create_default_properties:   An array of default properties for the created objects
  *   - create_options:              Options passed to the manager for entity creation
- *   - edit_after_create:           Set to true to redirect to the edit page after entity creation
  *   - remove_route:                The remove route
  *
  * @author    Antoine Guigan <antoine@akeneo.com>
@@ -244,14 +241,6 @@ class Configuration implements ConfigurationInterface
     /**
      * {@inheritdoc}
      */
-    public function getDatagridNamespace()
-    {
-        return $this->options['datagrid_namespace'];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getCreateDefaultProperties()
     {
         return $this->options['create_default_properties'];
@@ -271,14 +260,6 @@ class Configuration implements ConfigurationInterface
     public function getFindOptions()
     {
         return $this->options['find_options'];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getQueryBuilderOptions()
-    {
-        return $this->options['query_builder_options'];
     }
 
     /**
@@ -309,9 +290,7 @@ class Configuration implements ConfigurationInterface
                 'edit_route'                        => 'pim_customentity_edit',
                 'remove_route'                      => 'pim_customentity_remove',
                 'edit_form_options'                 => array(),
-                'find_options'                      => array(),
-                'query_builder_options'             => array(),
-                'datagrid_namespace'                => 'pim_custom_entity'
+                'find_options'                      => array()
             )
         );
     }

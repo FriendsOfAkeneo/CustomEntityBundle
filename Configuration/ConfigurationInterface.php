@@ -57,13 +57,6 @@ interface ConfigurationInterface
     public function getEntityClass();
 
     /**
-     * Returns the datagrid namespace
-     *
-     * @return string
-     */
-    public function getDatagridNamespace();
-
-    /**
      * Returns the base template
      *
      * @return string
@@ -188,11 +181,4 @@ interface ConfigurationInterface
      * @return array
      */
     public function getFindOptions();
-
-    /**
-     * Returns the options passed to the manager to generate the query builder for the datagrid
-     *
-     * @return array
-     */
-    public function getQueryBuilderOptions();
 }
