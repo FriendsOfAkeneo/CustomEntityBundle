@@ -25,6 +25,16 @@ abstract class AbstractCustomEntity implements ReferableInterface
     protected $code;
 
     /**
+     * @var \DateTime
+     */
+    protected $created;
+
+    /**
+     * @var \DateTime
+     */
+    protected $updated;
+
+    /**
      * Returns the id
      *
      * @return int
@@ -62,6 +72,54 @@ abstract class AbstractCustomEntity implements ReferableInterface
     public function setCode($code)
     {
         $this->code = $code;
+
+        return $this;
+    }
+
+    /**
+     * Get created time
+     * 
+     * @return \DateTime
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * Get updated time
+     * 
+     * @return \DateTime
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
+
+    /**
+     * Set created time
+     * 
+     * @param \DateTime $created
+     * 
+     * @return AbstractCustomEntity
+     */
+    public function setCreated(\DateTime $created)
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    /**
+     * Set updated time
+     * 
+     * @param \DateTime $updated
+     * 
+     * @return AbstractCustomEntity
+     */
+    public function setUpdated(\DateTime $updated)
+    {
+        $this->updated = $updated;
 
         return $this;
     }
