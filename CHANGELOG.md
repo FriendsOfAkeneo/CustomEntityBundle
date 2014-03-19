@@ -7,6 +7,7 @@ CHANGELOG for 1.1.x
 ### Features
 
 - Added QuickCreateConfiguration and QuickCreateStrategy
+- Added abstract custom entities
 
 ### BC Breaks
 
