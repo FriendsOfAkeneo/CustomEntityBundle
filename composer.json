@@ -20,7 +20,7 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "akeneo/pim-community-dev": "~1.1"
+        "akeneo/pim-community-dev": "dev-maintenance/1.0_backports|~1.1"
     },
     "config": {
         "bin-dir": "bin"
