@@ -5,7 +5,6 @@ namespace Pim\Bundle\CustomEntityBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Pim\Bundle\TranslationBundle\Entity\AbstractTranslation;
 use Pim\Bundle\TranslationBundle\Entity\TranslatableInterface;
-use Symfony\Component\PropertyAccess\PropertyAccessor;
 
 /**
  * Abstract custom entity
@@ -119,12 +118,13 @@ abstract class AbstractTranslatableCustomEntity extends AbstractCustomEntity imp
 
     /**
      * Convert to string
-     * 
+     *
      * @return string
      */
     public function __toString()
     {
         $translation = $this->getTranslation();
+
         return ($translation && (string) $translation)
             ? (string) $translation
             : (string) $this->code;

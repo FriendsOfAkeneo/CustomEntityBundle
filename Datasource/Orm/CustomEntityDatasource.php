@@ -3,7 +3,6 @@
 namespace Pim\Bundle\CustomEntityBundle\Datasource\Orm;
 
 use Doctrine\ORM\EntityManager;
-use Exception;
 use Oro\Bundle\DataGridBundle\Datagrid\DatagridInterface;
 use Oro\Bundle\SecurityBundle\ORM\Walker\AclHelper;
 use Pim\Bundle\CatalogBundle\Helper\LocaleHelper;
@@ -12,9 +11,11 @@ use Pim\Bundle\CustomEntityBundle\Entity\Repository\LocaleAwareRepositoryInterfa
 use Pim\Bundle\DataGridBundle\Datasource\Orm\OrmDatasource;
 
 /**
- * Description of CustomEntityDatasource
+ * Datasource for custom entity datagrids
  *
- * @author Antoine Guigan <aguigan@qimnet.com>
+ * @author    Antoine Guigan <antoine@akeneo.com>
+ * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
+ * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 class CustomEntityDatasource extends OrmDatasource
 {
@@ -31,10 +32,10 @@ class CustomEntityDatasource extends OrmDatasource
 
     /**
      * Constructor
-     * 
-     * @param \Doctrine\ORM\EntityManager $em
+     *
+     * @param \Doctrine\ORM\EntityManager                     $em
      * @param \Oro\Bundle\SecurityBundle\ORM\Walker\AclHelper $aclHelper
-     * @param \Pim\Bundle\CatalogBundle\Helper\LocaleHelper $localeHelper
+     * @param \Pim\Bundle\CatalogBundle\Helper\LocaleHelper   $localeHelper
      */
     public function __construct(EntityManager $em, AclHelper $aclHelper, LocaleHelper $localeHelper)
     {
@@ -48,7 +49,7 @@ class CustomEntityDatasource extends OrmDatasource
     public function process(DatagridInterface $grid, array $config)
     {
         if (!isset($config['entity'])) {
-            throw new Exception(get_class($this).' expects to be configured with entity');
+            throw new \Exception(get_class($this).' expects to be configured with entity');
         }
 
         $repository = $this->em->getRepository($config['entity']);

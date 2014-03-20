@@ -13,7 +13,7 @@
     }) }}
 
         {% block custom_entity_page_header %}
-            {% set title = (customEntityName ~ ( form.vars.value.id ? '.edit' : '.create'))|trans ~ 
+            {% set title = (customEntityName ~ ( form.vars.value.id ? '.edit' : '.create'))|trans ~
             (form.vars.value.id ? ' - ' ~ form.vars.value : "") %}
             {% set indexUrl = path(indexRoute, { customEntityName: customEntityName }) %}
             {% set buttons %}

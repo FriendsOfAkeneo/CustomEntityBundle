@@ -78,7 +78,7 @@ abstract class AbstractCustomEntity implements ReferableInterface
 
     /**
      * Get created time
-     * 
+     *
      * @return \DateTime
      */
     public function getCreated()
@@ -88,7 +88,7 @@ abstract class AbstractCustomEntity implements ReferableInterface
 
     /**
      * Get updated time
-     * 
+     *
      * @return \DateTime
      */
     public function getUpdated()
@@ -98,9 +98,9 @@ abstract class AbstractCustomEntity implements ReferableInterface
 
     /**
      * Set created time
-     * 
+     *
      * @param \DateTime $created
-     * 
+     *
      * @return AbstractCustomEntity
      */
     public function setCreated(\DateTime $created)
@@ -112,9 +112,9 @@ abstract class AbstractCustomEntity implements ReferableInterface
 
     /**
      * Set updated time
-     * 
+     *
      * @param \DateTime $updated
-     * 
+     *
      * @return AbstractCustomEntity
      */
     public function setUpdated(\DateTime $updated)
