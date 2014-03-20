@@ -24,5 +24,6 @@ class PimCustomEntityExtension extends Extension
         $loader->load('formatters.yml');
         $loader->load('data_sources.yml');
         $loader->load('extensions.yml');
+        $loader->load('event_listeners.yml');
     }
 }

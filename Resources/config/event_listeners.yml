@@ -1,0 +1,10 @@
+parameters:
+    pim_custom_entity.event_listener.configure_custom_entity_grid.class: Pim\Bundle\CustomEntityBundle\EventListener\ConfigureCustomEntityGridListener
+
+services: 
+    pim_custom_entity.event_listener.configure_custom_entity_grid:
+        class: %pim_custom_entity.event_listener.configure_custom_entity_grid.class%
+        arguments:
+            - '@pim_custom_entity.configuration.registry'
+        tags:
+            - { name: kernel.event_listener, event: oro_datagrid.datgrid.build.before, method: buildBefore }

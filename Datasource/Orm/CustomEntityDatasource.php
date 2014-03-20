@@ -25,7 +25,6 @@ class CustomEntityDatasource extends OrmDatasource
     const TYPE = 'pim_custom_entity';
 
     /**
-     *
      * @var LocaleHelper
      */
     protected $localeHelper;
@@ -33,12 +32,15 @@ class CustomEntityDatasource extends OrmDatasource
     /**
      * Constructor
      *
-     * @param \Doctrine\ORM\EntityManager                     $em
-     * @param \Oro\Bundle\SecurityBundle\ORM\Walker\AclHelper $aclHelper
-     * @param \Pim\Bundle\CatalogBundle\Helper\LocaleHelper   $localeHelper
+     * @param EntityManager                     $em
+     * @param AclHelper $aclHelper
+     * @param LocaleHelper   $localeHelper
      */
-    public function __construct(EntityManager $em, AclHelper $aclHelper, LocaleHelper $localeHelper)
-    {
+    public function __construct(
+        EntityManager $em,
+        AclHelper $aclHelper,
+        LocaleHelper $localeHelper
+    ) {
         parent::__construct($em, $aclHelper);
         $this->localeHelper = $localeHelper;
     }
@@ -48,10 +50,6 @@ class CustomEntityDatasource extends OrmDatasource
      */
     public function process(DatagridInterface $grid, array $config)
     {
-        if (!isset($config['entity'])) {
-            throw new \Exception(get_class($this).' expects to be configured with entity');
-        }
-
         $repository = $this->em->getRepository($config['entity']);
 
         if ($repository instanceof LocaleAwareRepositoryInterface) {

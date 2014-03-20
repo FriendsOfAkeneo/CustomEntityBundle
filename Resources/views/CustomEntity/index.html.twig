@@ -17,8 +17,6 @@
     {{ elements.page_header(title, buttons, null) }}
 </div>
 
-{% set gridName = customEntityName ~ "-grid" %}
-
-{{ dataGrid.renderGrid(gridName) }}
+{{ dataGrid.renderGrid(customEntityName) }}
 
 {% endblock %}
