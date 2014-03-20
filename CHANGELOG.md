@@ -8,6 +8,7 @@ CHANGELOG for 1.1.x
 
 - Added QuickCreateConfiguration and QuickCreateStrategy
 - Added abstract custom entities
+- Added automatic configuration of custom datagrids
 
 ### BC Breaks
 
