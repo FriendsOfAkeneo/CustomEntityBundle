@@ -1,0 +1,9 @@
+parameters:
+    pim_custom_entity.extension.pager.custom_entity.class: Pim\Bundle\CustomEntityBundle\Extension\Pager\CustomEntityPagerExtension
+
+services:
+    pim_custom_entity.extension.pager.custom_entity:
+        parent: pim_datagrid.extension.pager.orm_pager
+        class: "%pim_custom_entity.extension.pager.custom_entity.class%"
+        tags:
+            - { name: oro_datagrid.extension }

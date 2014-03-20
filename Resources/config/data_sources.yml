@@ -8,4 +8,4 @@ services:
         arguments:
             - '@pim_catalog.helper.locale'
         tags:
-            - { name: oro_datagrid.datasource, type: pim_customentity }
+            - { name: oro_datagrid.datasource, type: pim_custom_entity }
