@@ -1,0 +1,11 @@
+parameters:
+    pim_custom_entity.datasource.custom_entity: Pim\Bundle\CustomEntityBundle\Datasource\Orm\CustomEntityDatasource
+
+services:
+    pim_custom_entity.datasource.custom_entity:
+        class: %pim_custom_entity.datasource.custom_entity%
+        parent: pim_catalog.datasource.orm
+        arguments:
+            - '@pim_catalog.helper.locale'
+        tags:
+            - { name: oro_datagrid.datasource, type: pim_customentity }

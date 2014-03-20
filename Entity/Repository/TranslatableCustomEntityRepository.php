@@ -11,19 +11,30 @@ use Pim\Bundle\CatalogBundle\Entity\Repository\ReferableEntityRepository;
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class TranslatableCustomEntityRepository extends ReferableEntityRepository
+class TranslatableCustomEntityRepository extends ReferableEntityRepository implements LocaleAwareRepositoryInterface,
+    DatagridAwareRepositoryInterface
 {
     /**
-     * Creates a query builder for datagrids
-     * 
-     * @param string $alias
-     * 
-     * @return \Doctrine\ORM\QueryBuilder
+     * @var string
+     */
+    protected $locale;
+
+    /**
+     * {@inheritdoc}
      */
     public function createDatagridQueryBuilder($alias = 'o')
     {
         return $this->createQueryBuilder($alias)
-            ->leftJoin("$alias.translations", 'translation')
+            ->leftJoin("$alias.translations", 'translation', 'WITH', 'translation.locale=:locale')
+            ->setParameter('locale', $this->locale)
             ->select("$alias, translation");
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
     }
 }
