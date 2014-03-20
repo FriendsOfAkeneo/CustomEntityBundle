@@ -3,7 +3,6 @@
 namespace Pim\Bundle\CustomEntityBundle\Entity\Repository;
 
 use Pim\Bundle\UIBundle\Entity\Repository\OptionRepositoryInterface;
-use Pim\Bundle\CatalogBundle\Entity\Repository\ReferableEntityRepository;
 
 /**
  * Repository for translatable custom options
@@ -12,7 +11,7 @@ use Pim\Bundle\CatalogBundle\Entity\Repository\ReferableEntityRepository;
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class TranslatableCustomOptionRepository extends ReferableEntityRepository implements OptionRepositoryInterface
+class TranslatableCustomOptionRepository extends TranslatableCustomEntityRepository implements OptionRepositoryInterface
 {
     /**
      * {@inheritdoc}
