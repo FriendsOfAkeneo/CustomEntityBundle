@@ -77,6 +77,9 @@ abstract class AbstractStrategyTest extends \PHPUnit_Framework_TestCase
         $this->configuration->expects($this->any())
             ->method('getManager')
             ->will($this->returnValue($this->manager));
+        $this->router->expects($this->any())
+             ->method('generate')
+             ->will($this->returnValue('url'));
     }
 
     /**
@@ -114,7 +117,9 @@ abstract class AbstractStrategyTest extends \PHPUnit_Framework_TestCase
                         'indexRoute'       => 'index_route',
                         'editRoute'        => 'edit_route',
                         'createRoute'      => 'create_route',
-                        'removeRoute'      => 'remove_route'
+                        'removeRoute'      => 'remove_route',
+                        'quickCreate'      => false,
+                        'formAction'       => 'url'
                     ) + $parameters
                 )
             )

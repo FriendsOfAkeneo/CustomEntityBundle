@@ -44,7 +44,9 @@ class CrudStrategyTest extends AbstractStrategyTest
      */
     public function testCreateAction($post, $valid)
     {
-        $entity = new \stdClass();
+        $entity = $this->getMockBuilder('stdClass')
+            ->setMethods(['getId'])
+            ->getMock();
         $this->configuration->expects($this->any())
             ->method('getCreateDefaultProperties')
             ->will($this->returnValue(array('create_default_properties')));
@@ -125,7 +127,9 @@ class CrudStrategyTest extends AbstractStrategyTest
      */
     public function testEditAction($post, $valid)
     {
-        $entity = new \stdClass();
+        $entity = $this->getMockBuilder('stdClass')
+            ->setMethods(['getId'])
+            ->getMock();
         $this->request->attributes->expects($this->once())
             ->method('get')
             ->with($this->equalTo(('id')))
@@ -172,13 +176,6 @@ class CrudStrategyTest extends AbstractStrategyTest
                 ->method('bind');
         }
         if ($valid) {
-            $this->router->expects($this->once())
-                ->method('generate')
-                ->with(
-                    $this->equalTo('edit_redirect_route'),
-                    $this->equalTo(array('edit_redirect_route_parameters'))
-                )
-                ->will($this->returnValue('url'));
             $this->assertFlash('success', 'flash.name.updated');
         } else {
             $form->expects($this->once())

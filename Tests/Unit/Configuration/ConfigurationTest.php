@@ -42,9 +42,9 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                 'entity_class'                      => 'entity_class',
                 'edit_form_type'                    => 'edit_form_type',
                 'base_template'                     => 'PimCustomEntityBundle::layout.html.twig',
-                'edit_template'                     => 'PimCustomEntityBundle:CustomEntity:edit.html.twig',
+                'edit_template'                     => 'PimCustomEntityBundle:CustomEntity:form.html.twig',
                 'index_template'                    => 'PimCustomEntityBundle:CustomEntity:index.html.twig',
-                'create_template'                   => 'PimCustomEntityBundle:CustomEntity:quickcreate.html.twig',
+                'create_template'                   => 'PimCustomEntityBundle:CustomEntity:form.html.twig',
                 'create_form_options'               => array(),
                 'create_form_type'                  => 'edit_form_type',
                 'create_default_properties'         => array(),
@@ -55,8 +55,6 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                 'remove_route'                      => 'pim_customentity_remove',
                 'edit_form_options'                 => array(),
                 'find_options'                      => array(),
-                'query_builder_options'             => array(),
-                'datagrid_namespace'                => 'pim_custom_entity',
                 'manager'                           => $this->manager,
                 'controller_strategy'               => $this->controllerStrategy
             )
@@ -85,8 +83,6 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
             'remove_route'                      => 'remove_route',
             'edit_form_options'                 => 'edit_form_options',
             'find_options'                      => 'find_options',
-            'query_builder_options'             => 'query_builder_options',
-            'datagrid_namespace'                => 'datagrid_namespace'
         );
         $this->assertConfigValues($this->getConfiguration($userOptions), $userOptions);
     }
@@ -108,52 +104,6 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                 'edit_form_options'     => 'edit_form_options',
                 'create_form_options'   => 'edit_form_options',
             )
-        );
-    }
-
-    /**
-     * Test related method
-     */
-    public function testGetCreateRedirectAsIndex()
-    {
-        $entity = $this->getMockBuilder('stdClass')
-            ->getMock();
-
-        $configuration = $this->getConfiguration(
-            array(
-                'index_route'           =>'index_route',
-                'edit_after_create'     => false
-            )
-        );
-        $this->assertEquals('index_route', $configuration->getCreateRedirectRoute($entity));
-        $this->assertEquals(
-            array('customEntityName' => 'name'),
-            $configuration->getCreateRedirectRouteParameters($entity)
-        );
-    }
-
-    /**
-     * Test related method
-     */
-    public function testGetCreateRedirectAsEdit()
-    {
-        $entity = $this->getMockBuilder('stdClass')
-            ->setMethods(array('getId'))
-            ->getMock();
-
-        $entity->expects($this->any())
-            ->method('getId')
-            ->will($this->returnValue('id'));
-
-        $configuration = $this->getConfiguration(
-            array(
-                'edit_route'           =>'edit_route',
-            )
-        );
-        $this->assertEquals('edit_route', $configuration->getCreateRedirectRoute($entity));
-        $this->assertEquals(
-            array('customEntityName' => 'name', 'id' => 'id'),
-            $configuration->getCreateRedirectRouteParameters($entity)
         );
     }
 
