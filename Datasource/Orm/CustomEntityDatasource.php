@@ -32,9 +32,9 @@ class CustomEntityDatasource extends OrmDatasource
     /**
      * Constructor
      *
-     * @param EntityManager                     $em
-     * @param AclHelper $aclHelper
-     * @param LocaleHelper   $localeHelper
+     * @param EntityManager $em
+     * @param AclHelper     $aclHelper
+     * @param LocaleHelper  $localeHelper
      */
     public function __construct(
         EntityManager $em,

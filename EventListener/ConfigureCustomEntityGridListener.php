@@ -4,16 +4,15 @@ namespace Pim\Bundle\CustomEntityBundle\EventListener;
 
 use Oro\Bundle\DataGridBundle\Event\BuildBefore;
 use Pim\Bundle\CustomEntityBundle\Configuration\Registry;
-use Pim\Bundle\CustomEntityBundle\Datasource\Orm\CustomEntityDatasource;
 
 /**
  * Automatically configures pim_custom_entity grids
- * 
+ *
  * @author    Antoine Guigan <antoine@akeneo.com>
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class ConfigureCustomEntityGridListener 
+class ConfigureCustomEntityGridListener
 {
     /**
      * @var Registry
@@ -22,10 +21,10 @@ class ConfigureCustomEntityGridListener
 
     /**
      * Constructor
-     * 
+     *
      * @param Registry $configurationRegistry
      */
-    function __construct(Registry $configurationRegistry)
+    public function __construct(Registry $configurationRegistry)
     {
         $this->configurationRegistry = $configurationRegistry;
     }
@@ -46,20 +45,20 @@ class ConfigureCustomEntityGridListener
 
         $customEntityConfig = $this->configurationRegistry->get($datagridConfig->getName());
         $datagridConfig->offsetSetByPath(
-            '[source]', 
+            '[source]',
             [
                 'entity' => $customEntityConfig->getEntityClass(),
                 'type'   => 'pim_custom_entity'
             ]
         );
         $datagridConfig->offsetSetByPath(
-            '[properties]', 
-            [ 
+            '[properties]',
+            [
                 'id' => [],
                 'edit_link' => [
                     'type'   => 'custom_entity_url',
                     'route'  => sprintf(
-                        '%s{customEntityName:%s}', 
+                        '%s{customEntityName:%s}',
                         $customEntityConfig->getEditRoute(),
                         $customEntityConfig->getName()
                     ),
@@ -68,7 +67,7 @@ class ConfigureCustomEntityGridListener
                 'delete_link' => [
                     'type'   => 'custom_entity_url',
                     'route'  => sprintf(
-                        '%s{customEntityName:%s}', 
+                        '%s{customEntityName:%s}',
                         $customEntityConfig->getRemoveRoute(),
                         $customEntityConfig->getName()
                     ),
