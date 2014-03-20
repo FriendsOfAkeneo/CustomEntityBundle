@@ -14,4 +14,5 @@ CHANGELOG for 1.1.x
 
 - Default configuration and strategy do not use quick create
 - Removed unused datagrid_namespace configuration option
+- Grid names are not suffixed by -grid anymore, and are the same as custom entity names
 
