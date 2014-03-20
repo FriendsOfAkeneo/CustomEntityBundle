@@ -3,6 +3,8 @@
 namespace Pim\Bundle\CustomEntityBundle\Entity;
 
 use Pim\Bundle\CatalogBundle\Model\ReferableInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Abstract custom entity
@@ -11,6 +13,8 @@ use Pim\Bundle\CatalogBundle\Model\ReferableInterface;
  * @author    Antoine Guigan <antoine@akeneo.com>
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * 
+ * @UniqueEntity(fields="code", message="This code is already taken")
  */
 abstract class AbstractCustomEntity implements ReferableInterface
 {
@@ -21,6 +25,8 @@ abstract class AbstractCustomEntity implements ReferableInterface
 
     /**
      * @var string
+     * 
+     * @Assert\NotBlank
      */
     protected $code;
 
@@ -122,5 +128,15 @@ abstract class AbstractCustomEntity implements ReferableInterface
         $this->updated = $updated;
 
         return $this;
+    }
+
+    /**
+     * Convert to string
+     * 
+     * @return string
+     */
+    public function __toString()
+    {
+        return (string) $this->code;
     }
 }
