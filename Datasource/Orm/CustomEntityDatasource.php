@@ -53,7 +53,7 @@ class CustomEntityDatasource extends OrmDatasource
         $repository = $this->em->getRepository($config['entity']);
 
         if ($repository instanceof LocaleAwareRepositoryInterface) {
-            $repository->setLocale($this->localeHelper->getCurrentLocale());
+            $repository->setLocale($this->localeHelper->getCurrentLocale()->getCode());
         }
 
         if (!isset($config['repository_method']) && $repository instanceof DatagridAwareRepositoryInterface) {
