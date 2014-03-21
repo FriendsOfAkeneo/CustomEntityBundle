@@ -76,10 +76,8 @@ class TranslatableCustomOptionRepository extends ReferableEntityRepository imple
     {
         $qb = $this->createQueryBuilder('c')
             ->select('c.id AS id, c.code, t.label AS text')
-            ->where('c.attribute=:attribute_id')
             ->leftJoin('c.translations', 't', 'WITH', 't.locale=:locale')
-            ->setParameter('locale', $dataLocale)
-            ->setParameter('attribute_id', $collectionId);
+            ->setParameter('locale', $dataLocale);
         if ($search) {
             $qb->andWhere(('c.code LIKE :search OR t.label LIKE :search'))
                 ->setParameter('search', "$search%");
