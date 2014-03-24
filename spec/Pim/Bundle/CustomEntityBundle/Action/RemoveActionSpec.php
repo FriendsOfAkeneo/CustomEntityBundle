@@ -33,9 +33,33 @@ class RemoveActionSpec extends ActionBehavior
         ConfigurationInterface $configuration,
         Request $request
     ) {
+        $this->testObjectRemoval($manager, $configuration, $request, [], []);
+    }
+
+    public function it_accepts_find_options(
+        ManagerInterface $manager,
+        ConfigurationInterface $configuration,
+        Request $request
+    ) {
+        $this->testObjectRemoval(
+            $manager,
+            $configuration,
+            $request,
+            ['find_options' => ['find_options']],
+            ['find_options']
+        );
+    }
+
+    protected function testObjectRemoval(
+        ManagerInterface $manager,
+        ConfigurationInterface $configuration,
+        Request $request,
+        $options,
+        $findOptions
+    ) {
         $object = new \stdClass;
-        $configuration->getActionOptions('remove')->willReturn([]);
-        $manager->find('entity_class', 'id', [])->willReturn($object);
+        $configuration->getActionOptions('remove')->willReturn($options);
+        $manager->find('entity_class', 'id', $findOptions)->willReturn($object);
         $manager->remove($object)->shouldBeCalled();
         $response = $this->execute($request, $configuration);
         $response->shouldHaveType('Symfony\Component\HttpFoundation\Response');
