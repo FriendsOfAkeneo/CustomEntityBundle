@@ -3,6 +3,7 @@
 namespace Pim\Bundle\CustomEntityBundle\Controller;
 
 use Pim\Bundle\CustomEntityBundle\Configuration\Registry;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -27,13 +28,20 @@ class Controller
     protected $registry;
 
     /**
+     * @var ContainerInterface
+     */
+    protected $container;
+
+    /**
      * Constructor
      *
-     * @param Request  $request
-     * @param Registry $registry
+     * @param ContainerInterface $container
+     * @param Request            $request
+     * @param Registry           $registry
      */
-    public function __construct(Request $request, Registry $registry)
+    public function __construct(ContainerInterface $container, Request $request, Registry $registry)
     {
+        $this->container = $container;
         $this->request = $request;
         $this->registry = $registry;
     }
@@ -47,7 +55,7 @@ class Controller
      * @return Response
      * @throws NotFoundHttpException
      */
-    public function action($customEntityName, $actionType)
+    public function executeAction($customEntityName, $actionType)
     {
         if (!$this->registry->has($customEntityName)) {
             throw new NotFoundHttpException();
@@ -59,6 +67,8 @@ class Controller
             throw new NotFoundHttpException();
         }
 
-        return $configuration->getAction($actionType)->execute($this->request, $configuration);
+        $action = $this->container->get($configuration->getAction($actionType));
+
+        return $action->execute($this->request, $configuration);
     }
 }

@@ -2,8 +2,6 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Configuration;
 
-use Pim\Bundle\CustomEntityBundle\Action\ActionInterface;
-
 /**
  * Common interface for configuration services
  *
@@ -32,7 +30,7 @@ interface ConfigurationInterface
     /**
      * @param string $type
      *
-     * @return ActionInterface
+     * @return string
      */
     public function getAction($type);
 
