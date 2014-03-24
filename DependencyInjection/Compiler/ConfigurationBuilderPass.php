@@ -64,9 +64,9 @@ class ConfigurationBuilderPass implements CompilerPassInterface
         );
         $definition->setPublic(false);
         foreach ($configuration['actions'] as $type => $options) {
-            $service = $options['service'];
+            $service = new Reference($options['service']);
             unset($options['service']);
-            $definition->addMethodCall('addAction', [$type, $service, $options]);
+            $definition->addMethodCall('addAction', [$service, $options]);
         }
         $serviceName = sprintf('pim_custom_entity_bundle.configuration.%s', $name);
         $container->addDefinitions([$serviceName => $definition]);

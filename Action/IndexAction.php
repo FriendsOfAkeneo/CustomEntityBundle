@@ -23,7 +23,7 @@ class IndexAction extends AbstractViewableAction
         $vars = [];
         if ($configuration->hasAction('create')) {
             $vars['createUrl'] = $this->getActionUrl($configuration, 'create');
-            $vars['quickCreate'] = $configuration->getAction('create') instanceof QuickCreateAction;
+            $vars['quickCreate'] = $options['quick_create'];
         }
 
         return $this->renderResponse($configuration, $options, $vars);
@@ -51,6 +51,11 @@ class IndexAction extends AbstractViewableAction
     protected function setDefaultOptions(ConfigurationInterface $configuration, OptionsResolverInterface $resolver)
     {
         parent::setDefaultOptions($configuration, $resolver);
-        $resolver->setDefaults(['template' => 'PimCustomEntityBundle:CustomEntity:index.html.twig']);
+        $resolver->setDefaults(
+            [
+                'quick_create'  => false,
+                'template'      => 'PimCustomEntityBundle:CustomEntity:index.html.twig'
+            ]
+        );
     }
 }

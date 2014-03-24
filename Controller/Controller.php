@@ -39,9 +39,8 @@ class Controller
      * @param Request            $request
      * @param Registry           $registry
      */
-    public function __construct(ContainerInterface $container, Request $request, Registry $registry)
+    public function __construct(Request $request, Registry $registry)
     {
-        $this->container = $container;
         $this->request = $request;
         $this->registry = $registry;
     }
@@ -67,8 +66,6 @@ class Controller
             throw new NotFoundHttpException();
         }
 
-        $action = $this->container->get($configuration->getAction($actionType));
-
-        return $action->execute($this->request, $configuration);
+        return $configuration->getAction($actionType)->execute($this->request, $configuration);
     }
 }

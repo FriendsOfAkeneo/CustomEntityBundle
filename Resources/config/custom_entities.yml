@@ -12,9 +12,12 @@ custom_entities:
                 service: pim_custom_entity.action.remove
             create:
                 service: pim_custom_entity.action.create
+
     quick_create:
         parent: default
         abstract: true
         actions:
+            index:
+                quick_create: true
             create:
                 service: pim_custom_entity.action.quick_create

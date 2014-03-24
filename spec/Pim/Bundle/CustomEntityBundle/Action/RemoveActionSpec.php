@@ -19,8 +19,9 @@ class RemoveActionSpec extends ActionBehavior
         ParameterBag $attributes,
         ConfigurationInterface $configuration
     ) {
-        parent::let($manager, $router, $translator, $request, $attributes, $configuration);
         $this->beConstructedWith($manager, $router, $translator);
+        $this->initializeRequest($request, $attributes);
+        $this->initializeConfiguration($configuration);
     }
 
     public function it_is_initializable()

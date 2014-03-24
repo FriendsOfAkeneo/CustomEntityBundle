@@ -12,7 +12,6 @@ services:
         class: %pim_custom_entity.controller.class%
         scope: request
         arguments:
-            - '@service_container'
             - '@request'
             - '@pim_custom_entity.configuration.registry'
 

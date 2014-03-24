@@ -6,24 +6,21 @@ use PhpSpec\ObjectBehavior;
 use Pim\Bundle\CustomEntityBundle\Action\ActionInterface;
 use Pim\Bundle\CustomEntityBundle\Configuration\ConfigurationInterface;
 use Pim\Bundle\CustomEntityBundle\Configuration\Registry;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class ControllerSpec extends ObjectBehavior
 {
     public function let(
-        ContainerInterface $container,
         Request $request,
         Registry $registry,
         ConfigurationInterface $configuration,
         ActionInterface $action
     ) {
-        $this->beConstructedWith($container, $request, $registry);
+        $this->beConstructedWith($request, $registry);
         $registry->has('entity')->willReturn(true);
         $registry->get('entity')->willReturn($configuration);
         $configuration->hasAction('action')->willReturn(true);
-        $configuration->getAction('action')->willReturn('action');
-        $container->get('action')->willReturn($action);
+        $configuration->getAction('action')->willReturn($action);
     }
 
     public function it_is_initializable()

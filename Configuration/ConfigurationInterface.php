@@ -30,7 +30,7 @@ interface ConfigurationInterface
     /**
      * @param string $type
      *
-     * @return string
+     * @return \Pim\Bundle\CustomEntityBundle\Action\ActionInterface
      */
     public function getAction($type);
 
