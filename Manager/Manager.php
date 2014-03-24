@@ -12,7 +12,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class OrmManager implements OrmManagerInterface
+class Manager implements ManagerInterface
 {
     /**
      * @var RegistryInterface
@@ -55,17 +55,6 @@ class OrmManager implements OrmManagerInterface
     public function find($entityClass, $id, array $options = array())
     {
         return $this->doctrine->getRepository($entityClass)->find($id);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function createQueryBuilder($entityClass, array $options = array())
-    {
-        $method = isset($options['query_builder_method']) ? $options['query_builder_method'] : 'createQueryBuilder';
-        $alias = isset($options['query_builder_alias']) ? $options['query_builder_alias'] : 't';
-
-        return $this->doctrine->getRepository($entityClass)->$method($alias);
     }
 
     /**

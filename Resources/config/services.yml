@@ -2,7 +2,7 @@ parameters:
     pim_custom_entity.configuration.registry.class:                Pim\Bundle\CustomEntityBundle\Configuration\Registry
     pim_custom_entity.configuration.default.class:                 Pim\Bundle\CustomEntityBundle\Configuration\Configuration
     pim_custom_entity.controller.class:                            Pim\Bundle\CustomEntityBundle\Controller\Controller
-    pim_custom_entity.manager.orm.class:                           Pim\Bundle\CustomEntityBundle\Manager\OrmManager
+    pim_custom_entity.manager.class:                               Pim\Bundle\CustomEntityBundle\Manager\Manager
 
 services:
     pim_custom_entity.configuration.registry:
@@ -15,8 +15,8 @@ services:
             - '@request'
             - '@pim_custom_entity.configuration.registry'
 
-    pim_custom_entity.manager.orm:
-        class: %pim_custom_entity.manager.orm.class%
+    pim_custom_entity.manager:
+        class: %pim_custom_entity.manager.class%
         arguments:
             - '@doctrine'
             - '@property_accessor'

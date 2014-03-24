@@ -9,7 +9,7 @@ services:
     pim_custom_entity.action:
         abstract: true
         arguments:
-            - @pim_custom_entity.manager.orm
+            - @pim_custom_entity.manager
             - @router
             - @translator
 
