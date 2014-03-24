@@ -42,12 +42,12 @@ class Controller
      * Default action
      *
      * @param string $customEntityName
-     * @param string $actionName
+     * @param string $actionType
      *
      * @return Response
      * @throws NotFoundHttpException
      */
-    public function action($customEntityName, $actionName)
+    public function action($customEntityName, $actionType)
     {
         if (!$this->registry->has($customEntityName)) {
             throw new NotFoundHttpException();
@@ -55,10 +55,10 @@ class Controller
 
         $configuration = $this->registry->get($customEntityName);
 
-        return call_user_func(
-            array($configuration->getControllerStrategy(), $actionName),
-            $configuration,
-            $this->request
-        );
+        if (!$configuration->hasAction($actionType)) {
+            throw new NotFoundHttpException();
+        }
+
+        return $configuration->getAction($actionType)->execute($this->request, $configuration);
     }
 }

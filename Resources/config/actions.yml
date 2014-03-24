@@ -1,0 +1,42 @@
+parameters:
+    pim_custom_entity.action.index.class:  Pim\Bundle\CustomEntityBundle\Action\IndexAction
+    pim_custom_entity.action.remove.class: Pim\Bundle\CustomEntityBundle\Action\RemoveAction
+    pim_custom_entity.action.create.class: Pim\Bundle\CustomEntityBundle\Action\CreateAction
+    pim_custom_entity.action.edit.class:   Pim\Bundle\CustomEntityBundle\Action\EditAction
+
+services:
+    pim_custom_entity.action:
+        abstract: true
+        arguments:
+            - @pim_custom_entity.manager.orm
+            - @router
+            - @translator
+
+    pim_custom_entity.action.viewable:
+        abstract: true
+        parent: pim_custom_entity.action
+        arguments:
+            - @templating
+
+    pim_custom_entity.action.index:
+        class: %pim_custom_entity.action.index.class%
+        parent: pim_custom_entity.action.viewable
+
+    pim_custom_entity.action.remove:
+        class: %pim_custom_entity.action.remove.class%
+        parent: pim_custom_entity.action
+
+    pim_custom_entity.action.form:
+        abstract: true
+        parent: pim_custom_entity.action.viewable
+        arguments:
+            - @form.factory
+    
+    pim_custom_entity.action.edit:
+        class: %pim_custom_entity.action.edit.class%
+        parent: pim_custom_entity.action.form
+    
+    pim_custom_entity.action.create:
+        class: %pim_custom_entity.action.create.class%
+        parent: pim_custom_entity.action.form
+        

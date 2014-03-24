@@ -2,33 +2,11 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Configuration;
 
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Pim\Bundle\CustomEntityBundle\Controller\Strategy\StrategyInterface;
-use Pim\Bundle\CustomEntityBundle\Manager\ManagerInterface;
+use Pim\Bundle\CustomEntityBundle\Action\ActionInterface;
+
 
 /**
  * Configuration for an ORM custom entity
- *
- * The following options are defined :
- *
- *   - entity_class:                The class of the custom entity (REQUIRED)
- *   - edit_form_type:              The form type used for edition (REQUIRED)
- *
- *   - base_template:               The base template from which all templates are extended
- *   - index_template:              The template for the index action
- *   - find_options:                Options passed to the manager for finding entities
- *   - edit_route:                  The edit route
- *   - edit_template:               The edit template
- *   - edit_form_options:           Options for the edit form
- *   - create_route:                The create route
- *   - create_template:             The create template
- *   - create_form_type:            The form type used for creation. If not supplied, edit_form_type will be used
- *   - create_form_options:         Options passed to the create form type. If not supplied,
- *                                  the edit_form_options will be used
- *   - create_default_properties:   An array of default properties for the created objects
- *   - create_options:              Options passed to the manager for entity creation
- *   - remove_route:                The remove route
  *
  * @author    Antoine Guigan <antoine@akeneo.com>
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
@@ -42,36 +20,66 @@ class Configuration implements ConfigurationInterface
     protected $name;
 
     /**
-     * @var ManagerInterface
+     * @var string
      */
-    protected $manager;
+    protected $entityClass;
 
     /**
-     * @var StrategyInterface
+     * @var ActionInterface[]
      */
-    protected $controllerStrategy;
+    protected $actions = [];
 
     /**
-     * @var array
+     * @var array[]
      */
-    protected $options;
+    protected $actionOptions = [];
 
     /**
      * Constructor
-     *
-     * @param string            $name
-     * @param ManagerInterface  $manager
-     * @param StrategyInterface $controllerStrategy
-     * @param array             $options
+     * 
+     * @param string $name
+     * @param string $entityClass
      */
-    public function __construct($name, ManagerInterface $manager, StrategyInterface $controllerStrategy, array $options)
+    function __construct($name, $entityClass)
     {
         $this->name = $name;
-        $this->manager = $manager;
-        $this->controllerStrategy = $controllerStrategy;
-        $optionsResolver = new OptionsResolver();
-        $this->setDefaultOptions($optionsResolver);
-        $this->options = $optionsResolver->resolve($options);
+        $this->entityClass = $entityClass;
+    }
+
+    /**
+     * Adds an action for the current entity
+     * 
+     * @param ActionInterface $action
+     * @param array $options
+     */
+    public function addAction(ActionInterface $action, array $options = [])
+    {
+        $this->actions[$action->getType()] = $action;
+        $this->actionOptions[$action->getType()] = $options;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getAction($type)
+    {
+        return $this->actions[$type];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getActionOptions($type)
+    {
+        return $this->actionOptions[$type];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getEntityClass()
+    {
+        return $this->entityClass;
     }
 
     /**
@@ -85,213 +93,8 @@ class Configuration implements ConfigurationInterface
     /**
      * {@inheritdoc}
      */
-    public function getManager()
+    public function hasAction($type)
     {
-        return $this->manager;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getControllerStrategy()
-    {
-        return $this->controllerStrategy;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getEntityClass()
-    {
-        return $this->options['entity_class'];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getCreateRoute()
-    {
-        return $this->options['create_route'];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getEditRoute()
-    {
-        return $this->options['edit_route'];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getIndexRoute()
-    {
-        return $this->options['index_route'];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getRemoveRoute()
-    {
-        return $this->options['remove_route'];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBaseTemplate()
-    {
-        return $this->options['base_template'];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getCreateFormOptions()
-    {
-        return (null === $this->options['create_form_options'])
-            ? $this->options['edit_form_options']
-            : $this->options['create_form_options'];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getCreateFormType()
-    {
-        return $this->options['create_form_type'] ?: $this->options['edit_form_type'];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getCreateRedirectRoute($entity)
-    {
-        return $this->options['index_route'];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getCreateRedirectRouteParameters($entity)
-    {
-        return array('customEntityName' => $this->getName(), 'id' => $entity->getId());
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getCreateTemplate()
-    {
-        return $this->options['create_template'];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getEditFormType()
-    {
-        return $this->options['edit_form_type'];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getEditFormOptions()
-    {
-        return $this->options['edit_form_options'];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getEditRedirectRoute($entity)
-    {
-        return $this->options['index_route'] ;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getEditRedirectRouteParameters($entity)
-    {
-        return array(
-            'customEntityName' => $this->getName()
-        );
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getEditTemplate()
-    {
-        return $this->options['edit_template'];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getIndexTemplate()
-    {
-        return $this->options['index_template'];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getCreateDefaultProperties()
-    {
-        return $this->options['create_default_properties'];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getCreateOptions()
-    {
-        return $this->options['create_options'];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getFindOptions()
-    {
-        return $this->options['find_options'];
-    }
-
-    /**
-     * Set the default options
-     *
-     * @param OptionsResolverInterface $optionsResolver
-     */
-    protected function setDefaultOptions(OptionsResolverInterface $optionsResolver)
-    {
-        $optionsResolver->setRequired(
-            array(
-                'entity_class',
-                'edit_form_type',
-            )
-        );
-        $optionsResolver->setDefaults(
-            array(
-                'base_template'                     => 'PimCustomEntityBundle::layout.html.twig',
-                'edit_template'                     => 'PimCustomEntityBundle:CustomEntity:form.html.twig',
-                'index_template'                    => 'PimCustomEntityBundle:CustomEntity:index.html.twig',
-                'create_template'                   => 'PimCustomEntityBundle:CustomEntity:form.html.twig',
-                'create_form_type'                  => null,
-                'create_form_options'               => null,
-                'create_default_properties'         => array(),
-                'create_options'                    => array(),
-                'index_route'                       => 'pim_customentity_index',
-                'create_route'                      => 'pim_customentity_create',
-                'edit_route'                        => 'pim_customentity_edit',
-                'remove_route'                      => 'pim_customentity_remove',
-                'edit_form_options'                 => array(),
-                'find_options'                      => array()
-            )
-        );
+        return isset($this->actions[$type]);
     }
 }

@@ -15,13 +15,12 @@
         {% block custom_entity_page_header %}
             {% set title = (customEntityName ~ ( form.vars.value.id ? '.edit' : '.create'))|trans ~
             (form.vars.value.id ? ' - ' ~ form.vars.value : "") %}
-            {% set indexUrl = path(indexRoute, { customEntityName: customEntityName }) %}
             {% set buttons %}
                 {{ elements.backLink(indexUrl) }}
-                {% if form.vars.value.id %}
+                {% if deleteUrl|default(false) %}
                     {{
                         elements.deleteLink(
-                            path(removeRoute, { customEntityName: customEntityName, id: form.vars.value.id }),
+                            deleteUrl,
                             null,
                             indexUrl,
                             ('confirmation.remove.' ~ customEntityName)|trans,

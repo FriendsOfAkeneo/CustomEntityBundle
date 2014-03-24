@@ -51,47 +51,36 @@ class ConfigureCustomEntityGridListener
                 'type'   => 'pim_custom_entity'
             ]
         );
-        $datagridConfig->offsetSetByPath(
-            '[properties]',
-            [
-                'id' => [],
-                'edit_link' => [
-                    'type'   => 'custom_entity_url',
-                    'route'  => sprintf(
-                        '%s{customEntityName:%s}',
-                        $customEntityConfig->getEditRoute(),
-                        $customEntityConfig->getName()
-                    ),
-                    'params' => ['id']
-                ],
-                'delete_link' => [
-                    'type'   => 'custom_entity_url',
-                    'route'  => sprintf(
-                        '%s{customEntityName:%s}',
-                        $customEntityConfig->getRemoveRoute(),
-                        $customEntityConfig->getName()
-                    ),
-                    'params' => ['id']
-                ]
-            ]
-        );
-        $datagridConfig->offsetSetByPath(
-            '[actions]',
-            [
-                'edit' => [
-                    'type'      => 'navigate',
-                    'label'     => 'Edit',
-                    'icon'      => 'edit',
-                    'link'      => 'edit_link',
-                    'rowAction' => true
-                ],
-                'delete' => [
-                    'type'      => 'delete',
-                    'label'     => 'Delete',
-                    'icon'      => 'trash',
-                    'link'      => 'delete_link'
-                ]
-            ]
-        );
+        $properties = ['id' => []];
+        $actions = [];
+        if ($customEntityConfig->hasAction('edit')) {
+            $properties['edit_link'] = [
+                'type'   => 'custom_entity_url',
+                'route'  => sprintf('%s/edit', $customEntityConfig->getName()),
+                'params' => ['id']
+            ];
+            $actions['edit'] = [
+                'type'      => 'navigate',
+                'label'     => 'Edit',
+                'icon'      => 'edit',
+                'link'      => 'edit_link',
+                'rowAction' => true
+            ];
+        }
+        if ($customEntityConfig->hasAction('remove')) {
+            $properties['delete_link'] = [
+                'type'   => 'custom_entity_url',
+                'route'  => sprintf('%s/remove', $customEntityConfig->getName()),
+                'params' => ['id']
+            ];
+            $actions['delete'] = [
+                'type'      => 'delete',
+                'label'     => 'Delete',
+                'icon'      => 'trash',
+                'link'      => 'delete_link'
+            ];
+        }
+        $datagridConfig->offsetSetByPath('[properties]', $properties);
+        $datagridConfig->offsetSetByPath('[actions]', $actions);
     }
 }

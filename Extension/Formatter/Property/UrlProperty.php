@@ -4,6 +4,8 @@ namespace Pim\Bundle\CustomEntityBundle\Extension\Formatter\Property;
 
 use Oro\Bundle\DataGridBundle\Datasource\ResultRecordInterface;
 use Oro\Bundle\DataGridBundle\Extension\Formatter\Property\UrlProperty as OroUrlProperty;
+use Pim\Bundle\CustomEntityBundle\Configuration\Registry;
+use Symfony\Component\Routing\Router;
 
 /**
  * Overriden UrlProperty class
@@ -15,37 +17,43 @@ use Oro\Bundle\DataGridBundle\Extension\Formatter\Property\UrlProperty as OroUrl
 class UrlProperty extends OroUrlProperty
 {
     /**
+     * @var Registry
+     */
+    protected $configurationRegistry;
+
+    /**
      * @var string
      */
     protected $customEntityName;
+
+    /**
+     * 
+     * @param Router $router
+     * @param Registry $configurationRegistry
+     */
+    public function __construct(Router $router, Registry $configurationRegistry)
+    {
+        parent::__construct($router);
+        $this->configurationRegistry = $configurationRegistry;
+    }
 
     /**
      * {@inheritdoc}
      */
     public function getRawValue(ResultRecordInterface $record)
     {
-        $routeAndCustom = $this->get(self::ROUTE_KEY);
-        preg_match('/(?P<routeName>\w+){customEntityName:(?P<customEntityName>\w+)}/', $routeAndCustom, $matches);
-        $routeName = $matches['routeName'];
-        $this->customEntityName = $matches['customEntityName'];
+        list($this->customEntityName, $actionName) = explode('/', $this->get(self::ROUTE_KEY));
+
+        $configuration = $this->configurationRegistry->get($this->customEntityName);
+        $action = $configuration->getAction($actionName);
 
         $route = $this->router->generate(
-            $routeName,
-            $this->getParameters($record),
+            $action->getRoute(),
+            $this->getParameters($record) + $action->getRouteParameters($configuration),
             $this->getOr(self::IS_ABSOLUTE_KEY, false)
         );
 
         return $route . $this->getOr(self::ANCHOR_KEY);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function getParameters(ResultRecordInterface $record)
-    {
-        $result = parent::getParameters($record);
-        $result['customEntityName'] = $this->customEntityName;
-
-        return $result;
-    }
 }

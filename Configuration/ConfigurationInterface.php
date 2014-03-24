@@ -2,8 +2,7 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Configuration;
 
-use Pim\Bundle\CustomEntityBundle\Manager\ManagerInterface;
-use Pim\Bundle\CustomEntityBundle\Controller\Strategy\StrategyInterface;
+use Pim\Bundle\CustomEntityBundle\Action\ActionInterface;
 
 /**
  * Common interface for configuration services
@@ -22,163 +21,34 @@ interface ConfigurationInterface
     public function getName();
 
     /**
-     * Returns the index route
-     *
-     * @return string
+     * Returns true if an action of the concerned type is registered
+     * 
+     * @param string
+     * 
+     * @return boolean
      */
-    public function getIndexRoute();
+    public function hasAction($type);
 
     /**
-     * Returns the edit route
-     *
-     * @return string
+     * @param string $type
+     * 
+     * @return ActionInterface
      */
-    public function getEditRoute();
+    public function getAction($type);
 
     /**
-     * Returns the create route
-     *
-     * @return string
+     * Returns the options for a specific action type
+     * 
+     * @param string $type
+     * 
+     * @return array
      */
-    public function getCreateRoute();
+    public function getActionOptions($type);
 
     /**
-     * Returns the remove route
-     *
-     * @return string
-     */
-    public function getRemoveRoute();
-
-    /**
-     * Returns the entity class
-     *
+     * Returns the class of the managed entity
+     * 
      * @return string
      */
     public function getEntityClass();
-
-    /**
-     * Returns the base template
-     *
-     * @return string
-     */
-    public function getBaseTemplate();
-
-    /**
-     * Returns the index template
-     *
-     * @return string
-     */
-    public function getIndexTemplate();
-
-    /**
-     * Returns the controller strategy
-     *
-     * @return StrategyInterface
-     */
-    public function getControllerStrategy();
-
-    /**
-     * Returns the create template
-     *
-     * @return string
-     */
-    public function getCreateTemplate();
-
-    /**
-     * Returns the create form type
-     *
-     * @return string
-     */
-    public function getCreateFormType();
-
-    /**
-     * Returns the create form options
-     * @return array
-     */
-    public function getCreateFormOptions();
-
-    /**
-     * Returns the route for redirects after successful entity creation
-     *
-     * @param object $entity
-     *
-     * @return string
-     */
-    public function getCreateRedirectRoute($entity);
-
-    /**
-     * Returns the route parameters for redirects after successful entity creation
-     *
-     * @param object $entity
-     *
-     * @return string
-     */
-    public function getCreateRedirectRouteParameters($entity);
-
-    /**
-     * Returns the edit template
-     *
-     * @return string
-     */
-    public function getEditTemplate();
-
-    /**
-     * Returns the edit form type
-     *
-     * @return string
-     */
-    public function getEditFormType();
-
-    /**
-     * Returns the edit form options
-     *
-     * @return string
-     */
-    public function getEditFormOptions();
-
-    /**
-     * Returns the route for redirects after successful entity update
-     *
-     * @param object $entity
-     *
-     * @return string
-     */
-    public function getEditRedirectRoute($entity);
-
-    /**
-     * Returns the route parameters for redirects after successful entity update
-     *
-     * @param object $entity
-     *
-     * @return array
-     */
-    public function getEditRedirectRouteParameters($entity);
-
-    /**
-     * Returns the manager
-     *
-     * @return ManagerInterface
-     */
-    public function getManager();
-
-    /**
-     * Returns properties which should be added to any created object
-     *
-     * @return array
-     */
-    public function getCreateDefaultProperties();
-
-    /**
-     * Returns the options passed to the manager for entity creation
-     *
-     * @return array
-     */
-    public function getCreateOptions();
-
-    /**
-     * Returns the options passed to the manager to find entities
-     *
-     * @return array
-     */
-    public function getFindOptions();
 }

@@ -1,22 +1,22 @@
 pim_customentity_index:
     path: /{customEntityName}/.{_format}
-    defaults: { _controller: pim_customentity.controller:action, _format: html, actionName indexAction }
+    defaults: { _controller: pim_customentity.controller:action, _format: html, actionType: index }
     requirements:
         _format: html|json|csv
 
 pim_customentity_create:
     path: /{customEntityName}/create
-    defaults: { _controller: pim_customentity.controller:action, actionName createAction }
+    defaults: { _controller: pim_customentity.controller:action, actionType: create }
 
 pim_customentity_edit:
     path: /{customEntityName}/{id}/edit
-    defaults: { _controller: pim_customentity.controller:action, actionName editAction }
+    defaults: { _controller: pim_customentity.controller:action, actionType: edit }
     requirements:
         id: \d+
 
 pim_customentity_remove:
     path: /{customEntityName}/{id}/remove
-    defaults: { _controller: pim_customentity.controller:action, actionName removeAction }
+    defaults: { _controller: pim_customentity.controller:action, actionType: remove }
     requirements:
         id: \d+
     methods: [DELETE, POST]
