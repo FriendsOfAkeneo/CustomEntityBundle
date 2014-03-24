@@ -50,7 +50,18 @@ class RemoveActionSpec extends ActionBehavior
         );
     }
 
-    protected function testObjectRemoval(
+    public function it_throws_a_404_if_no_entity_found(
+        ManagerInterface $manager,
+        ConfigurationInterface $configuration,
+        Request $request
+    ) {
+        $configuration->getActionOptions('remove')->willReturn([]);
+        $manager->find('entity_class', 'id', [])->willReturn(null);
+        $this->shouldThrow('Symfony\Component\HttpKernel\Exception\NotFoundHttpException')
+            ->duringExecute($request, $configuration);
+    }
+
+    public function testObjectRemoval(
         ManagerInterface $manager,
         ConfigurationInterface $configuration,
         Request $request,
