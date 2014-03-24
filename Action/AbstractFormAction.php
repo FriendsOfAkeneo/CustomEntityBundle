@@ -5,7 +5,7 @@ namespace Pim\Bundle\CustomEntityBundle\Action;
 use Pim\Bundle\CustomEntityBundle\Configuration\ConfigurationInterface;
 use Pim\Bundle\CustomEntityBundle\Manager\ManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
-use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -95,8 +95,12 @@ abstract class AbstractFormAction extends AbstractViewableAction
      * @param Form                   $form
      * @param array                  $options
      */
-    protected function getTemplateVars(Request $request, ConfigurationInterface $configuration, Form $form, array $options)
-    {
+    protected function getTemplateVars(
+        Request $request,
+        ConfigurationInterface $configuration,
+        FormInterface $form,
+        array $options
+    ) {
         return [
             'form'       => $form->createView(),
             'formAction' => $this->getActionUrl($configuration, $this->getType(), $form->getData())

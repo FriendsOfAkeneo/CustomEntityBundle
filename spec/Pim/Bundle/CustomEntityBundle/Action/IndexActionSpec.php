@@ -22,6 +22,7 @@ class IndexActionSpec extends ActionBehavior
         $this->beConstructedWith($manager, $router, $translator, $templating);
         $this->initializeConfiguration($configuration);
         $this->initializeRouter($router);
+        $configuration->hasAction('index')->willReturn(true);
     }
 
     public function it_is_initializable()
@@ -35,7 +36,6 @@ class IndexActionSpec extends ActionBehavior
         EngineInterface $templating
     ) {
         $configuration->getActionOptions('index')->willReturn([]);
-        $configuration->hasAction('index')->willReturn(true);
         $configuration->hasAction('create')->willReturn(false);
         $templating->renderResponse(
             'PimCustomEntityBundle:CustomEntity:index.html.twig',
@@ -56,7 +56,6 @@ class IndexActionSpec extends ActionBehavior
         ActionInterface $createAction
     ) {
         $configuration->getActionOptions('index')->willReturn([]);
-        $configuration->hasAction('index')->willReturn(true);
         $configuration->hasAction('create')->willReturn(true);
         $configuration->getAction('create')->willReturn($createAction);
         $createAction->getRoute()->willReturn('create_route');
@@ -88,7 +87,6 @@ class IndexActionSpec extends ActionBehavior
                 'base_template' => 'base_template'
             ]
         );
-        $configuration->hasAction('index')->willReturn(true);
         $configuration->hasAction('create')->willReturn(true);
         $configuration->getAction('create')->willReturn($createAction);
         $createAction->getRoute()->willReturn('create_route');

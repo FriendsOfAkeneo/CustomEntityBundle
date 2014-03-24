@@ -3,7 +3,7 @@
 namespace Pim\Bundle\CustomEntityBundle\Action;
 
 use Pim\Bundle\CustomEntityBundle\Configuration\ConfigurationInterface;
-use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -56,8 +56,12 @@ class EditAction extends AbstractFormAction
     /**
      * {@inheritdoc}
      */
-    protected function getTemplateVars(Request $request, ConfigurationInterface $configuration, Form $form, array $options)
-    {
+    protected function getTemplateVars(
+        Request $request,
+        ConfigurationInterface $configuration,
+        FormInterface $form,
+        array $options
+    ) {
         $vars = parent::getTemplateVars($request, $configuration, $form, $options);
         if ($configuration->hasAction('remove')) {
             $vars['deleteUrl'] = $this->getActionUrl($configuration, 'remove', $form->getData());
