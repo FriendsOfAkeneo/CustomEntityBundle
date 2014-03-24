@@ -10,7 +10,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Index action
- * 
+ *
  * @author    Antoine Guigan <antoine@akeneo.com>
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
@@ -27,6 +27,7 @@ class IndexAction extends AbstractViewableAction
             $vars['createUrl'] = $this->getActionUrl($configuration, 'create');
             $vars['quickCreate'] = $configuration->getAction('create') instanceof QuickCreateAction;
         }
+
         return $this->renderResponse($configuration, $options, $vars);
     }
 

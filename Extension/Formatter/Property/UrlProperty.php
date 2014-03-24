@@ -27,8 +27,8 @@ class UrlProperty extends OroUrlProperty
     protected $customEntityName;
 
     /**
-     * 
-     * @param Router $router
+     *
+     * @param Router   $router
      * @param Registry $configurationRegistry
      */
     public function __construct(Router $router, Registry $configurationRegistry)

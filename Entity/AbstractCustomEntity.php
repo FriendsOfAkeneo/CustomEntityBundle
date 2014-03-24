@@ -13,7 +13,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @author    Antoine Guigan <antoine@akeneo.com>
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
- * 
+ *
  * @UniqueEntity(fields="code", message="This code is already taken")
  */
 abstract class AbstractCustomEntity implements ReferableInterface
@@ -25,7 +25,7 @@ abstract class AbstractCustomEntity implements ReferableInterface
 
     /**
      * @var string
-     * 
+     *
      * @Assert\NotBlank
      */
     protected $code;
@@ -132,7 +132,7 @@ abstract class AbstractCustomEntity implements ReferableInterface
 
     /**
      * Convert to string
-     * 
+     *
      * @return string
      */
     public function __toString()

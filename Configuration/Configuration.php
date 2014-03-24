@@ -4,7 +4,6 @@ namespace Pim\Bundle\CustomEntityBundle\Configuration;
 
 use Pim\Bundle\CustomEntityBundle\Action\ActionInterface;
 
-
 /**
  * Configuration for an ORM custom entity
  *
@@ -36,11 +35,11 @@ class Configuration implements ConfigurationInterface
 
     /**
      * Constructor
-     * 
+     *
      * @param string $name
      * @param string $entityClass
      */
-    function __construct($name, $entityClass)
+    public function __construct($name, $entityClass)
     {
         $this->name = $name;
         $this->entityClass = $entityClass;
@@ -48,9 +47,9 @@ class Configuration implements ConfigurationInterface
 
     /**
      * Adds an action for the current entity
-     * 
+     *
      * @param ActionInterface $action
-     * @param array $options
+     * @param array           $options
      */
     public function addAction(ActionInterface $action, array $options = [])
     {

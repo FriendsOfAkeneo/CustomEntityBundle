@@ -14,7 +14,7 @@ use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Abstract action
- * 
+ *
  * @author    Antoine Guigan <antoine@akeneo.com>
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
@@ -38,12 +38,12 @@ abstract class AbstractAction implements ActionInterface
 
     /**
      * Constructor
-     * 
-     * @param ManagerInterface $manager
-     * @param RouterInterface $router
+     *
+     * @param ManagerInterface    $manager
+     * @param RouterInterface     $router
      * @param TranslatorInterface $translator
      */
-    function __construct(ManagerInterface $manager, RouterInterface $router, TranslatorInterface $translator)
+    public function __construct(ManagerInterface $manager, RouterInterface $router, TranslatorInterface $translator)
     {
         $this->manager = $manager;
         $this->router = $router;
@@ -64,8 +64,8 @@ abstract class AbstractAction implements ActionInterface
 
     /**
      * Set the default options
-     * 
-     * @param ConfigurationInterface $configuration
+     *
+     * @param ConfigurationInterface   $configuration
      * @param OptionsResolverInterface $resolver
      */
     protected function setDefaultOptions(ConfigurationInterface $configuration, OptionsResolverInterface $resolver)
@@ -89,7 +89,7 @@ abstract class AbstractAction implements ActionInterface
     }
 
     /**
-     * 
+     *
      * @param object $object
      * @param string $actionType
      */
@@ -143,11 +143,11 @@ abstract class AbstractAction implements ActionInterface
 
     /**
      * Execute the action. Override to implement your own logic
-     * 
-     * @param Request $request 
+     *
+     * @param Request                $request
      * @param ConfigurationInterface $configuration
-     * @param array $options
-     * 
+     * @param array                  $options
+     *
      * @return Response
      */
     abstract protected function doExecute(Request $request, ConfigurationInterface $configuration, array $options);

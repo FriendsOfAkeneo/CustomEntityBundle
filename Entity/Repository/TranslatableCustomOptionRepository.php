@@ -63,12 +63,12 @@ class TranslatableCustomOptionRepository extends TranslatableCustomEntityReposit
 
     /**
      * Creates a query builder for options
-     * 
-     * @param type $dataLocale
-     * @param type $collectionId
-     * @param type $search
+     *
+     * @param type  $dataLocale
+     * @param type  $collectionId
+     * @param type  $search
      * @param array $options
-     * 
+     *
      * @return \Doctrine\ORM\QueryBuilder
      */
     protected function createOptionsQueryBuilder($dataLocale, $collectionId, $search, array $options)

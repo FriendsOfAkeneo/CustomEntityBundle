@@ -22,32 +22,32 @@ interface ConfigurationInterface
 
     /**
      * Returns true if an action of the concerned type is registered
-     * 
+     *
      * @param string
-     * 
+     *
      * @return boolean
      */
     public function hasAction($type);
 
     /**
      * @param string $type
-     * 
+     *
      * @return ActionInterface
      */
     public function getAction($type);
 
     /**
      * Returns the options for a specific action type
-     * 
+     *
      * @param string $type
-     * 
+     *
      * @return array
      */
     public function getActionOptions($type);
 
     /**
      * Returns the class of the managed entity
-     * 
+     *
      * @return string
      */
     public function getEntityClass();

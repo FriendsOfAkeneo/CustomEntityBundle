@@ -28,11 +28,11 @@ abstract class AbstractFormAction extends AbstractViewableAction
 
     /**
      * Constructor
-     * 
-     * @param ManagerInterface $manager
-     * @param RouterInterface $router
-     * @param TranslatorInterface $translator
-     * @param EngineInterface $templating
+     *
+     * @param ManagerInterface     $manager
+     * @param RouterInterface      $router
+     * @param TranslatorInterface  $translator
+     * @param EngineInterface      $templating
      * @param FormFactoryInterface $formFactory
      */
     public function __construct(
@@ -89,11 +89,11 @@ abstract class AbstractFormAction extends AbstractViewableAction
 
     /**
      * Gets the variables that should be present on the template
-     * 
-     * @param Request $request
+     *
+     * @param Request                $request
      * @param ConfigurationInterface $configuration
-     * @param Form $form
-     * @param array $options
+     * @param Form                   $form
+     * @param array                  $options
      */
     protected function getTemplateVars(Request $request, ConfigurationInterface $configuration, Form $form, array $options)
     {
@@ -105,9 +105,9 @@ abstract class AbstractFormAction extends AbstractViewableAction
 
     /**
      * Returns the redirect response in case of success
-     * 
+     *
      * @param array $options
-     * 
+     *
      * @return Response
      */
     protected function getRedirectResponse(array $options)
@@ -117,9 +117,9 @@ abstract class AbstractFormAction extends AbstractViewableAction
 
     /**
      * Returns the path to be redirected to in case of success
-     * 
+     *
      * @param array $options
-     * 
+     *
      * @return string
      */
     protected function getRedirectPath(array $options)
@@ -129,11 +129,11 @@ abstract class AbstractFormAction extends AbstractViewableAction
 
     /**
      * Creates the form
-     * 
+     *
      * @param ConfigurationInterface $configuration
-     * @param array $options
-     * @param object $object
-     * 
+     * @param array                  $options
+     * @param object                 $object
+     *
      * @return Form
      */
     protected function createForm(ConfigurationInterface $configuration, array $options, $object)
@@ -145,11 +145,11 @@ abstract class AbstractFormAction extends AbstractViewableAction
 
     /**
      * Returns the object to use in the form
-     * 
-     * @param Request $request
+     *
+     * @param Request                $request
      * @param ConfigurationInterface $configuration
-     * @param array $options
-     * 
+     * @param array                  $options
+     *
      * @return object
      */
     abstract protected function getObject(Request $request, ConfigurationInterface $configuration, array $options);

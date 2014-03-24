@@ -1,8 +1,9 @@
 parameters:
-    pim_custom_entity.action.index.class:  Pim\Bundle\CustomEntityBundle\Action\IndexAction
-    pim_custom_entity.action.remove.class: Pim\Bundle\CustomEntityBundle\Action\RemoveAction
-    pim_custom_entity.action.create.class: Pim\Bundle\CustomEntityBundle\Action\CreateAction
-    pim_custom_entity.action.edit.class:   Pim\Bundle\CustomEntityBundle\Action\EditAction
+    pim_custom_entity.action.index.class:        Pim\Bundle\CustomEntityBundle\Action\IndexAction
+    pim_custom_entity.action.remove.class:       Pim\Bundle\CustomEntityBundle\Action\RemoveAction
+    pim_custom_entity.action.create.class:       Pim\Bundle\CustomEntityBundle\Action\CreateAction
+    pim_custom_entity.action.quick_create.class: Pim\Bundle\CustomEntityBundle\Action\QuickCreateAction
+    pim_custom_entity.action.edit.class:         Pim\Bundle\CustomEntityBundle\Action\EditAction
 
 services:
     pim_custom_entity.action:
@@ -31,12 +32,15 @@ services:
         parent: pim_custom_entity.action.viewable
         arguments:
             - @form.factory
-    
+
     pim_custom_entity.action.edit:
         class: %pim_custom_entity.action.edit.class%
         parent: pim_custom_entity.action.form
-    
+
     pim_custom_entity.action.create:
         class: %pim_custom_entity.action.create.class%
         parent: pim_custom_entity.action.form
-        
+
+    pim_custom_entity.action.quick_create:
+        class: %pim_custom_entity.action.quick_create.class%
+        parent: pim_custom_entity.action.form

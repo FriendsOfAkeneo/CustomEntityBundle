@@ -1,0 +1,20 @@
+custom_entities:
+    default:
+        class: %pim_custom_entity.configuration.default.class%
+        parent: ~
+        abstract: true
+        actions:
+            index:
+                service: pim_custom_entity.action.index
+            edit:
+                service: pim_custom_entity.action.edit
+            remove:
+                service: pim_custom_entity.action.remove
+            create:
+                service: pim_custom_entity.action.create
+    quick_create:
+        parent: default
+        abstract: true
+        actions:
+            create:
+                service: pim_custom_entity.action.quick_create
