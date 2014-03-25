@@ -125,5 +125,36 @@ class CreateActionSpec extends FormActionBehavior
         $flashBag->add('success', '<flash.entity.created>')->shouldBeCalled();
         $response = $this->execute($request, $configuration);
         $response->shouldHaveType('Symfony\Component\HttpFoundation\RedirectResponse');
+        $response->getTargetUrl()->shouldReturn('index?&ir_param1=value1');
+    }
+
+    public function it_accepts_redirection_options(
+        ManagerInterface $manager,
+        ConfigurationInterface $configuration,
+        Request $request,
+        Entity $object,
+        FormInterface $form,
+        FlashBagInterface $flashBag
+    ) {
+        $request->isMethod('post')->willReturn(true);
+        $form->submit($request)->shouldBeCalled();
+        $form->isValid()->willReturn(true);
+        $manager->create('entity_class', [], [])->willReturn($object);
+        $manager->save($object)->shouldBeCalled();
+        $object->getId()->willReturn(null);
+        $configuration->getActionOptions('create')
+            ->willReturn(
+                [
+                    'form_type'                 => 'form_type',
+                    'redirect_route'            => 'redirect_route',
+                    'redirect_route_parameters' => ['c_r_param1' => 'value1'],
+                    'success_message'           => 'success_message'
+                ]
+            );
+        $configuration->hasAction('remove')->willReturn(false);
+        $flashBag->add('success', '<success_message>')->shouldBeCalled();
+        $response = $this->execute($request, $configuration);
+        $response->shouldHaveType('Symfony\Component\HttpFoundation\RedirectResponse');
+        $response->getTargetUrl()->shouldReturn('redirect_route?&c_r_param1=value1');
     }
 }
