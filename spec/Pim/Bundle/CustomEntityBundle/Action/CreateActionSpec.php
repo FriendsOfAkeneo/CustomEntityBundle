@@ -133,6 +133,7 @@ class CreateActionSpec extends FormActionBehavior
         ConfigurationInterface $configuration,
         Request $request,
         Entity $object,
+        FormFactoryInterface $formFactory,
         FormInterface $form,
         FlashBagInterface $flashBag
     ) {
@@ -142,10 +143,14 @@ class CreateActionSpec extends FormActionBehavior
         $manager->create('entity_class', [], [])->willReturn($object);
         $manager->save($object)->shouldBeCalled();
         $object->getId()->willReturn(null);
+        $formFactory->create('form_type', $object, ['f_param1' => 'value1', 'data_class' => 'entity_class'])
+            ->shouldBeCalled()
+            ->willReturn($form);
         $configuration->getActionOptions('create')
             ->willReturn(
                 [
                     'form_type'                 => 'form_type',
+                    'form_options'                 => ['f_param1' => 'value1'],
                     'redirect_route'            => 'redirect_route',
                     'redirect_route_parameters' => ['c_r_param1' => 'value1'],
                     'success_message'           => 'success_message'
