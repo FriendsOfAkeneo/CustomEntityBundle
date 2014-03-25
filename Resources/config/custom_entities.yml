@@ -1,7 +1,7 @@
 custom_entities:
     default:
         class: %pim_custom_entity.configuration.default.class%
-        parent: ~
+        extends: ~
         abstract: true
         actions:
             index:
@@ -12,6 +12,9 @@ custom_entities:
                 service: pim_custom_entity.action.remove
             create:
                 service: pim_custom_entity.action.create
+            mass_edit:
+                service: pim_custom_entity.action.mass_edit
+                enabled: false
 
     quick_create:
         abstract: true

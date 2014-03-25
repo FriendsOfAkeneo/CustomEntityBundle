@@ -63,11 +63,11 @@ class ConfigurationBuilderPass implements CompilerPassInterface
         );
         $definition->setPublic(false);
         foreach ($configuration['actions'] as $type => $options) {
-            if (null === $options) {
+            if (null === $options || !$options['enabled']) {
                 continue;
             }
             $service = $options['service'];
-            unset($options['service']);
+            unset($options['service'], $options['enabled']);
             $definition->addMethodCall('addAction', [$type, $service, $options]);
         }
         $serviceName = sprintf('pim_custom_entity_bundle.configuration.%s', $name);
@@ -86,12 +86,16 @@ class ConfigurationBuilderPass implements CompilerPassInterface
      */
     protected function getMergedConfiguration(array $configuration, array $configurations)
     {
-        if (!$configuration['parent']) {
+        foreach (array_keys($configuration['actions']) as $actionType) {
+            $configuration['actions'][$actionType] = $configuration['actions'][$actionType] + ['enabled' => true];
+        }
+
+        if (!$configuration['extends']) {
             return $configuration;
         }
 
         $parentConfiguration = $this->getMergedConfiguration(
-            $configurations[$configuration['parent']],
+            $configurations[$configuration['extends']],
             $configurations
         );
         if (!$configuration['class']) {
@@ -142,7 +146,7 @@ class ConfigurationBuilderPass implements CompilerPassInterface
                     ->scalarNode('name')->end()
                     ->scalarNode('class')->defaultNull()->end()
                     ->scalarNode('entity_class')->defaultNull()->end()
-                    ->scalarNode('parent')->defaultValue('default')->end()
+                    ->scalarNode('extends')->defaultValue('default')->end()
                     ->booleanNode('abstract')->defaultFalse()->end()
                     ->arrayNode('actions')
                         ->prototype('variable')
