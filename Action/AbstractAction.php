@@ -81,7 +81,7 @@ abstract class AbstractAction implements ActionInterface
     public function getRouteParameters(ConfigurationInterface $configuration, $object = null)
     {
         $parameters = ['customEntityName' => $configuration->getName()];
-        if ($object) {
+        if ($object && $object->getId()) {
             $parameters['id'] = $object->getId();
         }
 

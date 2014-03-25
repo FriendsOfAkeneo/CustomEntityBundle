@@ -7,7 +7,10 @@ use Pim\Bundle\CustomEntityBundle\Configuration\ConfigurationInterface;
 use Prophecy\Argument;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class ActionBehavior extends ObjectBehavior
 {
@@ -33,6 +36,33 @@ class ActionBehavior extends ObjectBehavior
                 }
 
                 return $path;
+            }
+        );
+    }
+
+    public function initializeFlashBag(
+        Request $request,
+        Session $session,
+        FlashBagInterface $flashBag
+    ) {
+        $request->getSession()->willReturn($session);
+        $session->getFlashBag()->willReturn($flashBag);
+    }
+
+    public function initializeTranslator(TranslatorInterface $translator)
+    {
+        $translator->trans(Argument::type('string'), Argument::any())->will(
+            function ($arguments) {
+                if (!isset($arguments[1])) {
+                    $arguments[1] = array();
+                }
+
+                $translated = sprintf('<%s>', $arguments[0]);
+                foreach ($arguments[1] as $key => $value) {
+                    $translated .= sprintf('%s=%s;', $key, $value);
+                }
+
+                return $translated;
             }
         );
     }

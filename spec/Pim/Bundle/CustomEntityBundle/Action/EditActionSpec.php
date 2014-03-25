@@ -51,6 +51,7 @@ class EditActionSpec extends FormActionBehavior
         EngineInterface $templating,
         FormView $formView
     ) {
+        $request->isMethod('post')->willReturn(false);
         $manager->find('entity_class', 'id', [])->willReturn($object);
         $object->getId()->willReturn('id');
         $configuration->getActionOptions('edit')->willReturn(['form_type' => 'form_type']);
