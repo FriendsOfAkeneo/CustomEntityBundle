@@ -2,7 +2,6 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Action;
 
-use Pim\Bundle\CustomEntityBundle\Configuration\ConfigurationInterface;
 use Pim\Bundle\CustomEntityBundle\Manager\ManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Form\FormInterface;
@@ -29,6 +28,7 @@ abstract class AbstractFormAction extends AbstractViewableAction
     /**
      * Constructor
      *
+     * @param ActionFactory        $actionFactory
      * @param ManagerInterface     $manager
      * @param RouterInterface      $router
      * @param TranslatorInterface  $translator
@@ -36,125 +36,127 @@ abstract class AbstractFormAction extends AbstractViewableAction
      * @param FormFactoryInterface $formFactory
      */
     public function __construct(
+        ActionFactory $actionFactory,
         ManagerInterface $manager,
         RouterInterface $router,
         TranslatorInterface $translator,
         EngineInterface $templating,
         FormFactoryInterface $formFactory
     ) {
-        parent::__construct($manager, $router, $translator, $templating);
+        parent::__construct($actionFactory, $manager, $router, $translator, $templating);
         $this->formFactory = $formFactory;
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function setDefaultOptions(ConfigurationInterface $configuration, OptionsResolverInterface $resolver)
+    protected function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        parent::setDefaultOptions($configuration, $resolver);
+        parent::setDefaultOptions($resolver);
         $resolver->setRequired(['form_type', 'success_message']);
+        $action = $this->actionFactory->getAction($this->configuration->getName(), 'index');
         $resolver->setDefaults(
             [
                 'form_options'              => [],
                 'template'                  => 'PimCustomEntityBundle:CustomEntity:form.html.twig',
-                'redirect_route'            => $configuration->getAction('index')->getRoute(),
-                'redirect_route_parameters' => $configuration->getAction('index')->getRouteParameters($configuration)
+                'redirect_route'            => $action->getRoute(),
+                'redirect_route_parameters' => $action->getRouteParameters()
             ]
         );
     }
-
     /**
      * {@inheritdoc}
      */
-    protected function doExecute(Request $request, ConfigurationInterface $configuration, array $options)
+    public function execute(Request $request)
     {
-        $object = $this->getObject($request, $configuration, $options);
-        $form = $this->createForm($configuration, $options, $object);
+        $object = $this->getObject($request);
+        $form = $this->createForm($object);
         if ($request->isMethod('post')) {
             $form->submit($request);
             if ($form->isValid()) {
                 $this->manager->save($object);
-                $this->addFlash($request, 'success', $options['success_message']);
+                $this->addFlash($request, 'success', $this->options['success_message']);
 
-                return $this->getRedirectResponse($options);
+                return $this->getRedirectResponse($object);
             }
         }
 
         return $this->renderResponse(
-            $configuration,
-            $options,
-            $this->getTemplateVars($request, $configuration, $form, $options)
+            $this->getTemplateVars($request, $form)
         );
+    }
+
+    /**
+     * Saves the object
+     *
+     * @param object $object
+     */
+    protected function saveObject($object)
+    {
+       $this->manager->save($object);
     }
 
     /**
      * Gets the variables that should be present on the template
      *
-     * @param Request                $request
-     * @param ConfigurationInterface $configuration
-     * @param Form                   $form
-     * @param array                  $options
+     * @param Request $request
+     * @param Form    $form
      */
-    protected function getTemplateVars(
-        Request $request,
-        ConfigurationInterface $configuration,
-        FormInterface $form,
-        array $options
-    ) {
+    protected function getTemplateVars(Request $request, FormInterface $form)
+    {
         return [
             'form'       => $form->createView(),
-            'formAction' => $this->getActionUrl($configuration, $this->getType(), $form->getData())
+            'formAction' => $this->getActionUrl($this->getType(), $form->getData())
         ];
     }
 
     /**
      * Returns the redirect response in case of success
      *
-     * @param array $options
+     * @param object $object
      *
      * @return Response
      */
-    protected function getRedirectResponse(array $options)
+    protected function getRedirectResponse($object)
     {
-        return new RedirectResponse($this->getRedirectPath($options));
+        return new RedirectResponse($this->getRedirectPath($object));
     }
 
     /**
      * Returns the path to be redirected to in case of success
      *
-     * @param array $options
+     * @param object $object
      *
      * @return string
      */
-    protected function getRedirectPath(array $options)
+    protected function getRedirectPath($object)
     {
-        return $this->router->generate($options['redirect_route'], $options['redirect_route_parameters']);
+        return $this->router->generate(
+            $this->options['redirect_route'],
+            $this->options['redirect_route_parameters']
+        );
     }
 
     /**
      * Creates the form
      *
-     * @param ConfigurationInterface $configuration
-     * @param array                  $options
-     * @param object                 $object
+     * @param object $object
      *
      * @return Form
      */
-    protected function createForm(ConfigurationInterface $configuration, array $options, $object)
+    protected function createForm($object)
     {
-        $options['form_options']['data_class'] = $configuration->getEntityClass();
+        $form_options = ['data_class' => $this->configuration->getEntityClass()] + $this->options['form_options'];
 
-        return $this->formFactory->create($options['form_type'], $object, $options['form_options']);
+        return $this->formFactory->create($this->options['form_type'], $object, $form_options);
     }
 
     /**
      * Returns the object to use in the form
      *
-     * @param Request                $request
-     * @param ConfigurationInterface $configuration
-     * @param array                  $options
+     * @param Request $request
      *
      * @return object
      */
-    abstract protected function getObject(Request $request, ConfigurationInterface $configuration, array $options);
+    abstract protected function getObject(Request $request);
 }

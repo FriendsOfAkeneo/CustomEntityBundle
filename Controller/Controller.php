@@ -2,8 +2,7 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Controller;
 
-use Pim\Bundle\CustomEntityBundle\Configuration\Registry;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Pim\Bundle\CustomEntityBundle\Action\ActionFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -18,31 +17,25 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class Controller
 {
     /**
+     * @var ActionFactory
+     */
+    protected $actionFactory;
+
+    /**
      * @var Request
      */
     protected $request;
 
     /**
-     * @var Registry
-     */
-    protected $registry;
-
-    /**
-     * @var ContainerInterface
-     */
-    protected $container;
-
-    /**
      * Constructor
      *
-     * @param ContainerInterface $container
-     * @param Request            $request
-     * @param Registry           $registry
+     * @param ActionFactory $actionFactory
+     * @param Request       $request
      */
-    public function __construct(Request $request, Registry $registry)
+    public function __construct(ActionFactory $actionFactory, Request $request)
     {
+        $this->actionFactory = $actionFactory;
         $this->request = $request;
-        $this->registry = $registry;
     }
 
     /**
@@ -56,16 +49,11 @@ class Controller
      */
     public function executeAction($customEntityName, $actionType)
     {
-        if (!$this->registry->has($customEntityName)) {
+        $action = $this->actionFactory->getAction($customEntityName, $actionType);
+        if (!$action) {
             throw new NotFoundHttpException();
         }
 
-        $configuration = $this->registry->get($customEntityName);
-
-        if (!$configuration->hasAction($actionType)) {
-            throw new NotFoundHttpException();
-        }
-
-        return $configuration->getAction($actionType)->execute($this->request, $configuration);
+        return $action->execute($this->request);
     }
 }

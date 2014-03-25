@@ -15,14 +15,27 @@ use Symfony\Component\HttpFoundation\Request;
 interface ActionInterface
 {
     /**
+     * Sets the configuration
+     *
+     * @param ConfigurationInterface $configuration
+     */
+    public function setConfiguration(ConfigurationInterface $configuration);
+
+    /**
+     * Returns the configuration
+     *
+     * @return ConfigurationInterface
+     */
+    public function getConfiguration();
+
+    /**
      * Execute the action
      *
-     * @param Request                $request
-     * @param ConfigurationInterface $configuration
+     * @param Request $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function execute(Request $request, ConfigurationInterface $configuration);
+    public function execute(Request $request);
 
     /**
      * @return string
@@ -32,7 +45,7 @@ interface ActionInterface
     /**
      * @return array
      */
-    public function getRouteParameters(ConfigurationInterface $configuration, $object = null);
+    public function getRouteParameters($object = null);
 
     /**
      * @return string

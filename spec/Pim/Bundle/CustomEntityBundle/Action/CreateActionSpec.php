@@ -2,6 +2,7 @@
 
 namespace spec\Pim\Bundle\CustomEntityBundle\Action;
 
+use Pim\Bundle\CustomEntityBundle\Action\ActionFactory;
 use Pim\Bundle\CustomEntityBundle\Action\ActionInterface;
 use Pim\Bundle\CustomEntityBundle\Configuration\ConfigurationInterface;
 use Pim\Bundle\CustomEntityBundle\Manager\ManagerInterface;
@@ -19,6 +20,7 @@ use Symfony\Component\Translation\TranslatorInterface;
 class CreateActionSpec extends FormActionBehavior
 {
     public function let(
+        ActionFactory $actionFactory,
         ManagerInterface $manager,
         RouterInterface $router,
         TranslatorInterface $translator,
@@ -34,12 +36,12 @@ class CreateActionSpec extends FormActionBehavior
         Session $session,
         FlashBagInterface $flashBag
     ) {
-        $this->beConstructedWith($manager, $router, $translator, $templating, $formFactory);
+        $this->beConstructedWith($actionFactory, $manager, $router, $translator, $templating, $formFactory);
         $this->initializeConfiguration($configuration);
         $this->initializeRouter($router);
         $this->initializeForm($formFactory, $form, $formView, $object);
         $this->initializeRequest($request, $attributes);
-        $this->initializeConfigurationForForm($configuration, $indexAction);
+        $this->initializeConfigurationForForm($actionFactory, $configuration, $indexAction);
         $this->initializeFlashBag($request, $session, $flashBag);
         $this->initializeTranslator($translator);
     }
@@ -72,7 +74,9 @@ class CreateActionSpec extends FormActionBehavior
                 'indexUrl' => 'index?&ir_param1=value1'
             ]
         )->willReturn('success');
-        $this->execute($request, $configuration)->shouldReturn('success');
+
+        $this->setConfiguration($configuration);
+        $this->execute($request)->shouldReturn('success');
     }
 
     public function it_displays_invalid_forms(
@@ -102,6 +106,8 @@ class CreateActionSpec extends FormActionBehavior
                 'indexUrl' => 'index?&ir_param1=value1'
             ]
         )->willReturn('success');
+
+        $this->setConfiguration($configuration);
         $this->execute($request, $configuration)->shouldReturn('success');
     }
 
@@ -123,7 +129,9 @@ class CreateActionSpec extends FormActionBehavior
             ->willReturn(['form_type' => 'form_type']);
         $configuration->hasAction('remove')->willReturn(false);
         $flashBag->add('success', '<flash.entity.created>')->shouldBeCalled();
-        $response = $this->execute($request, $configuration);
+
+        $this->setConfiguration($configuration);
+        $response = $this->execute($request);
         $response->shouldHaveType('Symfony\Component\HttpFoundation\RedirectResponse');
         $response->getTargetUrl()->shouldReturn('index?&ir_param1=value1');
     }
@@ -158,7 +166,9 @@ class CreateActionSpec extends FormActionBehavior
             );
         $configuration->hasAction('remove')->willReturn(false);
         $flashBag->add('success', '<success_message>')->shouldBeCalled();
-        $response = $this->execute($request, $configuration);
+
+        $this->setConfiguration($configuration);
+        $response = $this->execute($request);
         $response->shouldHaveType('Symfony\Component\HttpFoundation\RedirectResponse');
         $response->getTargetUrl()->shouldReturn('redirect_route?&c_r_param1=value1');
     }

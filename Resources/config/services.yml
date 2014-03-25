@@ -12,8 +12,8 @@ services:
         class: %pim_custom_entity.controller.class%
         scope: request
         arguments:
+            - '@pim_custom_entity.action.factory'
             - '@request'
-            - '@pim_custom_entity.configuration.registry'
 
     pim_custom_entity.manager:
         class: %pim_custom_entity.manager.class%

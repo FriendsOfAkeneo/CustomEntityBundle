@@ -2,6 +2,7 @@
 
 namespace spec\Pim\Bundle\CustomEntityBundle\Action;
 
+use Pim\Bundle\CustomEntityBundle\Action\ActionFactory;
 use Pim\Bundle\CustomEntityBundle\Action\ActionInterface;
 use Pim\Bundle\CustomEntityBundle\Configuration\ConfigurationInterface;
 use Pim\Bundle\CustomEntityBundle\Manager\ManagerInterface;
@@ -13,13 +14,14 @@ use Symfony\Component\Translation\TranslatorInterface;
 class IndexActionSpec extends ActionBehavior
 {
     public function let(
+        ActionFactory $actionFactory,
         ManagerInterface $manager,
         RouterInterface $router,
         TranslatorInterface $translator,
         ConfigurationInterface $configuration,
         EngineInterface $templating
     ) {
-        $this->beConstructedWith($manager, $router, $translator, $templating);
+        $this->beConstructedWith($actionFactory, $manager, $router, $translator, $templating);
         $this->initializeConfiguration($configuration);
         $this->initializeRouter($router);
         $configuration->hasAction('index')->willReturn(true);
@@ -46,10 +48,12 @@ class IndexActionSpec extends ActionBehavior
             ]
         )->willReturn('success');
 
-        $this->execute($request, $configuration, [])->shouldReturn('success');
+        $this->setConfiguration($configuration);
+        $this->execute($request)->shouldReturn('success');
     }
 
     public function it_displays_a_grid_with_an_add_button(
+        ActionFactory $actionFactory,
         ConfigurationInterface $configuration,
         Request $request,
         EngineInterface $templating,
@@ -57,9 +61,9 @@ class IndexActionSpec extends ActionBehavior
     ) {
         $configuration->getActionOptions('index')->willReturn([]);
         $configuration->hasAction('create')->willReturn(true);
-        $configuration->getAction('create')->willReturn($createAction);
+        $actionFactory->getAction('entity', 'create')->willReturn($createAction);
         $createAction->getRoute()->willReturn('create_route');
-        $createAction->getRouteParameters($configuration, null)->willReturn(['cr_param1' => 'value1']);
+        $createAction->getRouteParameters(null)->willReturn(['cr_param1' => 'value1']);
         $templating->renderResponse(
             'PimCustomEntityBundle:CustomEntity:index.html.twig',
             [
@@ -71,10 +75,12 @@ class IndexActionSpec extends ActionBehavior
             ]
         )->willReturn('success');
 
-        $this->execute($request, $configuration, [])->shouldReturn('success');
+        $this->setConfiguration($configuration);
+        $this->execute($request)->shouldReturn('success');
     }
 
     public function it_supports_options(
+        ActionFactory $actionFactory,
         ConfigurationInterface $configuration,
         Request $request,
         EngineInterface $templating,
@@ -88,9 +94,9 @@ class IndexActionSpec extends ActionBehavior
             ]
         );
         $configuration->hasAction('create')->willReturn(true);
-        $configuration->getAction('create')->willReturn($createAction);
+        $actionFactory->getAction('entity', 'create')->willReturn($createAction);
         $createAction->getRoute()->willReturn('create_route');
-        $createAction->getRouteParameters($configuration, null)->willReturn(['cr_param1' => 'value1']);
+        $createAction->getRouteParameters(null)->willReturn(['cr_param1' => 'value1']);
         $templating->renderResponse(
             'template',
             [
@@ -102,6 +108,7 @@ class IndexActionSpec extends ActionBehavior
             ]
         )->willReturn('success');
 
-        $this->execute($request, $configuration, [])->shouldReturn('success');
+        $this->setConfiguration($configuration);
+        $this->execute($request)->shouldReturn('success');
     }
 }

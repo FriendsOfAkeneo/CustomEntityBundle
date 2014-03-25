@@ -5,7 +5,6 @@ namespace Pim\Bundle\CustomEntityBundle\Action;
 use Pim\Bundle\CustomEntityBundle\Configuration\ConfigurationInterface;
 use Pim\Bundle\CustomEntityBundle\Manager\ManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -22,6 +21,11 @@ use Symfony\Component\Translation\TranslatorInterface;
 abstract class AbstractAction implements ActionInterface
 {
     /**
+     * @var ActionFactory
+     */
+    protected $actionFactory;
+
+    /**
      * @var ManagerInterface
      */
     protected $manager;
@@ -37,14 +41,30 @@ abstract class AbstractAction implements ActionInterface
     protected $translator;
 
     /**
+     * @var ConfigurationInterface
+     */
+    protected $configuration;
+
+    /**
+     * @var array
+     */
+    protected $options;
+
+    /**
      * Constructor
      *
+     * @param ActionFactory       $actionFactory
      * @param ManagerInterface    $manager
      * @param RouterInterface     $router
      * @param TranslatorInterface $translator
      */
-    public function __construct(ManagerInterface $manager, RouterInterface $router, TranslatorInterface $translator)
-    {
+    public function __construct(
+        ActionFactory $actionFactory,
+        ManagerInterface $manager,
+        RouterInterface $router,
+        TranslatorInterface $translator
+    ) {
+        $this->actionFactory = $actionFactory;
         $this->manager = $manager;
         $this->router = $router;
         $this->translator = $translator;
@@ -53,13 +73,20 @@ abstract class AbstractAction implements ActionInterface
     /**
      * {@inheritdoc}
      */
-    public function execute(Request $request, ConfigurationInterface $configuration)
+    public function setConfiguration(ConfigurationInterface $configuration)
     {
+        $this->configuration = $configuration;
         $resolver = new OptionsResolver;
-        $this->setDefaultOptions($configuration, $resolver);
-        $options = $resolver->resolve($configuration->getActionOptions($this->getType()));
+        $this->setDefaultOptions($resolver);
+        $this->options = $resolver->resolve($configuration->getActionOptions($this->getType()));
+    }
 
-        return $this->doExecute($request, $configuration, $options);
+    /**
+     * {@inheritdoc}
+     */
+    public function getConfiguration()
+    {
+        return $this->configuration;
     }
 
     /**
@@ -68,19 +95,25 @@ abstract class AbstractAction implements ActionInterface
      * @param ConfigurationInterface   $configuration
      * @param OptionsResolverInterface $resolver
      */
-    protected function setDefaultOptions(ConfigurationInterface $configuration, OptionsResolverInterface $resolver)
+    protected function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(
-            ['find_options' => []]
-        );
+        $resolver->setRequired(['route']);
+        $resolver->setDefaults(['find_options' => []]);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getRouteParameters(ConfigurationInterface $configuration, $object = null)
+    public function getRoute()
     {
-        $parameters = ['customEntityName' => $configuration->getName()];
+        return $this->options['route'];
+    }
+    /**
+     * {@inheritdoc}
+     */
+    public function getRouteParameters($object = null)
+    {
+        $parameters = ['customEntityName' => $this->configuration->getName()];
         if ($object && $object->getId()) {
             $parameters['id'] = $object->getId();
         }
@@ -89,36 +122,37 @@ abstract class AbstractAction implements ActionInterface
     }
 
     /**
+     * Returns the url for a specified action
      *
      * @param object $object
      * @param string $actionType
      */
-    protected function getActionUrl(ConfigurationInterface $configuration, $actionType, $object = null)
+    protected function getActionUrl($actionType, $object = null)
     {
-        $action = ($actionType === $this->getType()) ? $this : $configuration->getAction($actionType);
+        $action = ($actionType === $this->getType())
+            ? $this
+            : $this->actionFactory->getAction($this->configuration->getName(), $actionType);
 
         return $this->router->generate(
             $action->getRoute(),
-            $action->getRouteParameters($configuration, $object)
+            $action->getRouteParameters($object)
         );
     }
 
     /**
      * Returns the entity of the request
      *
-     * @param Request                $request
-     * @param ConfigurationInterface $configuration
-     * @param array                  $options
+     * @param Request $request
      *
      * @throws NotFoundHttpException
      * @return object
      */
-    protected function findEntity(Request $request, ConfigurationInterface $configuration, array $options)
+    protected function findEntity(Request $request)
     {
         $entity = $this->manager->find(
-            $configuration->getEntityClass(),
+            $this->configuration->getEntityClass(),
             $request->attributes->get('id'),
-            $options['find_options']
+            $this->options['find_options']
         );
 
         if (!$entity) {
@@ -140,15 +174,4 @@ abstract class AbstractAction implements ActionInterface
         $request->getSession()->getFlashBag()
             ->add($type, $this->translator->trans($message));
     }
-
-    /**
-     * Execute the action. Override to implement your own logic
-     *
-     * @param Request                $request
-     * @param ConfigurationInterface $configuration
-     * @param array                  $options
-     *
-     * @return Response
-     */
-    abstract protected function doExecute(Request $request, ConfigurationInterface $configuration, array $options);
 }

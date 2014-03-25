@@ -2,12 +2,12 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Action;
 
-use Pim\Bundle\CustomEntityBundle\Configuration\ConfigurationInterface;
 use Pim\Bundle\CustomEntityBundle\Manager\ManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Abstract viewable action
@@ -26,67 +26,63 @@ abstract class AbstractViewableAction extends AbstractAction
     /**
      * Constructor
      *
+     * @param ActionFactory       $actionFactory
      * @param ManagerInterface    $manager
      * @param RouterInterface     $router
      * @param TranslatorInterface $translator
      * @param EngineInterface     $templating
      */
     public function __construct(
+        ActionFactory $actionFactory,
         ManagerInterface $manager,
         RouterInterface $router,
         TranslatorInterface $translator,
         EngineInterface $templating
     ) {
-        parent::__construct($manager, $router, $translator);
+        parent::__construct($actionFactory, $manager, $router, $translator);
         $this->templating = $templating;
     }
 
     /**
      * Renders a response
      *
-     * @param ConfigurationInterface $configuration
-     * @param string                 $templateName
-     * @param array                  $options
-     * @param array                  $templateVars
+     * @param array $templateVars
      *
      * @return Response
      */
-    public function renderResponse(
-        ConfigurationInterface $configuration,
-        array $options,
-        array $templateVars = []
-    ) {
+    public function renderResponse(array $templateVars = [])
+    {
         return $this->templating->renderResponse(
-            $options['template'],
-            $templateVars + $this->getDefaultTemplateVars($configuration, $options)
+            $this->options['template'],
+            $templateVars + $this->getDefaultTemplateVars()
         );
     }
 
     /**
      * Returns the default template vars
      *
-     * @param ConfigurationInterface $configuration
-     * @param array                  $options
-     *
      * @return array
      */
-    protected function getDefaultTemplateVars(ConfigurationInterface $configuration, array $options)
+    protected function getDefaultTemplateVars()
     {
         $vars = [
-            'customEntityName' => $configuration->getName(),
-            'baseTemplate'     => $options['base_template']
+            'customEntityName' => $this->configuration->getName(),
+            'baseTemplate'     => $this->options['base_template']
         ];
 
-        if ($configuration->hasAction('index')) {
-            $vars['indexUrl'] = $this->getActionUrl($configuration, 'index');
+        if ($this->configuration->hasAction('index')) {
+            $vars['indexUrl'] = $this->getActionUrl('index');
         }
 
         return $vars;
     }
 
-    protected function setDefaultOptions(ConfigurationInterface $configuration, \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver)
+    /**
+     * {@inheritdoc}
+     */
+    protected function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        parent::setDefaultOptions($configuration, $resolver);
+        parent::setDefaultOptions($resolver);
         $resolver->setRequired(['template']);
         $resolver->setDefaults(['base_template' => 'PimCustomEntityBundle::layout.html.twig']);
     }

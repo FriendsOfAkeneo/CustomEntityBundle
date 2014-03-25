@@ -2,7 +2,6 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Action;
 
-use Pim\Bundle\CustomEntityBundle\Configuration\ConfigurationInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -13,28 +12,20 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class IndexAction extends AbstractViewableAction
+class IndexAction extends AbstractViewableAction implements IndexActionInterface
 {
     /**
      * {@inheritdoc}
      */
-    protected function doExecute(Request $request, ConfigurationInterface $configuration, array $options)
+    public function execute(Request $request)
     {
         $vars = [];
-        if ($configuration->hasAction('create')) {
-            $vars['createUrl'] = $this->getActionUrl($configuration, 'create');
-            $vars['quickCreate'] = $options['quick_create'];
+        if ($this->configuration->hasAction('create')) {
+            $vars['createUrl'] = $this->getActionUrl('create');
+            $vars['quickCreate'] = $this->options['quick_create'];
         }
 
-        return $this->renderResponse($configuration, $options, $vars);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getRoute()
-    {
-        return 'pim_customentity_index';
+        return $this->renderResponse($vars);
     }
 
     /**
@@ -48,14 +39,24 @@ class IndexAction extends AbstractViewableAction
     /**
      * {@inheritdoc}
      */
-    protected function setDefaultOptions(ConfigurationInterface $configuration, OptionsResolverInterface $resolver)
+    protected function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        parent::setDefaultOptions($configuration, $resolver);
+        parent::setDefaultOptions($resolver);
         $resolver->setDefaults(
             [
+                'route'         => 'pim_customentity_index',
                 'quick_create'  => false,
-                'template'      => 'PimCustomEntityBundle:CustomEntity:index.html.twig'
+                'template'      => 'PimCustomEntityBundle:CustomEntity:index.html.twig',
+                'mass_actions'  => []
             ]
         );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getMassActions()
+    {
+        return $this->options['mass_actions'];
     }
 }

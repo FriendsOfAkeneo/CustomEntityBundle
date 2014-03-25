@@ -2,7 +2,6 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Action;
 
-use Pim\Bundle\CustomEntityBundle\Configuration\ConfigurationInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -19,9 +18,9 @@ class EditAction extends AbstractFormAction
     /**
      * {@inheritdoc}
      */
-    protected function getObject(Request $request, ConfigurationInterface $configuration, array $options)
+    protected function getObject(Request $request)
     {
-        return $this->findEntity($request, $configuration, $options);
+        return $this->findEntity($request);
     }
 
     /**
@@ -43,12 +42,13 @@ class EditAction extends AbstractFormAction
     /**
      * {@inheritdoc}
      */
-    protected function setDefaultOptions(ConfigurationInterface $configuration, OptionsResolverInterface $resolver)
+    protected function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        parent::setDefaultOptions($configuration, $resolver);
+        parent::setDefaultOptions($resolver);
         $resolver->setDefaults(
             [
-                'success_message' => sprintf('flash.%s.updated', $configuration->getName())
+                'route'           => 'pim_customentity_edit',
+                'success_message' => sprintf('flash.%s.updated', $this->configuration->getName())
             ]
         );
     }
@@ -56,15 +56,11 @@ class EditAction extends AbstractFormAction
     /**
      * {@inheritdoc}
      */
-    protected function getTemplateVars(
-        Request $request,
-        ConfigurationInterface $configuration,
-        FormInterface $form,
-        array $options
-    ) {
-        $vars = parent::getTemplateVars($request, $configuration, $form, $options);
-        if ($configuration->hasAction('remove')) {
-            $vars['deleteUrl'] = $this->getActionUrl($configuration, 'remove', $form->getData());
+    protected function getTemplateVars(Request $request, FormInterface $form)
+    {
+        $vars = parent::getTemplateVars($request, $form);
+        if ($this->configuration->hasAction('remove')) {
+            $vars['deleteUrl'] = $this->getActionUrl('remove', $form->getData());
         }
 
         return $vars;

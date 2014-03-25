@@ -1,14 +1,23 @@
 parameters:
+    pim_custom_entity.action.factory.class:      Pim\Bundle\CustomEntityBundle\Action\ActionFactory
     pim_custom_entity.action.index.class:        Pim\Bundle\CustomEntityBundle\Action\IndexAction
     pim_custom_entity.action.remove.class:       Pim\Bundle\CustomEntityBundle\Action\RemoveAction
     pim_custom_entity.action.create.class:       Pim\Bundle\CustomEntityBundle\Action\CreateAction
     pim_custom_entity.action.quick_create.class: Pim\Bundle\CustomEntityBundle\Action\QuickCreateAction
     pim_custom_entity.action.edit.class:         Pim\Bundle\CustomEntityBundle\Action\EditAction
+    pim_custom_entity.action.mass_edit.class:    Pim\Bundle\CustomEntityBundle\Action\MassEditAction
 
 services:
+    pim_custom_entity.action.factory:
+        class: %pim_custom_entity.action.factory.class%
+        arguments:
+            - @service_container
+            - @pim_custom_entity.configuration.registry
+
     pim_custom_entity.action:
         abstract: true
         arguments:
+            - @pim_custom_entity.action.factory
             - @pim_custom_entity.manager
             - @router
             - @translator
@@ -22,10 +31,12 @@ services:
     pim_custom_entity.action.index:
         class: %pim_custom_entity.action.index.class%
         parent: pim_custom_entity.action.viewable
+        scope: prototype
 
     pim_custom_entity.action.remove:
         class: %pim_custom_entity.action.remove.class%
         parent: pim_custom_entity.action
+        scope: prototype
 
     pim_custom_entity.action.form:
         abstract: true
@@ -36,11 +47,19 @@ services:
     pim_custom_entity.action.edit:
         class: %pim_custom_entity.action.edit.class%
         parent: pim_custom_entity.action.form
+        scope: prototype
+
+    pim_custom_entity.action.mass_edit:
+        class: %pim_custom_entity.action.mass_edit.class%
+        parent: pim_custom_entity.action.form
+        scope: prototype
 
     pim_custom_entity.action.create:
         class: %pim_custom_entity.action.create.class%
         parent: pim_custom_entity.action.form
+        scope: prototype
 
     pim_custom_entity.action.quick_create:
         class: %pim_custom_entity.action.quick_create.class%
         parent: pim_custom_entity.action.form
+        scope: prototype

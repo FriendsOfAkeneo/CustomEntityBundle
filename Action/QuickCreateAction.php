@@ -2,7 +2,6 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Action;
 
-use Pim\Bundle\CustomEntityBundle\Configuration\ConfigurationInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -18,11 +17,11 @@ class QuickCreateAction extends CreateAction
     /**
      * {@inheritdoc}
      */
-    protected function getRedirectResponse(array $options)
+    protected function getRedirectResponse($object)
     {
         $response = array(
             'status' => 1,
-            'url' => $this->getRedirectPath($options)
+            'url' => $this->getRedirectPath($object)
         );
 
         return new Response(json_encode($response));
@@ -31,9 +30,9 @@ class QuickCreateAction extends CreateAction
     /**
      * {@inheritdoc}
      */
-    protected function setDefaultOptions(ConfigurationInterface $configuration, OptionsResolverInterface $resolver)
+    protected function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        parent::setDefaultOptions($configuration, $resolver);
+        parent::setDefaultOptions($resolver);
 
         $resolver->setDefaults(['template' => 'PimCustomEntityBundle:CustomEntity:quickcreate.html.twig']);
     }

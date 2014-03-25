@@ -3,7 +3,7 @@
 namespace Pim\Bundle\CustomEntityBundle\EventListener;
 
 use Oro\Bundle\DataGridBundle\Event\BuildBefore;
-use Pim\Bundle\CustomEntityBundle\Configuration\Registry;
+use Pim\Bundle\CustomEntityBundle\Action\ActionFactory;
 
 /**
  * Automatically configures pim_custom_entity grids
@@ -15,18 +15,18 @@ use Pim\Bundle\CustomEntityBundle\Configuration\Registry;
 class ConfigureCustomEntityGridListener
 {
     /**
-     * @var Registry
+     * @var ActionFactory
      */
-    protected $configurationRegistry;
+    protected $actionFactory;
 
     /**
      * Constructor
      *
-     * @param Registry $configurationRegistry
+     * @param ActionFactory $actionFactory
      */
-    public function __construct(Registry $configurationRegistry)
+    public function __construct(ActionFactory $actionFactory)
     {
-        $this->configurationRegistry = $configurationRegistry;
+        $this->actionFactory = $actionFactory;
     }
 
     /**
@@ -34,7 +34,7 @@ class ConfigureCustomEntityGridListener
      *
      * @param BuildBefore $event
      *
-     * @throws \LogicException
+     * @throws \Exception
      */
     public function buildBefore(BuildBefore $event)
     {
@@ -43,7 +43,12 @@ class ConfigureCustomEntityGridListener
             return;
         }
 
-        $customEntityConfig = $this->configurationRegistry->get($datagridConfig->getName());
+        $indexAction = $this->actionFactory->getAction($datagridConfig->getName(), 'index');
+        if (!$indexAction) {
+            throw new \Exception(sprintf('No index action configured for %s', $datagridConfig->getName()));
+        }
+
+        $customEntityConfig = $indexAction->getConfiguration();
         $datagridConfig->offsetSetByPath(
             '[source]',
             [
@@ -51,8 +56,10 @@ class ConfigureCustomEntityGridListener
                 'type'   => 'pim_custom_entity'
             ]
         );
+
         $properties = ['id' => []];
         $actions = [];
+
         if ($customEntityConfig->hasAction('edit')) {
             $properties['edit_link'] = [
                 'type'   => 'custom_entity_url',
@@ -67,6 +74,7 @@ class ConfigureCustomEntityGridListener
                 'rowAction' => true
             ];
         }
+
         if ($customEntityConfig->hasAction('remove')) {
             $properties['delete_link'] = [
                 'type'   => 'custom_entity_url',
@@ -80,7 +88,19 @@ class ConfigureCustomEntityGridListener
                 'link'      => 'delete_link'
             ];
         }
-        $datagridConfig->offsetSetByPath('[properties]', $properties);
+
         $datagridConfig->offsetSetByPath('[actions]', $actions);
+        $datagridConfig->offsetSetByPath('[properties]', $properties);
+
+        $massActions = [];
+        foreach ($indexAction->getMassActions() as $massActionType) {
+            $massAction = $this->actionFactory->getAction($customEntityConfig->getName(), $massActionType);
+            $massActions[$massAction->getType()] = [
+                'label' => $massAction->getGridLabel(),
+                'route' => $massAction->getRoute(),
+                'type'  => $massAction->getGridType()
+            ];
+        }
+        $datagridConfig->offsetSetByPath('[mass_actions]', $massActions);
     }
 }

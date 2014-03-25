@@ -28,9 +28,11 @@ interface ConfigurationInterface
     public function hasAction($type);
 
     /**
+     * Returns the id of the action service
+     *
      * @param string $type
      *
-     * @return \Pim\Bundle\CustomEntityBundle\Action\ActionInterface
+     * @return string
      */
     public function getAction($type);
 

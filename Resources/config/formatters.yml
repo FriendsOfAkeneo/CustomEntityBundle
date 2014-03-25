@@ -2,11 +2,10 @@ parameters:
     pim_customentity.extension.formatter.property.url_property.class: Pim\Bundle\CustomEntityBundle\Extension\Formatter\Property\UrlProperty
 
 services:
-
     pim_customentity.extension.formatter.property.url_property:
         class: %pim_customentity.extension.formatter.property.url_property.class%
         arguments:
             - '@router'
-            - '@pim_custom_entity.configuration.registry'
+            - '@pim_custom_entity.action.factory'
         tags:
             - { name: oro_datagrid.extension.formatter.property, type: custom_entity_url }

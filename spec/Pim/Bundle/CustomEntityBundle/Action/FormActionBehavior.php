@@ -2,6 +2,7 @@
 
 namespace spec\Pim\Bundle\CustomEntityBundle\Action;
 
+use Pim\Bundle\CustomEntityBundle\Action\ActionFactory;
 use Pim\Bundle\CustomEntityBundle\Action\ActionInterface;
 use Pim\Bundle\CustomEntityBundle\Configuration\ConfigurationInterface;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -21,12 +22,15 @@ class FormActionBehavior extends ActionBehavior
         $form->getData()->willReturn($object);
     }
 
-    public function initializeConfigurationForForm(ConfigurationInterface $configuration, ActionInterface $indexAction)
-    {
-        $configuration->getAction('index')->willReturn($indexAction);
+    public function initializeConfigurationForForm(
+        ActionFactory $actionFactory,
+        ConfigurationInterface $configuration,
+        ActionInterface $indexAction
+    ) {
+        $actionFactory->getAction('entity', 'index')->willReturn($indexAction);
         $configuration->hasAction('index')->willReturn(true);
         $indexAction->getRoute()->willReturn('index');
-        $indexAction->getRouteParameters($configuration, null)->willReturn(['ir_param1' => 'value1']);
+        $indexAction->getRouteParameters(null)->willReturn(['ir_param1' => 'value1']);
     }
 }
 

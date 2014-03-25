@@ -14,7 +14,6 @@ custom_entities:
                 service: pim_custom_entity.action.create
 
     quick_create:
-        parent: default
         abstract: true
         actions:
             index:

@@ -66,9 +66,9 @@ class ConfigurationBuilderPass implements CompilerPassInterface
             if (null === $options) {
                 continue;
             }
-            $service = new Reference($options['service']);
+            $service = $options['service'];
             unset($options['service']);
-            $definition->addMethodCall('addAction', [$service, $options]);
+            $definition->addMethodCall('addAction', [$type, $service, $options]);
         }
         $serviceName = sprintf('pim_custom_entity_bundle.configuration.%s', $name);
         $container->addDefinitions([$serviceName => $definition]);
@@ -100,7 +100,7 @@ class ConfigurationBuilderPass implements CompilerPassInterface
         foreach ($parentConfiguration['actions'] as $actionName => $actionConfiguration) {
             if (isset($configuration['actions'][$actionName])) {
                 $configuration['actions'][$actionName] = $configuration['actions'][$actionName] + $actionConfiguration;
-            } elseif(!array_key_exists($actionName, $configuration['actions'])) {
+            } elseif (!array_key_exists($actionName, $configuration['actions'])) {
                 $configuration['actions'][$actionName] = $actionConfiguration;
             }
         }

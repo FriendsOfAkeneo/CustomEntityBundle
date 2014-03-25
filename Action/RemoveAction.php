@@ -2,7 +2,6 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Action;
 
-use Pim\Bundle\CustomEntityBundle\Configuration\ConfigurationInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -18,9 +17,9 @@ class RemoveAction extends AbstractAction
     /**
      * {@inheritdoc}
      */
-    protected function doExecute(Request $request, ConfigurationInterface $configuration, array $options)
+    public function execute(Request $request)
     {
-        $object = $this->findEntity($request, $configuration, $options);
+        $object = $this->findEntity($request);
         $this->manager->remove($object);
 
         return new Response('', 204);
@@ -29,9 +28,10 @@ class RemoveAction extends AbstractAction
     /**
      * {@inheritdoc}
      */
-    public function getRoute()
+    protected function setDefaultOptions(\Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver)
     {
-        return 'pim_customentity_remove';
+        parent::setDefaultOptions($resolver);
+        $resolver->setDefaults(['route' => 'pim_customentity_remove']);
     }
 
     /**

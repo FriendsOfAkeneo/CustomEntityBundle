@@ -2,6 +2,7 @@
 
 namespace spec\Pim\Bundle\CustomEntityBundle\Action;
 
+use Pim\Bundle\CustomEntityBundle\Action\ActionFactory;
 use Pim\Bundle\CustomEntityBundle\Configuration\ConfigurationInterface;
 use Pim\Bundle\CustomEntityBundle\Manager\ManagerInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
@@ -12,6 +13,7 @@ use Symfony\Component\Translation\TranslatorInterface;
 class RemoveActionSpec extends ActionBehavior
 {
     public function let(
+        ActionFactory $actionFactory,
         ManagerInterface $manager,
         RouterInterface $router,
         TranslatorInterface $translator,
@@ -19,7 +21,7 @@ class RemoveActionSpec extends ActionBehavior
         ParameterBag $attributes,
         ConfigurationInterface $configuration
     ) {
-        $this->beConstructedWith($manager, $router, $translator);
+        $this->beConstructedWith($actionFactory, $manager, $router, $translator);
         $this->initializeRequest($request, $attributes);
         $this->initializeConfiguration($configuration);
     }
@@ -58,6 +60,7 @@ class RemoveActionSpec extends ActionBehavior
     ) {
         $configuration->getActionOptions('remove')->willReturn([]);
         $manager->find('entity_class', 'id', [])->willReturn(null);
+        $this->setConfiguration($configuration);
         $this->shouldThrow('Symfony\Component\HttpKernel\Exception\NotFoundHttpException')
             ->duringExecute($request, $configuration);
     }
@@ -71,6 +74,7 @@ class RemoveActionSpec extends ActionBehavior
     ) {
         $object = new \stdClass;
         $configuration->getActionOptions('remove')->willReturn($options);
+        $this->setConfiguration($configuration);
         $manager->find('entity_class', 'id', $findOptions)->willReturn($object);
         $manager->remove($object)->shouldBeCalled();
         $response = $this->execute($request, $configuration);

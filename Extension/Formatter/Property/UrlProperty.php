@@ -4,7 +4,7 @@ namespace Pim\Bundle\CustomEntityBundle\Extension\Formatter\Property;
 
 use Oro\Bundle\DataGridBundle\Datasource\ResultRecordInterface;
 use Oro\Bundle\DataGridBundle\Extension\Formatter\Property\UrlProperty as OroUrlProperty;
-use Pim\Bundle\CustomEntityBundle\Configuration\Registry;
+use Pim\Bundle\CustomEntityBundle\Action\ActionFactory;
 use Symfony\Component\Routing\Router;
 
 /**
@@ -17,9 +17,9 @@ use Symfony\Component\Routing\Router;
 class UrlProperty extends OroUrlProperty
 {
     /**
-     * @var Registry
+     * @var ActionFactory
      */
-    protected $configurationRegistry;
+    protected $actionFactory;
 
     /**
      * @var string
@@ -27,14 +27,15 @@ class UrlProperty extends OroUrlProperty
     protected $customEntityName;
 
     /**
+     * Constructor
      *
-     * @param Router   $router
-     * @param Registry $configurationRegistry
+     * @param Router        $router
+     * @param ActionFactory $actionFactory
      */
-    public function __construct(Router $router, Registry $configurationRegistry)
+    public function __construct(Router $router, ActionFactory $actionFactory)
     {
         parent::__construct($router);
-        $this->configurationRegistry = $configurationRegistry;
+        $this->actionFactory = $actionFactory;
     }
 
     /**
@@ -42,18 +43,15 @@ class UrlProperty extends OroUrlProperty
      */
     public function getRawValue(ResultRecordInterface $record)
     {
-        list($this->customEntityName, $actionName) = explode('/', $this->get(self::ROUTE_KEY));
-
-        $configuration = $this->configurationRegistry->get($this->customEntityName);
-        $action = $configuration->getAction($actionName);
+        list($this->customEntityName, $actionType) = explode('/', $this->get(self::ROUTE_KEY));
+        $action = $this->actionFactory->getAction($this->customEntityName, $actionType);
 
         $route = $this->router->generate(
             $action->getRoute(),
-            $this->getParameters($record) + $action->getRouteParameters($configuration),
+            $this->getParameters($record) + $action->getRouteParameters(),
             $this->getOr(self::IS_ABSOLUTE_KEY, false)
         );
 
         return $route . $this->getOr(self::ANCHOR_KEY);
     }
-
 }
