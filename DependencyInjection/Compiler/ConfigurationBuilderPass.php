@@ -38,7 +38,6 @@ class ConfigurationBuilderPass implements CompilerPassInterface
             }
         }
 
-        $serviceConfigurations = [];
         foreach ($configurations as $name => $configuration) {
             if ($configuration['abstract']) {
                 continue;
@@ -64,6 +63,9 @@ class ConfigurationBuilderPass implements CompilerPassInterface
         );
         $definition->setPublic(false);
         foreach ($configuration['actions'] as $type => $options) {
+            if (null === $options) {
+                continue;
+            }
             $service = new Reference($options['service']);
             unset($options['service']);
             $definition->addMethodCall('addAction', [$service, $options]);
@@ -98,7 +100,7 @@ class ConfigurationBuilderPass implements CompilerPassInterface
         foreach ($parentConfiguration['actions'] as $actionName => $actionConfiguration) {
             if (isset($configuration['actions'][$actionName])) {
                 $configuration['actions'][$actionName] = $configuration['actions'][$actionName] + $actionConfiguration;
-            } else {
+            } elseif(!array_key_exists($actionName, $configuration['actions'])) {
                 $configuration['actions'][$actionName] = $actionConfiguration;
             }
         }
