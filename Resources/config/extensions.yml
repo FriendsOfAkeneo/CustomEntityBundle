@@ -17,12 +17,6 @@ services:
         tags:
             - { name: oro_datagrid.extension }
 
-    pim_custom_entity.extension.selector.custom_entity:
-        parent: pim_datagrid.extension.selector.orm_selector
-        class: "%pim_custom_entity.extension.selector.custom_entity.class%"
-        tags:
-            - { name: oro_datagrid.extension }
-
     pim_custom_entity.extension.sorter.custom_entity:
         parent: pim_datagrid.extension.sorter.orm_sorter
         class: "%pim_custom_entity.extension.sorter.custom_entity.class%"

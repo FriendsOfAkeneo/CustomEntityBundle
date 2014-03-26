@@ -126,8 +126,9 @@ abstract class AbstractAction implements ActionInterface
      *
      * @param object $object
      * @param string $actionType
+     * @param array  $parameters
      */
-    protected function getActionUrl($actionType, $object = null)
+    protected function getActionUrl($actionType, $object = null, $parameters = [])
     {
         $action = ($actionType === $this->getType())
             ? $this
@@ -135,7 +136,7 @@ abstract class AbstractAction implements ActionInterface
 
         return $this->router->generate(
             $action->getRoute(),
-            $action->getRouteParameters($object)
+            $parameters + $action->getRouteParameters($object)
         );
     }
 

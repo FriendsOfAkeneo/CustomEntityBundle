@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class RemoveAction extends AbstractAction
+class RemoveAction extends AbstractAction implements GridActionInterface
 {
     /**
      * {@inheritdoc}
@@ -31,7 +31,16 @@ class RemoveAction extends AbstractAction
     protected function setDefaultOptions(\Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver)
     {
         parent::setDefaultOptions($resolver);
-        $resolver->setDefaults(['route' => 'pim_customentity_remove']);
+        $resolver->setDefaults(
+            [
+                'route'               => 'pim_customentity_remove',
+                'grid_action_options' => [
+                    'type'      => 'delete',
+                    'label'     => 'Delete',
+                    'icon'      => 'trash'
+                ]
+            ]
+        );
     }
 
     /**
@@ -40,5 +49,13 @@ class RemoveAction extends AbstractAction
     public function getType()
     {
         return 'remove';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getGridActionOptions()
+    {
+        return $this->options['grid_action_options'];
     }
 }

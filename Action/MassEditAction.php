@@ -2,7 +2,16 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Action;
 
+use Pim\Bundle\CustomEntityBundle\Manager\ManagerInterface;
+use Pim\Bundle\CustomEntityBundle\MassAction\DataGridQueryGenerator;
+use Pim\Bundle\CustomEntityBundle\MassAction\MassUpdater;
+use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Batch edit action
@@ -11,8 +20,33 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class MassEditAction extends CreateAction implements MassActionInterface
+class MassEditAction extends CreateAction implements GridActionInterface
 {
+    /**
+     * @var DataGridQueryGenerator
+     */
+    protected $queryGenerator;
+
+    /**
+     * @var MassUpdater
+     */
+    protected $massUpdater;
+
+    public function __construct(
+        ActionFactory $actionFactory,
+        ManagerInterface $manager,
+        RouterInterface $router,
+        TranslatorInterface $translator,
+        EngineInterface $templating,
+        FormFactoryInterface $formFactory,
+        DataGridQueryGenerator $queryGenerator,
+        MassUpdater $massUpdater
+    ) {
+        parent::__construct($actionFactory, $manager, $router, $translator, $templating, $formFactory);
+        $this->queryGenerator = $queryGenerator;
+        $this->massUpdater = $massUpdater;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -24,25 +58,74 @@ class MassEditAction extends CreateAction implements MassActionInterface
     /**
      * {@inheritdoc}
      */
-    public function getGridIcon()
+    public function getGridActionOptions()
     {
-        return $this->options['grid_icon'];
+        return $this->options['grid_action_options'] + [
+            'route'             => $this->getRoute(),
+            'route_parameters'  => $this->getRouteParameters()
+        ];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getGridLabel()
+    protected function saveForm(Request $request, FormInterface $form)
     {
-        return $this->options['grid_label'];
+        $this->massUpdater->updateEntities(
+            $this->configuration->getEntityClass(),
+            $this->getFormData($form),
+            $this->queryGenerator->getIds($request, $this->configuration->getName())
+        );
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getGridType()
+    protected function getTemplateVars(Request $request, FormInterface $form)
     {
-        return $this->options['grid_type'];
+        return [
+            'objectCount' => $this->queryGenerator->getCount($request, $this->configuration->getName()),
+            'formAction' => $this->getActionUrl(
+                $this->getType(),
+                $form->getData(),
+                $this->getGridUrlParameters($request)
+            )
+        ] + parent::getTemplateVars($request, $form);
+    }
+
+    /**
+     * Returns an array containing the grid url parameters
+     *
+     * @param  Request $request
+     * @return array
+     */
+    protected function getGridUrlParameters(Request $request)
+    {
+        $parameters = [];
+        foreach (['inset', 'filters', 'values'] as $key) {
+            $parameters[$key] = $request->get($key);
+        }
+
+        return $parameters;
+    }
+
+    /**
+     * Returns the data of the form
+     *
+     * @param FormInterface $form
+     *
+     * @return array
+     */
+    protected function getFormData(FormInterface $form)
+    {
+        $data = [];
+        foreach ($form as $key => $field) {
+            if ($field->getConfig()->getMapped()) {
+                $data[$key] = $field->getData();
+            }
+        }
+
+        return $data;
     }
 
     /**
@@ -53,10 +136,14 @@ class MassEditAction extends CreateAction implements MassActionInterface
         parent::setDefaultOptions($resolver);
         $resolver->setDefaults(
             [
-                'grid_type' => 'redirect',
-                'grid_label'=> 'Mass Edit',
-                'grid_icon' => 'edit',
-                'route'     => 'pim_customentity_batchedit'
+                'grid_action_options' => [
+                    'type' => 'redirect',
+                    'label'=> 'Mass Edit',
+                    'icon' => 'edit',
+                ],
+                'route'               => 'pim_customentity_massedit',
+                'template'            => 'PimCustomEntityBundle:CustomEntity:massEdit.html.twig',
+                'success_message'     => sprintf('flash.%s.mass_edited', $this->configuration->getName())
             ]
         );
     }

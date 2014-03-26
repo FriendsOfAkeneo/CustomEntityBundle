@@ -70,11 +70,11 @@ abstract class AbstractFormAction extends AbstractViewableAction
     public function execute(Request $request)
     {
         $object = $this->getObject($request);
-        $form = $this->createForm($object);
+        $form = $this->createForm($request, $object);
         if ($request->isMethod('post')) {
             $form->submit($request);
             if ($form->isValid()) {
-                $this->manager->save($object);
+                $this->saveForm($request, $form);
                 $this->addFlash($request, 'success', $this->options['success_message']);
 
                 return $this->getRedirectResponse($object);
@@ -89,11 +89,12 @@ abstract class AbstractFormAction extends AbstractViewableAction
     /**
      * Saves the object
      *
-     * @param object $object
+     * @param Request       $request
+     * @param FormInterface $form
      */
-    protected function saveObject($object)
+    protected function saveForm(Request $request, FormInterface $form)
     {
-       $this->manager->save($object);
+       $this->manager->save($form->getData());
     }
 
     /**
@@ -140,15 +141,31 @@ abstract class AbstractFormAction extends AbstractViewableAction
     /**
      * Creates the form
      *
-     * @param object $object
+     * @param Request $request
+     * @param object  $object
      *
      * @return Form
      */
-    protected function createForm($object)
+    protected function createForm(Request $request, $object)
     {
-        $form_options = ['data_class' => $this->configuration->getEntityClass()] + $this->options['form_options'];
+        return $this->formFactory->create(
+            $this->options['form_type'],
+            $object,
+            $this->getFormOptions($request, $object)
+        );
+    }
 
-        return $this->formFactory->create($this->options['form_type'], $object, $form_options);
+    /**
+     * Returns the options of the form
+     *
+     * @param Request $request
+     * @param object  $object
+     *
+     * @return array
+     */
+    protected function getFormOptions(Request $request, $object)
+    {
+        return ['data_class' => $this->configuration->getEntityClass()] + $this->options['form_options'];
     }
 
     /**

@@ -57,10 +57,10 @@ class ConfigureCustomEntityGridListener
             ]
         );
 
-        $properties = ['id' => []];
-        $actions = [];
+        $properties = ($datagridConfig->offsetGetByPath('[properties]') ?: []) + ['id' => []];
+        $actions = $datagridConfig->offsetGetByPath('[actions]') ?: [];
 
-        if ($customEntityConfig->hasAction('edit')) {
+        if ($customEntityConfig->hasAction('edit') && !isset($actions['edit'])) {
             $properties['edit_link'] = [
                 'type'   => 'custom_entity_url',
                 'route'  => sprintf('%s/edit', $customEntityConfig->getName()),
@@ -75,31 +75,23 @@ class ConfigureCustomEntityGridListener
             ];
         }
 
-        if ($customEntityConfig->hasAction('remove')) {
+        if ($customEntityConfig->hasAction('remove') && !isset($actions['remove'])) {
+            $removeAction = $this->actionFactory->getAction($customEntityConfig->getName(), 'remove');
             $properties['delete_link'] = [
                 'type'   => 'custom_entity_url',
                 'route'  => sprintf('%s/remove', $customEntityConfig->getName()),
                 'params' => ['id']
             ];
-            $actions['delete'] = [
-                'type'      => 'delete',
-                'label'     => 'Delete',
-                'icon'      => 'trash',
-                'link'      => 'delete_link'
-            ];
+            $actions['delete'] = $removeAction->getGridActionOptions() + ['link' => 'delete_link'];
         }
 
         $datagridConfig->offsetSetByPath('[actions]', $actions);
         $datagridConfig->offsetSetByPath('[properties]', $properties);
 
-        $massActions = [];
+        $massActions = $datagridConfig->offsetGetByPath('[mass_actions]') ?: [];
         foreach ($indexAction->getMassActions() as $massActionType) {
             $massAction = $this->actionFactory->getAction($customEntityConfig->getName(), $massActionType);
-            $massActions[$massAction->getType()] = [
-                'label' => $massAction->getGridLabel(),
-                'route' => $massAction->getRoute(),
-                'type'  => $massAction->getGridType()
-            ];
+            $massActions[$massAction->getType()] = $massAction->getGridActionOptions();
         }
         $datagridConfig->offsetSetByPath('[mass_actions]', $massActions);
     }

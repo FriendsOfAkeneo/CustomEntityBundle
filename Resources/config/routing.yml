@@ -8,6 +8,10 @@ pim_customentity_create:
     path: /{customEntityName}/create
     defaults: { _controller: pim_customentity.controller:executeAction, actionType: create }
 
+pim_customentity_massedit:
+    path: /{customEntityName}/mass-edit
+    defaults: { _controller: pim_customentity.controller:executeAction, actionType: mass_edit }
+
 pim_customentity_edit:
     path: /{customEntityName}/{id}/edit
     defaults: { _controller: pim_customentity.controller:executeAction, actionType: edit }
