@@ -16,11 +16,19 @@
         {
             "type": "vcs",
             "url": "https://github.com/akeneo/pim-community-dev.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/akeneo/platform.git",
+            "branch": "master"
         }
     ],
     "minimum-stability": "dev",
     "require": {
         "akeneo/pim-community-dev": "dev-maintenance/1.0_backports|~1.1"
+    },
+    "require-dev": {
+        "phpspec/phpspec": "2.0.*@dev"
     },
     "config": {
         "bin-dir": "bin"
