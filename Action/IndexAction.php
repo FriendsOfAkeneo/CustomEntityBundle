@@ -36,7 +36,6 @@ class IndexAction extends AbstractViewableAction implements IndexActionInterface
         return 'index';
     }
 
-
     /**
      * {@inheritdoc}
      */
