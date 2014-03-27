@@ -12,12 +12,7 @@ class ActionFactorySpec extends ObjectBehavior
 {
     public function let(
         Registry $confRegistry,
-        ContainerInterface $container,
-        ConfigurationInterface $configuration1,
-        ConfigurationInterface $configuration2,
-        ActionInterface $action1,
-        ActionInterface $action2,
-        ActionInterface $action1_1
+        ContainerInterface $container
     ) {
         $this->beConstructedWith($container, $confRegistry);
     }
