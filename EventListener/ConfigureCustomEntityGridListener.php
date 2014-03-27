@@ -58,9 +58,9 @@ class ConfigureCustomEntityGridListener
 
     /**
      * Sets the source in the config
-     * 
+     *
      * @param \Oro\Bundle\DataGridBundle\Datagrid\Common\DatagridConfiguration $datagridConfig
-     * @param \Pim\Bundle\CustomEntityBundle\Action\ActionInterface $indexAction
+     * @param \Pim\Bundle\CustomEntityBundle\Action\ActionInterface            $indexAction
      */
     protected function setSource(DatagridConfiguration $datagridConfig, ActionInterface $indexAction)
     {
@@ -76,8 +76,8 @@ class ConfigureCustomEntityGridListener
 
     /**
      * Sets the configuration for row actions
-     * 
-     * @param DatagridConfiguration $datagridConfig
+     *
+     * @param DatagridConfiguration  $datagridConfig
      * @param ConfigurationInterface $customEntityConfig
      */
     protected function setRowActions(DatagridConfiguration $datagridConfig, ActionInterface $indexAction)
@@ -107,9 +107,9 @@ class ConfigureCustomEntityGridListener
 
     /**
      * Sets the mass actions
-     * 
+     *
      * @param \Oro\Bundle\DataGridBundle\Datagrid\Common\DatagridConfiguration $datagridConfig
-     * @param \Pim\Bundle\CustomEntityBundle\Action\ActionInterface $indexAction
+     * @param \Pim\Bundle\CustomEntityBundle\Action\ActionInterface            $indexAction
      */
     protected function setMassActions(DatagridConfiguration $datagridConfig, ActionInterface $indexAction)
     {

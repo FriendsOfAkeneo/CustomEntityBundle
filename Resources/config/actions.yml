@@ -6,6 +6,7 @@ parameters:
     pim_custom_entity.action.quick_create.class: Pim\Bundle\CustomEntityBundle\Action\QuickCreateAction
     pim_custom_entity.action.edit.class:         Pim\Bundle\CustomEntityBundle\Action\EditAction
     pim_custom_entity.action.mass_edit.class:    Pim\Bundle\CustomEntityBundle\Action\MassEditAction
+    pim_custom_entity.action.mass_remove.class:  Pim\Bundle\CustomEntityBundle\Action\MassRemoveAction
 
 services:
     pim_custom_entity.action.factory:
@@ -21,6 +22,11 @@ services:
             - @pim_custom_entity.manager
             - @router
             - @translator
+
+    pim_custom_entity.action.mass_remove:
+        class: %pim_custom_entity.action.mass_remove.class%
+        parent: pim_custom_entity.action.viewable
+        scope: prototype
 
     pim_custom_entity.action.viewable:
         abstract: true

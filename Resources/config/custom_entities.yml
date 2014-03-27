@@ -15,6 +15,9 @@ custom_entities:
             mass_edit:
                 service: pim_custom_entity.action.mass_edit
                 enabled: false
+            mass_remove:
+                service: pim_custom_entity.action.mass_remove
+                enabled: false
 
     quick_create:
         abstract: true
@@ -23,3 +26,11 @@ custom_entities:
                 quick_create: true
             create:
                 service: pim_custom_entity.action.quick_create
+
+    mass_actions:
+        abstract: true
+        actions:
+            index:
+                mass_actions: [ mass_edit, mass_remove]
+            mass_remove:
+                enabled: true
