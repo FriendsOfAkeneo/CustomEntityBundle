@@ -122,7 +122,7 @@ class ConfigureCustomEntityGridListener
             }
 
             $massAction = $this->actionFactory->getAction($name, $massActionType);
-            $massActions[$massAction->getType()] = $massAction->getGridActionOptions();
+            $massActions[$massActionType] = $massAction->getGridActionOptions();
         }
 
         $datagridConfig->offsetSetByPath('[mass_actions]', $massActions);
