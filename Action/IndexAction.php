@@ -36,6 +36,23 @@ class IndexAction extends AbstractViewableAction implements IndexActionInterface
         return 'index';
     }
 
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getMassActions()
+    {
+        return $this->options['mass_actions'];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRowActions()
+    {
+        return $this->options['row_actions'];
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -47,16 +64,9 @@ class IndexAction extends AbstractViewableAction implements IndexActionInterface
                 'route'         => 'pim_customentity_index',
                 'quick_create'  => false,
                 'template'      => 'PimCustomEntityBundle:CustomEntity:index.html.twig',
+                'row_actions'   => ['edit', 'remove'],
                 'mass_actions'  => []
             ]
         );
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getMassActions()
-    {
-        return $this->options['mass_actions'];
     }
 }

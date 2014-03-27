@@ -13,7 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class EditAction extends AbstractFormAction
+class EditAction extends AbstractFormAction implements GridActionInterface
 {
     /**
      * {@inheritdoc}
@@ -42,13 +42,28 @@ class EditAction extends AbstractFormAction
     /**
      * {@inheritdoc}
      */
+    public function getGridActionOptions()
+    {
+        return $this->options['grid_action_options'];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     protected function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         parent::setDefaultOptions($resolver);
         $resolver->setDefaults(
             [
-                'route'           => 'pim_customentity_edit',
-                'success_message' => sprintf('flash.%s.updated', $this->configuration->getName())
+                'route'               => 'pim_customentity_edit',
+                'success_message'     => sprintf('flash.%s.updated', $this->configuration->getName()),
+                'grid_action_options' => [
+                    'type'      => 'navigate',
+                    'label'     => 'Edit',
+                    'icon'      => 'edit',
+                    'link'      => 'edit_link',
+                    'rowAction' => true
+                ]
             ]
         );
     }

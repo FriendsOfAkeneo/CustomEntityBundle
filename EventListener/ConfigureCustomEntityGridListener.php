@@ -2,8 +2,11 @@
 
 namespace Pim\Bundle\CustomEntityBundle\EventListener;
 
+use Oro\Bundle\DataGridBundle\Datagrid\Common\DatagridConfiguration;
 use Oro\Bundle\DataGridBundle\Event\BuildBefore;
 use Pim\Bundle\CustomEntityBundle\Action\ActionFactory;
+use Pim\Bundle\CustomEntityBundle\Action\ActionInterface;
+use Pim\Bundle\CustomEntityBundle\Configuration\ConfigurationInterface;
 
 /**
  * Automatically configures pim_custom_entity grids
@@ -48,6 +51,19 @@ class ConfigureCustomEntityGridListener
             throw new \Exception(sprintf('No index action configured for %s', $datagridConfig->getName()));
         }
 
+        $this->setSource($datagridConfig, $indexAction);
+        $this->setRowActions($datagridConfig, $indexAction);
+        $this->setMassActions($datagridConfig, $indexAction);
+    }
+
+    /**
+     * Sets the source in the config
+     * 
+     * @param \Oro\Bundle\DataGridBundle\Datagrid\Common\DatagridConfiguration $datagridConfig
+     * @param \Pim\Bundle\CustomEntityBundle\Action\ActionInterface $indexAction
+     */
+    protected function setSource(DatagridConfiguration $datagridConfig, ActionInterface $indexAction)
+    {
         $customEntityConfig = $indexAction->getConfiguration();
         $datagridConfig->offsetSetByPath(
             '[source]',
@@ -56,43 +72,59 @@ class ConfigureCustomEntityGridListener
                 'type'   => 'pim_custom_entity'
             ]
         );
+    }
 
+    /**
+     * Sets the configuration for row actions
+     * 
+     * @param DatagridConfiguration $datagridConfig
+     * @param ConfigurationInterface $customEntityConfig
+     */
+    protected function setRowActions(DatagridConfiguration $datagridConfig, ActionInterface $indexAction)
+    {
+        $name = $indexAction->getConfiguration()->getName();
         $properties = ($datagridConfig->offsetGetByPath('[properties]') ?: []) + ['id' => []];
         $actions = $datagridConfig->offsetGetByPath('[actions]') ?: [];
 
-        if ($customEntityConfig->hasAction('edit') && !isset($actions['edit'])) {
-            $properties['edit_link'] = [
-                'type'   => 'custom_entity_url',
-                'route'  => sprintf('%s/edit', $customEntityConfig->getName()),
-                'params' => ['id']
-            ];
-            $actions['edit'] = [
-                'type'      => 'navigate',
-                'label'     => 'Edit',
-                'icon'      => 'edit',
-                'link'      => 'edit_link',
-                'rowAction' => true
-            ];
-        }
+        foreach ($indexAction->getRowActions() as $rowActionType) {
+            if (isset($actions[$rowActionType])) {
+                continue;
+            }
 
-        if ($customEntityConfig->hasAction('remove') && !isset($actions['remove'])) {
-            $removeAction = $this->actionFactory->getAction($customEntityConfig->getName(), 'remove');
-            $properties['delete_link'] = [
+            $link = $rowActionType . '_link';
+            $rowAction  = $this->actionFactory->getAction($name, $rowActionType);
+            $actions[$rowActionType] = $rowAction->getGridActionOptions() + ['link' => $link];
+            $properties[$link] = [
                 'type'   => 'custom_entity_url',
-                'route'  => sprintf('%s/remove', $customEntityConfig->getName()),
+                'route'  => sprintf('%s/%s', $name, $rowActionType),
                 'params' => ['id']
             ];
-            $actions['delete'] = $removeAction->getGridActionOptions() + ['link' => 'delete_link'];
         }
 
         $datagridConfig->offsetSetByPath('[actions]', $actions);
         $datagridConfig->offsetSetByPath('[properties]', $properties);
+    }
 
+    /**
+     * Sets the mass actions
+     * 
+     * @param \Oro\Bundle\DataGridBundle\Datagrid\Common\DatagridConfiguration $datagridConfig
+     * @param \Pim\Bundle\CustomEntityBundle\Action\ActionInterface $indexAction
+     */
+    protected function setMassActions(DatagridConfiguration $datagridConfig, ActionInterface $indexAction)
+    {
+        $name = $indexAction->getConfiguration()->getName();
         $massActions = $datagridConfig->offsetGetByPath('[mass_actions]') ?: [];
+
         foreach ($indexAction->getMassActions() as $massActionType) {
-            $massAction = $this->actionFactory->getAction($customEntityConfig->getName(), $massActionType);
+            if (isset($massActions[$massActionType])) {
+                continue;
+            }
+
+            $massAction = $this->actionFactory->getAction($name, $massActionType);
             $massActions[$massAction->getType()] = $massAction->getGridActionOptions();
         }
+
         $datagridConfig->offsetSetByPath('[mass_actions]', $massActions);
     }
 }

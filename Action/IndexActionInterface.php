@@ -17,4 +17,11 @@ interface IndexActionInterface extends ActionInterface
      * @return string[]
      */
     public function getMassActions();
+
+    /**
+     * Returns the type names of the row actions
+     *
+     * @return string[]
+     */
+    public function getRowActions();
 }
