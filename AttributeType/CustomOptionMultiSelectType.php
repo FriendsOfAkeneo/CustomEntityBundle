@@ -3,7 +3,8 @@
 namespace Pim\Bundle\CustomEntityBundle\AttributeType;
 
 use Pim\Bundle\CatalogBundle\AttributeType\OptionMultiSelectType;
-use Pim\Bundle\FlexibleEntityBundle\Form\Validator\ConstraintGuesserInterface;
+use Pim\Bundle\CatalogBundle\Model\ProductValueInterface;
+use Pim\Bundle\CatalogBundle\Validator\ConstraintGuesserInterface;
 
 /**
  * Custom option multiple select attribute type
@@ -48,7 +49,7 @@ class CustomOptionMultiSelectType extends OptionMultiSelectType
     /**
      * {@inheritdoc}
      */
-    protected function prepareValueFormOptions(\Pim\Bundle\FlexibleEntityBundle\Model\FlexibleValueInterface $value)
+    protected function prepareValueFormOptions(ProductValueInterface $value)
     {
         return [
                 'class' => $this->optionClass
