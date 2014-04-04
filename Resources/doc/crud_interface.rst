@@ -46,10 +46,22 @@ service
   The id of the action service
 enabled
   Set to false if the action should not be enabled. **WARNING : This option is not inherited**
+route
+  The route for the action
 
 
 Index Action Options
 ********************
+
+template
+  The template of the action
+row_actions
+  An array of action types available for each row on the grid
+mass_actions
+  An array of available mass action types
+quick_create
+   True if the create action should be displayed in a lightbox. *(Requires the use of the 
+   **pim_custom_entity.action.quick_create** service for the create action)*
 
 Datagrid Configuration
 ----------------------
