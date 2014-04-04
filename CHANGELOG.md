@@ -1,12 +1,12 @@
 CHANGELOG for 1.1.x
 ===================
 
-1.1.1
+1.1.0
 -----
 
 ### Features
 
-- Added QuickCreateConfiguration and QuickCreateStrategy
+- Strategies are replaced by actions
 - Added abstract custom entities
 - Added automatic configuration of custom datagrids
 
