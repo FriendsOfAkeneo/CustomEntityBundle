@@ -21,7 +21,8 @@ This entity extends the AbstractCustomEntity, and provides a link to a translati
 
 The entity containg the translations should extend ``Pim\Bundle\TranslationBundle\Entity\AbstractTranslation``.
 
-The repositories for this entity should extend ``Pim\Bundle\CustomEntityBundle\Entity\Repository\TranslatableCustomEntityRepository``.
+The repositories for this entity should extend
+``Pim\Bundle\CustomEntityBundle\Entity\Repository\TranslatableCustomEntityRepository``.
 
 
 Entity\\AbstractCustomOption
@@ -29,7 +30,8 @@ Entity\\AbstractCustomOption
 
 This entity should be used when a custom attribute should be linked the entity.
 
-The repositories for this entity should extend ``Pim\Bundle\CustomEntityBundle\Entity\Repository\CustomOptionRepository``.
+The repositories for this entity should extend
+``Pim\Bundle\CustomEntityBundle\Entity\Repository\CustomOptionRepository``.
 
 
 Entity\\AbstractTranslatableCustomOption
@@ -38,6 +40,8 @@ Entity\\AbstractTranslatableCustomOption
 This entity should be used when a custom attribute should be linked the entity, and when some properties of the entity
 have to be localized.
 
-The entity containing the translations should extend ``Pim\Bundle\CustomEntityBundle\Entity\AbstractCustomOptionTranslation``
+The entity containing the translations should extend
+``Pim\Bundle\CustomEntityBundle\Entity\AbstractCustomOptionTranslation``
 
-The repositories for this entity should extend ``Pim\Bundle\CustomEntityBundle\Entity\Repository\TranslatableCustomOptionRepository``.
+The repositories for this entity should extend
+``Pim\Bundle\CustomEntityBundle\Entity\Repository\TranslatableCustomOptionRepository``.
