@@ -29,7 +29,7 @@ abstract
   Set to true if the definition is only meant to be extended
 extends
   The alias of the extended configuration.
-  The bundle propose three base configurations that can be extended : defalut, quick_create, and mass_actions
+  The bundle propose three base configurations that can be extended : default, quick_create, and mass_actions
 actions
   The configuration for the enabled CRUD actions
 class
@@ -52,6 +52,23 @@ route
 
 Index Action Options
 ********************
+
+By default, the index action uses the ``pim_custom_entity.action.index service`` with the following options :
+
+.. code-block:: yaml
+   
+    custom_entities:
+        my_entity:
+            extends: quick_create
+            class: Acme\Bundle\CatalogBundle\Entity\MyEntity
+            actions:
+                index:
+                     service: pim_custom_entity.action.index
+                     route: pim_customentity_index
+                     quick_create: false
+                     template: PimCustomEntityBundle:CustomEntity:index.html.twig
+                     row_actions: ['edit', 'remove']
+                    
 
 template
   The template of the action
