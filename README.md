@@ -11,3 +11,7 @@ and add the following lines *at-the-end* to your app/config/routing.yml :
     pim_customentity:
         prefix: /enrich
         resource: "@PimCustomEntityBundle/Resources/config/routing.yml"
+
+Some example usages for this bundle can be found in the [PIM documentation][http://docs.akeneo.com/master/cookbook/custom_entity/index.html]
+
+The full documentation for the bundle can be found in the [Resources/doc][Resources/doc/index.rst] folder.
