@@ -53,13 +53,12 @@ route
 Index Action Options
 ********************
 
-By default, the index action uses the ``pim_custom_entity.action.index service`` with the following options :
+By default, the index action uses the ``pim_custom_entity.action.index`` service with the following options :
 
 .. code-block:: yaml
    
     custom_entities:
         my_entity:
-            extends: quick_create
             class: Acme\Bundle\CatalogBundle\Entity\MyEntity
             actions:
                 index:
@@ -79,6 +78,56 @@ mass_actions
 quick_create
    True if the create action should be displayed in a lightbox. *(Requires the use of the 
    **pim_custom_entity.action.quick_create** service for the create action)*
+
+
+Remove Action Options
+*********************
+
+By default, the remove action uses the ``pim_custom_entity.action.remove`` service with the following options :
+
+.. code-block:: yaml
+   
+    custom_entities:
+        my_entity:
+            class: Acme\Bundle\CatalogBundle\Entity\MyEntity
+            actions:
+                remove:
+                     service: pim_custom_entity.action.remove
+                     route: pim_customentity_remove
+                     grid_action_options: 
+                        type: delete
+                        label: Delete
+                        icon: trash
+
+grid_action_options:
+  An array of options for the Oro grid action
+
+
+Mass Remove Action Options
+**************************
+
+By default, the mass remove action uses the ``pim_custom_entity.action.mass_remove`` service with the following options :
+
+.. code-block:: yaml
+   
+    custom_entities:
+        my_entity:
+            class: Acme\Bundle\CatalogBundle\Entity\MyEntity
+            actions:
+                index:
+                     service: pim_custom_entity.action.remove
+                     route: ~
+                     grid_action_options: 
+                        type: delete
+                        label: Delete
+                        entity_name: my_entity
+                        data_identifier: o
+                        launcherOptions: { icon: trash }
+
+
+grid_action_options:
+  An array of options for the Oro grid action
+
 
 Datagrid Configuration
 ----------------------
