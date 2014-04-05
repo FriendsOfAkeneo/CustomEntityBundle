@@ -141,7 +141,48 @@ By default, the edit action uses the ``pim_custom_entity.action.edit`` service w
                      form_options: {}
                      redirect_route: pim_customentity_index
                      redirect_route_parameters: { customEntityName: my_entity }
-                     successs_message: flash.my_entity.updated
+                     successs_message: flash.my_entity.mass_updated
+                     grid_action_options:
+                        type: redirect
+                        label: Mass Edit
+                        icon: edit
+                     
+template
+  The template of the action
+form_type
+   The form type used to create objects. **This option is required**
+form_options
+   Options which should be passed to the form factory
+redirect_route
+   The route to use for redirections on success
+redirect_route_parameters
+   The parameters for the redirect route
+success_message
+   A message which should be displayed on success
+grid_action_options:
+   An array of options for the Oro grid action
+
+
+Mass Edit Action Options
+************************
+
+By default, the mass edit action uses the ``pim_custom_entity.action.mass_edit`` service with the following options :
+
+.. code-block:: yaml
+   
+    custom_entities:
+        my_entity:
+            class: Acme\Bundle\CatalogBundle\Entity\MyEntity
+            actions:
+                mass_edit:
+                     service: pim_custom_entity.action.mass_edit
+                     route: pim_customentity_massedit
+                     template: PimCustomEntityBundle:CustomEntity:massEdit.html.twig
+                     form_type: ~
+                     form_options: {}
+                     redirect_route: pim_customentity_index
+                     redirect_route_parameters: { customEntityName: my_entity }
+                     successs_message: flash.my_entity.mass_edited
                      grid_action_options:
                         type: navigate
                         label: Edit
