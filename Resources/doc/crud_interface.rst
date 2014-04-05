@@ -80,6 +80,45 @@ quick_create
    **pim_custom_entity.action.quick_create** service for the create action)*
 
 
+Create Action Options
+*********************
+
+By default, the create action uses the ``pim_custom_entity.action.create`` service with the following options :
+
+.. code-block:: yaml
+   
+    custom_entities:
+        my_entity:
+            class: Acme\Bundle\CatalogBundle\Entity\MyEntity
+            actions:
+                create:
+                     service: pim_custom_entity.action.create
+                     route: pim_customentity_create
+                     template: PimCustomEntityBundle:CustomEntity:form.html.twig
+                     form_type: ~
+                     form_options: {}
+                     redirect_route: pim_customentity_index
+                     redirect_route_parameters: { customEntityName: my_entity }
+                     create_values: {}
+                     create_options: {}
+                     successs_message: flash.my_entity.created
+                     
+                     
+template
+  The template of the action
+form_type
+   The form type used to create objects. **This option is required**
+form_options
+   Options which should be passed to the form factory
+redirect_route
+   The route to use for redirections on success
+redirect_route_parameters
+   The parameters for the redirect route
+create_values
+   An array of default properties for the created object
+create_options
+   An array of options which should be passed to the object manager
+
 Remove Action Options
 *********************
 
