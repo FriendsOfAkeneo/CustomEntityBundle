@@ -143,7 +143,7 @@ class MassEditAction extends CreateAction implements GridActionInterface
                 ],
                 'route'               => 'pim_customentity_massedit',
                 'template'            => 'PimCustomEntityBundle:CustomEntity:massEdit.html.twig',
-                'success_message'     => sprintf('flash.%s.mass_edited', $this->configuration->getName())
+                'success_message'     => sprintf('flash.%s.mass_updated', $this->configuration->getName())
             ]
         );
     }
