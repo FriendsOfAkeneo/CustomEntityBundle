@@ -3,8 +3,7 @@
 namespace Pim\Bundle\CustomEntityBundle\Entity\Repository;
 
 use Pim\Bundle\UIBundle\Entity\Repository\OptionRepositoryInterface;
-use Pim\Bundle\CatalogBundle\Entity\Repository\ReferableEntityRepository;
-
+use Pim\Bundle\CatalogBundle\Doctrine\ReferableEntityRepository;
 /**
  * Repository for the Color entity
  *
