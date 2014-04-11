@@ -17,15 +17,17 @@
             {% set indexUrl = path(indexRoute, { customEntityName: customEntityName }) %}
             {% set buttons %}
                 {{ elements.backLink(indexUrl) }}
-                {{
-                    elements.deleteLink(
-                        path(removeRoute, { customEntityName: customEntityName, id: form.vars.value.id }),
-                        null,
-                        indexUrl,
-                        ('confirmation.remove.' ~ customEntityName)|trans,
-                        ('flash.' ~ customEntityName ~ '.removed')|trans
-                    )
-                }}
+                {% if form.vars.value.id is defined and form.vars.value.id != '' %}
+                    {{
+                        elements.deleteLink(
+                            path(removeRoute, { customEntityName: customEntityName, id: form.vars.value.id }),
+                            null,
+                            indexUrl,
+                            ('confirmation.remove.' ~ customEntityName)|trans,
+                            ('flash.' ~ customEntityName ~ '.removed')|trans
+                        )
+                    }}
+                {% endif %}
                 {{ elements.submitBtn() }}
             {% endset %}
             {{ elements.page_header(title, buttons, null, null, elements.updated(form.vars.id)) }}

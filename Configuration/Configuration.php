@@ -304,9 +304,9 @@ class Configuration implements ConfigurationInterface
         $optionsResolver->setDefaults(
             array(
                 'base_template'                     => 'PimCustomEntityBundle::layout.html.twig',
-                'edit_template'                     => 'PimCustomEntityBundle:CustomEntity:edit.html.twig',
+                'edit_template'                     => 'PimCustomEntityBundle:CustomEntity:form.html.twig',
                 'index_template'                    => 'PimCustomEntityBundle:CustomEntity:index.html.twig',
-                'create_template'                   => 'PimCustomEntityBundle:CustomEntity:edit.html.twig',
+                'create_template'                   => 'PimCustomEntityBundle:CustomEntity:form.html.twig',
                 'create_form_type'                  => null,
                 'create_form_options'               => null,
                 'create_default_properties'         => array(),
