@@ -1,11 +1,27 @@
 parameters:
-    pim_customentity.extension.formatter.property.url_property.class: Pim\Bundle\CustomEntityBundle\Extension\Formatter\Property\UrlProperty
+    pim_custom_entity.extension.formatter.property.url.class:                                               Pim\Bundle\CustomEntityBundle\Extension\Formatter\Property\UrlProperty
+    pim_custom_entity.extension.formatter.property.product_value.simple_translatable_custom_option.class:   Pim\Bundle\CustomEntityBundle\Extension\Formatter\Property\ProductValue\SimpleTranslatableCustomOptionProperty
+    pim_custom_entity.extension.formatter.property.product_value.multiple_translatable_custom_option.class: Pim\Bundle\CustomEntityBundle\Extension\Formatter\Property\ProductValue\MultipleTranslatableCustomOptionProperty
 
 services:
-    pim_customentity.extension.formatter.property.url_property:
-        class: %pim_customentity.extension.formatter.property.url_property.class%
+    pim_custom_entity.extension.formatter.property.url:
+        class: %pim_custom_entity.extension.formatter.property.url.class%
         arguments:
             - '@router'
             - '@pim_custom_entity.action.factory'
         tags:
             - { name: oro_datagrid.extension.formatter.property, type: custom_entity_url }
+
+    pim_custom_entity.extension.formatter.property.product_value.simple_translatable_custom_option:
+        class: %pim_custom_entity.extension.formatter.property.product_value.simple_translatable_custom_option.class%
+        arguments:
+            - '@translator'
+        tags:
+            - { name: oro_datagrid.extension.formatter.property, type: product_value_simple_translatable_custom_option }
+
+    pim_custom_entity.extension.formatter.property.product_value.multiple_translatable_custom_option:
+        class: %pim_custom_entity.extension.formatter.property.product_value.multiple_translatable_custom_option.class%
+        arguments:
+            - '@translator'
+        tags:
+            - { name: oro_datagrid.extension.formatter.property, type: product_value_multiple_translatable_custom_option }
