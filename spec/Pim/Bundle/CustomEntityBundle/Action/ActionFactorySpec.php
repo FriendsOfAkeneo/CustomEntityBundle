@@ -61,7 +61,7 @@ class ActionFactorySpec extends ObjectBehavior
         $this->getAction('entity2', 'action1')->shouldReturn($action1_1);
         $this->getAction('entity2', 'action2')->shouldReturn($action2);
         $this->getAction('entity3', 'action1')->shouldReturn(null);
-        
+
         $this->getAction('entity1', 'action1')->shouldReturn($action1);
         $this->getAction('entity1', 'action2')->shouldReturn($action2);
         $this->getAction('entity1', 'action3')->shouldReturn(null);

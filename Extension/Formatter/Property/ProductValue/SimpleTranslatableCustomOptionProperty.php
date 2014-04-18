@@ -26,5 +26,5 @@ class SimpleTranslatableCustomOptionProperty extends FieldProperty
         }
 
         return isset($data['code']) ? sprintf('[%s]', $data['code']) : null;
-    }    
+    }
 }

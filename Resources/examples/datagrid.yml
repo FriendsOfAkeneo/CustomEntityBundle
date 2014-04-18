@@ -46,4 +46,3 @@ datagrid:
                     data_name: o.updated
             default:
                 code: %oro_datagrid.extension.orm_sorter.class%::DIRECTION_ASC
-
