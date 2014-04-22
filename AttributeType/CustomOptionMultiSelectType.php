@@ -52,7 +52,7 @@ class CustomOptionMultiSelectType extends OptionMultiSelectType
     protected function prepareValueFormOptions(ProductValueInterface $value)
     {
         return [
-                'class' => $this->optionClass
+                'class' => $this->optionClass,
             ] + parent::prepareValueFormOptions($value);
     }
 

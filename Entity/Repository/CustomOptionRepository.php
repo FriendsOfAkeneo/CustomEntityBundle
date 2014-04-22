@@ -16,7 +16,7 @@ class CustomOptionRepository extends CustomEntityRepository
      */
     public function getOptionLabel($object, $dataLocale)
     {
-        return $object->getLabel();
+        return $object->getLabel() ?: sprintf('[%s]', $object->getCode());
     }
 
     /**
@@ -25,14 +25,22 @@ class CustomOptionRepository extends CustomEntityRepository
     public function getOptions($dataLocale, $collectionId = null, $search = '', array $options = array())
     {
         $qb = $this->createQueryBuilder('c')
-            ->select('c.id AS id, c.label AS text');
+            ->select('c.id, c.label, c.code');
         if ($search) {
             $qb->andWhere(('c.label LIKE :search'))
                 ->setParameter('search', "$search%");
         }
 
         return array(
-            'results' => $qb->getQuery()->getArrayResult()
+            'results' => array_map(
+                function ($vars) {
+                    return [
+                        'id'   => $vars['id'],
+                        'text' => $vars['label'] ?: sprintf('[%s]', $vars['code'])
+                    ];
+                },
+                $qb->getQuery()->getArrayResult()
+            )
         );
     }
 

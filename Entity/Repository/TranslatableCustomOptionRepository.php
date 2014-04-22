@@ -36,7 +36,7 @@ class TranslatableCustomOptionRepository extends TranslatableCustomEntityReposit
     {
         $object->setLocale($dataLocale);
 
-        return $object->getTranslation()->getLabel();
+        return $object->getTranslation()->getLabel() ?: sprintf('[%s]', $object->getCode());
     }
 
     /**
