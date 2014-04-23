@@ -2,8 +2,6 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Extension\Formatter\Property\ProductValue;
 
-use Pim\Bundle\DataGridBundle\Extension\Formatter\Property\ProductValue\FieldProperty;
-
 /**
  * Formatter for simple TranslatableCustomOption product values
  *
@@ -11,7 +9,7 @@ use Pim\Bundle\DataGridBundle\Extension\Formatter\Property\ProductValue\FieldPro
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class MultipleTranslatableCustomOptionProperty extends FieldProperty
+class MultipleTranslatableCustomOptionProperty extends SimpleTranslatableCustomOptionProperty
 {
     /**
      * {@inheritdoc}
@@ -21,12 +19,7 @@ class MultipleTranslatableCustomOptionProperty extends FieldProperty
         $data = $this->getBackendData($value);
         $optionValues = [];
         foreach ($data as $option) {
-            if (isset($option['translations']) && count($option['translations']) === 1) {
-                $optionValue = current($option['translations']);
-                $optionValues[] = $optionValue['label'];
-            } else {
-                $optionValues[] = sprinf('[%s]', $option['code']);
-            }
+            $optionValues[] = $this->getLabel($option);
         }
         $result = implode(', ', $optionValues);
 

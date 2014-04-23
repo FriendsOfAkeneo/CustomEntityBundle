@@ -18,8 +18,20 @@ class SimpleCustomOptionProperty extends FieldProperty
      */
     protected function convertValue($value)
     {
-        $data = $this->getBackendData($value);
+        return $this->getLabel($this->getBackendData($value));
+    }
 
-        return $data['label'] ?: sprintf('[%s]', $data['code']);
+    /**
+     * Returns the label for an option
+     *
+     * @param array $option
+     *
+     * @return string
+     */
+    protected function getLabel($option)
+    {
+        return isset($option['label']) && $option['label']
+            ? $option['label']
+            : sprintf('[%s]', $option['code']);
     }
 }

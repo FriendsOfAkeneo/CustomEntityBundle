@@ -18,14 +18,25 @@ class SimpleTranslatableCustomOptionProperty extends FieldProperty
      */
     protected function convertValue($value)
     {
-        $data = $this->getBackendData($value);
+        return $this->getLabel($this->getBackendData($value));
+    }
 
-        if (isset($data['translations']) && count($data['translations']) === 1) {
-            $optionValue = current($data['translations']);
-
-            return $optionValue['label'];
+    /**
+     * Returns the label for an option
+     *
+     * @param array $option
+     *
+     * @return string
+     */
+    protected function getLabel($option)
+    {
+        if (isset($option['translations']) && count($option['translations']) === 1) {
+            $optionValue = current($option['translations']);
+            if ($optionValue['label']) {
+                return $optionValue['label'];
+            }
         }
 
-        return isset($data['code']) ? sprintf('[%s]', $data['code']) : null;
+        return sprintf('[%s]', $option['code']);
     }
 }
