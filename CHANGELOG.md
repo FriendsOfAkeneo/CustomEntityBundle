@@ -1,6 +1,13 @@
 CHANGELOG for 1.1.x
 ===================
 
+1.1.1
+-----
+
+## Bug fixes
+
+- Fixed bug when displaying value for option with empty code
+
 1.1.0
 -----
 

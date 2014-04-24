@@ -37,6 +37,6 @@ class SimpleTranslatableCustomOptionProperty extends FieldProperty
             }
         }
 
-        return sprintf('[%s]', $option['code']);
+        return $option['code'] ? sprintf('[%s]', $option['code']) : '';
     }
 }
