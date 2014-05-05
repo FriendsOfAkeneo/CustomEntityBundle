@@ -22,6 +22,16 @@ class ActionEventManager
     protected $eventDispatcher;
 
     /**
+     * Constructor
+     *
+     * @param EventDispatcherInterface $eventDispatcher
+     */
+    public function __construct(EventDispatcherInterface $eventDispatcher)
+    {
+        $this->eventDispatcher = $eventDispatcher;
+    }
+
+    /**
      * Dispatches the ActionEvents::CONFIGURE event
      *
      * @param ActionInterface          $action

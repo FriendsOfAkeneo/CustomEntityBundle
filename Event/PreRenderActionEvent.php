@@ -2,6 +2,8 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Event;
 
+use Pim\Bundle\CustomEntityBundle\Action\ActionInterface;
+
 /**
  * Pre render action event
  *
@@ -24,13 +26,16 @@ class PreRenderActionEvent extends ActionEvent
     /**
      * Constructor
      *
-     * @param \Pim\Bundle\CustomEntityBundle\Action\ActionInterface $action
-     * @param type                                                  $template
-     * @param array                                                 $templateVars
+     * @param ActionInterface $action
+     * @param type            $template
+     * @param array           $templateVars
      */
-    public function __construct(\Pim\Bundle\CustomEntityBundle\Action\ActionInterface $action, $template, array $templateVars)
+    public function __construct(ActionInterface $action, $template, array $templateVars)
     {
         parent::__construct($action);
+
+        $this->template = $template;
+        $this->templateVars = $templateVars;
     }
 
     /**

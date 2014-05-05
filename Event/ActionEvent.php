@@ -3,6 +3,7 @@
 namespace Pim\Bundle\CustomEntityBundle\Event;
 
 use Pim\Bundle\CustomEntityBundle\Action\ActionInterface;
+use Symfony\Component\EventDispatcher\Event;
 
 /**
  * Basic event for actions
@@ -11,7 +12,7 @@ use Pim\Bundle\CustomEntityBundle\Action\ActionInterface;
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class ActionEvent
+class ActionEvent extends Event
 {
     /**
      * @var ActionInterface

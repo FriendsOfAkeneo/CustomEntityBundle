@@ -6,8 +6,8 @@ use Oro\Bundle\SecurityBundle\SecurityFacade;
 use Pim\Bundle\CustomEntityBundle\Event\ActionEvent;
 use Pim\Bundle\CustomEntityBundle\Event\ActionEvents;
 use Pim\Bundle\CustomEntityBundle\Event\ConfigureActionEvent;
-use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
-use Symfony\Compont\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * ACL listener for actions
@@ -59,14 +59,14 @@ class SecurityListener implements EventSubscriberInterface
      *
      * @param ActionEvent $event
      *
-     * @throws UnauthorizedHttpException
+     * @throws AccessDeniedHttpException
      */
     public function checkGranted(ActionEvent $event)
     {
         $options = $event->getAction()->getOptions();
 
         if (isset($options['acl']) && !$this->securityFacade->isGranted($options['acl'])) {
-            throw new UnauthorizedHttpException;
+            throw new AccessDeniedHttpException;
         }
     }
 }
