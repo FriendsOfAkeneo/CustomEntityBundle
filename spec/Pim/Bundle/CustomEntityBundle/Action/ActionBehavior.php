@@ -4,6 +4,7 @@ namespace spec\Pim\Bundle\CustomEntityBundle\Action;
 
 use PhpSpec\ObjectBehavior;
 use Pim\Bundle\CustomEntityBundle\Configuration\ConfigurationInterface;
+use Pim\Bundle\CustomEntityBundle\Event\ActionEventManager;
 use Prophecy\Argument;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
@@ -65,5 +66,31 @@ class ActionBehavior extends ObjectBehavior
                 return $translated;
             }
         );
+    }
+
+    public function initializeEventManager(
+        ActionEventManager $eventManager
+    ) {
+        $eventManager->dipatchConfigureEvent(
+            $this,
+            Argument::type('Symfony\Component\OptionsResolver\OptionsResolverInterface')
+        )->shouldBeCalled();
+        $eventManager->dispatchPreExecuteEvent($this)->shouldBeCalled();
+        $eventManager
+            ->dispatchPostExecuteEvent($this, Argument::type('Symfony\Component\HttpFoundation\Response'))
+            ->will(
+                function ($args) {
+                    return $args[1];
+                }
+            )
+            ->shouldBeCalled();
+        $eventManager->dispatchPreRenderEvent($this, Argument::type('string'), Argument::type('array'))
+            ->will(
+                function ($args) {
+                    $args[2]['pre_render'] = true;
+
+                    return [$args[1], $args[2]];
+                }
+            );
     }
 }
