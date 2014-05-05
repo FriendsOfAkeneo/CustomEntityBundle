@@ -9,6 +9,7 @@ use Pim\Bundle\CatalogBundle\Helper\LocaleHelper;
 use Pim\Bundle\CustomEntityBundle\Entity\Repository\DatagridAwareRepositoryInterface;
 use Pim\Bundle\CustomEntityBundle\Entity\Repository\LocaleAwareRepositoryInterface;
 use Pim\Bundle\DataGridBundle\Datasource\Orm\OrmDatasource;
+use Pim\Bundle\DataGridBundle\Datasource\ResultRecord\HydratorInterface;
 
 /**
  * Datasource for custom entity datagrids
@@ -32,16 +33,18 @@ class CustomEntityDatasource extends OrmDatasource
     /**
      * Constructor
      *
-     * @param EntityManager $em
-     * @param AclHelper     $aclHelper
-     * @param LocaleHelper  $localeHelper
+     * @param EntityManager     $em
+     * @param AclHelper         $aclHelper
+     * @param HydratorInterface $hydrator
+     * @param LocaleHelper      $localeHelper
      */
     public function __construct(
         EntityManager $em,
         AclHelper $aclHelper,
+        HydratorInterface $hydrator,
         LocaleHelper $localeHelper
     ) {
-        parent::__construct($em, $aclHelper);
+        parent::__construct($em, $aclHelper, $hydrator);
         $this->localeHelper = $localeHelper;
     }
 
