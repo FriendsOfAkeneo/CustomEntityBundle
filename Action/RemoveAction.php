@@ -17,7 +17,7 @@ class RemoveAction extends AbstractAction implements GridActionInterface
     /**
      * {@inheritdoc}
      */
-    public function execute(Request $request)
+    public function doExecute(Request $request)
     {
         $object = $this->findEntity($request);
         $this->manager->remove($object);

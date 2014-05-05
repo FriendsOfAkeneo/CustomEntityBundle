@@ -17,7 +17,7 @@ class IndexAction extends AbstractViewableAction implements IndexActionInterface
     /**
      * {@inheritdoc}
      */
-    public function execute(Request $request)
+    public function doExecute(Request $request)
     {
         $vars = [];
         if ($this->configuration->hasAction('create')) {

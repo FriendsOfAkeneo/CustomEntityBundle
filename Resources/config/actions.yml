@@ -19,6 +19,7 @@ services:
         abstract: true
         arguments:
             - @pim_custom_entity.action.factory
+            - @pim_custom_entity.action_event_manager
             - @pim_custom_entity.manager
             - @router
             - @translator

@@ -1,6 +1,6 @@
 <?php
 
-namespace Pim\Bundle\CustomEntityBundle\EventListener;
+namespace Pim\Bundle\CustomEntityBundle\EventListener\DataGrid;
 
 use Oro\Bundle\DataGridBundle\Datagrid\Common\DatagridConfiguration;
 use Oro\Bundle\DataGridBundle\Event\BuildBefore;

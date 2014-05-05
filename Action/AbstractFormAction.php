@@ -2,10 +2,12 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Action;
 
+use Pim\Bundle\CustomEntityBundle\Event\ActionEventManager;
 use Pim\Bundle\CustomEntityBundle\Manager\ManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
-use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -29,6 +31,7 @@ abstract class AbstractFormAction extends AbstractViewableAction
      * Constructor
      *
      * @param ActionFactory        $actionFactory
+     * @param ActionEventManager   $eventManager
      * @param ManagerInterface     $manager
      * @param RouterInterface      $router
      * @param TranslatorInterface  $translator
@@ -37,13 +40,14 @@ abstract class AbstractFormAction extends AbstractViewableAction
      */
     public function __construct(
         ActionFactory $actionFactory,
+        ActionEventManager $eventManager,
         ManagerInterface $manager,
         RouterInterface $router,
         TranslatorInterface $translator,
         EngineInterface $templating,
         FormFactoryInterface $formFactory
     ) {
-        parent::__construct($actionFactory, $manager, $router, $translator, $templating);
+        parent::__construct($actionFactory, $eventManager, $manager, $router, $translator, $templating);
         $this->formFactory = $formFactory;
     }
 
@@ -67,7 +71,7 @@ abstract class AbstractFormAction extends AbstractViewableAction
     /**
      * {@inheritdoc}
      */
-    public function execute(Request $request)
+    public function doExecute(Request $request)
     {
         $object = $this->getObject($request);
         $form = $this->createForm($request, $object);

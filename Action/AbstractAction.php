@@ -3,6 +3,7 @@
 namespace Pim\Bundle\CustomEntityBundle\Action;
 
 use Pim\Bundle\CustomEntityBundle\Configuration\ConfigurationInterface;
+use Pim\Bundle\CustomEntityBundle\Event\ActionEventManager;
 use Pim\Bundle\CustomEntityBundle\Manager\ManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -24,6 +25,11 @@ abstract class AbstractAction implements ActionInterface
      * @var ActionFactory
      */
     protected $actionFactory;
+
+    /**
+     * @var ActionEventManager
+     */
+    protected $eventManager;
 
     /**
      * @var ManagerInterface
@@ -54,17 +60,20 @@ abstract class AbstractAction implements ActionInterface
      * Constructor
      *
      * @param ActionFactory       $actionFactory
+     * @param ActionEventManager  $eventManager
      * @param ManagerInterface    $manager
      * @param RouterInterface     $router
      * @param TranslatorInterface $translator
      */
     public function __construct(
         ActionFactory $actionFactory,
+        ActionEventManager $eventManager,
         ManagerInterface $manager,
         RouterInterface $router,
         TranslatorInterface $translator
     ) {
         $this->actionFactory = $actionFactory;
+        $this->eventManager = $eventManager;
         $this->manager = $manager;
         $this->router = $router;
         $this->translator = $translator;
@@ -78,6 +87,7 @@ abstract class AbstractAction implements ActionInterface
         $this->configuration = $configuration;
         $resolver = new OptionsResolver;
         $this->setDefaultOptions($resolver);
+        $this->eventManager->dipatchConfigureEvent($this, $resolver);
         $this->options = $resolver->resolve($configuration->getActionOptions($this->getType()));
     }
 
@@ -87,18 +97,6 @@ abstract class AbstractAction implements ActionInterface
     public function getConfiguration()
     {
         return $this->configuration;
-    }
-
-    /**
-     * Set the default options
-     *
-     * @param ConfigurationInterface   $configuration
-     * @param OptionsResolverInterface $resolver
-     */
-    protected function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $resolver->setRequired(['route']);
-        $resolver->setDefaults(['find_options' => []]);
     }
 
     /**
@@ -119,6 +117,37 @@ abstract class AbstractAction implements ActionInterface
         }
 
         return $parameters;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getOptions()
+    {
+        return $this->options;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function execute(Request $request)
+    {
+        $this->eventManager->dispatchPreExecuteEvent($this);
+        $response = $this->doExecute($request);
+
+        return $this->eventManager->dispatchPostExecuteEvent($this, $response);
+    }
+
+    /**
+     * Set the default options
+     *
+     * @param ConfigurationInterface   $configuration
+     * @param OptionsResolverInterface $resolver
+     */
+    protected function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setRequired(['route']);
+        $resolver->setDefaults(['find_options' => []]);
     }
 
     /**
@@ -175,4 +204,13 @@ abstract class AbstractAction implements ActionInterface
         $request->getSession()->getFlashBag()
             ->add($type, $this->translator->trans($message));
     }
+
+    /**
+     * Executes the action
+     *
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response $response
+     */
+    abstract public function doExecute(Request $request);
 }

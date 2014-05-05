@@ -19,7 +19,7 @@ class MassRemoveAction extends AbstractAction implements GridActionInterface
     /**
      * {@inheritdoc}
      */
-    public function execute(Request $request)
+    public function doExecute(Request $request)
     {
         throw new \Exception('This action is not executable');
     }

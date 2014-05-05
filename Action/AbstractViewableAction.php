@@ -2,6 +2,7 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Action;
 
+use Pim\Bundle\CustomEntityBundle\Event\ActionEventManager;
 use Pim\Bundle\CustomEntityBundle\Manager\ManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,6 +28,7 @@ abstract class AbstractViewableAction extends AbstractAction
      * Constructor
      *
      * @param ActionFactory       $actionFactory
+     * @param ActionEventManager  $eventManager
      * @param ManagerInterface    $manager
      * @param RouterInterface     $router
      * @param TranslatorInterface $translator
@@ -34,12 +36,13 @@ abstract class AbstractViewableAction extends AbstractAction
      */
     public function __construct(
         ActionFactory $actionFactory,
+        ActionEventManager $eventManager,
         ManagerInterface $manager,
         RouterInterface $router,
         TranslatorInterface $translator,
         EngineInterface $templating
     ) {
-        parent::__construct($actionFactory, $manager, $router, $translator);
+        parent::__construct($actionFactory, $eventManager, $manager, $router, $translator);
         $this->templating = $templating;
     }
 
@@ -52,10 +55,13 @@ abstract class AbstractViewableAction extends AbstractAction
      */
     public function renderResponse(array $templateVars = [])
     {
-        return $this->templating->renderResponse(
+        list ($template, $templateVars) = $this->eventManager->dispatchPreRenderEvent(
+            $this,
             $this->options['template'],
             $templateVars + $this->getDefaultTemplateVars()
         );
+
+        return $this->templating->renderResponse($template, $templateVars);
     }
 
     /**

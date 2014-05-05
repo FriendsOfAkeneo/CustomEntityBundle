@@ -2,6 +2,7 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Action;
 
+use Pim\Bundle\CustomEntityBundle\Event\ActionEventManager;
 use Pim\Bundle\CustomEntityBundle\Manager\ManagerInterface;
 use Pim\Bundle\CustomEntityBundle\MassAction\DataGridQueryGenerator;
 use Pim\Bundle\CustomEntityBundle\MassAction\MassUpdater;
@@ -32,8 +33,22 @@ class MassEditAction extends CreateAction implements GridActionInterface
      */
     protected $massUpdater;
 
+    /**
+     * Constructor
+     *
+     * @param ActionFactory          $actionFactory
+     * @param ActionEventManager     $eventManager
+     * @param ManagerInterface       $manager
+     * @param RouterInterface        $router
+     * @param TranslatorInterface    $translator
+     * @param EngineInterface        $templating
+     * @param FormFactoryInterface   $formFactory
+     * @param DataGridQueryGenerator $queryGenerator
+     * @param MassUpdater            $massUpdater
+     */
     public function __construct(
         ActionFactory $actionFactory,
+        ActionEventManager $eventManager,
         ManagerInterface $manager,
         RouterInterface $router,
         TranslatorInterface $translator,
@@ -42,7 +57,7 @@ class MassEditAction extends CreateAction implements GridActionInterface
         DataGridQueryGenerator $queryGenerator,
         MassUpdater $massUpdater
     ) {
-        parent::__construct($actionFactory, $manager, $router, $translator, $templating, $formFactory);
+        parent::__construct($actionFactory, $eventManager, $manager, $router, $translator, $templating, $formFactory);
         $this->queryGenerator = $queryGenerator;
         $this->massUpdater = $massUpdater;
     }
