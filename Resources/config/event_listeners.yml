@@ -13,6 +13,7 @@ services:
     pim_custom_entity.event_listener.action.security:
         class: %pim_custom_entity.event_listener.action.security.class%
         arguments:
+            - @pim_custom_entity.action.factory
             - @oro_security.security_facade
         tags:
             - { name: kernel.event_subscriber }

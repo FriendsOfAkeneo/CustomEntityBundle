@@ -71,8 +71,8 @@ class ActionFactory
         }
 
         $action = $this->container->get($configuration->getAction($actionType));
-        $action->setConfiguration($configuration);
         $this->actions[$customEntityName][$actionType] = $action;
+        $action->setConfiguration($configuration);
 
         return $action;
     }

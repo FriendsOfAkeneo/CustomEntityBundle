@@ -3,9 +3,11 @@
 namespace Pim\Bundle\CustomEntityBundle\EventListener\Action;
 
 use Oro\Bundle\SecurityBundle\SecurityFacade;
+use Pim\Bundle\CustomEntityBundle\Action\ActionFactory;
 use Pim\Bundle\CustomEntityBundle\Event\ActionEvent;
 use Pim\Bundle\CustomEntityBundle\Event\ActionEvents;
 use Pim\Bundle\CustomEntityBundle\Event\ConfigureActionEvent;
+use Pim\Bundle\CustomEntityBundle\Event\PreRenderActionEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
@@ -18,6 +20,12 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
  */
 class SecurityListener implements EventSubscriberInterface
 {
+
+    /**
+     * @var ActionFactory
+     */
+    protected $actionFactory;
+
     /**
      * @var SecurityFacade
      */
@@ -26,10 +34,12 @@ class SecurityListener implements EventSubscriberInterface
     /**
      * Constructor
      *
+     * @param ActionFactory  $actionFactory
      * @param SecurityFacade $securityFacade
      */
-    public function __construct(SecurityFacade $securityFacade)
+    public function __construct(ActionFactory $actionFactory, SecurityFacade $securityFacade)
     {
+        $this->actionFactory = $actionFactory;
         $this->securityFacade = $securityFacade;
     }
 
@@ -39,8 +49,9 @@ class SecurityListener implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            ActionEvents::CONFIGURE   => 'setDefaultOptions',
-            ActionEvents::PRE_EXECUTE => 'checkGranted'
+            ActionEvents::CONFIGURE => 'setDefaultOptions',
+            ActionEvents::PRE_EXECUTE => 'checkGranted',
+            ActionEvents::PRE_RENDER => 'removeCreateLink'
         ];
     }
 
@@ -51,7 +62,27 @@ class SecurityListener implements EventSubscriberInterface
      */
     public function setDefaultOptions(ConfigureActionEvent $event)
     {
-        $event->getOptionsResolver()->setOptional(['acl']);
+        $resolver = $event->getOptionsResolver();
+        $resolver->setOptional(['acl']);
+        $customEntityName = $event->getAction()->getConfiguration()->getName();
+        $normalizeActions = function($options, $actionTypes) use ($customEntityName) {
+            return array_filter(
+                    $actionTypes, function ($actionType) use ($customEntityName) {
+                $action = $this->actionFactory->getAction($customEntityName, $actionType);
+                $options = $action->getOptions();
+
+                return (!isset($options['acl']) || $this->securityFacade->isGranted($options['acl']));
+            }
+            );
+        };
+        if ('index' === $event->getAction()->getType()) {
+            $resolver->setNormalizers(
+                    [
+                        'row_actions' => $normalizeActions,
+                        'mass_actions' => $normalizeActions
+                    ]
+            );
+        }
     }
 
     /**
@@ -69,4 +100,33 @@ class SecurityListener implements EventSubscriberInterface
             throw new AccessDeniedHttpException;
         }
     }
+
+    /**
+     * Removes the create link if no ACLS
+     * 
+     * @param PreRenderActionEvent $event
+     * @return type
+     */
+    public function removeCreateLink(PreRenderActionEvent $event)
+    {
+        $action = $event->getAction();
+        if ('index' != $action->getType()) {
+            return;
+        }
+
+        $vars = $event->getTemplateVars();
+        if (!isset($vars['createUrl'])) {
+            return;
+        }
+
+        $customEntityName = $action->getConfiguration()->getName();
+        $createAction = $this->actionFactory->getAction($customEntityName, 'create');
+        $options = $createAction->getOptions();
+        if (isset($options['acl']) && !$this->securityFacade->isGranted($options['acl'])) {
+            unset($vars['createUrl']);
+            unset($vars['quickCreate']);
+            $event->setTemplateVars($vars);
+        }
+    }
+
 }
