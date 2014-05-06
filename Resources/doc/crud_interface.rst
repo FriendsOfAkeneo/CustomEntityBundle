@@ -48,7 +48,8 @@ enabled
   Set to false if the action should not be enabled. **WARNING : This option is not inherited**
 route
   The route for the action
-
+acl
+  The ACL for the action
 
 Index Action Options
 ********************
