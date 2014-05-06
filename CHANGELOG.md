@@ -1,5 +1,13 @@
-CHANGELOG for 1.1.x
-===================
+CHANGELOG 
+=========
+
+1.2.0
+-----
+
+## Features
+
+- Added events on the actions
+- Added ACL support
 
 1.1.1
 -----
