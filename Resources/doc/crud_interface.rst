@@ -13,7 +13,7 @@ situated in an activated bundle. To have a full working CRUD for an entity, the 
     custom_entities:
         my_entity:
             extends: quick_create
-            class: Acme\Bundle\CatalogBundle\Entity\MyEntity
+            entity_class: Acme\Bundle\CatalogBundle\Entity\MyEntity
             actions:
                 create:
                     form_type: my_form_type
@@ -32,7 +32,7 @@ extends
   The bundle propose three base configurations that can be extended : default, quick_create, and mass_actions
 actions
   The configuration for the enabled CRUD actions
-class
+entity_class
   The class of the entity, **required** if the configuration is not abstract.
   (Container parameters can be used in the class value)
    
@@ -60,7 +60,7 @@ By default, the index action uses the ``pim_custom_entity.action.index`` service
    
     custom_entities:
         my_entity:
-            class: Acme\Bundle\CatalogBundle\Entity\MyEntity
+            entity_class: Acme\Bundle\CatalogBundle\Entity\MyEntity
             actions:
                 index:
                      service: pim_custom_entity.action.index
@@ -90,7 +90,7 @@ By default, the create action uses the ``pim_custom_entity.action.create`` servi
    
     custom_entities:
         my_entity:
-            class: Acme\Bundle\CatalogBundle\Entity\MyEntity
+            entity_class: Acme\Bundle\CatalogBundle\Entity\MyEntity
             actions:
                 create:
                      service: pim_custom_entity.action.create
@@ -132,7 +132,7 @@ By default, the edit action uses the ``pim_custom_entity.action.edit`` service w
    
     custom_entities:
         my_entity:
-            class: Acme\Bundle\CatalogBundle\Entity\MyEntity
+            entity_class: Acme\Bundle\CatalogBundle\Entity\MyEntity
             actions:
                 edit:
                      service: pim_custom_entity.action.edit
@@ -173,7 +173,7 @@ By default, the mass edit action uses the ``pim_custom_entity.action.mass_edit``
    
     custom_entities:
         my_entity:
-            class: Acme\Bundle\CatalogBundle\Entity\MyEntity
+            entity_class: Acme\Bundle\CatalogBundle\Entity\MyEntity
             actions:
                 mass_edit:
                      service: pim_custom_entity.action.mass_edit
@@ -216,7 +216,7 @@ By default, the remove action uses the ``pim_custom_entity.action.remove`` servi
    
     custom_entities:
         my_entity:
-            class: Acme\Bundle\CatalogBundle\Entity\MyEntity
+            entity_class: Acme\Bundle\CatalogBundle\Entity\MyEntity
             actions:
                 remove:
                      service: pim_custom_entity.action.remove
@@ -239,7 +239,7 @@ By default, the mass remove action uses the ``pim_custom_entity.action.mass_remo
    
     custom_entities:
         my_entity:
-            class: Acme\Bundle\CatalogBundle\Entity\MyEntity
+            entity_class: Acme\Bundle\CatalogBundle\Entity\MyEntity
             actions:
                 index:
                      service: pim_custom_entity.action.remove
