@@ -44,7 +44,7 @@ class QuickCreateAction extends CreateAction
     {
         $routeParameters = array_merge(
             $this->options['redirect_route_parameters'],
-            $$object && $object->getId() !== null ? array('id' => $object->getId()) : array()
+            $object && $object->getId() !== null ? array('id' => $object->getId()) : array()
         );
 
         return $this->router->generate(
