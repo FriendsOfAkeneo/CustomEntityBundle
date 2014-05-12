@@ -187,11 +187,9 @@ By default, the mass edit action uses the ``pim_custom_entity.action.mass_edit``
                      redirect_route_parameters: { customEntityName: my_entity }
                      successs_message: flash.my_entity.mass_edited
                      grid_action_options:
-                        type: navigate
-                        label: Edit
-                        icon: edit,
-                        link: edit_link
-                        rowAction: true
+                        type: redirect
+                        label: Mass Edit
+                        icon: edit
                      
                      
 template
