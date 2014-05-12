@@ -36,4 +36,20 @@ class QuickCreateAction extends CreateAction
 
         $resolver->setDefaults(['template' => 'PimCustomEntityBundle:CustomEntity:quickcreate.html.twig']);
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getRedirectPath($object)
+    {
+        $routeParameters = array_merge(
+            $this->options['redirect_route_parameters'],
+            $$object && $object->getId() !== null ? array('id' => $object->getId()) : array()
+        );
+
+        return $this->router->generate(
+            $this->options['redirect_route'],
+            $routeParameters
+        );
+    }
 }
