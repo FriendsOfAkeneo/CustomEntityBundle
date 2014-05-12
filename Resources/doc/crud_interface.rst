@@ -142,12 +142,14 @@ By default, the edit action uses the ``pim_custom_entity.action.edit`` service w
                      form_options: {}
                      redirect_route: pim_customentity_index
                      redirect_route_parameters: { customEntityName: my_entity }
-                     successs_message: flash.my_entity.mass_updated
+                     successs_message: flash.my_entity.updated
                      grid_action_options:
-                        type: redirect
-                        label: Mass Edit
+                        type: navigate
+                        label: Edit
                         icon: edit
-                     
+                        link: edit_link
+                        rowAction: true
+                        
 template
   The template of the action
 form_type
