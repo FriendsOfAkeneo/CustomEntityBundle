@@ -93,30 +93,6 @@ abstract class AbstractTranslatableCustomEntity extends AbstractCustomEntity imp
     }
 
     /**
-     * Get code
-     *
-     * @return string
-     */
-    public function getCode()
-    {
-        return $this->code;
-    }
-
-    /**
-     * Set code
-     *
-     * @param string $code
-     *
-     * @return AbstractTranslatableCustomEntity
-     */
-    public function setCode($code)
-    {
-        $this->code = $code;
-
-        return $this;
-    }
-
-    /**
      * Convert to string
      *
      * @return string
