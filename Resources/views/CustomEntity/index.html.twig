@@ -2,6 +2,7 @@
 {% import 'PimDataGridBundle::macros.html.twig' as dataGrid %}
 
 {% set title = (customEntityName ~ ".overview")|trans %}
+{% oro_title_set({params:{'%title%': title}}) %}
 
 {% block content %}
 

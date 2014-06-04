@@ -1,6 +1,8 @@
 {% extends baseTemplate %}
 
-{% oro_title_set({ params: { ('%' ~ customEntityName ~ '.label%'): form.vars.value ~ "" } }) %}
+{% set title = (customEntityName ~ ( form.vars.value.id ? '.edit' : '.create'))|trans ~
+(form.vars.value.id ? ' - ' ~ form.vars.value : "") %}
+{% oro_title_set({ params: { ('%title%'): title } }) %}
 
 {% block content %}
     {{ JSFV(form) }}
@@ -13,8 +15,6 @@
     }) }}
 
         {% block custom_entity_page_header %}
-            {% set title = (customEntityName ~ ( form.vars.value.id ? '.edit' : '.create'))|trans ~
-            (form.vars.value.id ? ' - ' ~ form.vars.value : "") %}
             {% set buttons %}
                 {{ elements.backLink(indexUrl) }}
                 {% if deleteUrl|default(false) %}

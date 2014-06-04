@@ -1,6 +1,9 @@
 {% extends baseTemplate %}
+
+{% set title = (customEntityName ~ '.mass_edit.title')|trans %}
+{% oro_title_set({params:{'%title%': title}}) %}
+
 {% block content %}
-    {% set title = (customEntityName ~ '.mass_edit.title')|trans %}
     {% set subtitle = (customEntityName ~ '.mass_edit.subtitle')|transchoice(objectCount) %}
     {{ elements.page_header(title, null, subtitle) }}
 
