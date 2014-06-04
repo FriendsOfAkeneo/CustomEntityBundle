@@ -9,6 +9,9 @@ CHANGELOG
 - Added events on the actions
 - Added ACL support
 
+# Bug fixes
+ - Fixed oro titles
+
 1.1.1
 -----
 
