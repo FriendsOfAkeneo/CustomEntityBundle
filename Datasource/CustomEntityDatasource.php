@@ -1,14 +1,15 @@
 <?php
 
-namespace Pim\Bundle\CustomEntityBundle\Datasource\Orm;
+namespace Pim\Bundle\CustomEntityBundle\Datasource;
 
+use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManager;
 use Oro\Bundle\DataGridBundle\Datagrid\DatagridInterface;
 use Oro\Bundle\SecurityBundle\ORM\Walker\AclHelper;
 use Pim\Bundle\CatalogBundle\Helper\LocaleHelper;
 use Pim\Bundle\CustomEntityBundle\Entity\Repository\DatagridAwareRepositoryInterface;
 use Pim\Bundle\CustomEntityBundle\Entity\Repository\LocaleAwareRepositoryInterface;
-use Pim\Bundle\DataGridBundle\Datasource\Orm\OrmDatasource;
+use Pim\Bundle\DataGridBundle\Datasource\Datasource;
 use Pim\Bundle\DataGridBundle\Datasource\ResultRecord\HydratorInterface;
 
 /**
@@ -18,7 +19,7 @@ use Pim\Bundle\DataGridBundle\Datasource\ResultRecord\HydratorInterface;
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class CustomEntityDatasource extends OrmDatasource
+class CustomEntityDatasource extends Datasource
 {
     /**
      * @var string
@@ -38,12 +39,12 @@ class CustomEntityDatasource extends OrmDatasource
      * @param LocaleHelper  $localeHelper
      */
     public function __construct(
-        EntityManager $em,
-        AclHelper $aclHelper,
+        ObjectManager $om,
         HydratorInterface $hydrator,
         LocaleHelper $localeHelper
+            
     ) {
-        parent::__construct($em, $aclHelper, $hydrator);
+        parent::__construct($om, $hydrator);
         $this->localeHelper = $localeHelper;
     }
 
