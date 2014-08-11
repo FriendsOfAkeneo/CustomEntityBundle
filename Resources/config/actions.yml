@@ -1,12 +1,12 @@
 parameters:
     pim_custom_entity.action.factory.class:      Pim\Bundle\CustomEntityBundle\Action\ActionFactory
     pim_custom_entity.action.index.class:        Pim\Bundle\CustomEntityBundle\Action\IndexAction
-    pim_custom_entity.action.remove.class:       Pim\Bundle\CustomEntityBundle\Action\RemoveAction
+    pim_custom_entity.action.delete.class:       Pim\Bundle\CustomEntityBundle\Action\DeleteAction
     pim_custom_entity.action.create.class:       Pim\Bundle\CustomEntityBundle\Action\CreateAction
     pim_custom_entity.action.quick_create.class: Pim\Bundle\CustomEntityBundle\Action\QuickCreateAction
     pim_custom_entity.action.edit.class:         Pim\Bundle\CustomEntityBundle\Action\EditAction
     pim_custom_entity.action.mass_edit.class:    Pim\Bundle\CustomEntityBundle\Action\MassEditAction
-    pim_custom_entity.action.mass_remove.class:  Pim\Bundle\CustomEntityBundle\Action\MassRemoveAction
+    pim_custom_entity.action.mass_delete.class:  Pim\Bundle\CustomEntityBundle\Action\MassDeleteAction
 
 services:
     pim_custom_entity.action.factory:
@@ -24,8 +24,8 @@ services:
             - @router
             - @translator
 
-    pim_custom_entity.action.mass_remove:
-        class: %pim_custom_entity.action.mass_remove.class%
+    pim_custom_entity.action.mass_delete:
+        class: %pim_custom_entity.action.mass_delete.class%
         parent: pim_custom_entity.action.viewable
         scope: prototype
 
@@ -40,8 +40,8 @@ services:
         parent: pim_custom_entity.action.viewable
         scope: prototype
 
-    pim_custom_entity.action.remove:
-        class: %pim_custom_entity.action.remove.class%
+    pim_custom_entity.action.delete:
+        class: %pim_custom_entity.action.delete.class%
         parent: pim_custom_entity.action
         scope: prototype
 

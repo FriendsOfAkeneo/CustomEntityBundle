@@ -87,10 +87,6 @@ class ConfigureCustomEntityGridListener
         $actions = $datagridConfig->offsetGetByPath('[actions]') ?: [];
 
         foreach ($indexAction->getRowActions() as $rowActionType) {
-            if (isset($actions[$rowActionType])) {
-                continue;
-            }
-
             $link = $rowActionType . '_link';
             $rowAction  = $this->actionFactory->getAction($name, $rowActionType);
             $actions[$rowActionType] = $rowAction->getGridActionOptions() + ['link' => $link];
@@ -100,7 +96,6 @@ class ConfigureCustomEntityGridListener
                 'params' => ['id']
             ];
         }
-
         $datagridConfig->offsetSetByPath('[actions]', $actions);
         $datagridConfig->offsetSetByPath('[properties]', $properties);
     }

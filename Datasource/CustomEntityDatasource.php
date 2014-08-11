@@ -53,7 +53,7 @@ class CustomEntityDatasource extends Datasource
      */
     public function process(DatagridInterface $grid, array $config)
     {
-        $repository = $this->em->getRepository($config['entity']);
+        $repository = $this->om->getRepository($config['entity']);
 
         if ($repository instanceof LocaleAwareRepositoryInterface) {
             $repository->setLocale($this->localeHelper->getCurrentLocale()->getCode());

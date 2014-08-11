@@ -8,15 +8,15 @@ custom_entities:
                 service: pim_custom_entity.action.index
             edit:
                 service: pim_custom_entity.action.edit
-            remove:
-                service: pim_custom_entity.action.remove
+            delete:
+                service: pim_custom_entity.action.delete
             create:
                 service: pim_custom_entity.action.create
             mass_edit:
                 service: pim_custom_entity.action.mass_edit
                 enabled: false
-            mass_remove:
-                service: pim_custom_entity.action.mass_remove
+            mass_delete:
+                service: pim_custom_entity.action.mass_delete
                 enabled: false
 
     quick_create:
@@ -31,6 +31,6 @@ custom_entities:
         abstract: true
         actions:
             index:
-                mass_actions: [ mass_edit, mass_remove]
-            mass_remove:
+                mass_actions: [ mass_edit, mass_delete]
+            mass_delete:
                 enabled: true

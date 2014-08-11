@@ -74,8 +74,8 @@ class EditAction extends AbstractFormAction implements GridActionInterface
     protected function getTemplateVars(Request $request, FormInterface $form)
     {
         $vars = parent::getTemplateVars($request, $form);
-        if ($this->configuration->hasAction('remove')) {
-            $vars['deleteUrl'] = $this->getActionUrl('remove', $form->getData());
+        if ($this->configuration->hasAction('delete')) {
+            $vars['deleteUrl'] = $this->getActionUrl('delete', $form->getData());
         }
 
         return $vars;

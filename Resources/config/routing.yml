@@ -18,9 +18,9 @@ pim_customentity_edit:
     requirements:
         id: \d+
 
-pim_customentity_remove:
-    path: /{customEntityName}/{id}/remove
-    defaults: { _controller: pim_customentity.controller:executeAction, actionType: remove }
+pim_customentity_delete:
+    path: /{customEntityName}/{id}/delete
+    defaults: { _controller: pim_customentity.controller:executeAction, actionType: delete }
     requirements:
         id: \d+
     methods: [DELETE, POST]

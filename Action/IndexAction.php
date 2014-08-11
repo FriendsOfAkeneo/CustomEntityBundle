@@ -63,7 +63,7 @@ class IndexAction extends AbstractViewableAction implements IndexActionInterface
                 'route'         => 'pim_customentity_index',
                 'quick_create'  => false,
                 'template'      => 'PimCustomEntityBundle:CustomEntity:index.html.twig',
-                'row_actions'   => ['edit', 'remove'],
+                'row_actions'   => ['edit', 'delete'],
                 'mass_actions'  => []
             ]
         );
