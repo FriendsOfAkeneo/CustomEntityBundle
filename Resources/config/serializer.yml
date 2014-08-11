@@ -1,0 +1,11 @@
+parameters:
+    pim_custom_entity.normalizer.referable.class: Pim\Bundle\CustomEntityBundle\Normalizer\ReferableNormalizer
+
+services:
+    pim_custom_entity.normalizer.referable:
+        class: %pim_custom_entity.normalizer.referable.class%
+        arguments:
+            - ['csv']
+        tags:
+            - { name: pim_versioning.serializer.normalizer, priority: 80 }
+            - { name: pim_serializer.normalizer, priority: 80 }
