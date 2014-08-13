@@ -83,8 +83,8 @@ class ConfigureCustomEntityGridListener
     protected function setRowActions(DatagridConfiguration $datagridConfig, ActionInterface $indexAction)
     {
         $name = $indexAction->getConfiguration()->getName();
-        $properties = ($datagridConfig->offsetGetByPath('[properties]') ?: []) + ['id' => []];
-        $actions = $datagridConfig->offsetGetByPath('[actions]') ?: [];
+        $properties = ['id' => []];
+        $actions = [];
 
         foreach ($indexAction->getRowActions() as $rowActionType) {
             $link = $rowActionType . '_link';
