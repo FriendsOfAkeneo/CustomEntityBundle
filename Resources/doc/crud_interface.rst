@@ -67,7 +67,7 @@ By default, the index action uses the ``pim_custom_entity.action.index`` service
                      route: pim_customentity_index
                      quick_create: false
                      template: PimCustomEntityBundle:CustomEntity:index.html.twig
-                     row_actions: ['edit', 'remove']
+                     row_actions: ['edit', 'delete']
                     
 
 template
@@ -207,10 +207,10 @@ success_message
 grid_action_options:
    An array of options for the Oro grid action
 
-Remove Action Options
+Delete Action Options
 *********************
 
-By default, the remove action uses the ``pim_custom_entity.action.remove`` service with the following options :
+By default, the delete action uses the ``pim_custom_entity.action.delete`` service with the following options :
 
 .. code-block:: yaml
    
@@ -218,9 +218,9 @@ By default, the remove action uses the ``pim_custom_entity.action.remove`` servi
         my_entity:
             entity_class: Acme\Bundle\CatalogBundle\Entity\MyEntity
             actions:
-                remove:
-                     service: pim_custom_entity.action.remove
-                     route: pim_customentity_remove
+                delete:
+                     service: pim_custom_entity.action.delete
+                     route: pim_customentity_delete
                      grid_action_options: 
                         type: delete
                         label: Delete
@@ -230,10 +230,10 @@ grid_action_options:
   An array of options for the Oro grid action
 
 
-Mass Remove Action Options
+Mass Delete Action Options
 **************************
 
-By default, the mass remove action uses the ``pim_custom_entity.action.mass_remove`` service with the following options :
+By default, the mass delete action uses the ``pim_custom_entity.action.mass_delete`` service with the following options :
 
 .. code-block:: yaml
    
@@ -242,7 +242,7 @@ By default, the mass remove action uses the ``pim_custom_entity.action.mass_remo
             entity_class: Acme\Bundle\CatalogBundle\Entity\MyEntity
             actions:
                 index:
-                     service: pim_custom_entity.action.remove
+                     service: pim_custom_entity.action.delete
                      route: ~
                      grid_action_options: 
                         type: delete
