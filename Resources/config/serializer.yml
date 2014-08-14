@@ -1,11 +1,20 @@
 parameters:
-    pim_custom_entity.normalizer.referable.class: Pim\Bundle\CustomEntityBundle\Normalizer\ReferableNormalizer
+    pim_custom_entity.normalizer.referable.class:         Pim\Bundle\CustomEntityBundle\Normalizer\ReferableNormalizer
+    pim_custom_entity.normalizer.mongodb_referable.class: Pim\Bundle\CustomEntityBundle\Normalizer\MongoDBReferableNormalizer
 
 services:
     pim_custom_entity.normalizer.referable:
         class: %pim_custom_entity.normalizer.referable.class%
         arguments:
-            - ['csv']
+            - ['csv', 'flat']
+        tags:
+            - { name: pim_versioning.serializer.normalizer, priority: 80 }
+            - { name: pim_serializer.normalizer, priority: 80 }
+
+    pim_custom_entity.normalizer.referable:
+        class: %pim_custom_entity.normalizer.referable.class%
+        arguments:
+            - ['mongodb_json']
         tags:
             - { name: pim_versioning.serializer.normalizer, priority: 80 }
             - { name: pim_serializer.normalizer, priority: 80 }
