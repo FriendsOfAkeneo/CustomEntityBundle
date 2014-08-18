@@ -12,9 +12,8 @@ services:
             - { name: pim_serializer.normalizer, priority: 80 }
 
     pim_custom_entity.normalizer.mongodb_referable:
-        class: %pim_custom_entity.normalizer.referable.class%
+        class: %pim_custom_entity.normalizer.mongodb_referable.class%
         arguments:
             - ['mongodb_json']
         tags:
-            - { name: pim_versioning.serializer.normalizer, priority: 80 }
             - { name: pim_serializer.normalizer, priority: 80 }
