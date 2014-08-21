@@ -49,7 +49,7 @@ class CustomOptionMultiSelectType extends OptionMultiSelectType
     /**
      * {@inheritdoc}
      */
-    protected function prepareValueFormOptions(ProductValueInterface $value)
+    public function prepareValueFormOptions(ProductValueInterface $value)
     {
         return [
                 'class' => $this->optionClass,
