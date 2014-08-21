@@ -1,0 +1,8 @@
+parameters:
+    pim_customentity.form.type.collection.class: Pim\Bundle\CustomEntityBundle\Form\Type\CollectionType
+
+services:
+    pim_customentity.form.type.collection:
+        class: %pim_customentity.form.type.collection.class%
+        tags:
+            - { name: form.type, alias: 'pim_customentity_collection' }
