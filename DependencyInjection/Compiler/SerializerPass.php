@@ -51,9 +51,9 @@ class SerializerPass implements CompilerPassInterface
      */
     public function processService(ContainerBuilder $container, $serviceId, array $tags)
     {
-        $newArguments = [];
+        $tagArguments = [];
         // Looks for all the services tagged "serializer.normalizer" and adds them to the Serializer service
-        $arguments[0] = $this->findAndSortTaggedServices(
+        $tagArguments[0] = $this->findAndSortTaggedServices(
             $container,
             array_map(
                 function ($tag) {
@@ -64,7 +64,7 @@ class SerializerPass implements CompilerPassInterface
         );
 
         // Looks for all the services tagged "serializer.encoders" and adds them to the Serializer service
-        $arguments[0] = $this->findAndSortTaggedServices(
+        $tagArguments[1] = $this->findAndSortTaggedServices(
             $container,
             array_map(
                 function ($tag) {
@@ -76,11 +76,14 @@ class SerializerPass implements CompilerPassInterface
 
         $definition = $container->getDefinition($serviceId);
         $arguments = $definition->getArguments();
-        foreach ($newArguments as $index => $argument) {
-            if (isset($arguments[index])) {
+        foreach ($tagArguments as $index => $argument) {
+            if (isset($arguments[$index])) {
                 $arguments[$index] = array_merge($arguments[$index], $argument);
+            } else {
+                $arguments[$index] = $argument;
             }
         }
+
         $definition->setArguments($arguments);
     }
 
