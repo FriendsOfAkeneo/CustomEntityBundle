@@ -76,7 +76,7 @@ class CreateActionSpec extends FormActionBehavior
         $manager->create('entity_class', [], [])->willReturn($object);
         $object->getId()->willReturn(null);
         $configuration->getActionOptions('create')->willReturn(['form_type' => 'form_type']);
-        $configuration->hasAction('remove')->willReturn(false);
+        $configuration->hasAction('delete')->willReturn(false);
         $templating->renderResponse(
             'PimCustomEntityBundle:CustomEntity:form.html.twig',
             [
@@ -112,7 +112,7 @@ class CreateActionSpec extends FormActionBehavior
         $object->getId()->willReturn(null);
         $configuration->getActionOptions('create')
             ->willReturn(['form_type' => 'form_type']);
-        $configuration->hasAction('remove')->willReturn(false);
+        $configuration->hasAction('delete')->willReturn(false);
         $templating->renderResponse(
             'PimCustomEntityBundle:CustomEntity:form.html.twig',
             [
@@ -147,7 +147,7 @@ class CreateActionSpec extends FormActionBehavior
         $object->getId()->willReturn(null);
         $configuration->getActionOptions('create')
             ->willReturn(['form_type' => 'form_type']);
-        $configuration->hasAction('remove')->willReturn(false);
+        $configuration->hasAction('delete')->willReturn(false);
         $flashBag->add('success', '<flash.entity.created>')->shouldBeCalled();
         $this->initializeEventManager($eventManager);
 
@@ -186,7 +186,7 @@ class CreateActionSpec extends FormActionBehavior
                     'success_message'           => 'success_message'
                 ]
             );
-        $configuration->hasAction('remove')->willReturn(false);
+        $configuration->hasAction('delete')->willReturn(false);
         $flashBag->add('success', '<success_message>')->shouldBeCalled();
         $this->initializeEventManager($eventManager);
 

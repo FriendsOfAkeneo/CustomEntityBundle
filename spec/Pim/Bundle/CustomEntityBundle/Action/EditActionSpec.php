@@ -70,7 +70,7 @@ class EditActionSpec extends FormActionBehavior
         $manager->find('entity_class', 'id', [])->willReturn($object);
         $object->getId()->willReturn('id');
         $configuration->getActionOptions('edit')->willReturn(['form_type' => 'form_type']);
-        $configuration->hasAction('remove')->willReturn(false);
+        $configuration->hasAction('delete')->willReturn(false);
         $templating->renderResponse(
             'PimCustomEntityBundle:CustomEntity:form.html.twig',
             [

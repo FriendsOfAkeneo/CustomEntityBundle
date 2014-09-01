@@ -65,27 +65,27 @@ class ConfigureCustomEntityGridListenerSpec extends ObjectBehavior
         $actionFactory->getAction('entity', 'action1')->willReturn($action1);
         $actionFactory->getAction('entity', 'action2')->willReturn($action2);
         $action1->getGridActionOptions()->willReturn(['action1_key1' => 'action1_value1']);
+        $action2->getGridActionOptions()->willReturn([]);
         $datagridConfig->getName()->willReturn('entity');
         $indexAction->getMassActions()->willReturn([]);
         $indexAction->getRowActions()->willReturn(['action1', 'action2']);
         $datagridConfig->offsetGetByPath('[extends]')->willReturn('custom_entity');
-        $datagridConfig->offsetGetByPath('[properties]')->willReturn([]);
-        $datagridConfig->offsetGetByPath('[actions]')->willReturn(['action2'=>[]]);
         $datagridConfig->offsetGetByPath('[mass_actions]')->willReturn([]);
         $datagridConfig->offsetSetByPath("[source]", ["entity" => "entity_class", "type" => "pim_custom_entity"])
                 ->shouldBeCalled();
         $datagridConfig->offsetSetByPath(
                 "[actions]",
                 [
-                    "action2" => [],
-                    "action1" => ["action1_key1" => "action1_value1", "link" => "action1_link"]
+                    "action1" => ["action1_key1" => "action1_value1", "link" => "action1_link"],
+                    "action2" => ['link' => 'action2_link']
                 ]
             )->shouldBeCalled();
         $datagridConfig->offsetSetByPath(
             "[properties]",
             [
                 'id' => [],
-                "action1_link" => ["type" => "custom_entity_url", "route" => "entity/action1", "params" => ["id"]]
+                "action1_link" => ["type" => "custom_entity_url", "route" => "entity/action1", "params" => ["id"]],
+                "action2_link" => ["type" => "custom_entity_url", "route" => "entity/action2", "params" => ["id"]]
             ]
         )->shouldBeCalled();
         $datagridConfig->offsetSetByPath("[mass_actions]", [])->shouldBeCalled();

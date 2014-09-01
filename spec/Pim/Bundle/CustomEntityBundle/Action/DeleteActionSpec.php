@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
-class RemoveActionSpec extends ActionBehavior
+class DeleteActionSpec extends ActionBehavior
 {
     public function let(
         ActionFactory $actionFactory,
@@ -30,10 +30,10 @@ class RemoveActionSpec extends ActionBehavior
 
     public function it_is_initializable()
     {
-        $this->shouldHaveType('Pim\Bundle\CustomEntityBundle\Action\RemoveAction');
+        $this->shouldHaveType('Pim\Bundle\CustomEntityBundle\Action\DeleteAction');
     }
 
-    public function it_removes_objects(
+    public function it_deletes_objects(
         ManagerInterface $manager,
         ActionEventManager $eventManager,
         ConfigurationInterface $configuration,
@@ -63,7 +63,7 @@ class RemoveActionSpec extends ActionBehavior
         ConfigurationInterface $configuration,
         Request $request
     ) {
-        $configuration->getActionOptions('remove')->willReturn([]);
+        $configuration->getActionOptions('delete')->willReturn([]);
         $manager->find('entity_class', 'id', [])->willReturn(null);
         $this->setConfiguration($configuration);
         $this->shouldThrow('Symfony\Component\HttpKernel\Exception\NotFoundHttpException')
@@ -79,7 +79,7 @@ class RemoveActionSpec extends ActionBehavior
         $findOptions
     ) {
         $object = new \stdClass;
-        $configuration->getActionOptions('remove')->willReturn($options);
+        $configuration->getActionOptions('delete')->willReturn($options);
         $this->setConfiguration($configuration);
         $manager->find('entity_class', 'id', $findOptions)->willReturn($object);
         $manager->remove($object)->shouldBeCalled();
