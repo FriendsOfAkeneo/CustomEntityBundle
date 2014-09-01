@@ -20,6 +20,7 @@ class PimCustomEntityBundle extends Bundle
     public function build(ContainerBuilder $container)
     {
         $container
-            ->addCompilerPass(new DependencyInjection\Compiler\ConfigurationBuilderPass);
+            ->addCompilerPass(new DependencyInjection\Compiler\ConfigurationBuilderPass())
+            ->addCompilerPass(new DependencyInjection\Compiler\SerializerPass());
     }
 }
