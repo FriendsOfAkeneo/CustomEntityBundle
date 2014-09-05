@@ -1,0 +1,8 @@
+parameters:
+    pim_customentity.form.extension.clear_missing.class: Pim\Bundle\CustomEntityBundle\Form\Extension\ClearMissingExtension
+
+services:
+    pim_customentity.form.extension.clear_missing:
+        class: %pim_customentity.form.extension.clear_missing.class%
+        tags:
+            - { name: form.type_extension, alias: form }

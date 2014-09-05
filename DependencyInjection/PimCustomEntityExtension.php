@@ -28,5 +28,6 @@ class PimCustomEntityExtension extends Extension
         $loader->load('actions.yml');
         $loader->load('mass_actions.yml');
         $loader->load('attribute_types.yml');
+        $loader->load('form.yml');
     }
 }
