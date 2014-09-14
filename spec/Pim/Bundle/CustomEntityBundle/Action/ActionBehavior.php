@@ -5,6 +5,8 @@ namespace spec\Pim\Bundle\CustomEntityBundle\Action;
 use PhpSpec\ObjectBehavior;
 use Pim\Bundle\CustomEntityBundle\Configuration\ConfigurationInterface;
 use Pim\Bundle\CustomEntityBundle\Event\ActionEventManager;
+use Pim\Bundle\CustomEntityBundle\Manager\ManagerInterface;
+use Pim\Bundle\CustomEntityBundle\Manager\Registry;
 use Prophecy\Argument;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
@@ -92,5 +94,14 @@ class ActionBehavior extends ObjectBehavior
                     return [$args[1], $args[2]];
                 }
             );
+    }
+
+    public function initializeManager(
+        ConfigurationInterface $configuration,
+        Registry $managerRegistry,
+        ManagerInterface $manager
+    )
+    {
+        $managerRegistry->getFromConfiguration($configuration)->willReturn($manager);
     }
 }

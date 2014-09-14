@@ -6,18 +6,24 @@ custom_entities:
         actions:
             index:
                 service: pim_custom_entity.action.index
+                acl_suffix: index
             edit:
                 service: pim_custom_entity.action.edit
+                acl_suffix: edit
             delete:
                 service: pim_custom_entity.action.delete
+                acl_suffix: delete
             create:
                 service: pim_custom_entity.action.create
+                acl_suffix: edit
             mass_edit:
                 service: pim_custom_entity.action.mass_edit
                 enabled: false
+                acl_suffix: edit
             mass_delete:
                 service: pim_custom_entity.action.mass_delete
                 enabled: false
+                acl_suffix: delete
 
     quick_create:
         abstract: true

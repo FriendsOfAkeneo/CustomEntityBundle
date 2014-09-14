@@ -7,6 +7,7 @@ use Pim\Bundle\CustomEntityBundle\Action\ActionInterface;
 use Pim\Bundle\CustomEntityBundle\Configuration\ConfigurationInterface;
 use Pim\Bundle\CustomEntityBundle\Event\ActionEventManager;
 use Pim\Bundle\CustomEntityBundle\Manager\ManagerInterface;
+use Pim\Bundle\CustomEntityBundle\Manager\Registry as ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
@@ -22,6 +23,7 @@ class EditActionSpec extends FormActionBehavior
     public function let(
         ActionFactory $actionFactory,
         ActionEventManager $eventManager,
+        ManagerRegistry $managerRegistry,
         ManagerInterface $manager,
         RouterInterface $router,
         TranslatorInterface $translator,
@@ -38,13 +40,14 @@ class EditActionSpec extends FormActionBehavior
         $this->beConstructedWith(
             $actionFactory,
             $eventManager,
-            $manager,
+            $managerRegistry,
             $router,
             $translator,
             $templating,
             $formFactory
         );
         $this->initializeConfiguration($configuration);
+        $this->initializeManager($configuration, $managerRegistry, $manager);
         $this->initializeRouter($router);
         $this->initializeForm($formFactory, $form, $formView, $object);
         $this->initializeRequest($request, $attributes);

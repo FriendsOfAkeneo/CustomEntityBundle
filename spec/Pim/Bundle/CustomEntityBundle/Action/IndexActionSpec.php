@@ -7,6 +7,7 @@ use Pim\Bundle\CustomEntityBundle\Action\ActionInterface;
 use Pim\Bundle\CustomEntityBundle\Configuration\ConfigurationInterface;
 use Pim\Bundle\CustomEntityBundle\Event\ActionEventManager;
 use Pim\Bundle\CustomEntityBundle\Manager\ManagerInterface;
+use Pim\Bundle\CustomEntityBundle\Manager\Registry as ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,14 +19,16 @@ class IndexActionSpec extends ActionBehavior
     public function let(
         ActionFactory $actionFactory,
         ActionEventManager $eventManager,
+        ManagerRegistry $managerRegistry,
         ManagerInterface $manager,
         RouterInterface $router,
         TranslatorInterface $translator,
         ConfigurationInterface $configuration,
         EngineInterface $templating
     ) {
-        $this->beConstructedWith($actionFactory, $eventManager, $manager, $router, $translator, $templating);
+        $this->beConstructedWith($actionFactory, $eventManager, $managerRegistry, $router, $translator, $templating);
         $this->initializeConfiguration($configuration);
+        $this->initializeManager($configuration, $managerRegistry, $manager);
         $this->initializeRouter($router);
         $configuration->hasAction('index')->willReturn(true);
     }

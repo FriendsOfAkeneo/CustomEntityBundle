@@ -8,7 +8,7 @@ use Symfony\Component\DependencyInjection\Reference;
 
 /**
  * Duplicates the pim serializer
- * 
+ *
  * @author    Antoine Guigan <antoine@akeneo.com>
  */
 class SerializerPass implements CompilerPassInterface
@@ -18,8 +18,8 @@ class SerializerPass implements CompilerPassInterface
      */
     const TAG_NAME = 'pim_serializer';
 
-    /** 
-     * @staticvar integer The default priority for services 
+    /**
+     * @staticvar integer The default priority for services
      */
     const DEFAULT_PRIORITY = 100;
 
@@ -44,10 +44,10 @@ class SerializerPass implements CompilerPassInterface
 
     /**
      * process a serializer service
-     * 
+     *
      * @param ContainerBuilder $container
-     * @param string $serviceId
-     * @param array $tags
+     * @param string           $serviceId
+     * @param array            $tags
      */
     public function processService(ContainerBuilder $container, $serviceId, array $tags)
     {

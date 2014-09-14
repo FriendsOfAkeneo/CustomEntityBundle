@@ -3,7 +3,7 @@
 namespace Pim\Bundle\CustomEntityBundle\Action;
 
 use Pim\Bundle\CustomEntityBundle\Event\ActionEventManager;
-use Pim\Bundle\CustomEntityBundle\Manager\ManagerInterface;
+use Pim\Bundle\CustomEntityBundle\Manager\Registry as ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -29,7 +29,7 @@ abstract class AbstractViewableAction extends AbstractAction
      *
      * @param ActionFactory       $actionFactory
      * @param ActionEventManager  $eventManager
-     * @param ManagerInterface    $manager
+     * @param ManagerRegistry     $managerRegistry
      * @param RouterInterface     $router
      * @param TranslatorInterface $translator
      * @param EngineInterface     $templating
@@ -37,12 +37,12 @@ abstract class AbstractViewableAction extends AbstractAction
     public function __construct(
         ActionFactory $actionFactory,
         ActionEventManager $eventManager,
-        ManagerInterface $manager,
+        ManagerRegistry $managerRegistry,
         RouterInterface $router,
         TranslatorInterface $translator,
         EngineInterface $templating
     ) {
-        parent::__construct($actionFactory, $eventManager, $manager, $router, $translator);
+        parent::__construct($actionFactory, $eventManager, $managerRegistry, $router, $translator);
         $this->templating = $templating;
     }
 

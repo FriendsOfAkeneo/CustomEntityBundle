@@ -6,9 +6,9 @@ use PhpSpec\ObjectBehavior;
 
 class ConfigurationSpec extends ObjectBehavior
 {
-    public function let()
+    public function let(\Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher)
     {
-        $this->beConstructedWith('entity', 'entity_class');
+        $this->beConstructedWith($eventDispatcher, 'entity', 'entity_class');
     }
 
     public function it_is_initializable()

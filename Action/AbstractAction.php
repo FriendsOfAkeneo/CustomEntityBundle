@@ -4,7 +4,7 @@ namespace Pim\Bundle\CustomEntityBundle\Action;
 
 use Pim\Bundle\CustomEntityBundle\Configuration\ConfigurationInterface;
 use Pim\Bundle\CustomEntityBundle\Event\ActionEventManager;
-use Pim\Bundle\CustomEntityBundle\Manager\ManagerInterface;
+use Pim\Bundle\CustomEntityBundle\Manager\Registry as ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -32,9 +32,9 @@ abstract class AbstractAction implements ActionInterface
     protected $eventManager;
 
     /**
-     * @var ManagerInterface
+     * @var ManagerRegistry
      */
-    protected $manager;
+    protected $managerRegistry;
 
     /**
      * @var RouterInterface
@@ -61,20 +61,20 @@ abstract class AbstractAction implements ActionInterface
      *
      * @param ActionFactory       $actionFactory
      * @param ActionEventManager  $eventManager
-     * @param ManagerInterface    $manager
+     * @param ManagerRegistry     $managerRegistry
      * @param RouterInterface     $router
      * @param TranslatorInterface $translator
      */
     public function __construct(
         ActionFactory $actionFactory,
         ActionEventManager $eventManager,
-        ManagerInterface $manager,
+        ManagerRegistry $managerRegistry,
         RouterInterface $router,
         TranslatorInterface $translator
     ) {
         $this->actionFactory = $actionFactory;
         $this->eventManager = $eventManager;
-        $this->manager = $manager;
+        $this->managerRegistry = $managerRegistry;
         $this->router = $router;
         $this->translator = $translator;
     }
@@ -153,8 +153,8 @@ abstract class AbstractAction implements ActionInterface
     /**
      * Returns the url for a specified action
      *
-     * @param object $object
      * @param string $actionType
+     * @param object $object
      * @param array  $parameters
      */
     protected function getActionUrl($actionType, $object = null, $parameters = [])
@@ -179,7 +179,7 @@ abstract class AbstractAction implements ActionInterface
      */
     protected function findEntity(Request $request)
     {
-        $entity = $this->manager->find(
+        $entity = $this->getManager()->find(
             $this->configuration->getEntityClass(),
             $request->attributes->get('id'),
             $this->options['find_options']
@@ -203,6 +203,16 @@ abstract class AbstractAction implements ActionInterface
     {
         $request->getSession()->getFlashBag()
             ->add($type, $this->translator->trans($message));
+    }
+
+    /**
+     * Returns the manager
+     *
+     * @return \Pim\Bundle\CustomEntityBundle\Manager\ManagerInterface
+     */
+    protected function getManager()
+    {
+        return $this->managerRegistry->getFromConfiguration($this->configuration);
     }
 
     /**

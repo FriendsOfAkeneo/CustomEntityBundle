@@ -1,6 +1,7 @@
 parameters:
     pim_custom_entity.event_listener.datagrid.configure_custom_entity_grid.class: Pim\Bundle\CustomEntityBundle\EventListener\DataGrid\ConfigureCustomEntityGridListener
     pim_custom_entity.event_listener.action.security.class:                       Pim\Bundle\CustomEntityBundle\EventListener\Action\SecurityListener
+    pim_custom_entity.event_listener.action.form_configuration.class:             Pim\Bundle\CustomEntityBundle\EventListener\Action\FormConfigurationListener
 
 services:
     pim_custom_entity.event_listener.datagrid.configure_custom_entity_grid:
@@ -15,5 +16,10 @@ services:
         arguments:
             - @pim_custom_entity.action.factory
             - @oro_security.security_facade
+        tags:
+            - { name: kernel.event_subscriber }
+
+    pim_custom_entity.event_listener.action.form_configuration:
+        class: %pim_custom_entity.event_listener.action.form_configuration.class%
         tags:
             - { name: kernel.event_subscriber }

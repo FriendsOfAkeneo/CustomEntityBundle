@@ -20,7 +20,7 @@ services:
         arguments:
             - @pim_custom_entity.action.factory
             - @pim_custom_entity.action_event_manager
-            - @pim_custom_entity.manager
+            - @pim_custom_entity.manager.registry
             - @router
             - @translator
 

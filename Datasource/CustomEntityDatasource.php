@@ -42,7 +42,7 @@ class CustomEntityDatasource extends Datasource
         ObjectManager $om,
         HydratorInterface $hydrator,
         LocaleHelper $localeHelper
-            
+
     ) {
         parent::__construct($om, $hydrator);
         $this->localeHelper = $localeHelper;
