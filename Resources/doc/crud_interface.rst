@@ -14,11 +14,12 @@ situated in an activated bundle. To have a full working CRUD for an entity, the 
         my_entity:
             extends: quick_create
             entity_class: Acme\Bundle\CatalogBundle\Entity\MyEntity
+            options:
+                form_type: my_form_type
+                acl_prefix: my_acl_prefix
             actions:
                 create:
-                    form_type: my_form_type
-                edit:
-                    form_type: my_form_type
+                    form_options: { create: true }
 
 The root level of the file contains the configuration for all your entities, indexed by alias. The alias will be used in the 
 CRUD URLs, and later, for the datagrid configuration.
@@ -30,12 +31,31 @@ abstract
 extends
   The alias of the extended configuration.
   The bundle propose three base configurations that can be extended : default, quick_create, and mass_actions
+options
+  The global configuration options for the current entity
 actions
   The configuration for the enabled CRUD actions
 entity_class
   The class of the entity, **required** if the configuration is not abstract.
   (Container parameters can be used in the class value)
-   
+
+
+Global Configuration Options
+****************************
+
+The following options can be used:
+
+manager
+  Alias of the CRUD object manager. Default is "default".
+acl_prefix
+  A prefix for all ACLs of the CRUD. If not set, no ACLs will be set.
+acl_separator
+  The separator between the ACL prefix and the ACL suffix. Default is "_"
+form_type
+  The default form type for form actions.
+form_options
+  The default form options for form actions.
+
 
 Common Action Options
 *********************
@@ -50,6 +70,10 @@ route
   The route for the action
 acl
   The ACL for the action
+acl_suffix
+  If the global ``acl_prefix`` option is provided, and no acl is provided for the action, the acl option
+  will be set to <acl_prefix><acl_separator><acl_suffix>
+
 
 Index Action Options
 ********************
@@ -79,6 +103,7 @@ mass_actions
 quick_create
    True if the create action should be displayed in a lightbox. *(Requires the use of the 
    **pim_custom_entity.action.quick_create** service for the create action)*
+
 
 
 Create Action Options
@@ -121,6 +146,7 @@ create_values
    An array of default properties for the created object
 create_options
    An array of options which should be passed to the object manager
+
 
 
 Edit Action Options
@@ -206,6 +232,7 @@ success_message
    A message which should be displayed on success
 grid_action_options:
    An array of options for the Oro grid action
+
 
 Delete Action Options
 *********************

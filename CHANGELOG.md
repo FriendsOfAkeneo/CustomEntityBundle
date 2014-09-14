@@ -1,6 +1,20 @@
 CHANGELOG 
 =========
 
+1.4.0
+-----
+
+## New features
+
+ - Added global configuration options for entities (see documentation)
+ - Added new event for configuration option resolving
+ - Added manager registry
+
+## BC Breaks
+ - Constructor for Action\AbstractAction has changed
+ - Constructor for Configuration\Configuration has changed
+ - Constructor for Configuration\Registry has changed
+
 1.3.0
 -----
 
