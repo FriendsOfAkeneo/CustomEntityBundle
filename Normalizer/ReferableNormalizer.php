@@ -39,7 +39,7 @@ class ReferableNormalizer implements NormalizerInterface
                 $context['field_name'] => $object->getReference(),
             ];
         } else {
-            return $object->getReference();
+            throw new \LogicException(sprintf('No normalizer found for object of class "%s"', get_class($object)));
         }
     }
 

@@ -5,6 +5,8 @@ parameters:
     pim_custom_entity.action.create.class:       Pim\Bundle\CustomEntityBundle\Action\CreateAction
     pim_custom_entity.action.quick_create.class: Pim\Bundle\CustomEntityBundle\Action\QuickCreateAction
     pim_custom_entity.action.edit.class:         Pim\Bundle\CustomEntityBundle\Action\EditAction
+    pim_custom_entity.action.show.class:         Pim\Bundle\CustomEntityBundle\Action\ShowAction
+    pim_custom_entity.action.history.class:      Pim\Bundle\CustomEntityBundle\Action\HistoryAction
     pim_custom_entity.action.mass_edit.class:    Pim\Bundle\CustomEntityBundle\Action\MassEditAction
     pim_custom_entity.action.mass_delete.class:  Pim\Bundle\CustomEntityBundle\Action\MassDeleteAction
 
@@ -34,6 +36,14 @@ services:
         parent: pim_custom_entity.action
         arguments:
             - @templating
+
+    pim_custom_entity.action.show:
+        class: %pim_custom_entity.action.show.class%
+        parent: pim_custom_entity.action.viewable
+
+    pim_custom_entity.action.history:
+        class: %pim_custom_entity.action.history.class%
+        parent: pim_custom_entity.action.viewable
 
     pim_custom_entity.action.index:
         class: %pim_custom_entity.action.index.class%

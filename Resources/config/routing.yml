@@ -18,6 +18,18 @@ pim_customentity_edit:
     requirements:
         id: \d+
 
+pim_customentity_show:
+    path: /{customEntityName}/{id}
+    defaults: { _controller: pim_customentity.controller:executeAction, actionType: history }
+    requirements:
+        id: \d+
+
+pim_customentity_history:
+    path: /{customEntityName}/{id}/history
+    defaults: { _controller: pim_customentity.controller:executeAction, actionType: history }
+    requirements:
+        id: \d+
+
 pim_customentity_delete:
     path: /{customEntityName}/{id}/delete
     defaults: { _controller: pim_customentity.controller:executeAction, actionType: delete }

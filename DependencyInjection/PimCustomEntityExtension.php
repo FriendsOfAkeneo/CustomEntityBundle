@@ -30,5 +30,6 @@ class PimCustomEntityExtension extends Extension
         $loader->load('managers.yml');
         $loader->load('attribute_types.yml');
         $loader->load('form.yml');
+        $loader->load('update_guessers.yml');
     }
 }

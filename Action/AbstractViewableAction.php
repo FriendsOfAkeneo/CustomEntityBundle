@@ -5,6 +5,7 @@ namespace Pim\Bundle\CustomEntityBundle\Action;
 use Pim\Bundle\CustomEntityBundle\Event\ActionEventManager;
 use Pim\Bundle\CustomEntityBundle\Manager\Registry as ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Routing\RouterInterface;
@@ -44,6 +45,18 @@ abstract class AbstractViewableAction extends AbstractAction
     ) {
         parent::__construct($actionFactory, $eventManager, $managerRegistry, $router, $translator);
         $this->templating = $templating;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function doExecute(Request $request)
+    {
+        return $this->renderResponse(
+            [
+                'object' => $this->findEntity($request)
+            ]
+        );
     }
 
     /**
@@ -89,6 +102,7 @@ abstract class AbstractViewableAction extends AbstractAction
     protected function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         parent::setDefaultOptions($resolver);
+
         $resolver->setRequired(['template']);
         $resolver->setDefaults(['base_template' => 'PimCustomEntityBundle::layout.html.twig']);
     }
