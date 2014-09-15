@@ -2,8 +2,6 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Entity;
 
-use Symfony\Component\Validator\Constraints as Assert;
-
 /**
  * Abstract custom option
  *
@@ -15,8 +13,6 @@ abstract class AbstractCustomOption extends AbstractCustomEntity
 {
     /**
      * @var string
-     *
-     * @Assert\NotBlank
      */
     protected $label;
 

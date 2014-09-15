@@ -14,6 +14,7 @@ CHANGELOG
  - Constructor for Action\AbstractAction has changed
  - Constructor for Configuration\Configuration has changed
  - Constructor for Configuration\Registry has changed
+ - Removed all validation for abstract entities
 
 1.3.0
 -----
