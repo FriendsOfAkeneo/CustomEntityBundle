@@ -37,7 +37,13 @@ class FormConfigurationListener implements EventSubscriberInterface
      */
     public function setConfigurationOptions(ConfigurationEvent $event)
     {
-        $event->getOptionsResolver()->setOptional(['form_type', 'form_options']);
+        $event->getOptionsResolver()->setOptional(
+            [
+                'form_type',
+                'form_options',
+                'form_template'
+            ]
+        );
     }
 
     /**
@@ -58,6 +64,9 @@ class FormConfigurationListener implements EventSubscriberInterface
         }
         if (isset($confOptions['form_options'])) {
             $resolver->setDefaults(['form_options' => $confOptions['form_options']]);
+        }
+        if (isset($confOptions['form_template'])) {
+            $resolver->setDefaults(['template' => $confOptions['form_template']]);
         }
     }
 }

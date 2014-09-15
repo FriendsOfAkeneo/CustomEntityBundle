@@ -55,7 +55,8 @@ form_type
   The default form type for form actions.
 form_options
   The default form options for form actions.
-
+form_template
+  The default template for form actions.
 
 Common Action Options
 *********************
