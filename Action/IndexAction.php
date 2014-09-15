@@ -21,7 +21,7 @@ class IndexAction extends AbstractViewableAction implements IndexActionInterface
     {
         $vars = [];
         if ($this->configuration->hasAction('create')) {
-            $vars['createUrl'] = $this->getActionUrl('create');
+            $vars['createUrl'] = $this->getActionUrl($this->options['quick_create_action_type']);
             $vars['quickCreate'] = $this->options['quick_create'];
         }
 
@@ -60,11 +60,12 @@ class IndexAction extends AbstractViewableAction implements IndexActionInterface
         parent::setDefaultOptions($resolver);
         $resolver->setDefaults(
             [
-                'route'         => 'pim_customentity_index',
-                'quick_create'  => false,
-                'template'      => 'PimCustomEntityBundle:CustomEntity:index.html.twig',
-                'row_actions'   => ['edit', 'delete'],
-                'mass_actions'  => []
+                'route'                    => 'pim_customentity_index',
+                'quick_create'             => false,
+                'quick_create_action_type' => 'create',
+                'template'                 => 'PimCustomEntityBundle:CustomEntity:index.html.twig',
+                'row_actions'              => ['edit', 'delete'],
+                'mass_actions'             => []
             ]
         );
     }

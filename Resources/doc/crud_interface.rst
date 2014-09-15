@@ -103,7 +103,8 @@ mass_actions
 quick_create
    True if the create action should be displayed in a lightbox. *(Requires the use of the 
    **pim_custom_entity.action.quick_create** service for the create action)*
-
+quick_create_action_type
+   The action type for the quick create action
 
 
 Create Action Options
