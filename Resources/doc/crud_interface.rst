@@ -5,7 +5,7 @@ CRUD Configuration
 ------------------
 
 The configuration for the CRUD actions of your custom entities must be in a file named 'config/custom_entities.yml', 
-situated in an activated bundle. To have a full working CRUD for an entity, the following configuration could be used :
+located in an activated bundle. To have a full working CRUD for an entity, the following configuration could be used:
 
 
 .. code-block:: yaml
@@ -24,13 +24,13 @@ situated in an activated bundle. To have a full working CRUD for an entity, the 
 The root level of the file contains the configuration for all your entities, indexed by alias. The alias will be used in the 
 CRUD URLs, and later, for the datagrid configuration.
 
-For each entity, the following options are available :
+For each entity, the following options are available:
 
 abstract
   Set to true if the definition is only meant to be extended
 extends
   The alias of the extended configuration.
-  The bundle propose three base configurations that can be extended : default, quick_create, and mass_actions
+  The bundle offers three base configurations that can be extended: default, quick_create, and mass_actions
 options
   The global configuration options for the current entity
 actions
@@ -61,7 +61,7 @@ form_template
 Common Action Options
 *********************
 
-The following options are common for all actions :
+The following options are common for all actions:
 
 service
   The id of the action service
@@ -79,7 +79,7 @@ acl_suffix
 Index Action Options
 ********************
 
-By default, the index action uses the ``pim_custom_entity.action.index`` service with the following options :
+By default, the index action uses the ``pim_custom_entity.action.index`` service with the following options:
 
 .. code-block:: yaml
    
@@ -111,7 +111,7 @@ quick_create_action_type
 Create Action Options
 *********************
 
-By default, the create action uses the ``pim_custom_entity.action.create`` service with the following options :
+By default, the create action uses the ``pim_custom_entity.action.create`` service with the following options:
 
 .. code-block:: yaml
    
@@ -154,7 +154,7 @@ create_options
 Edit Action Options
 *******************
 
-By default, the edit action uses the ``pim_custom_entity.action.edit`` service with the following options :
+By default, the edit action uses the ``pim_custom_entity.action.edit`` service with the following options:
 
 .. code-block:: yaml
    
@@ -197,7 +197,7 @@ grid_action_options:
 Mass Edit Action Options
 ************************
 
-By default, the mass edit action uses the ``pim_custom_entity.action.mass_edit`` service with the following options :
+By default, the mass edit action uses the ``pim_custom_entity.action.mass_edit`` service with the following options:
 
 .. code-block:: yaml
    
@@ -239,7 +239,7 @@ grid_action_options:
 Delete Action Options
 *********************
 
-By default, the delete action uses the ``pim_custom_entity.action.delete`` service with the following options :
+By default, the delete action uses the ``pim_custom_entity.action.delete`` service with the following options:
 
 .. code-block:: yaml
    
@@ -262,7 +262,7 @@ grid_action_options:
 Mass Delete Action Options
 **************************
 
-By default, the mass delete action uses the ``pim_custom_entity.action.mass_delete`` service with the following options :
+By default, the mass delete action uses the ``pim_custom_entity.action.mass_delete`` service with the following options:
 
 .. code-block:: yaml
    
