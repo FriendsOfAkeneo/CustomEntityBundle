@@ -6,4 +6,3 @@ services:
         class: %pim_custom_entity.versioning.update_guesser.class%
         tags:
             - { name: pim_versioning.update_guesser }
-
