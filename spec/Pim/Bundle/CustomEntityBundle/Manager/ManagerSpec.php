@@ -6,19 +6,19 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
+use Pim\Bundle\CatalogBundle\Doctrine\SmartManagerRegistry;
 
 class ManagerSpec extends ObjectBehavior
 {
     public function let(
-        RegistryInterface $doctrine,
+        SmartManagerRegistry $doctrine,
         EntityRepository $repository,
         EntityManager $entityManager,
         PropertyAccessorInterface $propertyAccessor
     ) {
         $doctrine->getRepository('entity_class')->willReturn($repository);
-        $doctrine->getManager()->willReturn($entityManager);
+        $doctrine->getManagerForClass('stdClass')->willReturn($entityManager);
         $this->beConstructedWith($doctrine, $propertyAccessor);
     }
 

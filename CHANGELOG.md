@@ -10,10 +10,12 @@ CHANGELOG
  - Added new event for configuration option resolving
  - Added manager registry
 
+
 ## BC Breaks
  - Constructor for Action\AbstractAction has changed
  - Constructor for Configuration\Configuration has changed
  - Constructor for Configuration\Registry has changed
+ - Constructor for Manager\Manager has changed
  - Removed all validation for abstract entities
 
 1.3.0
