@@ -19,14 +19,26 @@ class HistoryAction extends AbstractViewableAction
         return 'history';
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function setDefaultOptions(\Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver)
     {
         parent::setDefaultOptions($resolver);
         $resolver->setDefaults(
             [
-                'template' => 'PimCustomEntityBundle:CustomEntity:_history.html.twig',
-                'route'    => 'pim_customentity_history'
+                'template'      => 'PimCustomEntityBundle:CustomEntity:_history.html.twig',
+                'route'         => 'pim_customentity_history',
+                'datagrid_name' => 'history-grid'
             ]
         );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getDefaultTemplateVars()
+    {
+        return parent::getDefaultTemplateVars() + ['datagridName' => $this->options['datagrid_name']];
     }
 }
