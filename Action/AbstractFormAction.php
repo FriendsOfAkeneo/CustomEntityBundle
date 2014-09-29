@@ -64,7 +64,8 @@ abstract class AbstractFormAction extends AbstractViewableAction
                 'form_options'              => [],
                 'template'                  => 'PimCustomEntityBundle:CustomEntity:form.html.twig',
                 'redirect_route'            => $action->getRoute(),
-                'redirect_route_parameters' => $action->getRouteParameters()
+                'redirect_route_parameters' => $action->getRouteParameters(),
+                'save_options'              => []
             ]
         );
     }
@@ -98,7 +99,7 @@ abstract class AbstractFormAction extends AbstractViewableAction
      */
     protected function saveForm(Request $request, FormInterface $form)
     {
-       $this->getManager()->save($form->getData());
+       $this->getManager()->save($form->getData(), $this->options['save_options']);
     }
 
     /**

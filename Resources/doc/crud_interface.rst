@@ -88,11 +88,11 @@ By default, the index action uses the ``pim_custom_entity.action.index`` service
             entity_class: Acme\Bundle\CatalogBundle\Entity\MyEntity
             actions:
                 index:
-                     service: pim_custom_entity.action.index
-                     route: pim_customentity_index
-                     quick_create: false
-                     template: PimCustomEntityBundle:CustomEntity:index.html.twig
-                     row_actions: ['edit', 'delete']
+                    service: pim_custom_entity.action.index
+                    route: pim_customentity_index
+                    quick_create: false
+                    template: PimCustomEntityBundle:CustomEntity:index.html.twig
+                    row_actions: ['edit', 'delete']
                     
 
 template
@@ -120,16 +120,17 @@ By default, the create action uses the ``pim_custom_entity.action.create`` servi
             entity_class: Acme\Bundle\CatalogBundle\Entity\MyEntity
             actions:
                 create:
-                     service: pim_custom_entity.action.create
-                     route: pim_customentity_create
-                     template: PimCustomEntityBundle:CustomEntity:form.html.twig
-                     form_type: ~
-                     form_options: {}
-                     redirect_route: pim_customentity_index
-                     redirect_route_parameters: { customEntityName: my_entity }
-                     successs_message: flash.my_entity.created
-                     create_values: {}
-                     create_options: {}
+                    service: pim_custom_entity.action.create
+                    route: pim_customentity_create
+                    template: PimCustomEntityBundle:CustomEntity:form.html.twig
+                    form_type: ~
+                    form_options: {}
+                    redirect_route: pim_customentity_index
+                    redirect_route_parameters: { customEntityName: my_entity }
+                    successs_message: flash.my_entity.created
+                    create_values: {}
+                    create_options: {}
+                    save_options: {}
                      
                      
 template
@@ -147,8 +148,9 @@ success_message
 create_values
    An array of default properties for the created object
 create_options
-   An array of options which should be passed to the object manager
-
+   An array of options which should be passed to the object manager for object creation
+save_options
+   An array of options which should be passed to the object manager for object saving
 
 
 Edit Action Options
@@ -163,21 +165,22 @@ By default, the edit action uses the ``pim_custom_entity.action.edit`` service w
             entity_class: Acme\Bundle\CatalogBundle\Entity\MyEntity
             actions:
                 edit:
-                     service: pim_custom_entity.action.edit
-                     route: pim_customentity_edit
-                     template: PimCustomEntityBundle:CustomEntity:form.html.twig
-                     form_type: ~
-                     form_options: {}
-                     redirect_route: pim_customentity_index
-                     redirect_route_parameters: { customEntityName: my_entity }
-                     successs_message: flash.my_entity.updated
-                     grid_action_options:
+                    service: pim_custom_entity.action.edit
+                    route: pim_customentity_edit
+                    template: PimCustomEntityBundle:CustomEntity:form.html.twig
+                    form_type: ~
+                    form_options: {}
+                    redirect_route: pim_customentity_index
+                    redirect_route_parameters: { customEntityName: my_entity }
+                    successs_message: flash.my_entity.updated
+                    grid_action_options:
                         type: navigate
                         label: Edit
                         icon: edit
                         link: edit_link
                         rowAction: true
-                        
+                    save_options: {}
+   
 template
   The template of the action
 form_type
@@ -192,7 +195,8 @@ success_message
    A message which should be displayed on success
 grid_action_options:
    An array of options for the Oro grid action
-
+save_options:
+   An array of options which should be passed to the object manager for object saving
 
 Mass Edit Action Options
 ************************
@@ -206,15 +210,15 @@ By default, the mass edit action uses the ``pim_custom_entity.action.mass_edit``
             entity_class: Acme\Bundle\CatalogBundle\Entity\MyEntity
             actions:
                 mass_edit:
-                     service: pim_custom_entity.action.mass_edit
-                     route: pim_customentity_massedit
-                     template: PimCustomEntityBundle:CustomEntity:massEdit.html.twig
-                     form_type: ~
-                     form_options: {}
-                     redirect_route: pim_customentity_index
-                     redirect_route_parameters: { customEntityName: my_entity }
-                     successs_message: flash.my_entity.mass_edited
-                     grid_action_options:
+                    service: pim_custom_entity.action.mass_edit
+                    route: pim_customentity_massedit
+                    template: PimCustomEntityBundle:CustomEntity:massEdit.html.twig
+                    form_type: ~
+                    form_options: {}
+                    redirect_route: pim_customentity_index
+                    redirect_route_parameters: { customEntityName: my_entity }
+                    successs_message: flash.my_entity.mass_edited
+                    grid_action_options:
                         type: redirect
                         label: Mass Edit
                         icon: edit
@@ -248,9 +252,9 @@ By default, the delete action uses the ``pim_custom_entity.action.delete`` servi
             entity_class: Acme\Bundle\CatalogBundle\Entity\MyEntity
             actions:
                 delete:
-                     service: pim_custom_entity.action.delete
-                     route: pim_customentity_delete
-                     grid_action_options: 
+                    service: pim_custom_entity.action.delete
+                    route: pim_customentity_delete
+                    grid_action_options: 
                         type: delete
                         label: Delete
                         icon: trash
@@ -271,9 +275,9 @@ By default, the mass delete action uses the ``pim_custom_entity.action.mass_dele
             entity_class: Acme\Bundle\CatalogBundle\Entity\MyEntity
             actions:
                 index:
-                     service: pim_custom_entity.action.delete
-                     route: ~
-                     grid_action_options: 
+                    service: pim_custom_entity.action.delete
+                    route: ~
+                    grid_action_options: 
                         type: delete
                         label: Delete
                         entity_name: my_entity

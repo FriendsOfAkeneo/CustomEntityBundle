@@ -61,7 +61,7 @@ class Manager implements ManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function save($entity)
+    public function save($entity, array $options = array())
     {
         $em = $this->getManager($entity);
         $em->persist($entity);

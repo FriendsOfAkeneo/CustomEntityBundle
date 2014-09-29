@@ -146,7 +146,7 @@ class CreateActionSpec extends FormActionBehavior
         $form->submit($request)->shouldBeCalled();
         $form->isValid()->willReturn(true);
         $manager->create('entity_class', [], [])->willReturn($object);
-        $manager->save($object)->shouldBeCalled();
+        $manager->save($object, [])->shouldBeCalled();
         $object->getId()->willReturn(null);
         $configuration->getActionOptions('create')
             ->willReturn(['form_type' => 'form_type']);
@@ -174,7 +174,7 @@ class CreateActionSpec extends FormActionBehavior
         $form->submit($request)->shouldBeCalled();
         $form->isValid()->willReturn(true);
         $manager->create('entity_class', [], [])->willReturn($object);
-        $manager->save($object)->shouldBeCalled();
+        $manager->save($object, [])->shouldBeCalled();
         $object->getId()->willReturn(null);
         $formFactory->create('form_type', $object, ['f_param1' => 'value1', 'data_class' => 'entity_class'])
             ->shouldBeCalled()

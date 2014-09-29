@@ -37,8 +37,9 @@ interface ManagerInterface
      * Saves the entity
      *
      * @param object $entity
+     * @param array  $options
      */
-    public function save($entity);
+    public function save($entity, array $options = array());
 
     /**
      * Remove the entity

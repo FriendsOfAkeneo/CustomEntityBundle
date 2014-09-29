@@ -9,6 +9,7 @@ CHANGELOG
  - Added global configuration options for entities (see documentation)
  - Added new event for configuration option resolving
  - Added manager registry
+ - Added save options for form actions
 
 
 ## BC Breaks
@@ -17,6 +18,7 @@ CHANGELOG
  - Constructor for Configuration\Registry has changed
  - Constructor for Manager\Manager has changed
  - Removed all validation for abstract entities
+ - Changed signature of ManagerInterface::save()
 
 1.3.0
 -----
