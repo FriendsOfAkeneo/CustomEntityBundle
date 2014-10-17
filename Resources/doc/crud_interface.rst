@@ -172,7 +172,7 @@ By default, the edit action uses the ``pim_custom_entity.action.edit`` service w
                     form_options: {}
                     redirect_route: pim_customentity_index
                     redirect_route_parameters: { customEntityName: my_entity }
-                    successs_message: flash.my_entity.updated
+                    success_message: flash.my_entity.updated
                     grid_action_options:
                         type: navigate
                         label: Edit
@@ -217,7 +217,7 @@ By default, the mass edit action uses the ``pim_custom_entity.action.mass_edit``
                     form_options: {}
                     redirect_route: pim_customentity_index
                     redirect_route_parameters: { customEntityName: my_entity }
-                    successs_message: flash.my_entity.mass_edited
+                    success_message: flash.my_entity.mass_edited
                     grid_action_options:
                         type: redirect
                         label: Mass Edit
@@ -287,6 +287,47 @@ By default, the mass delete action uses the ``pim_custom_entity.action.mass_dele
 
 grid_action_options:
   An array of options for the Oro grid action
+
+Quick Export Action Options
+***************************
+
+By default, the quick_export action uses the ``pim_custom_entity.action.quick_export`` service with the following options:
+
+.. code-block:: yaml
+   
+    custom_entities:
+        my_entity:
+            entity_class: Acme\Bundle\CatalogBundle\Entity\MyEntity
+            actions:
+                mass_edit:
+                    limit: ~
+                    service: pim_custom_entity.action.quick_export
+                    route: pim_customentity_quickexport
+                    format: csv
+                    content_type: csv
+                    filename: export.csv
+                    serializer_format: csv
+                    serializer_context: []
+                    grid_action_options:
+                        type: export
+                        frontend_type: export
+                        label: Quick export
+                        icon: download
+                     
+limit:
+   The maximum number of items that can be exported, null for no limit
+format:
+   The format of the exported file
+content_type:
+   The content type of the exported file
+filename:
+   The name of the exported file
+serializer_format:
+   The format passed to the serializer
+serializer_context:
+   The context passed to the serializer
+grid_action_options:
+   An array of options for the Oro grid action
 
 
 Datagrid Configuration

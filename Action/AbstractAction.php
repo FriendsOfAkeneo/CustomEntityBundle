@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Routing\Router;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -156,16 +157,22 @@ abstract class AbstractAction implements ActionInterface
      * @param string $actionType
      * @param object $object
      * @param array  $parameters
+     * @param mixed  $referenceType
      */
-    protected function getActionUrl($actionType, $object = null, $parameters = [])
-    {
+    protected function getActionUrl(
+        $actionType,
+        $object = null,
+        $parameters = [],
+        $referenceType = Router::ABSOLUTE_PATH
+    ) {
         $action = ($actionType === $this->getType())
             ? $this
             : $this->actionFactory->getAction($this->configuration->getName(), $actionType);
 
         return $this->router->generate(
             $action->getRoute(),
-            $parameters + $action->getRouteParameters($object)
+            $parameters + $action->getRouteParameters($object),
+            $referenceType
         );
     }
 
@@ -198,11 +205,12 @@ abstract class AbstractAction implements ActionInterface
      * @param Request $request
      * @param type    $type
      * @param type    $message
+     * @param array   $messageParameters
      */
-    protected function addFlash(Request $request, $type, $message)
+    protected function addFlash(Request $request, $type, $message, array $messageParameters = [])
     {
         $request->getSession()->getFlashBag()
-            ->add($type, $this->translator->trans($message));
+            ->add($type, $this->translator->trans($message, $messageParameters));
     }
 
     /**
@@ -220,7 +228,7 @@ abstract class AbstractAction implements ActionInterface
      *
      * @param Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\Response $response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     abstract public function doExecute(Request $request);
 }

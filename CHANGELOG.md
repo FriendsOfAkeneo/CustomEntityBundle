@@ -10,6 +10,7 @@ CHANGELOG
  - Added new event for configuration option resolving
  - Added manager registry
  - Added save options for form actions
+ - Added quick export action
 
 
 ## BC Breaks

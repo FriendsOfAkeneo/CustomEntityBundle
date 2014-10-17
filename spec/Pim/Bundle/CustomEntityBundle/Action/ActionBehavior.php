@@ -31,7 +31,7 @@ class ActionBehavior extends ObjectBehavior
 
     public function initializeRouter(RouterInterface $router)
     {
-        $router->generate(Argument::type('string'), Argument::type('array'))->will(
+        $router->generate(Argument::type('string'), Argument::type('array'), Argument::any())->will(
             function ($arguments) {
                 $path = $arguments[0] . '?';
                 foreach ($arguments[1] as $key => $value) {
