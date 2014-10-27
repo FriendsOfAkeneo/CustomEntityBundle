@@ -9,6 +9,7 @@ parameters:
     pim_custom_entity.action.history.class:      Pim\Bundle\CustomEntityBundle\Action\HistoryAction
     pim_custom_entity.action.mass_edit.class:    Pim\Bundle\CustomEntityBundle\Action\MassEditAction
     pim_custom_entity.action.mass_delete.class:  Pim\Bundle\CustomEntityBundle\Action\MassDeleteAction
+    pim_custom_entity.action.quick_export.class: Pim\Bundle\CustomEntityBundle\Action\QuickExportAction
 
 services:
     pim_custom_entity.action.factory:
@@ -73,6 +74,14 @@ services:
         arguments:
             - @pim_custom_entity.mass_action.datagrid_query_generator
             - @pim_custom_entity.mass_action.mass_updater
+
+    pim_custom_entity.action.quick_export:
+        class: %pim_custom_entity.action.quick_export.class%
+        parent: pim_custom_entity.action
+        scope: prototype
+        arguments:
+            - @pim_custom_entity.mass_action.datagrid_query_generator
+            - @pim_serializer
 
     pim_custom_entity.action.create:
         class: %pim_custom_entity.action.create.class%

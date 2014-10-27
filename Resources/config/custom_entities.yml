@@ -32,6 +32,10 @@ custom_entities:
                 service: pim_custom_entity.action.history
                 enabled: false
                 acl_suffix: edit
+            quick_export:
+                service: pim_custom_entity.action.quick_export
+                enabled: false
+                acl_suffix: index
 
     quick_create:
         abstract: true
@@ -45,6 +49,8 @@ custom_entities:
         abstract: true
         actions:
             index:
-                mass_actions: [ mass_edit, mass_delete]
+                mass_actions: [ mass_edit, mass_delete, quick_export]
             mass_delete:
+                enabled: true
+            quick_export:
                 enabled: true

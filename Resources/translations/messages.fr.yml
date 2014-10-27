@@ -1,0 +1,9 @@
+Properties: Propriétés
+
+# tabs and accordions
+pane.accordion:
+    general_properties: Propriétés générales
+
+pim_custom_entity:
+    export:
+        limit_exceeded: Merci de sélectionner moins de %limit% enregistrements

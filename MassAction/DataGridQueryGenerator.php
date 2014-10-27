@@ -4,11 +4,12 @@ namespace Pim\Bundle\CustomEntityBundle\MassAction;
 
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\Query\Expr\From;
+use Doctrine\ORM\QueryBuilder;
 use Oro\Bundle\DataGridBundle\Datagrid\Manager;
 use Oro\Bundle\DataGridBundle\Datagrid\RequestParameters;
-use Oro\Bundle\DataGridBundle\Datasource\Orm\OrmDatasource;
 use Oro\Bundle\DataGridBundle\Extension\MassAction\MassActionParametersParser;
-use Pim\Bundle\DataGridBundle\Extension\Filter\OrmFilterExtension;
+use Oro\Bundle\FilterBundle\Grid\Extension\OrmFilterExtension;
+use Pim\Bundle\DataGridBundle\Datasource\Datasource;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -52,10 +53,10 @@ class DataGridQueryGenerator
     /**
      * Creates a query builder based on the grid
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param string                                    $datagridName
+     * @param Request $request
+     * @param string  $datagridName
      *
-     * @return \Doctrine\ORM\QueryBuilder
+     * @return QueryBuilder
      *
      * @throws \LogicException
      */
@@ -71,7 +72,7 @@ class DataGridQueryGenerator
         $this->requestParams->set(OrmFilterExtension::FILTER_ROOT_PARAM, $parameters['filters']);
 
         $datasource = $datagrid->getDatasource();
-        if (!$datasource instanceof OrmDatasource) {
+        if (!$datasource instanceof Datasource) {
             throw new \LogicException("Mass actions applicable only for datagrids with ORM datasource.");
         }
 
@@ -104,6 +105,14 @@ class DataGridQueryGenerator
         return $qb->getQuery()->getResult(AbstractQuery::HYDRATE_ARRAY);
     }
 
+    /**
+     * Returns the count of selected objects
+     *
+     * @param Request $request
+     * @param string  $datagridName
+     *
+     * @return int
+     */
     public function getCount(Request $request, $datagridName)
     {
         $qb = $this->createQueryBuilder($request, $datagridName);
