@@ -32,6 +32,6 @@ class SimpleCustomOptionProperty extends FieldProperty
     {
         return isset($option['label']) && $option['label']
             ? $option['label']
-            : $option['code'] ? sprintf('[%s]', $option['code']) : null;
+            : ($option['code'] ? sprintf('[%s]', $option['code']) : null);
     }
 }
