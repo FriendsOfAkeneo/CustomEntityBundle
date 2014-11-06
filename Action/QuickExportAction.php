@@ -11,7 +11,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Routing\Router;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -192,7 +191,7 @@ class QuickExportAction extends AbstractAction implements GridActionInterface
                     $this->options['serializer_format'],
                     $this->options['serializer_context']
                 );
-
+                $headersSent = true;
             }
 
             echo $this->serializer->encode(
