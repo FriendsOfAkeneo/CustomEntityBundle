@@ -308,6 +308,7 @@ By default, the quick_export action uses the ``pim_custom_entity.action.quick_ex
                     filename: export.csv
                     serializer_format: csv
                     serializer_context: []
+                    batch_size: 100
                     grid_action_options:
                         type: export
                         frontend_type: export
@@ -326,6 +327,8 @@ serializer_format:
    The format passed to the serializer
 serializer_context:
    The context passed to the serializer
+batch_size:
+   The count of exported elements before the entity manager is cleared
 grid_action_options:
    An array of options for the Oro grid action
 

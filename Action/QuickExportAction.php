@@ -5,6 +5,7 @@ namespace Pim\Bundle\CustomEntityBundle\Action;
 use Pim\Bundle\CustomEntityBundle\Event\ActionEventManager;
 use Pim\Bundle\CustomEntityBundle\Manager\Registry as ManagerRegistry;
 use Pim\Bundle\CustomEntityBundle\MassAction\DataGridQueryGenerator;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,6 +26,11 @@ use Symfony\Component\Translation\TranslatorInterface;
 class QuickExportAction extends AbstractAction implements GridActionInterface
 {
     /**
+     * @var RegistryInterface
+     */
+    protected $doctrine;
+
+    /**
      * @var DataGridQueryGenerator
      */
     protected $queryGenerator;
@@ -42,6 +48,7 @@ class QuickExportAction extends AbstractAction implements GridActionInterface
      * @param ManagerRegistry        $managerRegistry
      * @param RouterInterface        $router
      * @param TranslatorInterface    $translator
+     * @param RegistryInterface      $doctrine
      * @param DataGridQueryGenerator $queryGenerator
      * @param Serializer             $serializer
      */
@@ -51,10 +58,12 @@ class QuickExportAction extends AbstractAction implements GridActionInterface
         ManagerRegistry $managerRegistry,
         RouterInterface $router,
         TranslatorInterface $translator,
+        RegistryInterface $doctrine,
         DataGridQueryGenerator $queryGenerator,
         Serializer $serializer
     ) {
         parent::__construct($actionFactory, $eventManager, $managerRegistry, $router, $translator);
+        $this->doctrine = $doctrine;
         $this->queryGenerator = $queryGenerator;
         $this->serializer = $serializer;
     }
@@ -118,6 +127,7 @@ class QuickExportAction extends AbstractAction implements GridActionInterface
                 'filename'            => 'export.csv',
                 'serializer_format'   => 'csv',
                 'serializer_context'  => [],
+                'batch_size'          => 1,
                 'grid_action_options' => [
                     'type' => 'export',
                     'frontend_type' => 'export',
@@ -174,8 +184,9 @@ class QuickExportAction extends AbstractAction implements GridActionInterface
             ->iterate();
 
         $headersSent = false;
+        $manager = $this->doctrine->getManagerForClass($this->configuration->getEntityClass());
 
-        foreach ($iterator as $item) {
+        foreach ($iterator as $index => $item) {
             if (!count($item[0])) {
                 continue;
             }
@@ -200,6 +211,9 @@ class QuickExportAction extends AbstractAction implements GridActionInterface
                 $this->options['serializer_context']
             );
             flush();
+            if (0 === (($index + 100) % $this->options['batch_size'])) {
+                $manager->clear();
+            }
         }
     }
 }

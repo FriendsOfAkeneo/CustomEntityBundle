@@ -80,6 +80,7 @@ services:
         parent: pim_custom_entity.action
         scope: prototype
         arguments:
+            - @doctrine
             - @pim_custom_entity.mass_action.datagrid_query_generator
             - @pim_serializer
 

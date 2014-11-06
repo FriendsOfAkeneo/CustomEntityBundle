@@ -2,6 +2,7 @@
 
 namespace spec\Pim\Bundle\CustomEntityBundle\Action;
 
+use Doctrine\ORM\EntityManager;
 use Pim\Bundle\CustomEntityBundle\Action\AbstractAction;
 use Pim\Bundle\CustomEntityBundle\Action\ActionFactory;
 use Pim\Bundle\CustomEntityBundle\Configuration\ConfigurationInterface;
@@ -9,6 +10,7 @@ use Pim\Bundle\CustomEntityBundle\Event\ActionEventManager;
 use Pim\Bundle\CustomEntityBundle\Manager\ManagerInterface;
 use Pim\Bundle\CustomEntityBundle\Manager\Registry as ManagerRegistry;
 use Pim\Bundle\CustomEntityBundle\MassAction\DataGridQueryGenerator;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
@@ -29,10 +31,12 @@ class QuickExportActionSpec extends ActionBehavior
         Request $request,
         ParameterBag $attributes,
         ConfigurationInterface $configuration,
+        RegistryInterface $doctrine,
         DataGridQueryGenerator $queryGenerator,
         Serializer $serializer,
         Session $session,
-        FlashBag $flashBag
+        FlashBag $flashBag,
+        EntityManager $em
     ) {
         $this->beConstructedWith(
             $actionFactory,
@@ -40,6 +44,7 @@ class QuickExportActionSpec extends ActionBehavior
             $managerRegistry,
             $router,
             $translator,
+            $doctrine,
             $queryGenerator,
             $serializer
         );
@@ -49,6 +54,7 @@ class QuickExportActionSpec extends ActionBehavior
         $this->initializeConfiguration($configuration);
         $this->initializeRouter($router);
         $this->initializeTranslator($translator);
+        $doctrine->getManagerForClass('class')->willReturn($em);
         $configuration->getActionOptions('quick_export')->willReturn([]);
         $queryGenerator->getCount($request, 'entity')->willReturn(3);
     }
