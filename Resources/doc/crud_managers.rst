@@ -9,6 +9,9 @@ the ``Pim\Bundle\CustomEntityBundle\Manager\Manager`` class.
 
 Your manager can be registered by using the pim_custom_entity.manager tag in your DI:
 
+
+.. code-block:: yaml
+
     services:
         acme_catalog.manager.my_manager:
             class: Acme\Bundle\CatalogBundle\Manager\MyManager
@@ -17,6 +20,9 @@ Your manager can be registered by using the pim_custom_entity.manager tag in you
 
 
 The manager for each class can be specified in your ``custom_entities.yml`` files:
+
+
+.. code-block:: yaml
 
     custom_entities:
         my_entity:
