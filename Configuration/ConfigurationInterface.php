@@ -51,4 +51,9 @@ interface ConfigurationInterface
      * @return string
      */
     public function getEntityClass();
+
+    /**
+     * Returns the global options of the action
+     */
+    public function getOptions();
 }

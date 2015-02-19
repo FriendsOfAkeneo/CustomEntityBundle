@@ -40,8 +40,10 @@ class ConfigureCustomEntityGridListenerSpec extends ObjectBehavior
         $datagridConfig->getName()->willReturn('entity');
         $indexAction->getMassActions()->willReturn([]);
         $indexAction->getRowActions()->willReturn([]);
+        $indexAction->getOptions()->willReturn([]);
         $datagridConfig->offsetGetByPath('[extends]')->willReturn('custom_entity');
         $datagridConfig->offsetGetByPath('[properties]')->willReturn([]);
+        $datagridConfig->offsetGetByPath('[source]')->willReturn([]);
         $datagridConfig->offsetGetByPath('[actions]')->willReturn([]);
         $datagridConfig->offsetGetByPath('[mass_actions]')->willReturn([]);
         $datagridConfig->offsetSetByPath("[source]", ["entity" => "entity_class", "type" => "pim_custom_entity"])
@@ -68,9 +70,11 @@ class ConfigureCustomEntityGridListenerSpec extends ObjectBehavior
         $action2->getGridActionOptions()->willReturn([]);
         $datagridConfig->getName()->willReturn('entity');
         $indexAction->getMassActions()->willReturn([]);
+        $indexAction->getOptions()->willReturn([]);
         $indexAction->getRowActions()->willReturn(['action1', 'action2']);
         $datagridConfig->offsetGetByPath('[extends]')->willReturn('custom_entity');
         $datagridConfig->offsetGetByPath('[mass_actions]')->willReturn([]);
+        $datagridConfig->offsetGetByPath('[source]')->willReturn([]);
         $datagridConfig->offsetSetByPath("[source]", ["entity" => "entity_class", "type" => "pim_custom_entity"])
                 ->shouldBeCalled();
         $datagridConfig->offsetSetByPath(
@@ -108,9 +112,11 @@ class ConfigureCustomEntityGridListenerSpec extends ObjectBehavior
         $datagridConfig->getName()->willReturn('entity');
         $indexAction->getMassActions()->willReturn(['action1', 'action2']);
         $indexAction->getRowActions()->willReturn([]);
+        $indexAction->getOptions()->willReturn([]);
         $datagridConfig->offsetGetByPath('[extends]')->willReturn('custom_entity');
         $datagridConfig->offsetGetByPath('[properties]')->willReturn([]);
         $datagridConfig->offsetGetByPath('[actions]')->willReturn([]);
+        $datagridConfig->offsetGetByPath('[source]')->willReturn([]);
         $datagridConfig->offsetGetByPath('[mass_actions]')->willReturn(['action2'=>[]]);
         $datagridConfig->offsetSetByPath("[source]", ["entity" => "entity_class", "type" => "pim_custom_entity"])
                 ->shouldBeCalled();

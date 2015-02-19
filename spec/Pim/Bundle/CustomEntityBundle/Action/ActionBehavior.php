@@ -5,6 +5,8 @@ namespace spec\Pim\Bundle\CustomEntityBundle\Action;
 use PhpSpec\ObjectBehavior;
 use Pim\Bundle\CustomEntityBundle\Configuration\ConfigurationInterface;
 use Pim\Bundle\CustomEntityBundle\Event\ActionEventManager;
+use Pim\Bundle\CustomEntityBundle\Manager\ManagerInterface;
+use Pim\Bundle\CustomEntityBundle\Manager\Registry;
 use Prophecy\Argument;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,7 +31,7 @@ class ActionBehavior extends ObjectBehavior
 
     public function initializeRouter(RouterInterface $router)
     {
-        $router->generate(Argument::type('string'), Argument::type('array'))->will(
+        $router->generate(Argument::type('string'), Argument::type('array'), Argument::any())->will(
             function ($arguments) {
                 $path = $arguments[0] . '?';
                 foreach ($arguments[1] as $key => $value) {
@@ -92,5 +94,14 @@ class ActionBehavior extends ObjectBehavior
                     return [$args[1], $args[2]];
                 }
             );
+    }
+
+    public function initializeManager(
+        ConfigurationInterface $configuration,
+        Registry $managerRegistry,
+        ManagerInterface $manager
+    )
+    {
+        $managerRegistry->getFromConfiguration($configuration)->willReturn($manager);
     }
 }

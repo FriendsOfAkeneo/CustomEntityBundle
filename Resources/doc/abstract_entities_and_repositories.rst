@@ -1,7 +1,7 @@
 Abstract Entites and Repositories
 =================================
 
-The bundle provides a series of abstract entities  :
+The bundle provides a series of abstract entities:
 
 
 Entity\\AbstractCustomEntity
@@ -19,7 +19,7 @@ Entity\\AbstractTranslatableCustomEntity
 
 This entity extends the AbstractCustomEntity, and provides a link to a translation entity.
 
-The entity containg the translations should extend ``Pim\Bundle\TranslationBundle\Entity\AbstractTranslation``.
+The entity containing the translations should extend ``Pim\Bundle\TranslationBundle\Entity\AbstractTranslation``.
 
 The repositories for this entity should extend
 ``Pim\Bundle\CustomEntityBundle\Entity\Repository\TranslatableCustomEntityRepository``.
@@ -28,7 +28,7 @@ The repositories for this entity should extend
 Entity\\AbstractCustomOption
 ----------------------------
 
-This entity should be used when a custom attribute should be linked the entity.
+This entity should be used when a custom attribute should be linked to the entity.
 
 The repositories for this entity should extend
 ``Pim\Bundle\CustomEntityBundle\Entity\Repository\CustomOptionRepository``.
@@ -37,7 +37,7 @@ The repositories for this entity should extend
 Entity\\AbstractTranslatableCustomOption
 ----------------------------------------
 
-This entity should be used when a custom attribute should be linked the entity, and when some properties of the entity
+This entity should be used when a custom attribute should be linked to the entity, and when some properties of the entity
 have to be localized.
 
 The entity containing the translations should extend

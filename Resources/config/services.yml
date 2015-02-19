@@ -1,13 +1,16 @@
 parameters:
-    pim_custom_entity.configuration.registry.class:                Pim\Bundle\CustomEntityBundle\Configuration\Registry
-    pim_custom_entity.configuration.default.class:                 Pim\Bundle\CustomEntityBundle\Configuration\Configuration
-    pim_custom_entity.controller.class:                            Pim\Bundle\CustomEntityBundle\Controller\Controller
-    pim_custom_entity.manager.class:                               Pim\Bundle\CustomEntityBundle\Manager\Manager
-    pim_custom_entity.action_event_manager.class:                  Pim\Bundle\CustomEntityBundle\Event\ActionEventManager
+    pim_custom_entity.configuration.registry.class: Pim\Bundle\CustomEntityBundle\Configuration\Registry
+    pim_custom_entity.configuration.default.class:  Pim\Bundle\CustomEntityBundle\Configuration\Configuration
+    pim_custom_entity.controller.class:             Pim\Bundle\CustomEntityBundle\Controller\Controller
+    pim_custom_entity.manager.class:                Pim\Bundle\CustomEntityBundle\Manager\Manager
+    pim_custom_entity.manager.registry.class:       Pim\Bundle\CustomEntityBundle\Manager\Registry
+    pim_custom_entity.action_event_manager.class:   Pim\Bundle\CustomEntityBundle\Event\ActionEventManager
 
 services:
     pim_custom_entity.configuration.registry:
         class: %pim_custom_entity.configuration.registry.class%
+        arguments:
+            - '@service_container'
 
     pim_custom_entity.controller:
         class: %pim_custom_entity.controller.class%
@@ -21,6 +24,11 @@ services:
         arguments:
             - '@doctrine'
             - '@property_accessor'
+
+    pim_custom_entity.manager_registry:
+        class: %pim_custom_entity.manager.class%
+        arguments:
+            - @pim_custom_entity.manager
 
     pim_custom_entity.action_event_manager:
         class: %pim_custom_entity.action_event_manager.class%

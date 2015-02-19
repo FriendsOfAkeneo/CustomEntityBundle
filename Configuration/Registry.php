@@ -2,6 +2,8 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Configuration;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
 /**
  * Registry of configurations
  *
@@ -12,9 +14,24 @@ namespace Pim\Bundle\CustomEntityBundle\Configuration;
 class Registry
 {
     /**
+     * @var ContainerInterface
+     */
+    protected $container;
+
+    /**
      * @var array
      */
     protected $configurations = array();
+
+    /**
+     * Constructor
+     *
+     * @param ContainerInterface $container
+     */
+    public function __construct(ContainerInterface $container)
+    {
+        $this->container = $container;
+    }
 
     /**
      * Returns true if a configuration with the corresponding name exists
@@ -37,16 +54,17 @@ class Registry
      */
     public function get($name)
     {
-        return $this->configurations[$name];
+        return $this->container->get($this->configurations[$name]);
     }
 
     /**
      * Add a configuration
      *
-     * @param ConfigurationInterface $configuration
+     * @param string $name
+     * @param string $serviceId
      */
-    public function add(ConfigurationInterface $configuration)
+    public function add($name, $serviceId)
     {
-        $this->configurations[$configuration->getName()] = $configuration;
+        $this->configurations[$name] = $serviceId;
     }
 }

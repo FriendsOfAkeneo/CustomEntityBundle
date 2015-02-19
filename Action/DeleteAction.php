@@ -20,7 +20,7 @@ class DeleteAction extends AbstractAction implements GridActionInterface
     public function doExecute(Request $request)
     {
         $object = $this->findEntity($request);
-        $this->manager->remove($object);
+        $this->getManager()->remove($object);
 
         return new Response('', 204);
     }

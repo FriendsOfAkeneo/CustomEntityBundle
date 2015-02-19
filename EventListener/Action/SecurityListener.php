@@ -6,6 +6,8 @@ use Oro\Bundle\SecurityBundle\SecurityFacade;
 use Pim\Bundle\CustomEntityBundle\Action\ActionFactory;
 use Pim\Bundle\CustomEntityBundle\Event\ActionEvent;
 use Pim\Bundle\CustomEntityBundle\Event\ActionEvents;
+use Pim\Bundle\CustomEntityBundle\Event\ConfigurationEvent;
+use Pim\Bundle\CustomEntityBundle\Event\ConfigurationEvents;
 use Pim\Bundle\CustomEntityBundle\Event\ConfigureActionEvent;
 use Pim\Bundle\CustomEntityBundle\Event\PreRenderActionEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -49,10 +51,23 @@ class SecurityListener implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
+            ConfigurationEvents::CONFIGURE => 'setConfigurationOptions',
             ActionEvents::CONFIGURE => 'setDefaultOptions',
             ActionEvents::PRE_EXECUTE => 'checkGranted',
             ActionEvents::PRE_RENDER => 'removeCreateLink'
         ];
+    }
+
+    /**
+     * Adds options to the configuration
+     *
+     * @param ConfigurationEvent $event
+     */
+    public function setConfigurationOptions(ConfigurationEvent $event)
+    {
+        $resolver = $event->getOptionsResolver();
+        $resolver->setOptional(['acl', 'acl_prefix']);
+        $resolver->setDefaults(['acl_separator' => '_']);
     }
 
     /**
@@ -63,23 +78,43 @@ class SecurityListener implements EventSubscriberInterface
     public function setDefaultOptions(ConfigureActionEvent $event)
     {
         $resolver = $event->getOptionsResolver();
-        $resolver->setOptional(['acl']);
-        $customEntityName = $event->getAction()->getConfiguration()->getName();
-        $normalizeActions = function($options, $actionTypes) use ($customEntityName) {
-            return array_filter(
-                    $actionTypes, function ($actionType) use ($customEntityName) {
-                $action = $this->actionFactory->getAction($customEntityName, $actionType);
-                $options = $action->getOptions();
 
-                return (!isset($options['acl']) || $this->securityFacade->isGranted($options['acl']));
-            }
+        $options = $event->getAction()->getConfiguration()->getOptions();
+        if (isset($options['acl'])) {
+            $resolver->setDefaults(['acl' => $options['acl']]);
+        } else {
+            $resolver->setOptional(['acl']);
+        }
+        $resolver->setOptional(['acl_suffix']);
+        $resolver->setNormalizers(
+            [
+                'acl' => function ($actionOptions, $acl) use ($options) {
+                    if (null === $acl && isset($options['acl_prefix']) && isset($actionOptions['acl_suffix'])) {
+                        return $options['acl_prefix'] . $options['acl_separator'] .
+                            $actionOptions['acl_suffix'];
+                    }
+
+                    return $acl;
+                }
+            ]
+        );
+        $customEntityName = $event->getAction()->getConfiguration()->getName();
+        $normalizeActions = function ($options, $actionTypes) use ($customEntityName) {
+            return array_filter(
+                $actionTypes,
+                function ($actionType) use ($customEntityName) {
+                    $action = $this->actionFactory->getAction($customEntityName, $actionType);
+                    $options = $action->getOptions();
+
+                    return (!isset($options['acl']) || $this->securityFacade->isGranted($options['acl']));
+                }
             );
         };
         if ('index' === $event->getAction()->getType()) {
             $resolver->setNormalizers(
                     [
-                        'row_actions' => $normalizeActions,
-                        'mass_actions' => $normalizeActions
+                        'row_actions'  => $normalizeActions,
+                        'mass_actions' => $normalizeActions,
                     ]
             );
         }
@@ -95,7 +130,6 @@ class SecurityListener implements EventSubscriberInterface
     public function checkGranted(ActionEvent $event)
     {
         $options = $event->getAction()->getOptions();
-
         if (isset($options['acl']) && !$this->securityFacade->isGranted($options['acl'])) {
             throw new AccessDeniedHttpException;
         }
@@ -103,8 +137,8 @@ class SecurityListener implements EventSubscriberInterface
 
     /**
      * Removes the create link if no ACLS
-     * 
-     * @param PreRenderActionEvent $event
+     *
+     * @param  PreRenderActionEvent $event
      * @return type
      */
     public function removeCreateLink(PreRenderActionEvent $event)

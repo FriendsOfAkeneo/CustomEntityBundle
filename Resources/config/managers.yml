@@ -1,0 +1,15 @@
+parameters:
+    pim_custom_entity.manager.class:          Pim\Bundle\CustomEntityBundle\Manager\Manager
+    pim_custom_entity.manager.registry.class: Pim\Bundle\CustomEntityBundle\Manager\Registry
+
+services:
+    pim_custom_entity.manager.registry:
+        class: %pim_custom_entity.manager.registry.class%
+
+    pim_custom_entity.manager:
+        class: %pim_custom_entity.manager.class%
+        arguments:
+            - '@pim_catalog.doctrine.smart_manager_registry'
+            - '@property_accessor'
+        tags:
+            - { name: pim_custom_entity.manager, alias: default }

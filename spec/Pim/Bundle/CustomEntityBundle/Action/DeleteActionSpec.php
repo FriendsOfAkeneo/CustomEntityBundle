@@ -6,6 +6,7 @@ use Pim\Bundle\CustomEntityBundle\Action\ActionFactory;
 use Pim\Bundle\CustomEntityBundle\Configuration\ConfigurationInterface;
 use Pim\Bundle\CustomEntityBundle\Event\ActionEventManager;
 use Pim\Bundle\CustomEntityBundle\Manager\ManagerInterface;
+use Pim\Bundle\CustomEntityBundle\Manager\Registry as ManagerRegistry;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
@@ -16,6 +17,7 @@ class DeleteActionSpec extends ActionBehavior
     public function let(
         ActionFactory $actionFactory,
         ActionEventManager $eventManager,
+        ManagerRegistry $managerRegistry,
         ManagerInterface $manager,
         RouterInterface $router,
         TranslatorInterface $translator,
@@ -23,8 +25,9 @@ class DeleteActionSpec extends ActionBehavior
         ParameterBag $attributes,
         ConfigurationInterface $configuration
     ) {
-        $this->beConstructedWith($actionFactory, $eventManager, $manager, $router, $translator);
+        $this->beConstructedWith($actionFactory, $eventManager, $managerRegistry, $router, $translator);
         $this->initializeRequest($request, $attributes);
+        $this->initializeManager($configuration, $managerRegistry, $manager);
         $this->initializeConfiguration($configuration);
     }
 

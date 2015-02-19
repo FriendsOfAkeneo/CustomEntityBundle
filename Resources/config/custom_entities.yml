@@ -6,18 +6,36 @@ custom_entities:
         actions:
             index:
                 service: pim_custom_entity.action.index
+                acl_suffix: index
             edit:
                 service: pim_custom_entity.action.edit
+                acl_suffix: edit
             delete:
                 service: pim_custom_entity.action.delete
+                acl_suffix: delete
             create:
                 service: pim_custom_entity.action.create
+                acl_suffix: edit
             mass_edit:
                 service: pim_custom_entity.action.mass_edit
                 enabled: false
+                acl_suffix: edit
             mass_delete:
                 service: pim_custom_entity.action.mass_delete
                 enabled: false
+                acl_suffix: delete
+            show:
+                service: pim_custom_entity.action.show
+                enabled: false
+                acl_suffix: edit
+            history:
+                service: pim_custom_entity.action.history
+                enabled: false
+                acl_suffix: edit
+            quick_export:
+                service: pim_custom_entity.action.quick_export
+                enabled: false
+                acl_suffix: index
 
     quick_create:
         abstract: true
@@ -31,6 +49,8 @@ custom_entities:
         abstract: true
         actions:
             index:
-                mass_actions: [ mass_edit, mass_delete]
+                mass_actions: [ mass_edit, mass_delete, quick_export]
             mass_delete:
+                enabled: true
+            quick_export:
                 enabled: true

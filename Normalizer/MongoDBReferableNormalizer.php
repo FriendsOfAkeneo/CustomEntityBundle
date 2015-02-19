@@ -5,7 +5,6 @@ namespace Pim\Bundle\CustomEntityBundle\Normalizer;
 use Pim\Bundle\CatalogBundle\Model\ReferableInterface;
 use Pim\Bundle\CustomEntityBundle\Entity\AbstractCustomOption;
 use Pim\Bundle\CustomEntityBundle\Entity\AbstractTranslatableCustomOption;
-use Pim\Bundle\TranslationBundle\Entity\TranslatableInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
@@ -24,10 +23,10 @@ class MongoDBReferableNormalizer implements NormalizerInterface
 
     /**
      * Constructor
-     * 
+     *
      * @param array $allowedformats
      */
-    function __construct(array $allowedformats)
+    public function __construct(array $allowedformats)
     {
         $this->allowedformats = $allowedformats;
     }

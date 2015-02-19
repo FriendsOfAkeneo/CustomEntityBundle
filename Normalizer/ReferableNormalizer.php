@@ -7,7 +7,7 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
  * Normalizes referable entities
- * 
+ *
  * @author    Antoine Guigan <antoine@akeneo.com>
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
@@ -21,10 +21,10 @@ class ReferableNormalizer implements NormalizerInterface
 
     /**
      * Constructor
-     * 
+     *
      * @param array $allowedformats
      */
-    function __construct(array $allowedformats)
+    public function __construct(array $allowedformats)
     {
         $this->allowedformats = $allowedformats;
     }
@@ -39,7 +39,7 @@ class ReferableNormalizer implements NormalizerInterface
                 $context['field_name'] => $object->getReference(),
             ];
         } else {
-            return $object->getReference();
+            throw new \LogicException(sprintf('No normalizer found for object of class "%s"', get_class($object)));
         }
     }
 

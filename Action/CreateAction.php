@@ -19,7 +19,7 @@ class CreateAction extends AbstractFormAction
      */
     protected function getObject(Request $request)
     {
-        return $this->manager->create(
+        return $this->getManager()->create(
             $this->configuration->getEntityClass(),
             $this->options['create_values'],
             $this->options['create_options']

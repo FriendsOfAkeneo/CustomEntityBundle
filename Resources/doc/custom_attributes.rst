@@ -11,7 +11,7 @@ This bundle provides two classes to help you quickly create multiple and single 
 Single Option Attribute
 -----------------------
 
-A single option attribute can be configured in the following way :
+A single option attribute can be configured in the following way:
 
 .. code-block:: yaml
    
@@ -49,7 +49,7 @@ Please note the following:
 Multiple Option Attribute
 -------------------------
 
-A single option attribute can be configured in the following way :
+A multiple options attribute can be configured in the following way:
 
 .. code-block:: yaml
    

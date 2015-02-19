@@ -5,7 +5,7 @@ CRUD Configuration
 ------------------
 
 The configuration for the CRUD actions of your custom entities must be in a file named 'config/custom_entities.yml', 
-situated in an activated bundle. To have a full working CRUD for an entity, the following configuration could be used :
+located in an activated bundle. To have a full working CRUD for an entity, the following configuration could be used:
 
 
 .. code-block:: yaml
@@ -14,33 +14,54 @@ situated in an activated bundle. To have a full working CRUD for an entity, the 
         my_entity:
             extends: quick_create
             entity_class: Acme\Bundle\CatalogBundle\Entity\MyEntity
+            options:
+                form_type: my_form_type
+                acl_prefix: my_acl_prefix
             actions:
                 create:
-                    form_type: my_form_type
-                edit:
-                    form_type: my_form_type
+                    form_options: { create: true }
 
 The root level of the file contains the configuration for all your entities, indexed by alias. The alias will be used in the 
 CRUD URLs, and later, for the datagrid configuration.
 
-For each entity, the following options are available :
+For each entity, the following options are available:
 
 abstract
   Set to true if the definition is only meant to be extended
 extends
   The alias of the extended configuration.
-  The bundle propose three base configurations that can be extended : default, quick_create, and mass_actions
+  The bundle offers three base configurations that can be extended: default, quick_create, and mass_actions
+options
+  The global configuration options for the current entity
 actions
   The configuration for the enabled CRUD actions
 entity_class
   The class of the entity, **required** if the configuration is not abstract.
   (Container parameters can be used in the class value)
-   
+
+
+Global Configuration Options
+****************************
+
+The following options can be used:
+
+manager
+  Alias of the CRUD object manager. Default is "default".
+acl_prefix
+  A prefix for all ACLs of the CRUD. If not set, no ACLs will be set.
+acl_separator
+  The separator between the ACL prefix and the ACL suffix. Default is "_"
+form_type
+  The default form type for form actions.
+form_options
+  The default form options for form actions.
+form_template
+  The default template for form actions.
 
 Common Action Options
 *********************
 
-The following options are common for all actions :
+The following options are common for all actions:
 
 service
   The id of the action service
@@ -50,11 +71,15 @@ route
   The route for the action
 acl
   The ACL for the action
+acl_suffix
+  If the global ``acl_prefix`` option is provided, and no acl is provided for the action, the acl option
+  will be set to <acl_prefix><acl_separator><acl_suffix>
+
 
 Index Action Options
 ********************
 
-By default, the index action uses the ``pim_custom_entity.action.index`` service with the following options :
+By default, the index action uses the ``pim_custom_entity.action.index`` service with the following options:
 
 .. code-block:: yaml
    
@@ -63,11 +88,11 @@ By default, the index action uses the ``pim_custom_entity.action.index`` service
             entity_class: Acme\Bundle\CatalogBundle\Entity\MyEntity
             actions:
                 index:
-                     service: pim_custom_entity.action.index
-                     route: pim_customentity_index
-                     quick_create: false
-                     template: PimCustomEntityBundle:CustomEntity:index.html.twig
-                     row_actions: ['edit', 'delete']
+                    service: pim_custom_entity.action.index
+                    route: pim_customentity_index
+                    quick_create: false
+                    template: PimCustomEntityBundle:CustomEntity:index.html.twig
+                    row_actions: ['edit', 'delete']
                     
 
 template
@@ -79,12 +104,14 @@ mass_actions
 quick_create
    True if the create action should be displayed in a lightbox. *(Requires the use of the 
    **pim_custom_entity.action.quick_create** service for the create action)*
+quick_create_action_type
+   The action type for the quick create action
 
 
 Create Action Options
 *********************
 
-By default, the create action uses the ``pim_custom_entity.action.create`` service with the following options :
+By default, the create action uses the ``pim_custom_entity.action.create`` service with the following options:
 
 .. code-block:: yaml
    
@@ -93,16 +120,17 @@ By default, the create action uses the ``pim_custom_entity.action.create`` servi
             entity_class: Acme\Bundle\CatalogBundle\Entity\MyEntity
             actions:
                 create:
-                     service: pim_custom_entity.action.create
-                     route: pim_customentity_create
-                     template: PimCustomEntityBundle:CustomEntity:form.html.twig
-                     form_type: ~
-                     form_options: {}
-                     redirect_route: pim_customentity_index
-                     redirect_route_parameters: { customEntityName: my_entity }
-                     successs_message: flash.my_entity.created
-                     create_values: {}
-                     create_options: {}
+                    service: pim_custom_entity.action.create
+                    route: pim_customentity_create
+                    template: PimCustomEntityBundle:CustomEntity:form.html.twig
+                    form_type: ~
+                    form_options: {}
+                    redirect_route: pim_customentity_index
+                    redirect_route_parameters: { customEntityName: my_entity }
+                    successs_message: flash.my_entity.created
+                    create_values: {}
+                    create_options: {}
+                    save_options: {}
                      
                      
 template
@@ -120,13 +148,15 @@ success_message
 create_values
    An array of default properties for the created object
 create_options
-   An array of options which should be passed to the object manager
+   An array of options which should be passed to the object manager for object creation
+save_options
+   An array of options which should be passed to the object manager for object saving
 
 
 Edit Action Options
 *******************
 
-By default, the edit action uses the ``pim_custom_entity.action.edit`` service with the following options :
+By default, the edit action uses the ``pim_custom_entity.action.edit`` service with the following options:
 
 .. code-block:: yaml
    
@@ -135,21 +165,22 @@ By default, the edit action uses the ``pim_custom_entity.action.edit`` service w
             entity_class: Acme\Bundle\CatalogBundle\Entity\MyEntity
             actions:
                 edit:
-                     service: pim_custom_entity.action.edit
-                     route: pim_customentity_edit
-                     template: PimCustomEntityBundle:CustomEntity:form.html.twig
-                     form_type: ~
-                     form_options: {}
-                     redirect_route: pim_customentity_index
-                     redirect_route_parameters: { customEntityName: my_entity }
-                     successs_message: flash.my_entity.updated
-                     grid_action_options:
+                    service: pim_custom_entity.action.edit
+                    route: pim_customentity_edit
+                    template: PimCustomEntityBundle:CustomEntity:form.html.twig
+                    form_type: ~
+                    form_options: {}
+                    redirect_route: pim_customentity_index
+                    redirect_route_parameters: { customEntityName: my_entity }
+                    success_message: flash.my_entity.updated
+                    grid_action_options:
                         type: navigate
                         label: Edit
                         icon: edit
                         link: edit_link
                         rowAction: true
-                        
+                    save_options: {}
+   
 template
   The template of the action
 form_type
@@ -164,12 +195,13 @@ success_message
    A message which should be displayed on success
 grid_action_options:
    An array of options for the Oro grid action
-
+save_options:
+   An array of options which should be passed to the object manager for object saving
 
 Mass Edit Action Options
 ************************
 
-By default, the mass edit action uses the ``pim_custom_entity.action.mass_edit`` service with the following options :
+By default, the mass edit action uses the ``pim_custom_entity.action.mass_edit`` service with the following options:
 
 .. code-block:: yaml
    
@@ -178,15 +210,15 @@ By default, the mass edit action uses the ``pim_custom_entity.action.mass_edit``
             entity_class: Acme\Bundle\CatalogBundle\Entity\MyEntity
             actions:
                 mass_edit:
-                     service: pim_custom_entity.action.mass_edit
-                     route: pim_customentity_massedit
-                     template: PimCustomEntityBundle:CustomEntity:massEdit.html.twig
-                     form_type: ~
-                     form_options: {}
-                     redirect_route: pim_customentity_index
-                     redirect_route_parameters: { customEntityName: my_entity }
-                     successs_message: flash.my_entity.mass_edited
-                     grid_action_options:
+                    service: pim_custom_entity.action.mass_edit
+                    route: pim_customentity_massedit
+                    template: PimCustomEntityBundle:CustomEntity:massEdit.html.twig
+                    form_type: ~
+                    form_options: {}
+                    redirect_route: pim_customentity_index
+                    redirect_route_parameters: { customEntityName: my_entity }
+                    success_message: flash.my_entity.mass_edited
+                    grid_action_options:
                         type: redirect
                         label: Mass Edit
                         icon: edit
@@ -207,10 +239,11 @@ success_message
 grid_action_options:
    An array of options for the Oro grid action
 
+
 Delete Action Options
 *********************
 
-By default, the delete action uses the ``pim_custom_entity.action.delete`` service with the following options :
+By default, the delete action uses the ``pim_custom_entity.action.delete`` service with the following options:
 
 .. code-block:: yaml
    
@@ -219,9 +252,9 @@ By default, the delete action uses the ``pim_custom_entity.action.delete`` servi
             entity_class: Acme\Bundle\CatalogBundle\Entity\MyEntity
             actions:
                 delete:
-                     service: pim_custom_entity.action.delete
-                     route: pim_customentity_delete
-                     grid_action_options: 
+                    service: pim_custom_entity.action.delete
+                    route: pim_customentity_delete
+                    grid_action_options: 
                         type: delete
                         label: Delete
                         icon: trash
@@ -233,7 +266,7 @@ grid_action_options:
 Mass Delete Action Options
 **************************
 
-By default, the mass delete action uses the ``pim_custom_entity.action.mass_delete`` service with the following options :
+By default, the mass delete action uses the ``pim_custom_entity.action.mass_delete`` service with the following options:
 
 .. code-block:: yaml
    
@@ -242,9 +275,9 @@ By default, the mass delete action uses the ``pim_custom_entity.action.mass_dele
             entity_class: Acme\Bundle\CatalogBundle\Entity\MyEntity
             actions:
                 index:
-                     service: pim_custom_entity.action.delete
-                     route: ~
-                     grid_action_options: 
+                    service: pim_custom_entity.action.delete
+                    route: ~
+                    grid_action_options: 
                         type: delete
                         label: Delete
                         entity_name: my_entity
@@ -254,6 +287,50 @@ By default, the mass delete action uses the ``pim_custom_entity.action.mass_dele
 
 grid_action_options:
   An array of options for the Oro grid action
+
+Quick Export Action Options
+***************************
+
+By default, the quick_export action uses the ``pim_custom_entity.action.quick_export`` service with the following options:
+
+.. code-block:: yaml
+   
+    custom_entities:
+        my_entity:
+            entity_class: Acme\Bundle\CatalogBundle\Entity\MyEntity
+            actions:
+                mass_edit:
+                    limit: ~
+                    service: pim_custom_entity.action.quick_export
+                    route: pim_customentity_quickexport
+                    format: csv
+                    content_type: csv
+                    filename: export.csv
+                    serializer_format: csv
+                    serializer_context: []
+                    batch_size: 100
+                    grid_action_options:
+                        type: export
+                        frontend_type: export
+                        label: Quick export
+                        icon: download
+                     
+limit:
+   The maximum number of items that can be exported, null for no limit
+format:
+   The format of the exported file
+content_type:
+   The content type of the exported file
+filename:
+   The name of the exported file
+serializer_format:
+   The format passed to the serializer
+serializer_context:
+   The context passed to the serializer
+batch_size:
+   The count of exported elements before the entity manager is cleared
+grid_action_options:
+   An array of options for the Oro grid action
 
 
 Datagrid Configuration

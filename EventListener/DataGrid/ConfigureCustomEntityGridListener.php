@@ -65,13 +65,15 @@ class ConfigureCustomEntityGridListener
     protected function setSource(DatagridConfiguration $datagridConfig, ActionInterface $indexAction)
     {
         $customEntityConfig = $indexAction->getConfiguration();
-        $datagridConfig->offsetSetByPath(
-            '[source]',
-            [
+        $options = $indexAction->getOptions();
+        $sourceOptions = ($datagridConfig->offsetGetByPath('[source]')?:[]) + [
                 'entity' => $customEntityConfig->getEntityClass(),
                 'type'   => 'pim_custom_entity'
-            ]
-        );
+        ];
+        if (isset($options['acl'])) {
+            $sourceOptions['acl_resource'] = $options['acl'];
+        }
+        $datagridConfig->offsetSetByPath('[source]', $sourceOptions);
     }
 
     /**

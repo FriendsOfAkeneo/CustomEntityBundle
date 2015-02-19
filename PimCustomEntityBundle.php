@@ -21,6 +21,7 @@ class PimCustomEntityBundle extends Bundle
     {
         $container
             ->addCompilerPass(new DependencyInjection\Compiler\ConfigurationBuilderPass())
-            ->addCompilerPass(new DependencyInjection\Compiler\SerializerPass());
+            ->addCompilerPass(new DependencyInjection\Compiler\SerializerPass())
+            ->addCompilerPass(new DependencyInjection\Compiler\ManagerRegistryPass());
     }
 }

@@ -3,7 +3,7 @@
 namespace Pim\Bundle\CustomEntityBundle\Action;
 
 use Pim\Bundle\CustomEntityBundle\Event\ActionEventManager;
-use Pim\Bundle\CustomEntityBundle\Manager\ManagerInterface;
+use Pim\Bundle\CustomEntityBundle\Manager\Registry as ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -32,7 +32,7 @@ abstract class AbstractFormAction extends AbstractViewableAction
      *
      * @param ActionFactory        $actionFactory
      * @param ActionEventManager   $eventManager
-     * @param ManagerInterface     $manager
+     * @param ManagerRegistry      $managerRegistry
      * @param RouterInterface      $router
      * @param TranslatorInterface  $translator
      * @param EngineInterface      $templating
@@ -41,13 +41,13 @@ abstract class AbstractFormAction extends AbstractViewableAction
     public function __construct(
         ActionFactory $actionFactory,
         ActionEventManager $eventManager,
-        ManagerInterface $manager,
+        ManagerRegistry $managerRegistry,
         RouterInterface $router,
         TranslatorInterface $translator,
         EngineInterface $templating,
         FormFactoryInterface $formFactory
     ) {
-        parent::__construct($actionFactory, $eventManager, $manager, $router, $translator, $templating);
+        parent::__construct($actionFactory, $eventManager, $managerRegistry, $router, $translator, $templating);
         $this->formFactory = $formFactory;
     }
 
@@ -64,7 +64,8 @@ abstract class AbstractFormAction extends AbstractViewableAction
                 'form_options'              => [],
                 'template'                  => 'PimCustomEntityBundle:CustomEntity:form.html.twig',
                 'redirect_route'            => $action->getRoute(),
-                'redirect_route_parameters' => $action->getRouteParameters()
+                'redirect_route_parameters' => $action->getRouteParameters(),
+                'save_options'              => []
             ]
         );
     }
@@ -98,7 +99,7 @@ abstract class AbstractFormAction extends AbstractViewableAction
      */
     protected function saveForm(Request $request, FormInterface $form)
     {
-       $this->manager->save($form->getData());
+       $this->getManager()->save($form->getData(), $this->options['save_options']);
     }
 
     /**

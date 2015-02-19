@@ -2,8 +2,9 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Manager;
 
+use Pim\Bundle\CatalogBundle\Doctrine\SmartManagerRegistry;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Common\Util\ClassUtils;
 
 /**
  * Base implementation for ORM managers
@@ -15,7 +16,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
 class Manager implements ManagerInterface
 {
     /**
-     * @var RegistryInterface
+     * @var SmartManagerRegistry
      */
     protected $doctrine;
 
@@ -27,10 +28,10 @@ class Manager implements ManagerInterface
     /**
      * Constructor
      *
-     * @param RegistryInterface         $doctrine
+     * @param SmartManagerRegistry      $doctrine
      * @param PropertyAccessorInterface $propertyAccessor
      */
-    public function __construct(RegistryInterface $doctrine, PropertyAccessorInterface $propertyAccessor)
+    public function __construct(SmartManagerRegistry $doctrine, PropertyAccessorInterface $propertyAccessor)
     {
         $this->doctrine = $doctrine;
         $this->propertyAccessor = $propertyAccessor;
@@ -60,9 +61,9 @@ class Manager implements ManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function save($entity)
+    public function save($entity, array $options = array())
     {
-        $em = $this->doctrine->getManager();
+        $em = $this->getManager($entity);
         $em->persist($entity);
         $em->flush();
     }
@@ -72,8 +73,22 @@ class Manager implements ManagerInterface
      */
     public function remove($entity)
     {
-        $em = $this->doctrine->getManager();
+        $em = $this->getManager($entity);
         $em->remove($entity);
         $em->flush();
+    }
+
+    /**
+     * Returns the manager for an entity
+     *
+     * @param object|string $entity
+     *
+     * @return \Doctrine\Common\Persistence\ObjectManager
+     */
+    protected function getManager($entity)
+    {
+        return $this->doctrine->getManagerForClass(
+            is_object($entity) ? ClassUtils::getClass($entity) : $entity
+        );
     }
 }

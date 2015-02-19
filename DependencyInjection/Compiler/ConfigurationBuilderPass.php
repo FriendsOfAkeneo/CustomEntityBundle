@@ -59,9 +59,13 @@ class ConfigurationBuilderPass implements CompilerPassInterface
     {
         $definition = new Definition(
             $configuration['class'],
-            [ $name, $configuration['entity_class']]
+            [
+                new Reference('event_dispatcher'),
+                $name,
+                $configuration['entity_class'],
+                $configuration['options']
+            ]
         );
-        $definition->setPublic(false);
         foreach ($configuration['actions'] as $type => $options) {
             if (null === $options || !$options['enabled']) {
                 continue;
@@ -73,7 +77,7 @@ class ConfigurationBuilderPass implements CompilerPassInterface
         $serviceName = sprintf('pim_custom_entity_bundle.configuration.%s', $name);
         $container->addDefinitions([$serviceName => $definition]);
         $container->getDefinition('pim_custom_entity.configuration.registry')
-            ->addMethodCall('add', [new Reference($serviceName)]);
+            ->addMethodCall('add', [$name, $serviceName]);
     }
 
     /**
@@ -101,6 +105,7 @@ class ConfigurationBuilderPass implements CompilerPassInterface
         if (!$configuration['class']) {
             $configuration['class'] = $parentConfiguration['class'];
         }
+        $configuration['options'] = $configuration['options'] + $parentConfiguration['options'];
         foreach ($parentConfiguration['actions'] as $actionName => $actionConfiguration) {
             if (isset($configuration['actions'][$actionName])) {
                 $configuration['actions'][$actionName] = $configuration['actions'][$actionName] + $actionConfiguration;
@@ -147,6 +152,10 @@ class ConfigurationBuilderPass implements CompilerPassInterface
                     ->scalarNode('class')->defaultNull()->end()
                     ->scalarNode('entity_class')->defaultNull()->end()
                     ->scalarNode('extends')->defaultValue('default')->end()
+                    ->arrayNode('options')
+                        ->prototype('variable')
+                        ->end()
+                    ->end()
                     ->booleanNode('abstract')->defaultFalse()->end()
                     ->arrayNode('actions')
                         ->prototype('variable')

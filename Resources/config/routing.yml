@@ -12,9 +12,28 @@ pim_customentity_massedit:
     path: /{customEntityName}/mass-edit
     defaults: { _controller: pim_customentity.controller:executeAction, actionType: mass_edit }
 
+pim_customentity_quickexport:
+    path: /{customEntityName}/export.{_format}
+    defaults:
+        _controller: pim_customentity.controller:executeAction
+        actionType: quick_export
+        _format: csv
+
 pim_customentity_edit:
     path: /{customEntityName}/{id}/edit
     defaults: { _controller: pim_customentity.controller:executeAction, actionType: edit }
+    requirements:
+        id: \d+
+
+pim_customentity_show:
+    path: /{customEntityName}/{id}
+    defaults: { _controller: pim_customentity.controller:executeAction, actionType: history }
+    requirements:
+        id: \d+
+
+pim_customentity_history:
+    path: /{customEntityName}/{id}/history
+    defaults: { _controller: pim_customentity.controller:executeAction, actionType: history }
     requirements:
         id: \d+
 
