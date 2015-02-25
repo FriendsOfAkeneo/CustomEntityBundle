@@ -14,9 +14,9 @@ interface DatagridAwareRepositoryInterface
     /**
      * Creates a query builder for datagrids
      *
-     * @param string $alias
+     * @param array $config
      *
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function createDatagridQueryBuilder($alias = 'o');
+    public function createDatagridQueryBuilder(array $config);
 }
