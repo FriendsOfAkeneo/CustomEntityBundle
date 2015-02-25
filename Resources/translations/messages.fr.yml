@@ -7,3 +7,6 @@ pane.accordion:
 pim_custom_entity:
     export:
         limit_exceeded: Merci de sélectionner moins de %limit% enregistrements
+
+properties:
+    title: Propriétés
