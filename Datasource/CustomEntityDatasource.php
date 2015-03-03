@@ -64,4 +64,21 @@ class CustomEntityDatasource extends Datasource
         }
         parent::process($grid, $config);
     }
+
+    
+    /**
+     * Override PIM method to fix bug when no specific query builder method is used
+     * 
+     * {@inheritdoc}
+     */
+    protected function initializeQueryBuilder($method, array $config = [])
+    {
+        if ('createQueryBuilder' === $method) {
+            $this->qb = $this->getRepository()->createQueryBuilder('o');
+        } else {
+            $this->qb = $this->getRepository()->$method($config);
+        }
+
+        return $this;
+    }
 }
