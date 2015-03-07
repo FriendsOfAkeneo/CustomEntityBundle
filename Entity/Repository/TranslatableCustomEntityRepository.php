@@ -20,12 +20,12 @@ class TranslatableCustomEntityRepository extends CustomEntityRepository implemen
     /**
      * {@inheritdoc}
      */
-    public function createDatagridQueryBuilder($alias = 'o')
+    public function createDatagridQueryBuilder(array $config)
     {
-        return $this->createQueryBuilder($alias)
-            ->leftJoin("$alias.translations", 'translation', 'WITH', 'translation.locale=:locale')
+        return $this->createQueryBuilder('o')
+            ->leftJoin("o.translations", 'translation', 'WITH', 'translation.locale=:locale')
             ->setParameter('locale', $this->locale)
-            ->select("$alias, translation");
+            ->select("o, translation");
     }
 
     /**
