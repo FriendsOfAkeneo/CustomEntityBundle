@@ -2,7 +2,7 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Manager;
 
-use Pim\Bundle\CatalogBundle\Doctrine\SmartManagerRegistry;
+use Akeneo\Bundle\StorageUtilsBundle\Doctrine\SmartManagerRegistry;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Doctrine\Common\Util\ClassUtils;
 

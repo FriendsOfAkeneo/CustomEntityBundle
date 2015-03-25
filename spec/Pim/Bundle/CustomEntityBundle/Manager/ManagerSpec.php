@@ -2,12 +2,12 @@
 
 namespace spec\Pim\Bundle\CustomEntityBundle\Manager;
 
+use Akeneo\Bundle\StorageUtilsBundle\Doctrine\SmartManagerRegistry;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
-use Pim\Bundle\CatalogBundle\Doctrine\SmartManagerRegistry;
 
 class ManagerSpec extends ObjectBehavior
 {
