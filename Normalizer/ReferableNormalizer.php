@@ -2,7 +2,7 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Normalizer;
 
-use Pim\Bundle\CatalogBundle\Model\ReferableInterface;
+use Pim\Bundle\CustomEntityBundle\Entity\AbstractCustomEntity;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
@@ -48,6 +48,6 @@ class ReferableNormalizer implements NormalizerInterface
      */
     public function supportsNormalization($data, $format = null)
     {
-        return $data instanceof ReferableInterface && in_array($format, $this->allowedformats);
+        return $data instanceof AbstractCustomEntity && in_array($format, $this->allowedformats);
     }
 }
