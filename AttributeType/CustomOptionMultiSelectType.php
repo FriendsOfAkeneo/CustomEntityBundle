@@ -3,6 +3,7 @@
 namespace Pim\Bundle\CustomEntityBundle\AttributeType;
 
 use Pim\Bundle\CatalogBundle\AttributeType\OptionMultiSelectType;
+use Pim\Bundle\CatalogBundle\Model\AttributeInterface;
 use Pim\Bundle\CatalogBundle\Model\ProductValueInterface;
 use Pim\Bundle\CatalogBundle\Validator\ConstraintGuesserInterface;
 
@@ -54,6 +55,17 @@ class CustomOptionMultiSelectType extends OptionMultiSelectType
         return [
                 'class' => $this->optionClass,
             ] + parent::prepareValueFormOptions($value);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function defineCustomAttributeProperties(AttributeInterface $attribute)
+    {
+        $values = parent::defineCustomAttributeProperties($attribute);
+        unset($values['autoOptionSorting']);
+
+        return $values;
     }
 
     /**
