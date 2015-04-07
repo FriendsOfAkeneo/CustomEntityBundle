@@ -7,9 +7,8 @@
     "license": "OSL-3.0",
     "authors": [
         {
-            "name": "Antoine Guigan",
-            "email": "antoine@akeneo.com",
-            "homepage": "http://akeneo.com"
+            "name":     "Akeneo",
+            "homepage": "http://www.akeneo.com/"
         }
     ],
     "repositories": [
