@@ -13,9 +13,7 @@ use Pim\Bundle\TranslationBundle\Entity\AbstractTranslation;
  */
 class AbstractCustomOptionTranslation extends AbstractTranslation
 {
-    /**
-     * @var string $label
-     */
+    /** @var string $label */
     protected $label;
 
     /**

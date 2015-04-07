@@ -14,9 +14,7 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
  */
 class ReferableNormalizer implements NormalizerInterface
 {
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $allowedformats;
 
     /**

@@ -16,9 +16,7 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
  */
 class MongoDBReferableNormalizer implements NormalizerInterface
 {
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $allowedformats;
 
     /**

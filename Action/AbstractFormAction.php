@@ -22,9 +22,7 @@ use Symfony\Component\Translation\TranslatorInterface;
  */
 abstract class AbstractFormAction extends AbstractViewableAction
 {
-    /**
-     * @var FormFactoryInterface
-     */
+    /** @var FormFactoryInterface */
     protected $formFactory;
 
     /**
@@ -69,6 +67,7 @@ abstract class AbstractFormAction extends AbstractViewableAction
             ]
         );
     }
+
     /**
      * {@inheritdoc}
      */
@@ -99,19 +98,21 @@ abstract class AbstractFormAction extends AbstractViewableAction
      */
     protected function saveForm(Request $request, FormInterface $form)
     {
-       $this->getManager()->save($form->getData(), $this->options['save_options']);
+        $this->getManager()->save($form->getData(), $this->options['save_options']);
     }
 
     /**
      * Gets the variables that should be present on the template
      *
-     * @param Request $request
-     * @param Form    $form
+     * @param Request       $request
+     * @param FormInterface $form
+     *
+     * @return array
      */
     protected function getTemplateVars(Request $request, FormInterface $form)
     {
         return [
-            'form'       => $form->createView(),
+            'form' => $form->createView(),
             'formAction' => $this->getActionUrl($this->getType(), $form->getData())
         ];
     }
@@ -121,7 +122,7 @@ abstract class AbstractFormAction extends AbstractViewableAction
      *
      * @param object $object
      *
-     * @return Response
+     * @return RedirectResponse
      */
     protected function getRedirectResponse($object)
     {

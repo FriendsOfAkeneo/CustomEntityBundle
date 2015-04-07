@@ -16,14 +16,10 @@ use Pim\Bundle\TranslationBundle\Entity\TranslatableInterface;
  */
 abstract class AbstractTranslatableCustomEntity extends AbstractCustomEntity implements TranslatableInterface
 {
-    /**
-     * @var ArrayCollection
-     */
+    /** @var ArrayCollection */
     protected $translations;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $locale;
 
     /**
@@ -93,9 +89,7 @@ abstract class AbstractTranslatableCustomEntity extends AbstractCustomEntity imp
     }
 
     /**
-     * Convert to string
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function __toString()
     {

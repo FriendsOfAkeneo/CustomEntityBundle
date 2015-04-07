@@ -22,39 +22,25 @@ use Symfony\Component\Translation\TranslatorInterface;
  */
 abstract class AbstractAction implements ActionInterface
 {
-    /**
-     * @var ActionFactory
-     */
+    /** @var ActionFactory */
     protected $actionFactory;
 
-    /**
-     * @var ActionEventManager
-     */
+    /** @var ActionEventManager */
     protected $eventManager;
 
-    /**
-     * @var ManagerRegistry
-     */
+    /** @var ManagerRegistry */
     protected $managerRegistry;
 
-    /**
-     * @var RouterInterface
-     */
+    /** @var RouterInterface */
     protected $router;
 
-    /**
-     * @var TranslatorInterface
-     */
+    /** @var TranslatorInterface */
     protected $translator;
 
-    /**
-     * @var ConfigurationInterface
-     */
+    /** @var ConfigurationInterface */
     protected $configuration;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $options;
 
     /**
@@ -107,6 +93,7 @@ abstract class AbstractAction implements ActionInterface
     {
         return $this->options['route'];
     }
+
     /**
      * {@inheritdoc}
      */
@@ -142,7 +129,6 @@ abstract class AbstractAction implements ActionInterface
     /**
      * Set the default options
      *
-     * @param ConfigurationInterface   $configuration
      * @param OptionsResolverInterface $resolver
      */
     protected function setDefaultOptions(OptionsResolverInterface $resolver)
@@ -158,6 +144,8 @@ abstract class AbstractAction implements ActionInterface
      * @param object $object
      * @param array  $parameters
      * @param mixed  $referenceType
+     *
+     * @return string
      */
     protected function getActionUrl(
         $actionType,
@@ -203,8 +191,8 @@ abstract class AbstractAction implements ActionInterface
      * Adds a flash message
      *
      * @param Request $request
-     * @param type    $type
-     * @param type    $message
+     * @param string  $type
+     * @param string  $message
      * @param array   $messageParameters
      */
     protected function addFlash(Request $request, $type, $message, array $messageParameters = [])

@@ -16,14 +16,10 @@ use Symfony\Component\Routing\Router;
  */
 class UrlProperty extends OroUrlProperty
 {
-    /**
-     * @var ActionFactory
-     */
+    /** @var ActionFactory */
     protected $actionFactory;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $customEntityName;
 
     /**

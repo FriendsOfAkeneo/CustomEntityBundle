@@ -15,14 +15,10 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class ConfigurationEvent extends Event
 {
-    /**
-     * @var ConfigurationInterface
-     */
+    /** @var ConfigurationInterface */
     protected $configuration;
 
-    /**
-     * @var OptionsResolverInterface
-     */
+    /** @var OptionsResolverInterface */
     protected $optionsResolver;
 
     /**

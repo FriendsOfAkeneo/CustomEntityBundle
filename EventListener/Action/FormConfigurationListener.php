@@ -33,7 +33,7 @@ class FormConfigurationListener implements EventSubscriberInterface
     /**
      * Adds options to the actions
      *
-     * @param ConfigureActionEvent $event
+     * @param ConfigurationEvent $event
      */
     public function setConfigurationOptions(ConfigurationEvent $event)
     {

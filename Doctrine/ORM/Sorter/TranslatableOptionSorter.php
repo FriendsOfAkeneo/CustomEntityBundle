@@ -20,28 +20,28 @@ class TranslatableOptionSorter extends BaseSorter
     public function addAttributeSorter(AbstractAttribute $attribute, $direction)
     {
         $aliasPrefix = 'sorter';
-        $joinAlias   = $aliasPrefix.'V'.$attribute->getCode().$this->aliasCounter++;
+        $joinAlias = $aliasPrefix . 'V' . $attribute->getCode() . $this->aliasCounter++;
         $backendType = $attribute->getBackendType();
 
         // join to value
         $condition = $this->prepareAttributeJoinCondition($attribute, $joinAlias);
         $this->qb->leftJoin(
-            $this->qb->getRootAlias().'.' . $attribute->getBackendStorage(),
+            $this->qb->getRootAlias() . '.' . $attribute->getBackendStorage(),
             $joinAlias,
             'WITH',
             $condition
         );
 
         // then to option and option value to sort on
-        $joinAliasOpt = $aliasPrefix.'O'.$attribute->getCode().$this->aliasCounter;
-        $this->qb->leftJoin($joinAlias.'.'.$backendType, $joinAliasOpt);
+        $joinAliasOpt = $aliasPrefix . 'O' . $attribute->getCode() . $this->aliasCounter;
+        $this->qb->leftJoin($joinAlias . '.' . $backendType, $joinAliasOpt);
 
-        $joinAliasOptVal = $aliasPrefix.'OV'.$attribute->getCode().$this->aliasCounter;
-        $condition       = $joinAliasOptVal.'.locale = '.$this->qb->expr()->literal($this->context->getLocaleCode());
-        $this->qb->leftJoin($joinAliasOpt.'.translations', $joinAliasOptVal, 'WITH', $condition);
+        $joinAliasOptVal = $aliasPrefix . 'OV' . $attribute->getCode() . $this->aliasCounter;
+        $condition = $joinAliasOptVal . '.locale = ' . $this->qb->expr()->literal($this->context->getLocaleCode());
+        $this->qb->leftJoin($joinAliasOpt . '.translations', $joinAliasOptVal, 'WITH', $condition);
 
-        $this->qb->addOrderBy($joinAliasOpt.'.code', $direction);
-        $this->qb->addOrderBy($joinAliasOptVal.'.label', $direction);
+        $this->qb->addOrderBy($joinAliasOpt . '.code', $direction);
+        $this->qb->addOrderBy($joinAliasOptVal . '.label', $direction);
 
         return $this;
     }

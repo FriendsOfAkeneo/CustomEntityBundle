@@ -13,7 +13,7 @@ Add the following lines **at the very end** of your `app/config/routing.yml` :
         prefix: /enrich
         resource: "@PimCustomEntityBundle/Resources/config/routing.yml"
 
-## Resources
+## Documentation
 - [Cookbook](http://docs.akeneo.com/master/cookbook/custom_entity/index.html)
 - [Technical documentation](Resources/doc/index.rst)
 - [PIM Documentation](http://docs.akeneo.com)
