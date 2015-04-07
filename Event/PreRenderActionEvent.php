@@ -13,21 +13,17 @@ use Pim\Bundle\CustomEntityBundle\Action\ActionInterface;
  */
 class PreRenderActionEvent extends ActionEvent
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $template;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $templateVars;
 
     /**
      * Constructor
      *
      * @param ActionInterface $action
-     * @param type            $template
+     * @param string          $template
      * @param array           $templateVars
      */
     public function __construct(ActionInterface $action, $template, array $templateVars)

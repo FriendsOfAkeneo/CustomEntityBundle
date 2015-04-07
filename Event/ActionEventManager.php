@@ -16,9 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class ActionEventManager
 {
-    /**
-     * @var EventDispatcherInterface
-     */
+    /** @var EventDispatcherInterface */
     protected $eventDispatcher;
 
     /**

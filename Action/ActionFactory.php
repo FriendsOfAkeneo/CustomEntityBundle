@@ -14,20 +14,13 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class ActionFactory
 {
-    /**
-     *
-     * @var ContainerInterface
-     */
+    /** @var ContainerInterface */
     protected $container;
 
-    /**
-     * @var Registry
-     */
+    /** @var Registry */
     protected $configurationRegistry;
 
-    /**
-     * @var ActionInterface[][]
-     */
+    /** @var ActionInterface[][] */
     private $actions = [];
 
     /**

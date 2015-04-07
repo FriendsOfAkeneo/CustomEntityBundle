@@ -16,14 +16,10 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 class ManagerRegistryPass implements CompilerPassInterface
 {
-    /**
-     * @staticvar string
-     */
+    /** @const string */
     const REGISTRY_SERVICE = 'pim_custom_entity.manager.registry';
 
-    /**
-     * @staticvar string
-     */
+    /** @const string */
     const TAG_NAME = 'pim_custom_entity.manager';
 
     /**

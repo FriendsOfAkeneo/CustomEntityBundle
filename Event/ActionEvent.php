@@ -14,9 +14,7 @@ use Symfony\Component\EventDispatcher\Event;
  */
 class ActionEvent extends Event
 {
-    /**
-     * @var ActionInterface
-     */
+    /** @var ActionInterface */
     protected $action;
 
     /**

@@ -20,9 +20,7 @@ use Symfony\Component\Translation\TranslatorInterface;
  */
 abstract class AbstractViewableAction extends AbstractAction
 {
-    /**
-     * @var EngineInterface
-     */
+    /** @var EngineInterface */
     protected $templating;
 
     /**

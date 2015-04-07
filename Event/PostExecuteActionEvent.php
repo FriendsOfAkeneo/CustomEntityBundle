@@ -14,9 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class PostExecuteActionEvent extends ActionEvent
 {
-    /**
-     * @var Response
-     */
+    /** @var Response */
     protected $response;
 
     /**

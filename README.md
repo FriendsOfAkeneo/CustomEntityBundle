@@ -1,17 +1,19 @@
-CustomEntityBundle
-==================
+# CustomEntityBundle
 
-Eases the creation of custom entity and related views in the PIM
+The CustomEntityBundle eases the creation of custom entities and related views in the [Akeneo PIM](https://github.com/akeneo/pim-community-standard).
 
-For more information, please see http://docs.akeneo.com/
+## Installation
+To install this bundle, please include `akeneo/custom-entity-bundle` to your `composer.json` :
 
-To install this bundle, please include akeneo/custom-entity-bundle to your composer.json 
-and add the following lines **at the end** of your app/config/routing.yml :
+    composer require akeneo/custom-entity-bundle
+
+Add the following lines **at the very end** of your `app/config/routing.yml` :
 
     pim_customentity:
         prefix: /enrich
         resource: "@PimCustomEntityBundle/Resources/config/routing.yml"
 
-Some example usages for this bundle can be found in the [PIM documentation](http://docs.akeneo.com/master/cookbook/custom_entity/index.html)
-
-The full documentation for the bundle can be found in the [Resources/doc](Resources/doc/index.rst) folder.
+## Documentation
+- [Cookbook](http://docs.akeneo.com/master/cookbook/custom_entity/index.html)
+- [Technical documentation](Resources/doc/index.rst)
+- [PIM Documentation](http://docs.akeneo.com)

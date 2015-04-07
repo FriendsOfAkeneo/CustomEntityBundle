@@ -25,19 +25,13 @@ use Symfony\Component\Translation\TranslatorInterface;
  */
 class QuickExportAction extends AbstractAction implements GridActionInterface
 {
-    /**
-     * @var RegistryInterface
-     */
+    /** @var RegistryInterface */
     protected $doctrine;
 
-    /**
-     * @var DataGridQueryGenerator
-     */
+    /** @var DataGridQueryGenerator */
     protected $queryGenerator;
 
-    /**
-     * @var Serializer
-     */
+    /** @var Serializer */
     protected $serializer;
 
     /**

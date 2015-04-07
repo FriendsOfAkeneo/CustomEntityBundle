@@ -13,9 +13,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class MassUpdater
 {
-    /**
-     * @var RegistryInterface
-     */
+    /** @var RegistryInterface */
     protected $doctrine;
 
     /**

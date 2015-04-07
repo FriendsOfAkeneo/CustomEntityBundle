@@ -10,6 +10,8 @@ use Symfony\Component\DependencyInjection\Reference;
  * Duplicates the pim serializer
  *
  * @author    Antoine Guigan <antoine@akeneo.com>
+ * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
+ * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 class SerializerPass implements CompilerPassInterface
 {
@@ -72,7 +74,7 @@ class SerializerPass implements CompilerPassInterface
                 },
                 $tags
             )
-        );;
+        );
 
         $definition = $container->getDefinition($serviceId);
         $arguments = $definition->getArguments();
@@ -113,5 +115,4 @@ class SerializerPass implements CompilerPassInterface
         // Flatten the array
         return call_user_func_array('array_merge', $sortedServices);
     }
-
 }

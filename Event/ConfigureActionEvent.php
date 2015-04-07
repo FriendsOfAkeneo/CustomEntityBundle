@@ -14,9 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class ConfigureActionEvent extends ActionEvent
 {
-    /**
-     * @var OptionsResolverInterface
-     */
+    /** @var OptionsResolverInterface */
     protected $optionsResolver;
 
     /**

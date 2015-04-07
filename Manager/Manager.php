@@ -15,14 +15,10 @@ use Doctrine\Common\Util\ClassUtils;
  */
 class Manager implements ManagerInterface
 {
-    /**
-     * @var SmartManagerRegistry
-     */
+    /** @var SmartManagerRegistry */
     protected $doctrine;
 
-    /**
-     * @var PropertyAccessorInterface
-     */
+    /** @var PropertyAccessorInterface */
     protected $propertyAccessor;
 
     /**

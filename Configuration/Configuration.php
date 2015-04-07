@@ -17,29 +17,19 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class Configuration implements ConfigurationInterface
 {
-    /**
-     * @var EventDispatcherInterface
-     */
+    /** @var EventDispatcherInterface */
     protected $eventDispatcher;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $name;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $entityClass;
 
-    /**
-     * @var string[]
-     */
+    /** @var string[] */
     protected $actions = [];
 
-    /**
-     * @var array[]
-     */
+    /** @var array[] */
     protected $actionOptions = [];
 
     /**

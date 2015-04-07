@@ -17,9 +17,7 @@ use Pim\Bundle\CustomEntityBundle\Configuration\ConfigurationInterface;
  */
 class ConfigureCustomEntityGridListener
 {
-    /**
-     * @var ActionFactory
-     */
+    /** @var ActionFactory */
     protected $actionFactory;
 
     /**
@@ -80,7 +78,7 @@ class ConfigureCustomEntityGridListener
      * Sets the configuration for row actions
      *
      * @param DatagridConfiguration  $datagridConfig
-     * @param ConfigurationInterface $customEntityConfig
+     * @param ActionInterface        $indexAction
      */
     protected function setRowActions(DatagridConfiguration $datagridConfig, ActionInterface $indexAction)
     {

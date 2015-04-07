@@ -52,8 +52,8 @@ class CustomOptionSimpleSelectType extends OptionSimpleSelectType
     public function prepareValueFormOptions(ProductValueInterface $value)
     {
         return [
-                'class' => $this->optionClass
-            ] + parent::prepareValueFormOptions($value);
+            'class' => $this->optionClass
+        ] + parent::prepareValueFormOptions($value);
     }
 
     /**

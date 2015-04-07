@@ -25,6 +25,11 @@ class ClearMissingSubscriber implements EventSubscriberInterface
         ];
     }
 
+    /**
+     * Pre submit event subscriber
+     *
+     * @param FormEvent $event
+     */
     public function preSubmit(FormEvent $event)
     {
         $form = $event->getForm();

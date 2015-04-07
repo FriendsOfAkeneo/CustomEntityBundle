@@ -11,9 +11,7 @@ namespace Pim\Bundle\CustomEntityBundle\Entity;
  */
 abstract class AbstractCustomOption extends AbstractCustomEntity
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $label;
 
     /**

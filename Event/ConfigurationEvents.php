@@ -11,8 +11,6 @@ namespace Pim\Bundle\CustomEntityBundle\Event;
  */
 class ConfigurationEvents
 {
-    /**
-     * Launched at action configuration
-     */
+    /** @const Launched at action configuration */
     const CONFIGURE = 'pim_custom_entity.configuration.configure';
 }

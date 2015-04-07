@@ -52,7 +52,7 @@ class ConfigurationBuilderPass implements CompilerPassInterface
      * Adds a configuration service to the DIC
      *
      * @param ContainerBuilder $container
-     * @param type             $name
+     * @param string           $name
      * @param array            $configuration
      */
     protected function addService(ContainerBuilder $container, $name, array $configuration)

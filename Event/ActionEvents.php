@@ -11,23 +11,15 @@ namespace Pim\Bundle\CustomEntityBundle\Event;
  */
 class ActionEvents
 {
-    /**
-     * Launched at action configuration
-     */
+    /** @const string Launched at action configuration */
     const CONFIGURE = 'pim_custom_entity.action.configure';
 
-    /**
-     * Launched before action execution
-     */
+    /** @const string Launched before action execution */
     const PRE_EXECUTE = 'pim_custom_entity.action.pre_execute';
 
-    /**
-     * Launched at action configuration
-     */
+    /** @const string Launched at action configuration */
     const PRE_RENDER = 'pim_custom_entity.action.pre_render';
 
-    /**
-     * Launched after action execution
-     */
+    /** @const string Launched after action execution */
     const POST_EXECUTE = 'pim_custom_entity.action.post_execute';
 }
