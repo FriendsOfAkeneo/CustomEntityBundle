@@ -2,12 +2,14 @@
 
 namespace spec\Pim\Bundle\CustomEntityBundle\Action;
 
+use PhpSpec\ObjectBehavior;
 use Pim\Bundle\CustomEntityBundle\Action\ActionFactory;
 use Pim\Bundle\CustomEntityBundle\Action\ActionInterface;
 use Pim\Bundle\CustomEntityBundle\Configuration\ConfigurationInterface;
 use Pim\Bundle\CustomEntityBundle\Event\ActionEventManager;
 use Pim\Bundle\CustomEntityBundle\Manager\ManagerInterface;
 use Pim\Bundle\CustomEntityBundle\Manager\Registry as ManagerRegistry;
+use Prophecy\Argument;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
@@ -20,7 +22,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
-class CreateActionSpec extends FormActionBehavior
+class CreateActionSpec extends ObjectBehavior
 {
     public function let(
         ActionFactory $actionFactory,
@@ -50,14 +52,60 @@ class CreateActionSpec extends FormActionBehavior
             $templating,
             $formFactory
         );
-        $this->initializeConfiguration($configuration);
-        $this->initializeManager($configuration, $managerRegistry, $manager);
-        $this->initializeRouter($router);
-        $this->initializeForm($formFactory, $form, $formView, $object);
-        $this->initializeRequest($request, $attributes);
-        $this->initializeConfigurationForForm($actionFactory, $configuration, $indexAction);
-        $this->initializeFlashBag($request, $session, $flashBag);
-        $this->initializeTranslator($translator);
+
+        // initialize configuration
+        $configuration->getEntityClass()->willReturn('entity_class');
+        $configuration->getName()->willReturn('entity');
+
+        // initialize manager
+        $managerRegistry->getFromConfiguration($configuration)->willReturn($manager);
+
+        // initialize router
+        $router->generate(Argument::type('string'), Argument::type('array'), Argument::any())->will(
+            function ($arguments) {
+                $path = $arguments[0] . '?';
+                foreach ($arguments[1] as $key => $value) {
+                    $path .= '&' . $key . '=' . $value;
+                }
+
+                return $path;
+            }
+        );
+
+        // initialize form
+        $formFactory->create('form_type', $object, ['data_class' => 'entity_class'])->willReturn($form);
+        $form->createView()->willReturn($formView);
+        $form->getData()->willReturn($object);
+
+        // initialize request
+        $request->attributes = $attributes;
+        $attributes->get('id')->willReturn('id');
+
+        // initialize configuration for form
+        $actionFactory->getAction('entity', 'index')->willReturn($indexAction);
+        $configuration->hasAction('index')->willReturn(true);
+        $indexAction->getRoute()->willReturn('index');
+        $indexAction->getRouteParameters(null)->willReturn(['ir_param1' => 'value1']);
+
+        // initialize flashbag
+        $request->getSession()->willReturn($session);
+        $session->getFlashBag()->willReturn($flashBag);
+
+        // initialize translator
+        $translator->trans(Argument::type('string'), Argument::any())->will(
+            function ($arguments) {
+                if (!isset($arguments[1])) {
+                    $arguments[1] = array();
+                }
+
+                $translated = sprintf('<%s>', $arguments[0]);
+                foreach ($arguments[1] as $key => $value) {
+                    $translated .= sprintf('%s=%s;', $key, $value);
+                }
+
+                return $translated;
+            }
+        );
     }
 
     public function it_is_initializable()
@@ -197,5 +245,36 @@ class CreateActionSpec extends FormActionBehavior
         $response = $this->execute($request);
         $response->shouldHaveType('Symfony\Component\HttpFoundation\RedirectResponse');
         $response->getTargetUrl()->shouldReturn('redirect_route?&c_r_param1=value1');
+    }
+
+    protected function initializeEventManager(ActionEventManager $eventManager)
+    {
+        $eventManager
+            ->dipatchConfigureEvent(
+                $this,
+                Argument::type('Symfony\Component\OptionsResolver\OptionsResolverInterface')
+            )
+            ->shouldBeCalled();
+
+        $eventManager->dispatchPreExecuteEvent($this)->shouldBeCalled();
+
+        $eventManager
+            ->dispatchPostExecuteEvent($this, Argument::type('Symfony\Component\HttpFoundation\Response'))
+            ->will(
+                function ($args) {
+                    return $args[1];
+                }
+            )
+            ->shouldBeCalled();
+
+        $eventManager
+            ->dispatchPreRenderEvent($this, Argument::type('string'), Argument::type('array'))
+            ->will(
+                function ($args) {
+                    $args[2]['pre_render'] = true;
+
+                    return [$args[1], $args[2]];
+                }
+            );
     }
 }
