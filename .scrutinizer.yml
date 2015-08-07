@@ -1,0 +1,37 @@
+filter:
+    paths:
+        - src/*
+
+tools:
+    php_mess_detector:
+        filter:
+            paths:
+                - src/*
+    php_cs_fixer:
+        config:
+            level: all
+    php_analyzer:
+        filter:
+            paths:
+                - src/*
+    php_code_sniffer:
+        config:
+            standard: PSR2
+        filter:
+            paths:
+                - src/*
+    sensiolabs_security_checker: true
+    php_cpd:
+        filter:
+            paths:
+                - src/*
+    php_loc:
+        excluded_dirs:
+            - app/
+            - vendor/
+            - web/
+    php_pdepend:
+        excluded_dirs:
+            - app/
+            - vendor/
+            - web/
