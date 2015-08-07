@@ -8,8 +8,8 @@ services:
         arguments:
             - ['csv', 'flat']
         tags:
-            - { name: pim_versioning.serializer.normalizer, priority: 80 }
-            - { name: pim_serializer.normalizer, priority: 80 }
+            - { name: pim_versioning.serializer.normalizer, priority: 100 }
+            - { name: pim_serializer.normalizer, priority: 100 }
 
     pim_custom_entity.normalizer.mongodb_referable:
         class: %pim_custom_entity.normalizer.mongodb_referable.class%
