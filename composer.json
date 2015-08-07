@@ -30,7 +30,8 @@
         "squizlabs/php_codesniffer": "2.*",
         "pdepend/pdepend": "2.1.*",
         "phpmd/phpmd": "1.*",
-        "phpspec/phpspec": "2.1.*"
+        "phpspec/phpspec": "2.1.*",
+        "fabpot/php-cs-fixer": "^2.0@dev"
     },
     "config": {
         "bin-dir": "bin"
