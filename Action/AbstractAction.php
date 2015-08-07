@@ -142,7 +142,6 @@ abstract class AbstractAction implements ActionInterface
     /**
      * Set the default options
      *
-     * @param ConfigurationInterface   $configuration
      * @param OptionsResolverInterface $resolver
      */
     protected function setDefaultOptions(OptionsResolverInterface $resolver)
@@ -203,8 +202,8 @@ abstract class AbstractAction implements ActionInterface
      * Adds a flash message
      *
      * @param Request $request
-     * @param type    $type
-     * @param type    $message
+     * @param string  $type
+     * @param string  $message
      * @param array   $messageParameters
      */
     protected function addFlash(Request $request, $type, $message, array $messageParameters = [])

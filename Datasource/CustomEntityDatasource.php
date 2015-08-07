@@ -21,20 +21,16 @@ use Pim\Bundle\DataGridBundle\Datasource\ResultRecord\HydratorInterface;
  */
 class CustomEntityDatasource extends Datasource
 {
-    /**
-     * @var string
-     */
+    /**  @staticvar string */
     const TYPE = 'pim_custom_entity';
 
-    /**
-     * @var LocaleHelper
-     */
+    /** @var LocaleHelper */
     protected $localeHelper;
 
     /**
      * Constructor
      *
-     * @param EntityManager $em
+     * @param ObjectManager $om
      * @param AclHelper     $aclHelper
      * @param LocaleHelper  $localeHelper
      */
@@ -45,6 +41,7 @@ class CustomEntityDatasource extends Datasource
 
     ) {
         parent::__construct($om, $hydrator);
+
         $this->localeHelper = $localeHelper;
     }
 
@@ -65,10 +62,10 @@ class CustomEntityDatasource extends Datasource
         parent::process($grid, $config);
     }
 
-    
+
     /**
      * Override PIM method to fix bug when no specific query builder method is used
-     * 
+     *
      * {@inheritdoc}
      */
     protected function initializeQueryBuilder($method, array $config = [])
