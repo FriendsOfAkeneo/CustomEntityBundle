@@ -68,7 +68,7 @@ abstract class AbstractViewableAction extends AbstractAction
      */
     public function renderResponse(array $templateVars = [])
     {
-        list ($template, $templateVars) = $this->eventManager->dispatchPreRenderEvent(
+        list($template, $templateVars) = $this->eventManager->dispatchPreRenderEvent(
             $this,
             $this->options['template'],
             $templateVars + $this->getDefaultTemplateVars()

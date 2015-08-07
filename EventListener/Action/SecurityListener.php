@@ -22,7 +22,6 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
  */
 class SecurityListener implements EventSubscriberInterface
 {
-
     /**
      * @var ActionFactory
      */
@@ -162,5 +161,4 @@ class SecurityListener implements EventSubscriberInterface
             $event->setTemplateVars($vars);
         }
     }
-
 }

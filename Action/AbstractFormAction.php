@@ -99,7 +99,7 @@ abstract class AbstractFormAction extends AbstractViewableAction
      */
     protected function saveForm(Request $request, FormInterface $form)
     {
-       $this->getManager()->save($form->getData(), $this->options['save_options']);
+        $this->getManager()->save($form->getData(), $this->options['save_options']);
     }
 
     /**

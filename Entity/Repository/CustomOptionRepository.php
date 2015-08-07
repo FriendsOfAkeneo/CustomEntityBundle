@@ -43,5 +43,4 @@ class CustomOptionRepository extends CustomEntityRepository
             )
         );
     }
-
 }

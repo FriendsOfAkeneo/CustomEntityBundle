@@ -11,5 +11,4 @@ namespace Pim\Bundle\CustomEntityBundle\Form\Subscriber;
  */
 class NullValue
 {
-
 }

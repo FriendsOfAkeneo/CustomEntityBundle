@@ -18,7 +18,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class FormConfigurationListener implements EventSubscriberInterface
 {
-
     /**
      * {@inheritdoc}
      */
