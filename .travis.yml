@@ -15,3 +15,5 @@ before_script:
 script:
     - ./bin/phpspec run
 
+notifications:
+    slack: akeneo:RtMZyFyncKFKYKFT3kdzLvid
