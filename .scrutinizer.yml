@@ -1,6 +1,6 @@
 filter:
     paths:
-        - src/*
+        - ./*
 
 tools:
     php_mess_detector:
@@ -9,9 +9,6 @@ tools:
                 - bin/*
                 - spec/*
                 - vendor/*
-    php_cs_fixer:
-        config:
-            level: all
     php_analyzer:
         filter:
             excluded_paths:

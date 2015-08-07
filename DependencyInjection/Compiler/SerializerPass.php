@@ -72,7 +72,7 @@ class SerializerPass implements CompilerPassInterface
                 },
                 $tags
             )
-        );;
+        );
 
         $definition = $container->getDefinition($serviceId);
         $arguments = $definition->getArguments();
@@ -113,5 +113,4 @@ class SerializerPass implements CompilerPassInterface
         // Flatten the array
         return call_user_func_array('array_merge', $sortedServices);
     }
-
 }
