@@ -3,7 +3,7 @@
 namespace Pim\Bundle\CustomEntityBundle\Entity\Repository;
 
 /**
- * Repository for the Color entity
+ * Repository for the custom option entity
  *
  * @author    Antoine Guigan <antoine@akeneo.com>
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
