@@ -14,7 +14,7 @@ cache:
 before_script:
     - echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
     - composer self-update --no-interaction
-    - composer update --prefer-dist --no-interaction --no-scripts
+    - composer install --prefer-dist --no-interaction --no-scripts
 
 script:
     - ./bin/phpspec run
