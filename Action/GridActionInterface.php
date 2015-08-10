@@ -14,7 +14,7 @@ interface GridActionInterface
     /**
      * Returns the grid action options
      *
-     * @return string
+     * @return array
      */
     public function getGridActionOptions();
 }
