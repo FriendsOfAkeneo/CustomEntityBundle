@@ -12,6 +12,7 @@ cache:
         - $HOME/.composer/cache
 
 before_script:
+    - phpenv config-add travis.php.ini
     - echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
     - composer self-update --no-interaction
     - composer install --prefer-dist --no-interaction --no-scripts
