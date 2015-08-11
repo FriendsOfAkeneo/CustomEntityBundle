@@ -36,8 +36,6 @@ class Configuration implements ConfigurationInterface
     protected $options = [];
 
     /**
-     * Constructor
-     *
      * @param EventDispatcherInterface $eventDispatcher
      * @param string                   $name
      * @param string                   $entityClass

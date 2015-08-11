@@ -12,7 +12,7 @@ namespace Pim\Bundle\CustomEntityBundle\Event;
 class ConfigurationEvents
 {
     /**
-     * Launched at action configuration
+     * @staticvar string Launched at action configuration
      */
     const CONFIGURE = 'pim_custom_entity.configuration.configure';
 }

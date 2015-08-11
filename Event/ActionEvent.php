@@ -20,9 +20,7 @@ class ActionEvent extends Event
     protected $action;
 
     /**
-     * Constructor
-     *
-     * @param \Pim\Bundle\CustomEntityBundle\Action\ActionInterface $action
+     * @param ActionInterface $action
      */
     public function __construct(ActionInterface $action)
     {

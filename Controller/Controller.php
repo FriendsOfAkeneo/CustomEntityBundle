@@ -27,8 +27,6 @@ class Controller
     protected $request;
 
     /**
-     * Constructor
-     *
      * @param ActionFactory $actionFactory
      * @param Request       $request
      */

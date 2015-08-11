@@ -21,7 +21,7 @@ use Pim\Bundle\DataGridBundle\Datasource\ResultRecord\HydratorInterface;
  */
 class CustomEntityDatasource extends Datasource
 {
-    /**  @staticvar string */
+    /** @staticvar string */
     const TYPE = 'pim_custom_entity';
 
     /** @var LocaleHelper */
@@ -38,7 +38,6 @@ class CustomEntityDatasource extends Datasource
         ObjectManager $om,
         HydratorInterface $hydrator,
         LocaleHelper $localeHelper
-
     ) {
         parent::__construct($om, $hydrator);
 
@@ -59,6 +58,7 @@ class CustomEntityDatasource extends Datasource
         if (!isset($config['repository_method']) && $repository instanceof DatagridAwareRepositoryInterface) {
             $config['repository_method'] = 'createDatagridQueryBuilder';
         }
+
         parent::process($grid, $config);
     }
 

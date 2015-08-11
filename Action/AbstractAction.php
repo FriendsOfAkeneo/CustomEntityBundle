@@ -58,8 +58,6 @@ abstract class AbstractAction implements ActionInterface
     protected $options;
 
     /**
-     * Constructor
-     *
      * @param ActionFactory       $actionFactory
      * @param ActionEventManager  $eventManager
      * @param ManagerRegistry     $managerRegistry
@@ -107,6 +105,7 @@ abstract class AbstractAction implements ActionInterface
     {
         return $this->options['route'];
     }
+
     /**
      * {@inheritdoc}
      */
@@ -213,7 +212,7 @@ abstract class AbstractAction implements ActionInterface
     }
 
     /**
-     * Returns the manager
+     * Returns the custom entity manager
      *
      * @return \Pim\Bundle\CustomEntityBundle\Manager\ManagerInterface
      */

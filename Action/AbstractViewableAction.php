@@ -12,8 +12,6 @@ use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
- * Abstract viewable action
- *
  * @author    Antoine Guigan <antoine@akeneo.com>
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
@@ -26,8 +24,6 @@ abstract class AbstractViewableAction extends AbstractAction
     protected $templating;
 
     /**
-     * Constructor
-     *
      * @param ActionFactory       $actionFactory
      * @param ActionEventManager  $eventManager
      * @param ManagerRegistry     $managerRegistry
@@ -44,6 +40,7 @@ abstract class AbstractViewableAction extends AbstractAction
         EngineInterface $templating
     ) {
         parent::__construct($actionFactory, $eventManager, $managerRegistry, $router, $translator);
+
         $this->templating = $templating;
     }
 
@@ -60,8 +57,6 @@ abstract class AbstractViewableAction extends AbstractAction
     }
 
     /**
-     * Renders a response
-     *
      * @param array $templateVars
      *
      * @return Response

@@ -10,7 +10,7 @@ use Pim\Bundle\CustomEntityBundle\Event\ConfigureActionEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * ACL listener for actions
+ * Form listener for actions
  *
  * @author    Antoine Guigan <antoine@akeneo.com>
  * @copyright 2014 Akeneo SAS (http://www.akeneo.com)
@@ -32,7 +32,7 @@ class FormConfigurationListener implements EventSubscriberInterface
     /**
      * Adds options to the actions
      *
-     * @param ConfigureActionEvent $event
+     * @param ConfigureEvent $event
      */
     public function setConfigurationOptions(ConfigurationEvent $event)
     {
@@ -49,6 +49,8 @@ class FormConfigurationListener implements EventSubscriberInterface
      * Adds options to the actions
      *
      * @param ConfigureActionEvent $event
+     *
+     * @return null
      */
     public function setActionOptions(ConfigureActionEvent $event)
     {

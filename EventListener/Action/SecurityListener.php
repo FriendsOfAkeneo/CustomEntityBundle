@@ -33,8 +33,6 @@ class SecurityListener implements EventSubscriberInterface
     protected $securityFacade;
 
     /**
-     * Constructor
-     *
      * @param ActionFactory  $actionFactory
      * @param SecurityFacade $securityFacade
      */

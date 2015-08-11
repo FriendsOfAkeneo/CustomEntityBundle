@@ -43,6 +43,8 @@ interface ActionInterface
     public function getRoute();
 
     /**
+     * @param mixed
+     *
      * @return array
      */
     public function getRouteParameters($object = null);

@@ -20,10 +20,8 @@ class ConfigureActionEvent extends ActionEvent
     protected $optionsResolver;
 
     /**
-     * Constructor
-     *
-     * @param \Pim\Bundle\CustomEntityBundle\Action\ActionInterface       $action
-     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $optionsResolver
+     * @param ActionInterface          $action
+     * @param OptionsResolverInterface $optionsResolver
      */
     public function __construct(ActionInterface $action, OptionsResolverInterface $optionsResolver)
     {
