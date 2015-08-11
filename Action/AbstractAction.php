@@ -84,7 +84,7 @@ abstract class AbstractAction implements ActionInterface
     public function setConfiguration(ConfigurationInterface $configuration)
     {
         $this->configuration = $configuration;
-        $resolver = new OptionsResolver;
+        $resolver = new OptionsResolver();
         $this->setDefaultOptions($resolver);
         $this->eventManager->dipatchConfigureEvent($this, $resolver);
         $this->options = $resolver->resolve($configuration->getActionOptions($this->getType()));

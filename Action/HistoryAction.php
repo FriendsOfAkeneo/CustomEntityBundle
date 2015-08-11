@@ -2,6 +2,8 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Action;
 
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
 /**
  * @author    Antoine Guigan <antoine@akeneo.com>
  * @copyright 2014 Akeneo SAS (http://www.akeneo.com)
@@ -20,9 +22,10 @@ class HistoryAction extends AbstractViewableAction
     /**
      * {@inheritdoc}
      */
-    protected function setDefaultOptions(\Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver)
+    protected function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         parent::setDefaultOptions($resolver);
+
         $resolver->setDefaults(
             [
                 'template'      => 'PimCustomEntityBundle:CustomEntity:_history.html.twig',
