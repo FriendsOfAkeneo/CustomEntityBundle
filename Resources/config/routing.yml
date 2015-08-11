@@ -27,7 +27,7 @@ pim_customentity_edit:
 
 pim_customentity_show:
     path: /{customEntityName}/{id}
-    defaults: { _controller: pim_customentity.controller:executeAction, actionType: history }
+    defaults: { _controller: pim_customentity.controller:executeAction, actionType: show }
     requirements:
         id: \d+
 
