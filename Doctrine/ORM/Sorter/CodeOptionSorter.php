@@ -3,7 +3,7 @@
 namespace Pim\Bundle\CustomEntityBundle\Doctrine\ORM\Sorter;
 
 use Pim\Bundle\CatalogBundle\Doctrine\ORM\Sorter\BaseSorter;
-use Pim\Bundle\CatalogBundle\Model\AbstractAttribute;
+use Pim\Bundle\CatalogBundle\Model\AttributeInterface;
 
 /**
  * Sorter for translatable options
@@ -17,7 +17,7 @@ class CodeOptionSorter extends BaseSorter
     /**
      * {@inheritdoc}
      */
-    public function addAttributeSorter(AbstractAttribute $attribute, $direction)
+    public function addAttributeSorter(AttributeInterface $attribute, $direction)
     {
         $aliasPrefix = 'sorter';
         $joinAlias   = $aliasPrefix.'V'.$attribute->getCode().$this->aliasCounter++;
