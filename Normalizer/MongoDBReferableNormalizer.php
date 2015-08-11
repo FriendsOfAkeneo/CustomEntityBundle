@@ -42,9 +42,9 @@ class MongoDBReferableNormalizer implements NormalizerInterface
         ];
 
         $values = [];
-        /*if ($object instanceof AbstractCustomOption) {
+        if ($object instanceof AbstractCustomOption) {
             $data['label'] = $object->getLabel();
-        }*/
+        }
         if ($object instanceof AbstractTranslatableCustomOption) {
             foreach ($object->getTranslations() as $translation) {
                 $data[$translation->getLocale()] = [
