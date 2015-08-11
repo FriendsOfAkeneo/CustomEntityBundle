@@ -48,7 +48,7 @@ class CustomEntityDatasource extends Datasource
         $repository = $this->om->getRepository($config['entity']);
 
         if ($repository instanceof LocaleAwareRepositoryInterface) {
-            $repository->setLocale($this->localeHelper->getCurrentLocale()->getCode());
+            $repository->setLocale($this->localeHelper->getCurrentLocaleCode());
         }
 
         if (!isset($config['repository_method']) && $repository instanceof DatagridAwareRepositoryInterface) {
