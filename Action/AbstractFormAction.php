@@ -121,7 +121,7 @@ abstract class AbstractFormAction extends AbstractViewableAction
      *
      * @param object $object
      *
-     * @return Response
+     * @return RedirectResponse
      */
     protected function getRedirectResponse($object)
     {

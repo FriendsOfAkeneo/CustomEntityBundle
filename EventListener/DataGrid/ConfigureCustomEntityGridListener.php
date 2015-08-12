@@ -79,8 +79,8 @@ class ConfigureCustomEntityGridListener
     /**
      * Sets the configuration for row actions
      *
-     * @param DatagridConfiguration  $datagridConfig
-     * @param ConfigurationInterface $indexAction
+     * @param DatagridConfiguration $datagridConfig
+     * @param ActionInterface       $indexAction
      */
     protected function setRowActions(DatagridConfiguration $datagridConfig, ActionInterface $indexAction)
     {

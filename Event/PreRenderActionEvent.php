@@ -23,7 +23,7 @@ class PreRenderActionEvent extends ActionEvent
 
     /**
      * @param ActionInterface $action
-     * @param type            $template
+     * @param string          $template
      * @param array           $templateVars
      */
     public function __construct(ActionInterface $action, $template, array $templateVars)
