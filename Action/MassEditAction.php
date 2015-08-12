@@ -4,6 +4,7 @@ namespace Pim\Bundle\CustomEntityBundle\Action;
 
 use Pim\Bundle\CustomEntityBundle\Event\ActionEventManager;
 use Pim\Bundle\CustomEntityBundle\Manager\ManagerInterface;
+use Pim\Bundle\CustomEntityBundle\Manager\Registry as ManagerRegistry;
 use Pim\Bundle\CustomEntityBundle\MassAction\DataGridQueryGenerator;
 use Pim\Bundle\CustomEntityBundle\MassAction\MassUpdater;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
@@ -32,11 +33,9 @@ class MassEditAction extends CreateAction implements GridActionInterface
     protected $massUpdater;
 
     /**
-     * Constructor
-     *
      * @param ActionFactory          $actionFactory
      * @param ActionEventManager     $eventManager
-     * @param ManagerInterface       $manager
+     * @param ManagerRegistry        $manager
      * @param RouterInterface        $router
      * @param TranslatorInterface    $translator
      * @param EngineInterface        $templating
@@ -47,7 +46,7 @@ class MassEditAction extends CreateAction implements GridActionInterface
     public function __construct(
         ActionFactory $actionFactory,
         ActionEventManager $eventManager,
-        ManagerInterface $manager,
+        ManagerRegistry $manager,
         RouterInterface $router,
         TranslatorInterface $translator,
         EngineInterface $templating,
