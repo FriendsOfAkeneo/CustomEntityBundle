@@ -1,3 +1,6 @@
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/akeneo/CustomEntityBundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/akeneo/CustomEntityBundle/?branch=master)
+[![Build Status](https://travis-ci.org/akeneo/CustomEntityBundle.svg?branch=master)](https://travis-ci.org/akeneo/CustomEntityBundle)
+
 CustomEntityBundle
 ==================
 
@@ -5,7 +8,7 @@ Eases the creation of custom entity and related views in the PIM
 
 For more information, please see http://docs.akeneo.com/
 
-To install this bundle, please include akeneo/custom-entity-bundle to your composer.json 
+To install this bundle, please include akeneo/custom-entity-bundle to your composer.json
 and add the following lines **at the end** of your app/config/routing.yml :
 
     pim_customentity:
