@@ -51,6 +51,7 @@ class CustomEntityDatasource extends Datasource
             $repository->setLocale($this->localeHelper->getCurrentLocaleCode());
         }
 
+        // TODO: Remove that code, it's configurable in the datagrid.yml file
         if (!isset($config['repository_method']) && $repository instanceof DatagridAwareRepositoryInterface) {
             $config['repository_method'] = 'createDatagridQueryBuilder';
         }
