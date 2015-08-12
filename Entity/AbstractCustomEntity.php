@@ -2,47 +2,23 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Entity;
 
-use Pim\Bundle\CatalogBundle\Model\ReferableInterface;
+use Pim\Component\ReferenceData\Model\AbstractReferenceData;
+use Pim\Component\ReferenceData\Model\ReferenceDataInterface;
 
 /**
  * Abstract custom entity
- *
  *
  * @author    Antoine Guigan <antoine@akeneo.com>
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-abstract class AbstractCustomEntity implements ReferableInterface
+abstract class AbstractCustomEntity extends AbstractReferenceData implements ReferenceDataInterface
 {
-    /**
-     * @var int
-     */
-    protected $id;
-
-    /**
-     * @var string
-     */
-    protected $code;
-
-    /**
-     * @var \DateTime
-     */
+    /** @var \DateTime */
     protected $created;
 
-    /**
-     * @var \DateTime
-     */
+    /** * @var \DateTime */
     protected $updated;
-
-    /**
-     * Returns the id
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
     /**
      * {@inheritdoc}
@@ -53,32 +29,6 @@ abstract class AbstractCustomEntity implements ReferableInterface
     }
 
     /**
-     * Get code
-     *
-     * @return string
-     */
-    public function getCode()
-    {
-        return $this->code;
-    }
-
-    /**
-     * Set code
-     *
-     * @param string $code
-     *
-     * @return AbstractCustomEntity
-     */
-    public function setCode($code)
-    {
-        $this->code = $code;
-
-        return $this;
-    }
-
-    /**
-     * Get created time
-     *
      * @return \DateTime
      */
     public function getCreated()
@@ -87,8 +37,6 @@ abstract class AbstractCustomEntity implements ReferableInterface
     }
 
     /**
-     * Get updated time
-     *
      * @return \DateTime
      */
     public function getUpdated()
@@ -97,8 +45,6 @@ abstract class AbstractCustomEntity implements ReferableInterface
     }
 
     /**
-     * Set created time
-     *
      * @param \DateTime $created
      *
      * @return AbstractCustomEntity
@@ -111,8 +57,6 @@ abstract class AbstractCustomEntity implements ReferableInterface
     }
 
     /**
-     * Set updated time
-     *
      * @param \DateTime $updated
      *
      * @return AbstractCustomEntity
@@ -125,8 +69,6 @@ abstract class AbstractCustomEntity implements ReferableInterface
     }
 
     /**
-     * Convert to string
-     *
      * @return string
      */
     public function __toString()

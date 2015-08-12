@@ -26,8 +26,6 @@ class Manager implements ManagerInterface
     protected $propertyAccessor;
 
     /**
-     * Constructor
-     *
      * @param SmartManagerRegistry      $doctrine
      * @param PropertyAccessorInterface $propertyAccessor
      */

@@ -92,6 +92,9 @@ class DataGridQueryGenerator
     }
 
     /**
+     * @param Request $request
+     * @param string $datagridName
+     *
      * @return array
      */
     public function getIds(Request $request, $datagridName)

@@ -4,6 +4,7 @@ namespace Pim\Bundle\CustomEntityBundle\Action;
 
 use Pim\Bundle\CustomEntityBundle\Event\ActionEventManager;
 use Pim\Bundle\CustomEntityBundle\Manager\ManagerInterface;
+use Pim\Bundle\CustomEntityBundle\Manager\Registry as ManagerRegistry;
 use Pim\Bundle\CustomEntityBundle\MassAction\DataGridQueryGenerator;
 use Pim\Bundle\CustomEntityBundle\MassAction\MassUpdater;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
@@ -15,8 +16,6 @@ use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
- * Batch edit action
- *
  * @author    Antoine Guigan <antoine@akeneo.com>
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
@@ -34,11 +33,9 @@ class MassEditAction extends CreateAction implements GridActionInterface
     protected $massUpdater;
 
     /**
-     * Constructor
-     *
      * @param ActionFactory          $actionFactory
      * @param ActionEventManager     $eventManager
-     * @param ManagerInterface       $manager
+     * @param ManagerRegistry        $manager
      * @param RouterInterface        $router
      * @param TranslatorInterface    $translator
      * @param EngineInterface        $templating
@@ -49,7 +46,7 @@ class MassEditAction extends CreateAction implements GridActionInterface
     public function __construct(
         ActionFactory $actionFactory,
         ActionEventManager $eventManager,
-        ManagerInterface $manager,
+        ManagerRegistry $manager,
         RouterInterface $router,
         TranslatorInterface $translator,
         EngineInterface $templating,
@@ -58,6 +55,7 @@ class MassEditAction extends CreateAction implements GridActionInterface
         MassUpdater $massUpdater
     ) {
         parent::__construct($actionFactory, $eventManager, $manager, $router, $translator, $templating, $formFactory);
+
         $this->queryGenerator = $queryGenerator;
         $this->massUpdater = $massUpdater;
     }

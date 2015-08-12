@@ -54,6 +54,8 @@ interface ConfigurationInterface
 
     /**
      * Returns the global options of the action
+     *
+     * @return array
      */
     public function getOptions();
 }

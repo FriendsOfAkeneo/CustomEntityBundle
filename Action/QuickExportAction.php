@@ -63,6 +63,7 @@ class QuickExportAction extends AbstractAction implements GridActionInterface
         Serializer $serializer
     ) {
         parent::__construct($actionFactory, $eventManager, $managerRegistry, $router, $translator);
+
         $this->doctrine = $doctrine;
         $this->queryGenerator = $queryGenerator;
         $this->serializer = $serializer;

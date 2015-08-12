@@ -58,8 +58,6 @@ abstract class AbstractAction implements ActionInterface
     protected $options;
 
     /**
-     * Constructor
-     *
      * @param ActionFactory       $actionFactory
      * @param ActionEventManager  $eventManager
      * @param ManagerRegistry     $managerRegistry
@@ -86,7 +84,7 @@ abstract class AbstractAction implements ActionInterface
     public function setConfiguration(ConfigurationInterface $configuration)
     {
         $this->configuration = $configuration;
-        $resolver = new OptionsResolver;
+        $resolver = new OptionsResolver();
         $this->setDefaultOptions($resolver);
         $this->eventManager->dipatchConfigureEvent($this, $resolver);
         $this->options = $resolver->resolve($configuration->getActionOptions($this->getType()));
@@ -107,6 +105,7 @@ abstract class AbstractAction implements ActionInterface
     {
         return $this->options['route'];
     }
+
     /**
      * {@inheritdoc}
      */
@@ -213,7 +212,7 @@ abstract class AbstractAction implements ActionInterface
     }
 
     /**
-     * Returns the manager
+     * Returns the custom entity manager
      *
      * @return \Pim\Bundle\CustomEntityBundle\Manager\ManagerInterface
      */

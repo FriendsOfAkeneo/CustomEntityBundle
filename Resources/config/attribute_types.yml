@@ -1,3 +1,0 @@
-parameters:
-    pim_custom_entity.attribute_type.custom_option_multi_select.class:  Pim\Bundle\CustomEntityBundle\AttributeType\CustomOptionMultiSelectType
-    pim_custom_entity.attribute_type.custom_option_simple_select.class: Pim\Bundle\CustomEntityBundle\AttributeType\CustomOptionSimpleSelectType

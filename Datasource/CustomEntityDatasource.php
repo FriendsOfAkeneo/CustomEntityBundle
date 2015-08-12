@@ -3,9 +3,7 @@
 namespace Pim\Bundle\CustomEntityBundle\Datasource;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\ORM\EntityManager;
 use Oro\Bundle\DataGridBundle\Datagrid\DatagridInterface;
-use Oro\Bundle\SecurityBundle\ORM\Walker\AclHelper;
 use Pim\Bundle\CatalogBundle\Helper\LocaleHelper;
 use Pim\Bundle\CustomEntityBundle\Entity\Repository\DatagridAwareRepositoryInterface;
 use Pim\Bundle\CustomEntityBundle\Entity\Repository\LocaleAwareRepositoryInterface;
@@ -21,24 +19,21 @@ use Pim\Bundle\DataGridBundle\Datasource\ResultRecord\HydratorInterface;
  */
 class CustomEntityDatasource extends Datasource
 {
-    /**  @staticvar string */
+    /** @staticvar string */
     const TYPE = 'pim_custom_entity';
 
     /** @var LocaleHelper */
     protected $localeHelper;
 
     /**
-     * Constructor
-     *
-     * @param ObjectManager $om
-     * @param AclHelper     $aclHelper
-     * @param LocaleHelper  $localeHelper
+     * @param ObjectManager     $om
+     * @param HydratorInterface $hydrator
+     * @param LocaleHelper      $localeHelper
      */
     public function __construct(
         ObjectManager $om,
         HydratorInterface $hydrator,
         LocaleHelper $localeHelper
-
     ) {
         parent::__construct($om, $hydrator);
 
@@ -53,12 +48,14 @@ class CustomEntityDatasource extends Datasource
         $repository = $this->om->getRepository($config['entity']);
 
         if ($repository instanceof LocaleAwareRepositoryInterface) {
-            $repository->setLocale($this->localeHelper->getCurrentLocale()->getCode());
+            $repository->setLocale($this->localeHelper->getCurrentLocaleCode());
         }
 
+        // TODO: Remove that code, it's configurable in the datagrid.yml file
         if (!isset($config['repository_method']) && $repository instanceof DatagridAwareRepositoryInterface) {
             $config['repository_method'] = 'createDatagridQueryBuilder';
         }
+
         parent::process($grid, $config);
     }
 

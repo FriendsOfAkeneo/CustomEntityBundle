@@ -6,8 +6,6 @@ use Pim\Bundle\CustomEntityBundle\Configuration\Registry;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Action factory
- *
  * @author    Antoine Guigan <antoine@akeneo.com>
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
@@ -15,7 +13,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class ActionFactory
 {
     /**
-     *
      * @var ContainerInterface
      */
     protected $container;
@@ -28,11 +25,9 @@ class ActionFactory
     /**
      * @var ActionInterface[][]
      */
-    private $actions = [];
+    protected $actions = [];
 
     /**
-     * Constructor
-     *
      * @param ContainerInterface $container
      * @param Registry           $configurationRegistry
      */
@@ -43,8 +38,6 @@ class ActionFactory
     }
 
     /**
-     * Returns an action
-     *
      * @param string $customEntityName
      * @param string $actionType
      *
