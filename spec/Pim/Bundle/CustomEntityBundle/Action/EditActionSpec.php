@@ -126,7 +126,7 @@ class EditActionSpec extends ObjectBehavior
         $eventManager
             ->dipatchConfigureEvent(
                 $this,
-                Argument::type('Symfony\Component\OptionsResolver\OptionsResolverInterface')
+                Argument::type('Symfony\Component\OptionsResolver\OptionsResolver')
             )
             ->shouldBeCalled();
 

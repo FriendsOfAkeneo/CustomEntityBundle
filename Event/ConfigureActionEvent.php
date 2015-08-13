@@ -3,7 +3,7 @@
 namespace Pim\Bundle\CustomEntityBundle\Event;
 
 use Pim\Bundle\CustomEntityBundle\Action\ActionInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Event for action configuration
@@ -15,15 +15,15 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class ConfigureActionEvent extends ActionEvent
 {
     /**
-     * @var OptionsResolverInterface
+     * @var OptionsResolver
      */
     protected $optionsResolver;
 
     /**
-     * @param ActionInterface          $action
-     * @param OptionsResolverInterface $optionsResolver
+     * @param ActionInterface $action
+     * @param OptionsResolver $optionsResolver
      */
-    public function __construct(ActionInterface $action, OptionsResolverInterface $optionsResolver)
+    public function __construct(ActionInterface $action, OptionsResolver $optionsResolver)
     {
         parent::__construct($action);
         $this->optionsResolver = $optionsResolver;
@@ -32,7 +32,7 @@ class ConfigureActionEvent extends ActionEvent
     /**
      * Returns the options resolver for the action
      *
-     * @return OptionsResolverInterface
+     * @return OptionsResolver
      */
     public function getOptionsResolver()
     {

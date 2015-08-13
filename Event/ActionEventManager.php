@@ -5,7 +5,7 @@ namespace Pim\Bundle\CustomEntityBundle\Event;
 use Pim\Bundle\CustomEntityBundle\Action\ActionInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Event manager for actions
@@ -34,10 +34,10 @@ class ActionEventManager
     /**
      * Dispatches the ActionEvents::CONFIGURE event
      *
-     * @param ActionInterface          $action
-     * @param OptionsResolverInterface $optionsResolver
+     * @param ActionInterface $action
+     * @param OptionsResolver $optionsResolver
      */
-    public function dipatchConfigureEvent(ActionInterface $action, OptionsResolverInterface $optionsResolver)
+    public function dipatchConfigureEvent(ActionInterface $action, OptionsResolver $optionsResolver)
     {
         $event = new ConfigureActionEvent($action, $optionsResolver);
         $this->eventDispatcher->dispatch(ActionEvents::CONFIGURE, $event);

@@ -4,7 +4,7 @@ namespace Pim\Bundle\CustomEntityBundle\Event;
 
 use Pim\Bundle\CustomEntityBundle\Configuration\ConfigurationInterface;
 use Symfony\Component\EventDispatcher\Event;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Launched upon custom entity options configuration
@@ -21,17 +21,17 @@ class ConfigurationEvent extends Event
     protected $configuration;
 
     /**
-     * @var OptionsResolverInterface
+     * @var OptionsResolver
      */
     protected $optionsResolver;
 
     /**
      * Constructor
      *
-     * @param ConfigurationInterface   $configuration
-     * @param OptionsResolverInterface $optionsResolver
+     * @param ConfigurationInterface $configuration
+     * @param OptionsResolver        $optionsResolver
      */
-    public function __construct(ConfigurationInterface $configuration, OptionsResolverInterface $optionsResolver)
+    public function __construct(ConfigurationInterface $configuration, OptionsResolver $optionsResolver)
     {
         $this->configuration = $configuration;
         $this->optionsResolver = $optionsResolver;
@@ -50,7 +50,7 @@ class ConfigurationEvent extends Event
     /**
      * Returns the options resolver
      *
-     * @return OptionsResolverInterface
+     * @return OptionsResolver
      */
     public function getOptionsResolver()
     {

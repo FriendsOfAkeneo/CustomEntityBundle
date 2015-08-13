@@ -3,7 +3,7 @@
 namespace Pim\Bundle\CustomEntityBundle\Action;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @author    Antoine Guigan <antoine@akeneo.com>
@@ -27,7 +27,7 @@ class CreateAction extends AbstractFormAction
     /**
      * {@inheritdoc}
      */
-    protected function setDefaultOptions(OptionsResolverInterface $resolver)
+    protected function setDefaultOptions(OptionsResolver $resolver)
     {
         parent::setDefaultOptions($resolver);
 
