@@ -63,7 +63,7 @@ class SecurityListener implements EventSubscriberInterface
     public function setConfigurationOptions(ConfigurationEvent $event)
     {
         $resolver = $event->getOptionsResolver();
-        $resolver->setOptional(['acl', 'acl_prefix']);
+        $resolver->setDefined(['acl', 'acl_prefix']);
         $resolver->setDefaults(['acl_separator' => '_']);
     }
 
@@ -80,9 +80,9 @@ class SecurityListener implements EventSubscriberInterface
         if (isset($options['acl'])) {
             $resolver->setDefaults(['acl' => $options['acl']]);
         } else {
-            $resolver->setOptional(['acl']);
+            $resolver->setDefined(['acl']);
         }
-        $resolver->setOptional(['acl_suffix']);
+        $resolver->setDefined(['acl_suffix']);
         $resolver->setNormalizers(
             [
                 'acl' => function ($actionOptions, $acl) use ($options) {

@@ -36,7 +36,7 @@ class FormConfigurationListener implements EventSubscriberInterface
      */
     public function setConfigurationOptions(ConfigurationEvent $event)
     {
-        $event->getOptionsResolver()->setOptional(
+        $event->getOptionsResolver()->setDefined(
             [
                 'form_type',
                 'form_options',
