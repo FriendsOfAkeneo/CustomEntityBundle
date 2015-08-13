@@ -37,8 +37,6 @@ class DataGridQueryGenerator
     protected $parametersParser;
 
     /**
-     * Constructor
-     *
      * @param Manager                    $manager
      * @param RequestParameters          $requestParams
      * @param MassActionParametersParser $parametersParser

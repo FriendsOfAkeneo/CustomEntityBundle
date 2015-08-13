@@ -17,7 +17,7 @@ abstract class AbstractCustomEntity extends AbstractReferenceData implements Ref
     /** @var \DateTime */
     protected $created;
 
-    /** * @var \DateTime */
+    /** @var \DateTime */
     protected $updated;
 
     /**
