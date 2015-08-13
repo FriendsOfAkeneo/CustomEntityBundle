@@ -15,7 +15,7 @@ use Pim\Bundle\ReferenceDataBundle\Doctrine\ORM\Repository\ReferenceDataReposito
 class CustomEntityRepository extends ReferenceDataRepository
 {
     /**
-     * Apply mass action parameters on query builder
+     * Applies mass action parameters on the query builder
      *
      * @param QueryBuilder $qb
      * @param bool         $inset
