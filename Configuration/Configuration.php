@@ -2,11 +2,10 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Configuration;
 
-use Pim\Bundle\CustomEntityBundle\Event\ConfigurationEvents;
 use Pim\Bundle\CustomEntityBundle\Event\ConfigurationEvent;
+use Pim\Bundle\CustomEntityBundle\Event\ConfigurationEvents;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Configuration for an ORM custom entity
@@ -115,9 +114,9 @@ class Configuration implements ConfigurationInterface
     /**
      * Sets the default options
      *
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    protected function setDefaultOptions(OptionsResolverInterface $resolver)
+    protected function setDefaultOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(['manager' => 'default']);
         $event = new ConfigurationEvent($this, $resolver);

@@ -3,7 +3,7 @@
 namespace Pim\Bundle\CustomEntityBundle\Action;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @author    Antoine Guigan <antoine@akeneo.com>
@@ -40,7 +40,7 @@ class MassDeleteAction extends AbstractAction implements GridActionInterface
     /**
      * {@inheritdoc}
      */
-    protected function setDefaultOptions(OptionsResolverInterface $resolver)
+    protected function setDefaultOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             [

@@ -2,7 +2,7 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Action;
 
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @author    Antoine Guigan <antoine@akeneo.com>
@@ -22,7 +22,7 @@ class ShowAction extends AbstractViewableAction
     /**
      * {@inheritdoc}
      */
-    protected function setDefaultOptions(OptionsResolverInterface $resolver)
+    protected function setDefaultOptions(OptionsResolver $resolver)
     {
         parent::setDefaultOptions($resolver);
         $resolver->setDefaults(['route' => 'pim_customentity_show']);

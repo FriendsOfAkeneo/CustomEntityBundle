@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\StreamedResponse;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -74,6 +74,9 @@ class QuickExportAction extends AbstractAction implements GridActionInterface
      */
     public function doExecute(Request $request)
     {
+
+
+
         if (isset($this->options['limit'])) {
             $count = $this->queryGenerator->getCount($request, $this->configuration->getName());
             if ($count > $this->options['limit']) {
@@ -117,7 +120,7 @@ class QuickExportAction extends AbstractAction implements GridActionInterface
     /**
      * {@inheritdoc}
      */
-    protected function setDefaultOptions(OptionsResolverInterface $resolver)
+    protected function setDefaultOptions(OptionsResolver $resolver)
     {
         $resolver->setOptional(['limit']);
         $resolver->setDefaults(
