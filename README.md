@@ -30,18 +30,14 @@ Then add the following lines **at the end** of your app/config/routing.yml :
         prefix: /enrich
         resource: "@PimCustomEntityBundle/Resources/config/routing.yml"
 
-Then enable the bundle in the `app/AppKernel.php` file in the registerBundles() method:
+and enable the bundle in the `app/AppKernel.php` file in the registerBundles() method:
 
     $bundles = [
         // ...
         new Pim\Bundle\CustomEntityBundle\PimCustomEntityBundle(),
     ]
 
-Then, you've to load the following job fixtures if you want to use the quick export and/or the mass edit features.
-Job fixture is defined in [Resources/fixtures/jobs.yml] file and you can copy/paste it to your installer.
-If you're in a production environment and you can't reinstall your PIM, you can use the `akeneo:batch:create-job` command like:
-
-    $ php app/console akeneo:batch:create-job "Akeneo Mass Edit Connector" "reference_data_quick_export" "quick_export" "csv_reference_data_quick_export" "{\"delimiter\":\";\",\"enclosure\":\"\\\"\",\"withHeader\":true,\"filePath\":\"\\/tmp\\/reference_data_quick_export.csv\"}"
+If you want to use the quick export and/or the mass edit features, you've to load the job fixture defined in [Resources/fixtures/jobs.yml] file and you can copy/paste its content to your installer.
 
 
 ## Documentation
