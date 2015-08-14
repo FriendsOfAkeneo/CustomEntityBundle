@@ -76,17 +76,18 @@ class QuickExportAction extends AbstractAction implements GridActionInterface
      */
     public function doExecute(Request $request)
     {
-        $jobInstance = $this->jobInstanceRepo->findOneBy(['code' => 'reference_data_quick_export']);
+        $jobInstance = $this->jobInstanceRepo->findOneBy(['code' => 'csv_reference_data_quick_export']);
         if (null === $jobInstance) {
-            throw new \Exception(
-                'The job instance "reference_data_quick_export" does not exist. Please contact your administrator'
+            throw new \LogicException(
+                'The job instance "csv_reference_data_quick_export" does not exist. Please contact your administrator'
             );
         }
 
         $rawConfiguration = addslashes(
             json_encode(
                 [
-                    'filters'     => $this->getFilters($request),
+                    'reference_data' => $this->configuration->getEntityClass(),
+                    'ids'            => $this->getEntityIds($request),
                 ]
             )
         );
@@ -97,25 +98,19 @@ class QuickExportAction extends AbstractAction implements GridActionInterface
     }
 
     /**
-     * Get datagrid filters
-     *
      * @param Request $request
      *
      * @return array
      */
-    protected function getFilters(Request $request)
+    protected function getEntityIds(Request $request)
     {
-        $referenceDatas = $this->massActionDispatcher->dispatch($request);
-        $referenceDataIds = [];
-        foreach ($referenceDatas as $referenceData) {
-            $referenceDataIds[] = $referenceData->getId();
+        $entities = $this->massActionDispatcher->dispatch($request);
+        $entityIds = [];
+        foreach ($entities as $entity) {
+            $entityIds[] = $entity->getId();
         }
 
-        $filters = [
-            ['field' => 'id', 'operator' => 'IN', 'value' => $referenceDataIds]
-        ];
-
-        return $filters;
+        return $entityIds;
     }
 
     /**
@@ -160,6 +155,8 @@ class QuickExportAction extends AbstractAction implements GridActionInterface
                 ],
             ]
         );
+
+        // TODO: Add job instance code + context for normalization + file for writer
     }
 
     /**
