@@ -9,7 +9,7 @@ connector:
                     title: csv_reference_data_quick_export
                     services:
                         reader: pim_custom_entity.mass_edit_connector.reader.reference_data
-                        processor: pim_base_connector.processor.dummy
+                        processor: pim_custom_entity.mass_edit_connector.processor.reference_data_to_flat_array
                         writer: pim_base_connector.writer.dummy
                     parameters:
                         batch_size: 100

@@ -1,9 +1,16 @@
 parameters:
     pim_custom_entity.mass_edit_connector.reader.reference_data.class: Pim\Bundle\CustomEntityBundle\MassEditConnector\Reader\ReferenceDataReader
+    pim_custom_entity.mass_edit_connector.processor.reference_data_to_flat_array.class: Pim\Bundle\CustomEntityBundle\MassEditConnector\Processor\ReferenceDataToFlatArrayProcessor
 
 services:
     pim_custom_entity.mass_edit_connector.reader.reference_data:
         class: %pim_custom_entity.mass_edit_connector.reader.reference_data.class%
         arguments:
-            - '@pim_connector.repository.job_configuration'
-            - '@doctrine.orm.entity_manager'
+            - @pim_connector.repository.job_configuration
+            - @doctrine.orm.entity_manager
+
+    pim_custom_entity.mass_edit_connector.processor.reference_data_to_flat_array:
+        class: %pim_custom_entity.mass_edit_connector.processor.reference_data_to_flat_array.class%
+        arguments:
+            - @pim_connector.repository.job_configuration
+            - @pim_serializer
