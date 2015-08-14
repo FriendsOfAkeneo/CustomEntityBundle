@@ -30,14 +30,14 @@ Then add the following lines **at the end** of your app/config/routing.yml :
         prefix: /enrich
         resource: "@PimCustomEntityBundle/Resources/config/routing.yml"
 
-and enable the bundle in the `app/AppKernel.php` file in the registerBundles() method:
+and enable the bundle in the `app/AppKernel.php` file in the `registerBundles()` method:
 
     $bundles = [
         // ...
         new Pim\Bundle\CustomEntityBundle\PimCustomEntityBundle(),
     ]
 
-If you want to use the quick export and/or the mass edit features, you've to load the job fixture defined in [Resources/fixtures/jobs.yml] file and you can copy/paste its content to your installer.
+If you want to use the quick export and/or the mass edit features, you have to load the job fixture defined in [Resources/fixtures/jobs.yml] file and to copy/paste its content to your installer.
 
 
 ## Documentation

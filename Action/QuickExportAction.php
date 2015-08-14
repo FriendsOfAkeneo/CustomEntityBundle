@@ -126,7 +126,7 @@ class QuickExportAction extends AbstractAction implements GridActionInterface
     {
         $token = $this->tokenStorage->getToken();
         if (null === $token || !is_object($user = $token->getUser())) {
-            throw new TokenNotFoundException('You seems not authenticated anymore. Please login and try again');
+            throw new TokenNotFoundException('You are no longer authenticated. Please log in and try again');
         }
 
         return $user;

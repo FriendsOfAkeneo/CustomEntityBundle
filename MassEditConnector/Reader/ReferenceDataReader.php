@@ -23,7 +23,7 @@ class ReferenceDataReader extends AbstractConfigurableStepElement implements
     protected $stepExecution;
 
     /** @var JobConfigurationRepositoryInterface */
-    protected $jobConfigRepo;
+    protected $jobConfigRepository;
 
     /** @var EntityManager */
     protected $em;
@@ -32,15 +32,15 @@ class ReferenceDataReader extends AbstractConfigurableStepElement implements
     protected $referenceDatas;
 
     /**
-     * @param JobConfigurationRepositoryInterface $jobConfigRepo
+     * @param JobConfigurationRepositoryInterface $jobConfigRepository
      * @param EntityManager                       $em
      */
     public function __construct(
-        JobConfigurationRepositoryInterface $jobConfigRepo,
+        JobConfigurationRepositoryInterface $jobConfigRepository,
         EntityManager $em
     ) {
-        $this->jobConfigRepo = $jobConfigRepo;
-        $this->em            = $em;
+        $this->jobConfigRepository = $jobConfigRepository;
+        $this->em                  = $em;
     }
 
     /**
@@ -98,7 +98,7 @@ class ReferenceDataReader extends AbstractConfigurableStepElement implements
     protected function getJobConfiguration()
     {
         $jobExecution = $this->stepExecution->getJobExecution();
-        $massEditJobConf = $this->jobConfigRepo->findOneBy(['jobExecution' => $jobExecution]);
+        $massEditJobConf = $this->jobConfigRepository->findOneBy(['jobExecution' => $jobExecution]);
 
         if (null === $massEditJobConf) {
             throw new EntityNotFoundException(sprintf(

@@ -7,6 +7,7 @@ use Pim\Component\Connector\Repository\JobConfigurationRepositoryInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
+ * Processor to quick export reference datas
  *
  * @author Romain Monceau <romain@akeneo.com>
  */
