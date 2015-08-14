@@ -8,7 +8,7 @@ connector:
                 perform:
                     title: csv_reference_data_quick_export
                     services:
-                        reader: pim_custom_entity.connector.reader.mass_edit.reference_data
+                        reader: pim_custom_entity.mass_edit_connector.reader.reference_data
                         processor: pim_base_connector.processor.dummy
                         writer: pim_base_connector.writer.dummy
                     parameters:

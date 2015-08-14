@@ -1,9 +1,0 @@
-parameters:
-    pim_custom_entity.connector.reader.mass_edit.reference_data.class: Pim\Bundle\CustomEntityBundle\Connector\Reader\MassEdit\ReferenceDataReader
-
-services:
-    pim_custom_entity.connector.reader.mass_edit.reference_data:
-        class: %pim_custom_entity.connector.reader.mass_edit.reference_data.class%
-        arguments:
-            - '@pim_connector.repository.job_configuration'
-            - '@doctrine.orm.entity_manager'
