@@ -1,0 +1,15 @@
+connector:
+    name: Akeneo Mass Edit Connector
+    jobs:
+        reference_data_quick_export:
+            title: reference_data_quick_export
+            type: quick_export
+            steps:
+                perform:
+                    title: csv_reference_data_quick_export
+                    services:
+                        reader: pim_custom_entity.connector.reader.mass_edit.reference_data
+                        processor: pim_base_connector.processor.dummy
+                        writer: pim_base_connector.writer.dummy
+                    parameters:
+                        batch_size: 100
