@@ -1,6 +1,7 @@
 parameters:
     pim_custom_entity.mass_edit_connector.reader.reference_data.class: Pim\Bundle\CustomEntityBundle\MassEditConnector\Reader\ReferenceDataReader
     pim_custom_entity.mass_edit_connector.processor.reference_data_to_flat_array.class: Pim\Bundle\CustomEntityBundle\MassEditConnector\Processor\ReferenceDataToFlatArrayProcessor
+    pim_custom_entity.mass_edit_connector.writer.reference_data.class: Pim\Bundle\CustomEntityBundle\MassEditConnector\Writer\ReferenceDataWriter
 
 services:
     pim_custom_entity.mass_edit_connector.reader.reference_data:
@@ -14,3 +15,7 @@ services:
         arguments:
             - @pim_connector.repository.job_configuration
             - @pim_serializer
+
+    pim_custom_entity.mass_edit_connector.processor.reference_data_writer:
+        class: %pim_custom_entity.mass_edit_connector.writer.reference_data.class%
+        parent: pim_base_connector.writer.file.csv

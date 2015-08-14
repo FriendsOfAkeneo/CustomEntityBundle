@@ -10,6 +10,6 @@ connector:
                     services:
                         reader: pim_custom_entity.mass_edit_connector.reader.reference_data
                         processor: pim_custom_entity.mass_edit_connector.processor.reference_data_to_flat_array
-                        writer: pim_base_connector.writer.dummy
+                        writer: pim_custom_entity.mass_edit_connector.processor.reference_data_writer
                     parameters:
                         batch_size: 100
