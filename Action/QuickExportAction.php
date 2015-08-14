@@ -2,9 +2,13 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Action;
 
+use Akeneo\Bundle\BatchBundle\Launcher\JobLauncherInterface;
 use Pim\Bundle\CustomEntityBundle\Event\ActionEventManager;
 use Pim\Bundle\CustomEntityBundle\Manager\Registry as ManagerRegistry;
 use Pim\Bundle\CustomEntityBundle\MassAction\DataGridQueryGenerator;
+use Pim\Bundle\DataGridBundle\Adapter\GridFilterAdapterInterface;
+use Pim\Bundle\DataGridBundle\Extension\MassAction\MassActionDispatcher;
+use Pim\Bundle\ImportExportBundle\Entity\Repository\JobInstanceRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,6 +17,8 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -26,31 +32,31 @@ use Symfony\Component\Translation\TranslatorInterface;
 class QuickExportAction extends AbstractAction implements GridActionInterface
 {
     /**
-     * @var RegistryInterface
+     * @var MassActionDispatcher
      */
-    protected $doctrine;
+    protected $massActionDispatcher;
 
     /**
-     * @var DataGridQueryGenerator
+     * @var JobInstanceRepository
      */
-    protected $queryGenerator;
+    protected $jobInstanceRepo;
 
     /**
-     * @var Serializer
+     * @var JobLauncherInterface
      */
-    protected $serializer;
+    protected $jobLauncher;
 
     /**
-     * Constructor
-     *
+     * @var TokenStorageInterface
+     */
+    protected $tokenStorage;
+
+    /**
      * @param ActionFactory          $actionFactory
      * @param ActionEventManager     $eventManager
      * @param ManagerRegistry        $managerRegistry
      * @param RouterInterface        $router
      * @param TranslatorInterface    $translator
-     * @param RegistryInterface      $doctrine
-     * @param DataGridQueryGenerator $queryGenerator
-     * @param Serializer             $serializer
      */
     public function __construct(
         ActionFactory $actionFactory,
@@ -58,15 +64,17 @@ class QuickExportAction extends AbstractAction implements GridActionInterface
         ManagerRegistry $managerRegistry,
         RouterInterface $router,
         TranslatorInterface $translator,
-        RegistryInterface $doctrine,
-        DataGridQueryGenerator $queryGenerator,
-        Serializer $serializer
+        MassActionDispatcher $massActionDispatcher,
+        JobInstanceRepository $jobInstanceRepo,
+        JobLauncherInterface $jobLauncher,
+        TokenStorageInterface $tokenStorage
     ) {
         parent::__construct($actionFactory, $eventManager, $managerRegistry, $router, $translator);
 
-        $this->doctrine = $doctrine;
-        $this->queryGenerator = $queryGenerator;
-        $this->serializer = $serializer;
+        $this->massActionDispatcher = $massActionDispatcher;
+        $this->jobInstanceRepo      = $jobInstanceRepo;
+        $this->jobLauncher          = $jobLauncher;
+        $this->tokenStorage         = $tokenStorage;
     }
 
     /**
@@ -74,47 +82,63 @@ class QuickExportAction extends AbstractAction implements GridActionInterface
      */
     public function doExecute(Request $request)
     {
-
-
-
-        if (isset($this->options['limit'])) {
-            $count = $this->queryGenerator->getCount($request, $this->configuration->getName());
-            if ($count > $this->options['limit']) {
-                $this->addFlash(
-                    $request,
-                    'error',
-                    'pim_custom_entity.export.limit_exceeded',
-                    ['%limit%' => $this->options['limit']]
-                );
-
-                return new RedirectResponse($this->getActionUrl('index'));
-            }
+        $jobInstance = $this->jobInstanceRepo->findOneBy(['code' => 'reference_data_quick_export']);
+        if (null === $jobInstance) {
+            throw new \Exception(
+                'The job instance "reference_data_quick_export" does not exist. Please contact your administrator'
+            );
         }
 
-        $response = new StreamedResponse(
-            function () use ($request) {
-                $this->export($request);
-            }
+        $rawConfiguration = addslashes(
+            json_encode(
+                [
+                    'filters'     => $this->getFilters($request),
+                ]
+            )
         );
 
-        $this->setHttpHeaders($response);
+        $this->jobLauncher->launch($jobInstance, $this->getUser(), $rawConfiguration);
 
-        return $response;
+        return new Response();
     }
 
     /**
-     * Sets headers in the response
+     * Get datagrid filters
      *
-     * @param Response $response
+     * @param Request $request
+     *
+     * @return array
      */
-    protected function setHttpHeaders(Response $response)
+    protected function getFilters(Request $request)
     {
-        $response->headers->set('Content-Type', $this->options['content_type']);
-        $disposition = $response->headers->makeDisposition(
-            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            $this->options['filename']
-        );
-        $response->headers->set('Content-Disposition', $disposition);
+        $referenceDatas = $this->massActionDispatcher->dispatch($request);
+        $referenceDataIds = [];
+        foreach ($referenceDatas as $referenceData) {
+            $referenceDataIds[] = $referenceData->getId();
+        }
+
+        $filters = [
+            ['field' => 'id', 'operator' => 'IN', 'value' => $referenceDataIds]
+        ];
+
+        return $filters;
+    }
+
+    /**
+     * Get a user from the Security Context
+     *
+     * @return UserInterface|null
+     *
+     * @see Symfony\Component\Security\Core\Authentication\Token\TokenInterface::getUser()
+     */
+    protected function getUser()
+    {
+        $token = $this->tokenStorage->getToken();
+        if (null === $token || !is_object($user = $token->getUser())) {
+            return null;
+        }
+
+        return $user;
     }
 
     /**
@@ -122,7 +146,7 @@ class QuickExportAction extends AbstractAction implements GridActionInterface
      */
     protected function setDefaultOptions(OptionsResolver $resolver)
     {
-        $resolver->setOptional(['limit']);
+        $resolver->setDefined(['limit']);
         $resolver->setDefaults(
             [
                 'route'               => 'pim_customentity_quickexport',
@@ -170,54 +194,5 @@ class QuickExportAction extends AbstractAction implements GridActionInterface
             '_format'      => $this->options['format'],
             '_contentType' => $this->options['content_type']
         ];
-    }
-
-    /**
-     * Outputs serialized entities
-     *
-     * @param Request $request
-     */
-    protected function export(Request $request)
-    {
-        $iterator = $this->queryGenerator
-            ->createQueryBuilder(
-                $request,
-                $this->configuration->getName()
-            )
-            ->getQuery()
-            ->iterate();
-
-        $headersSent = false;
-        $manager = $this->doctrine->getManagerForClass($this->configuration->getEntityClass());
-
-        foreach ($iterator as $index => $item) {
-            if (!count($item[0])) {
-                continue;
-            }
-            $norm = $this->serializer->normalize(
-                $item[0],
-                $this->options['serializer_format'],
-                $this->options['serializer_context']
-            );
-
-            if (!$headersSent) {
-                echo $this->serializer->encode(
-                    array_keys($norm),
-                    $this->options['serializer_format'],
-                    $this->options['serializer_context']
-                );
-                $headersSent = true;
-            }
-
-            echo $this->serializer->encode(
-                $norm,
-                $this->options['serializer_format'],
-                $this->options['serializer_context']
-            );
-            flush();
-            if (0 === (($index + 100) % $this->options['batch_size'])) {
-                $manager->clear();
-            }
-        }
     }
 }
