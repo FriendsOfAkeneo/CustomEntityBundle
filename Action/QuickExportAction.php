@@ -5,21 +5,15 @@ namespace Pim\Bundle\CustomEntityBundle\Action;
 use Akeneo\Bundle\BatchBundle\Launcher\JobLauncherInterface;
 use Pim\Bundle\CustomEntityBundle\Event\ActionEventManager;
 use Pim\Bundle\CustomEntityBundle\Manager\Registry as ManagerRegistry;
-use Pim\Bundle\CustomEntityBundle\MassAction\DataGridQueryGenerator;
-use Pim\Bundle\DataGridBundle\Adapter\GridFilterAdapterInterface;
 use Pim\Bundle\DataGridBundle\Extension\MassAction\MassActionDispatcher;
 use Pim\Bundle\ImportExportBundle\Entity\Repository\JobInstanceRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Exception\TokenNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
@@ -127,7 +121,9 @@ class QuickExportAction extends AbstractAction implements GridActionInterface
     /**
      * Get a user from the Security Context
      *
-     * @return UserInterface|null
+     * @return UserInterface
+     *
+     * @throws TokenNotFoundException
      *
      * @see Symfony\Component\Security\Core\Authentication\Token\TokenInterface::getUser()
      */
@@ -135,7 +131,7 @@ class QuickExportAction extends AbstractAction implements GridActionInterface
     {
         $token = $this->tokenStorage->getToken();
         if (null === $token || !is_object($user = $token->getUser())) {
-            return null;
+            throw new TokenNotFoundException('You seems not authenticated anymore. Please login and try again');
         }
 
         return $user;
