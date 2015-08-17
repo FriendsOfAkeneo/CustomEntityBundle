@@ -27,11 +27,6 @@ services:
             - @router
             - @translator
 
-    pim_custom_entity.action.mass_delete:
-        class: %pim_custom_entity.action.mass_delete.class%
-        parent: pim_custom_entity.action.viewable
-        scope: prototype
-
     pim_custom_entity.action.viewable:
         abstract: true
         parent: pim_custom_entity.action
