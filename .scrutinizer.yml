@@ -42,6 +42,8 @@ tools:
             - bin/
             - vendor/
             - web/
+before_commands:
+    - 'php -d memory_limit=-1 composer.phar install --prefer-source'
 build:
     tests:
         override:
