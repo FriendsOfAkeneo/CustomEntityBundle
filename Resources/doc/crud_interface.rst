@@ -266,7 +266,7 @@ grid_action_options:
 Mass Delete
 ***********
 
-The mass delete feature should be defined in the ```Resources\config\datagrid.yml``` file of the reference data entity.
+The mass delete feature should be defined in the ``Resources\config\datagrid.yml`` file of the reference data entity.
 
 .. code-block:: yaml
 
