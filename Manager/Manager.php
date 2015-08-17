@@ -3,8 +3,8 @@
 namespace Pim\Bundle\CustomEntityBundle\Manager;
 
 use Akeneo\Bundle\StorageUtilsBundle\Doctrine\SmartManagerRegistry;
-use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Doctrine\Common\Util\ClassUtils;
+use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
 /**
  * Base implementation for ORM managers
