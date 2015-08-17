@@ -1,0 +1,11 @@
+jobs:
+    csv_reference_data_quick_export:
+        connector: Akeneo Mass Edit Connector
+        alias: reference_data_quick_export
+        label: CSV deference data quick export
+        type: quick_export
+        configuration:
+            delimiter:  ;
+            enclosure:  '"'
+            withHeader: true
+            filePath:   /tmp/reference_data_quick_export.csv

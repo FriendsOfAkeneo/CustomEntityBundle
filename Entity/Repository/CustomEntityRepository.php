@@ -2,6 +2,7 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Entity\Repository;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\QueryBuilder;
 use Pim\Bundle\ReferenceDataBundle\Doctrine\ORM\Repository\ReferenceDataRepository;
 
@@ -56,7 +57,7 @@ class CustomEntityRepository extends ReferenceDataRepository
     }
 
     /**
-     * Delete a list of reference ids
+     * Used to mass delete reference datas from their ids
      *
      * @param int[] $ids
      *
@@ -75,5 +76,26 @@ class CustomEntityRepository extends ReferenceDataRepository
             ->where($qb->expr()->in('ref.id', $ids));
 
         return $qb->getQuery()->execute();
+    }
+
+    /**
+     * Hydrates reference data from ids for quick export or mass edit features
+     *
+     * @param array $referenceDataIds
+     *
+     * @return ArrayCollection
+     *
+     * @throws \InvalidArgumentException array of ids should not be empty
+     */
+    public function findByIds(array $referenceDataIds)
+    {
+        if (empty($referenceDataIds)) {
+            throw new \InvalidArgumentException('Array must contain at least one reference data id');
+        }
+
+        $qb = $this->createQueryBuilder('rd');
+        $qb->where($qb->expr()->in('rd.id', $referenceDataIds));
+
+        return new ArrayCollection($qb->getQuery()->getResult());
     }
 }

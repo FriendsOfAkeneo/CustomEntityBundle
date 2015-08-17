@@ -28,6 +28,7 @@ class PimCustomEntityExtension extends Extension
         $loader->load('actions.yml');
         $loader->load('mass_actions.yml');
         $loader->load('managers.yml');
+        $loader->load('mass_edit_connector.yml');
         $loader->load('update_guessers.yml');
     }
 }
