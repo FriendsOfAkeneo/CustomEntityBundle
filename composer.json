@@ -32,7 +32,8 @@
         "pdepend/pdepend": "2.1.*",
         "phpmd/phpmd": "1.*",
         "phpspec/phpspec": "2.1.*",
-        "fabpot/php-cs-fixer": "^2.0@dev"
+        "fabpot/php-cs-fixer": "^2.0@dev",
+        "henrikbjorn/phpspec-code-coverage": "~1.0"
     },
     "config": {
         "bin-dir": "bin"

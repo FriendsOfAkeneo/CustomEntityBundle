@@ -42,3 +42,11 @@ tools:
             - bin/
             - vendor/
             - web/
+build:
+    tests:
+        override:
+            -
+                command: 'bin/phpspec run -f progress -c phpcpec-ci.yml'
+                coverage:
+                    file: 'coverage.clover'
+                    format: 'php-clover'
