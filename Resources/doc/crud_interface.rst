@@ -300,38 +300,35 @@ By default, the quick_export action uses the ``pim_custom_entity.action.quick_ex
         my_entity:
             entity_class: Acme\Bundle\CatalogBundle\Entity\MyEntity
             actions:
-                mass_edit:
-                    limit: ~
-                    service: pim_custom_entity.action.quick_export
-                    route: pim_customentity_quickexport
-                    format: csv
-                    content_type: csv
-                    filename: export.csv
-                    serializer_format: csv
-                    serializer_context: []
-                    batch_size: 100
-                    grid_action_options:
-                        type: export
-                        frontend_type: export
-                        label: Quick export
-                        icon: download
+                quick_export:
+                    service:     pim_custom_entity.action.quick_export
+                    route:       pim_customentity_quickexport
+                    job_profile: csv_reference_data_quick_export
 
-limit:
-   The maximum number of items that can be exported, null for no limit
-format:
-   The format of the exported file
-content_type:
-   The content type of the exported file
-filename:
-   The name of the exported file
-serializer_format:
-   The format passed to the serializer
-serializer_context:
-   The context passed to the serializer
-batch_size:
-   The count of exported elements before the entity manager is cleared
-grid_action_options:
-   An array of options for the Oro grid action
+You can define another job profile if you want to export in another format. The job profile should be defined as a job fixtures as all Akeneo PIM backend tasks.
+
+Also, you should defined the following things in the ``Resources\config\datagrid.yml`` file of the reference data entity.
+
+.. code-block:: yaml
+
+    custom_entities:
+        my_entity:
+            entity_class: Acme\Bundle\CatalogBundle\Entity\MyEntity
+            actions:
+                quick_export_csv:
+                type: export
+                label: pim.grid.mass_action.quick_export.csv_all
+                icon: download
+                handler: quick_export
+                route: pim_customentity_quickexport
+                route_parameters:
+                    customEntityName: brand
+                    _format: csv
+                    _contentType: text/csv
+                context:
+                    withHeader: true
+                messages:
+                    empty_selection: pim_datagrid.mass_action.delete.empty_selection
 
 
 Datagrid Configuration
