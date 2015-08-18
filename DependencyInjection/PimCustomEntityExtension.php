@@ -2,10 +2,10 @@
 
 namespace Pim\Bundle\CustomEntityBundle\DependencyInjection;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
+use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
  * This is the class that loads and manages your bundle configuration
@@ -28,6 +28,7 @@ class PimCustomEntityExtension extends Extension
         $loader->load('actions.yml');
         $loader->load('mass_actions.yml');
         $loader->load('managers.yml');
+        $loader->load('mass_edit_connector.yml');
         $loader->load('update_guessers.yml');
     }
 }
