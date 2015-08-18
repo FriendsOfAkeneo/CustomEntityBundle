@@ -8,7 +8,7 @@ use Pim\Bundle\CustomEntityBundle\Action\ActionFactory;
 use Pim\Bundle\CustomEntityBundle\Action\ActionInterface;
 
 /**
- * Automatically configures pim_custom_entity grids
+ * Inject custom entity configuration in pim_custom_entity grids
  *
  * @author    Antoine Guigan <antoine@akeneo.com>
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
@@ -109,18 +109,13 @@ class ConfigureCustomEntityGridListener
      */
     protected function setMassActions(DatagridConfiguration $datagridConfig, ActionInterface $indexAction)
     {
-        $name = $indexAction->getConfiguration()->getName();
-        $massActions = $datagridConfig->offsetGetByPath('[mass_actions]') ?: [];
+        if ($indexAction->getConfiguration()->hasAction('mass_edit')) {
+            $name = $indexAction->getConfiguration()->getName();
+            $massAction = $this->actionFactory->getAction($name, 'mass_edit');
 
-        foreach ($indexAction->getMassActions() as $massActionType) {
-            if (isset($massActions[$massActionType])) {
-                continue;
-            }
-
-            $massAction = $this->actionFactory->getAction($name, $massActionType);
-            $massActions[$massActionType] = $massAction->getGridActionOptions();
+            $massActions = $datagridConfig->offsetGetByPath('[mass_actions]') ?: [];
+            $massActions['mass_edit'] = $massAction->getGridActionOptions();
+            $datagridConfig->offsetSetByPath('[mass_actions]', $massActions);
         }
-
-        $datagridConfig->offsetSetByPath('[mass_actions]', $massActions);
     }
 }

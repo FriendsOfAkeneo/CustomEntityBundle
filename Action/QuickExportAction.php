@@ -17,40 +17,34 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
- * Quick export action
- *
  * @author    Antoine Guigan <antoine@akeneo.com>
  * @copyright 2014 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class QuickExportAction extends AbstractAction implements GridActionInterface
+class QuickExportAction extends AbstractAction
 {
-    /**
-     * @var MassActionDispatcher
-     */
+    /** @var MassActionDispatcher */
     protected $massActionDispatcher;
 
-    /**
-     * @var JobInstanceRepository
-     */
+    /** @var JobInstanceRepository */
     protected $jobInstanceRepo;
 
-    /**
-     * @var JobLauncherInterface
-     */
+    /** @var JobLauncherInterface */
     protected $jobLauncher;
 
-    /**
-     * @var TokenStorageInterface
-     */
+    /** @var TokenStorageInterface */
     protected $tokenStorage;
 
     /**
-     * @param ActionFactory          $actionFactory
-     * @param ActionEventManager     $eventManager
-     * @param ManagerRegistry        $managerRegistry
-     * @param RouterInterface        $router
-     * @param TranslatorInterface    $translator
+     * @param ActionFactory         $actionFactory
+     * @param ActionEventManager    $eventManager
+     * @param ManagerRegistry       $managerRegistry
+     * @param RouterInterface       $router
+     * @param TranslatorInterface   $translator
+     * @param MassActionDispatcher  $massActionDispatcher
+     * @param JobInstanceRepository $jobInstanceRepo
+     * @param JobLauncherInterface  $jobLauncher
+     * @param TokenStorageInterface $tokenStorage
      */
     public function __construct(
         ActionFactory $actionFactory,
@@ -76,10 +70,13 @@ class QuickExportAction extends AbstractAction implements GridActionInterface
      */
     public function doExecute(Request $request)
     {
-        $jobInstance = $this->jobInstanceRepo->findOneBy(['code' => 'csv_reference_data_quick_export']);
+        $jobInstance = $this->jobInstanceRepo->findOneBy(['code' => $this->getOption('job_profile')]);
         if (null === $jobInstance) {
             throw new \LogicException(
-                'The job instance "csv_reference_data_quick_export" does not exist. Please contact your administrator'
+                sprintf(
+                    'The job instance "%s" does not exist. Please contact your administrator',
+                    $this->getOption('job_profile')
+                )
             );
         }
 
@@ -87,7 +84,7 @@ class QuickExportAction extends AbstractAction implements GridActionInterface
             json_encode(
                 [
                     'reference_data' => $this->configuration->getEntityClass(),
-                    'ids'            => $this->getEntityIds($request),
+                    'ids'            => $this->massActionDispatcher->dispatch($request),
                 ]
             )
         );
@@ -98,23 +95,7 @@ class QuickExportAction extends AbstractAction implements GridActionInterface
     }
 
     /**
-     * @param Request $request
-     *
-     * @return array
-     */
-    protected function getEntityIds(Request $request)
-    {
-        $entities = $this->massActionDispatcher->dispatch($request);
-        $entityIds = [];
-        foreach ($entities as $entity) {
-            $entityIds[] = $entity->getId();
-        }
-
-        return $entityIds;
-    }
-
-    /**
-     * Get a user from the Security Context
+     * Get the authenticated user from the Security Context
      *
      * @return UserInterface
      *
@@ -141,22 +122,10 @@ class QuickExportAction extends AbstractAction implements GridActionInterface
         $resolver->setDefaults(
             [
                 'route'               => 'pim_customentity_quickexport',
-                'format'              => 'csv',
-                'content_type'        => 'text/csv',
-                'filename'            => 'export.csv',
-                'serializer_format'   => 'csv',
+                'job_profile'         => 'csv_reference_data_quick_export',
                 'serializer_context'  => [],
-                'batch_size'          => 1,
-                'grid_action_options' => [
-                    'type' => 'export',
-                    'frontend_type' => 'export',
-                    'label'=> 'Quick export',
-                    'icon' => 'download',
-                ],
             ]
         );
-
-        // TODO: Add job instance code + context for normalization + file for writer
     }
 
     /**
@@ -165,27 +134,5 @@ class QuickExportAction extends AbstractAction implements GridActionInterface
     public function getType()
     {
         return 'quick_export';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getGridActionOptions()
-    {
-        return $this->options['grid_action_options'] + [
-            'route'            => $this->getRoute(),
-            'route_parameters' => $this->getRouteParameters()
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getRouteParameters($object = null)
-    {
-        return parent::getRouteParameters($object) + [
-            '_format'      => $this->options['format'],
-            '_contentType' => $this->options['content_type']
-        ];
     }
 }
