@@ -125,6 +125,23 @@ abstract class AbstractAction implements ActionInterface
     }
 
     /**
+     * @param string $optionKey
+     *
+     * @return mixed
+     * @throws \LogicException
+     */
+    protected function getOption($optionKey)
+    {
+        if (isset($this->options[$optionKey])) {
+            return $this->options[$optionKey];
+        } else {
+            throw new \LogicException(
+                sprintf('Option "%s" is not defined', $optionKey)
+            );
+        }
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function execute(Request $request)
