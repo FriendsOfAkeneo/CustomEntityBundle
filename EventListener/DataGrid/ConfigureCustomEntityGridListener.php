@@ -50,55 +50,7 @@ class ConfigureCustomEntityGridListener
             throw new \Exception(sprintf('No index action configured for %s', $datagridConfig->getName()));
         }
 
-        $this->setSource($datagridConfig, $indexAction);
-        $this->setRowActions($datagridConfig, $indexAction);
         $this->setMassActions($datagridConfig, $indexAction);
-    }
-
-    /**
-     * Sets the source in the config
-     *
-     * @param DatagridConfiguration $datagridConfig
-     * @param ActionInterface       $indexAction
-     */
-    protected function setSource(DatagridConfiguration $datagridConfig, ActionInterface $indexAction)
-    {
-        $customEntityConfig = $indexAction->getConfiguration();
-        $options = $indexAction->getOptions();
-        $sourceOptions = ($datagridConfig->offsetGetByPath('[source]')?:[]) + [
-                'entity' => $customEntityConfig->getEntityClass(),
-                'type'   => 'pim_custom_entity'
-        ];
-        if (isset($options['acl'])) {
-            $sourceOptions['acl_resource'] = $options['acl'];
-        }
-        $datagridConfig->offsetSetByPath('[source]', $sourceOptions);
-    }
-
-    /**
-     * Sets the configuration for row actions
-     *
-     * @param DatagridConfiguration $datagridConfig
-     * @param ActionInterface       $indexAction
-     */
-    protected function setRowActions(DatagridConfiguration $datagridConfig, ActionInterface $indexAction)
-    {
-        $name = $indexAction->getConfiguration()->getName();
-        $properties = ['id' => []];
-        $actions = [];
-
-        foreach ($indexAction->getRowActions() as $rowActionType) {
-            $link = $rowActionType . '_link';
-            $rowAction  = $this->actionFactory->getAction($name, $rowActionType);
-            $actions[$rowActionType] = $rowAction->getGridActionOptions() + ['link' => $link];
-            $properties[$link] = [
-                'type'   => 'custom_entity_url',
-                'route'  => sprintf('%s/%s', $name, $rowActionType),
-                'params' => ['id']
-            ];
-        }
-        $datagridConfig->offsetSetByPath('[actions]', $actions);
-        $datagridConfig->offsetSetByPath('[properties]', $properties);
     }
 
     /**
