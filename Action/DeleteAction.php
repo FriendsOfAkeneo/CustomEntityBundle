@@ -11,7 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class DeleteAction extends AbstractAction implements GridActionInterface
+class DeleteAction extends AbstractAction
 {
     /**
      * {@inheritdoc}
@@ -31,16 +31,7 @@ class DeleteAction extends AbstractAction implements GridActionInterface
     {
         parent::setDefaultOptions($resolver);
 
-        $resolver->setDefaults(
-            [
-                'route'               => 'pim_customentity_delete',
-                'grid_action_options' => [
-                    'type'      => 'delete',
-                    'label'     => 'Delete',
-                    'icon'      => 'trash'
-                ]
-            ]
-        );
+        $resolver->setDefaults(['route' => 'pim_customentity_delete']);
     }
 
     /**
@@ -49,13 +40,5 @@ class DeleteAction extends AbstractAction implements GridActionInterface
     public function getType()
     {
         return 'delete';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getGridActionOptions()
-    {
-        return $this->options['grid_action_options'];
     }
 }
