@@ -173,12 +173,6 @@ By default, the edit action uses the ``pim_custom_entity.action.edit`` service w
                     redirect_route: pim_customentity_index
                     redirect_route_parameters: { customEntityName: my_entity }
                     success_message: flash.my_entity.updated
-                    grid_action_options:
-                        type: navigate
-                        label: Edit
-                        icon: edit
-                        link: edit_link
-                        rowAction: true
                     save_options: {}
 
 template
@@ -193,10 +187,25 @@ redirect_route_parameters
    The parameters for the redirect route
 success_message
    A message which should be displayed on success
-grid_action_options:
-   An array of options for the Oro grid action
 save_options:
    An array of options which should be passed to the object manager for object saving
+
+
+Delete Action Options
+*********************
+
+By default, the delete action uses the ``pim_custom_entity.action.delete`` service with the following options:
+
+.. code-block:: yaml
+
+    custom_entities:
+        my_entity:
+            entity_class: Acme\Bundle\CatalogBundle\Entity\MyEntity
+            actions:
+                delete:
+                    service: pim_custom_entity.action.delete
+                    route: pim_customentity_delete
+
 
 Mass Edit Action Options
 ************************
@@ -218,10 +227,6 @@ By default, the mass edit action uses the ``pim_custom_entity.action.mass_edit``
                     redirect_route: pim_customentity_index
                     redirect_route_parameters: { customEntityName: my_entity }
                     success_message: flash.my_entity.mass_edited
-                    grid_action_options:
-                        type: redirect
-                        label: Mass Edit
-                        icon: edit
 
 
 template
@@ -236,31 +241,21 @@ redirect_route_parameters
    The parameters for the redirect route
 success_message
    A message which should be displayed on success
-grid_action_options:
-   An array of options for the Oro grid action
 
+Also, you should defined the following things in the ``Resources\config\datagrid.yml`` file of the reference data entity.
 
-Delete Action Options
-*********************
-
-By default, the delete action uses the ``pim_custom_entity.action.delete`` service with the following options:
-
-.. code-block:: yaml
+..code-block:: yaml
 
     custom_entities:
         my_entity:
-            entity_class: Acme\Bundle\CatalogBundle\Entity\MyEntity
-            actions:
-                delete:
-                    service: pim_custom_entity.action.delete
-                    route: pim_customentity_delete
-                    grid_action_options:
-                        type: delete
-                        label: Delete
-                        icon: trash
-
-grid_action_options:
-  An array of options for the Oro grid action
+            mass_actions:
+                mass_edit:
+                    type: redirect
+                    label: Mass Edit
+                    icon: edit
+                    route: pim_customentity_massedit
+                    route_parameters:
+                        customEntityName: brand
 
 
 Mass Delete

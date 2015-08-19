@@ -46,3 +46,42 @@ datagrid:
                     data_name: o.updated
             default:
                 code: %oro_datagrid.extension.orm_sorter.class%::DIRECTION_ASC
+        mass_actions:
+            delete:
+                type: delete
+                label: pim.grid.mass_action.delete
+                entity_name: my_translatable_option
+                acl_resource: ~
+                handler: mass_delete
+                messages:
+                    confirm_title: pim_datagrid.mass_action.delete.confirm_title
+                    confirm_content: pim_datagrid.mass_action.delete.confirm_content
+                    confirm_ok: pim_datagrid.mass_action.delete.confirm_ok
+                    success: pim_datagrid.mass_action.delete.success
+                    error: pim_datagrid.mass_action.delete.error
+                    empty_selection: pim_datagrid.mass_action.delete.empty_selection
+                launcherOptions:
+                    icon: trash
+
+            quick_export_csv:
+                type: export
+                label: pim.grid.mass_action.quick_export.csv_all
+                icon: download
+                handler: quick_export
+                route: pim_customentity_quickexport
+                route_parameters:
+                    customEntityName: my_translatable_option
+                    _format: csv
+                    _contentType: text/csv
+                context:
+                    withHeader: true
+                messages:
+                    empty_selection: pim_datagrid.mass_action.delete.empty_selection
+
+            mass_edit:
+                type: redirect
+                label: Mass Edit
+                icon: edit
+                route: pim_customentity_massedit
+                route_parameters:
+                    customEntityName: my_translatable_option
