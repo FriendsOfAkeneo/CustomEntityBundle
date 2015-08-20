@@ -99,8 +99,6 @@ template
   The template of the action
 row_actions
   An array of action types available for each row on the grid
-mass_actions
-  An array of available mass action types
 quick_create
    True if the create action should be displayed in a lightbox. *(Requires the use of the
    **pim_custom_entity.action.quick_create** service for the create action)*
@@ -206,6 +204,45 @@ By default, the delete action uses the ``pim_custom_entity.action.delete`` servi
                     service: pim_custom_entity.action.delete
                     route: pim_customentity_delete
 
+
+Show Action Options
+*******************
+
+By default, the show action uses the ``pim_custom_entity.action.show`` service with the following options:
+
+.. code-block:: yaml
+
+    custom_entities:
+        my_entity:
+            entity_class: Acme\Bundle\CatalogBundle\Entity\MyEntity
+            actions:
+                show:
+                    service:  pim_custom_entity.action.show
+                    route:    pim_customentity_show
+                    template: AcmeCatalogBundle:MyEntity:show.html.twig
+
+You've to define the ``template`` option.
+
+The datagrid could be defined like that:
+
+.. code-block:: yaml
+
+    datagrid:
+        my_entity_datagrid:
+            properties:
+                id: ~
+                show_link:
+                    type: url
+                    route: pim_customentity_show
+                    params:
+                        - id
+                        - customEntityName
+            actions:
+                show:
+                    type:      navigate
+                    label:     Show the reference data
+                    icon:      eye-open
+                    link:      show_link
 
 Mass Edit Action Options
 ************************
