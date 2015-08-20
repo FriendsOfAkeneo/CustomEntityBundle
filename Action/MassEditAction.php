@@ -19,7 +19,7 @@ use Symfony\Component\Translation\TranslatorInterface;
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class MassEditAction extends CreateAction implements GridActionInterface
+class MassEditAction extends CreateAction
 {
     /**
      * @var DataGridQueryGenerator
@@ -72,7 +72,7 @@ class MassEditAction extends CreateAction implements GridActionInterface
      */
     public function getGridActionOptions()
     {
-        return $this->options['grid_action_options'] + [
+        return [
             'route'             => $this->getRoute(),
             'route_parameters'  => $this->getRouteParameters()
         ];
@@ -148,11 +148,6 @@ class MassEditAction extends CreateAction implements GridActionInterface
         parent::setDefaultOptions($resolver);
         $resolver->setDefaults(
             [
-                'grid_action_options' => [
-                    'type' => 'redirect',
-                    'label'=> 'Mass Edit',
-                    'icon' => 'edit',
-                ],
                 'route'               => 'pim_customentity_massedit',
                 'template'            => 'PimCustomEntityBundle:CustomEntity:massEdit.html.twig',
                 'success_message'     => sprintf('flash.%s.mass_updated', $this->configuration->getName())

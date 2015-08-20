@@ -152,3 +152,8 @@ class EditActionSpec extends ObjectBehavior
             );
     }
 }
+
+class Entity
+{
+    public function getId() { }
+}

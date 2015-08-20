@@ -49,7 +49,9 @@ class Controller
     {
         $action = $this->actionFactory->getAction($customEntityName, $actionType);
         if (!$action) {
-            throw new NotFoundHttpException();
+            throw new NotFoundHttpException(
+                sprintf('No action found for type "%s"', $actionType)
+            );
         }
 
         return $action->execute($this->request);

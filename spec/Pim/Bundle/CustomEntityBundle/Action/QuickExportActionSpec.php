@@ -4,9 +4,9 @@ namespace spec\Pim\Bundle\CustomEntityBundle\Action;
 
 use Akeneo\Bundle\BatchBundle\Entity\JobInstance;
 use Akeneo\Bundle\BatchBundle\Launcher\JobLauncherInterface;
-use Doctrine\ORM\EntityManager;
 use PhpSpec\ObjectBehavior;
 use Pim\Bundle\CustomEntityBundle\Action\ActionFactory;
+use Pim\Bundle\CustomEntityBundle\Configuration\Configuration;
 use Pim\Bundle\CustomEntityBundle\Configuration\ConfigurationInterface;
 use Pim\Bundle\CustomEntityBundle\Event\ActionEventManager;
 use Pim\Bundle\CustomEntityBundle\Manager\ManagerInterface;
@@ -42,8 +42,7 @@ class QuickExportActionSpec extends ObjectBehavior
         ParameterBag $attributes,
         ConfigurationInterface $configuration,
         Session $session,
-        FlashBag $flashBag,
-        EntityManager $em
+        FlashBag $flashBag
     ) {
         $this->beConstructedWith(
             $actionFactory,
@@ -125,20 +124,18 @@ class QuickExportActionSpec extends ObjectBehavior
         $configuration,
         JobInstance $jobInstance,
         TokenInterface $token,
-        UserInterface $user,
-        Entity $entity1,
-        Entity $entity2
+        UserInterface $user
     ) {
         $jobInstanceRepository->findOneBy(['code' => 'csv_reference_data_quick_export'])->willReturn($jobInstance);
 
         $tokenStorage->getToken()->willReturn($token);
         $token->getUser()->willReturn($user);
 
-        $massActionDispatcher->dispatch($request)->willReturn([$entity1, $entity2]);
-        $entity1->getId()->willReturn(2);
-        $entity2->getId()->willReturn(5);
+        $massActionDispatcher->dispatch($request)->willReturn([2, 5]);
 
-        $configuration->getActionOptions('quick_export')->willReturn([]);
+        $configuration
+            ->getActionOptions('quick_export')
+            ->willReturn(['job_profile' => 'csv_reference_data_quick_export']);
 
         $rawConfig = addslashes(
             json_encode(
@@ -155,10 +152,18 @@ class QuickExportActionSpec extends ObjectBehavior
         $this->doExecute($request);
     }
 
-    public function it_throws_an_exception_when_job_instance_does_not_exist($jobInstanceRepository, $request)
-    {
+    public function it_throws_an_exception_when_job_instance_does_not_exist(
+        $jobInstanceRepository,
+        $request,
+        Configuration $configuration
+    ) {
+        $configuration
+            ->getActionOptions('quick_export')
+            ->willReturn(['job_profile' => 'csv_reference_data_quick_export']);
+
         $jobInstanceRepository->findOneBy(['code' => 'csv_reference_data_quick_export'])->willReturn(null);
 
+        $this->setConfiguration($configuration);
         $this->shouldThrow(
             new \LogicException(
                 'The job instance "csv_reference_data_quick_export" does not exist. Please contact your administrator'
@@ -220,9 +225,4 @@ class QuickExportActionSpec extends ObjectBehavior
                 }
             );
     }
-}
-
-class Entity
-{
-    public function getId() { }
 }
