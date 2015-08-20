@@ -67,7 +67,7 @@ services:
         parent: pim_custom_entity.action.form
         scope: prototype
         arguments:
-            - @pim_custom_entity.mass_action.datagrid_query_generator
+            - @pim_datagrid.extension.mass_action.dispatcher
             - @pim_custom_entity.mass_action.mass_updater
 
     pim_custom_entity.action.quick_export:

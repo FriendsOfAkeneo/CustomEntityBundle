@@ -6,6 +6,7 @@ use Pim\Bundle\CustomEntityBundle\Event\ActionEventManager;
 use Pim\Bundle\CustomEntityBundle\Manager\Registry as ManagerRegistry;
 use Pim\Bundle\CustomEntityBundle\MassAction\DataGridQueryGenerator;
 use Pim\Bundle\CustomEntityBundle\MassAction\MassUpdater;
+use Pim\Bundle\DataGridBundle\Extension\MassAction\MassActionDispatcher;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
@@ -22,9 +23,9 @@ use Symfony\Component\Translation\TranslatorInterface;
 class MassEditAction extends CreateAction
 {
     /**
-     * @var DataGridQueryGenerator
+     * @var MassActionDispatcher
      */
-    protected $queryGenerator;
+    protected $massActionDispatcher;
 
     /**
      * @var MassUpdater
@@ -39,7 +40,7 @@ class MassEditAction extends CreateAction
      * @param TranslatorInterface    $translator
      * @param EngineInterface        $templating
      * @param FormFactoryInterface   $formFactory
-     * @param DataGridQueryGenerator $queryGenerator
+     * @param MassActionDispatcher   $massActionDispatcher
      * @param MassUpdater            $massUpdater
      */
     public function __construct(
@@ -50,13 +51,13 @@ class MassEditAction extends CreateAction
         TranslatorInterface $translator,
         EngineInterface $templating,
         FormFactoryInterface $formFactory,
-        DataGridQueryGenerator $queryGenerator,
+        MassActionDispatcher $massActionDispatcher,
         MassUpdater $massUpdater
     ) {
         parent::__construct($actionFactory, $eventManager, $manager, $router, $translator, $templating, $formFactory);
 
-        $this->queryGenerator = $queryGenerator;
-        $this->massUpdater = $massUpdater;
+        $this->massActionDispatcher = $massActionDispatcher;
+        $this->massUpdater          = $massUpdater;
     }
 
     /**
@@ -70,23 +71,12 @@ class MassEditAction extends CreateAction
     /**
      * {@inheritdoc}
      */
-    public function getGridActionOptions()
-    {
-        return [
-            'route'             => $this->getRoute(),
-            'route_parameters'  => $this->getRouteParameters()
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     protected function saveForm(Request $request, FormInterface $form)
     {
         $this->massUpdater->updateEntities(
             $this->configuration->getEntityClass(),
             $this->getFormData($form),
-            $this->queryGenerator->getIds($request, $this->configuration->getName())
+            $this->massActionDispatcher->dispatch($request)
         );
     }
 
@@ -95,8 +85,10 @@ class MassEditAction extends CreateAction
      */
     protected function getTemplateVars(Request $request, FormInterface $form)
     {
+        $entityIds = $this->massActionDispatcher->dispatch($request);
+
         return [
-            'objectCount' => $this->queryGenerator->getCount($request, $this->configuration->getName()),
+            'objectCount' => count($entityIds),
             'formAction' => $this->getActionUrl(
                 $this->getType(),
                 $form->getData(),
@@ -108,13 +100,14 @@ class MassEditAction extends CreateAction
     /**
      * Returns an array containing the grid url parameters
      *
-     * @param  Request $request
+     * @param Request $request
+     *
      * @return array
      */
     protected function getGridUrlParameters(Request $request)
     {
         $parameters = [];
-        foreach (['inset', 'filters', 'values'] as $key) {
+        foreach (['inset', 'filters', 'values', 'gridName', 'actionName'] as $key) {
             $parameters[$key] = $request->get($key);
         }
 
