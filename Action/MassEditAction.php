@@ -73,8 +73,6 @@ class MassEditAction extends CreateAction
      */
     protected function saveForm(Request $request, FormInterface $form)
     {
-        $this->injectMissingParametersInRequest($request);
-
         $this->massUpdater->updateEntities(
             $this->configuration->getEntityClass(),
             $this->getFormData($form),
@@ -83,26 +81,10 @@ class MassEditAction extends CreateAction
     }
 
     /**
-     * Inject missing parameters used in datagrid
-     *
-     * @param Request $request
-     *
-     * @deprecated
-     */
-    protected function injectMissingParametersInRequest(Request $request)
-    {
-        $gridName = $this->configuration->getName();
-        $request->request->set('gridName', $gridName);
-        $request->request->set('actionName', 'mass_edit');
-    }
-
-    /**
      * {@inheritdoc}
      */
     protected function getTemplateVars(Request $request, FormInterface $form)
     {
-        $this->injectMissingParametersInRequest($request);
-
         $entityIds = $this->massActionDispatcher->dispatch($request);
 
         return [
@@ -121,14 +103,11 @@ class MassEditAction extends CreateAction
      * @param Request $request
      *
      * @return array
-     *
-     * TODO: Should take in account gridName + actionName
-     * @see Pim\Bundle\CustomEntityBundle\Action\MassEditAction::injectMissingParametersInRequest(Request $request)
      */
     protected function getGridUrlParameters(Request $request)
     {
         $parameters = [];
-        foreach (['inset', 'filters', 'values'] as $key) {
+        foreach (['inset', 'filters', 'values', 'gridName', 'actionName'] as $key) {
             $parameters[$key] = $request->get($key);
         }
 
