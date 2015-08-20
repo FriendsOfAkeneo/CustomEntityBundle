@@ -14,3 +14,11 @@ services:
         class: %pim_custom_entity.mass_action.mass_updater.class%
         arguments:
             - '@doctrine'
+
+    pim_custom_entity.mass_action.mass_action.handler.edit:
+        class: %pim_datagrid.extension.mass_action.handler.edit.class%
+        arguments:
+            - '@pim_datagrid.datasource.result_record.hydrator.object_id'
+            - '@event_dispatcher'
+        tags:
+            - { name: pim_datagrid.extension.mass_action.handler, alias: custom_mass_edit }
