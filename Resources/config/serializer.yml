@@ -1,6 +1,5 @@
 parameters:
     pim_custom_entity.normalizer.referable.class:         Pim\Bundle\CustomEntityBundle\Normalizer\ReferableNormalizer
-    pim_custom_entity.normalizer.mongodb_referable.class: Pim\Bundle\CustomEntityBundle\Normalizer\MongoDBReferableNormalizer
 
 services:
     pim_custom_entity.normalizer.referable:
@@ -10,10 +9,3 @@ services:
         tags:
             - { name: pim_versioning.serializer.normalizer, priority: 100 }
             - { name: pim_serializer.normalizer, priority: 100 }
-
-    pim_custom_entity.normalizer.mongodb_referable:
-        class: %pim_custom_entity.normalizer.mongodb_referable.class%
-        arguments:
-            - ['mongodb_json']
-        tags:
-            - { name: pim_serializer.normalizer, priority: 80 }
