@@ -69,14 +69,6 @@ abstract class AbstractCustomEntity extends AbstractReferenceData implements Ref
     }
 
     /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return (string) $this->code;
-    }
-
-    /**
      * Returns the custom entity name used in the configuration
      * Used to map row actions on datagrid
      *
