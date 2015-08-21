@@ -19,6 +19,6 @@
     {{ elements.page_header(title, buttons, null) }}
 </div>
 
-{{ dataGrid.renderGrid(customEntityName) }}
+{{ dataGrid.renderGrid(customEntityName, { localeCode: locale_code() }) }}
 
 {% endblock %}

@@ -22,7 +22,6 @@ class PimCustomEntityExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
         $loader->load('serializer.yml');
-        $loader->load('data_sources.yml');
         $loader->load('event_listeners.yml');
         $loader->load('actions.yml');
         $loader->load('mass_actions.yml');

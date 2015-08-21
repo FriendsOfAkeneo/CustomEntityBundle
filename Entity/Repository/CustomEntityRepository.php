@@ -16,6 +16,16 @@ use Pim\Bundle\ReferenceDataBundle\Doctrine\ORM\Repository\ReferenceDataReposito
 class CustomEntityRepository extends ReferenceDataRepository
 {
     /**
+     * Create a query builder used for the datagrid
+     *
+     * @return QueryBuilder
+     */
+    public function createDatagridQueryBuilder()
+    {
+        return $this->createQueryBuilder('o');
+    }
+
+    /**
      * Applies mass action parameters on the query builder
      *
      * @param QueryBuilder $qb
