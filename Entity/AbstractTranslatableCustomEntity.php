@@ -37,29 +37,31 @@ abstract class AbstractTranslatableCustomEntity extends AbstractCustomEntity imp
     public function addTranslation(AbstractTranslation $translation)
     {
         if (!$this->translations->contains($translation)) {
-            $translation->setForeignKey($this);
             $this->translations->add($translation);
         }
+
+        return $this;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getTranslation()
+    public function getTranslation($locale = null)
     {
-        if (null === $this->locale) {
-            return;
+        $locale = ($locale) ? $locale : $this->locale;
+        if (!$locale) {
+            return null;
         }
-
-        foreach ($this->translations as $translation) {
-            if ($this->locale === $translation->getLocale()) {
+        foreach ($this->getTranslations() as $translation) {
+            if ($translation->getLocale() == $locale) {
                 return $translation;
             }
         }
 
-        $class = $this->getTranslationFQCN();
-        $translation = new $class;
-        $translation->setLocale($this->locale);
+        $translationClass = $this->getTranslationFQCN();
+        $translation      = new $translationClass();
+        $translation->setLocale($locale);
+        $translation->setForeignKey($this);
         $this->addTranslation($translation);
 
         return $translation;
@@ -71,6 +73,8 @@ abstract class AbstractTranslatableCustomEntity extends AbstractCustomEntity imp
     public function setLocale($locale)
     {
         $this->locale = $locale;
+
+        return $this;
     }
 
     /**
@@ -79,6 +83,8 @@ abstract class AbstractTranslatableCustomEntity extends AbstractCustomEntity imp
     public function removeTranslation(AbstractTranslation $translation)
     {
         $this->translations->removeElement($translation);
+
+        return $this;
     }
 
     /**
