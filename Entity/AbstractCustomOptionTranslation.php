@@ -37,4 +37,12 @@ class AbstractCustomOptionTranslation extends AbstractTranslation
     {
         return $this->label;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return (string) $this->label;
+    }
 }
