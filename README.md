@@ -37,7 +37,7 @@ and enable the bundle in the `app/AppKernel.php` file in the `registerBundles()`
         new Pim\Bundle\CustomEntityBundle\PimCustomEntityBundle(),
     ]
 
-If you want to use the quick export and/or the mass edit features, you have to load the job fixture defined in [Resources/fixtures/jobs.yml] file and to copy/paste its content to your installer.
+If you want to use the quick export and/or the mass edit features, you have to load the job fixture defined in [Resources/fixtures/jobs.yml](Resources/fixtures/jobs.yml) file and to copy/paste its content to your installer.
 
 
 ## Documentation
