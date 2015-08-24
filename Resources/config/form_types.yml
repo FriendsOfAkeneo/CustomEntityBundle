@@ -1,0 +1,5 @@
+services:
+    pim_custom.form.type.custom_entity:
+        class: Pim\Bundle\CustomEntityBundle\Form\Type\CustomEntityType
+        tags:
+            - { name: form.type, alias: pim_enrich_custom_entity }
