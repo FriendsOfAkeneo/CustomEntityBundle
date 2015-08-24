@@ -2,6 +2,8 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Action;
 
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -12,6 +14,20 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class QuickCreateAction extends CreateAction
 {
+    /**
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
+    public function doExecute(Request $request)
+    {
+        if (!$request->isXmlHttpRequest()) {
+            return new RedirectResponse($this->getRedirectPath(null));
+        }
+
+        return parent::doExecute($request);
+    }
+
     /**
      * {@inheritdoc}
      */
