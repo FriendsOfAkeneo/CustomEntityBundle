@@ -110,7 +110,7 @@ class EditActionSpec extends ObjectBehavior
                 'form' => $formView,
                 'formAction' => 'pim_customentity_edit?&customEntityName=entity&id=id',
                 'customEntityName' => 'entity',
-                'baseTemplate' => 'PimCustomEntityBundle::layout.html.twig',
+                'baseTemplate' => 'PimEnrichBundle::layout.html.twig',
                 'indexUrl' => 'index?&ir_param1=value1',
                 'pre_render' => true
             ]

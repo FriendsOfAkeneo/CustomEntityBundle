@@ -69,7 +69,7 @@ class IndexActionSpec extends ObjectBehavior
             'PimCustomEntityBundle:CustomEntity:index.html.twig',
             [
                 'customEntityName' => 'entity',
-                'baseTemplate'     => 'PimCustomEntityBundle::layout.html.twig',
+                'baseTemplate'     => 'PimEnrichBundle::layout.html.twig',
                 'indexUrl'         => 'pim_customentity_index?&customEntityName=entity',
                 'pre_render'       => true
             ]
@@ -100,7 +100,7 @@ class IndexActionSpec extends ObjectBehavior
                 'createUrl'        => 'create_route?&cr_param1=value1',
                 'quickCreate'      => false,
                 'customEntityName' => 'entity',
-                'baseTemplate'     => 'PimCustomEntityBundle::layout.html.twig',
+                'baseTemplate'     => 'PimEnrichBundle::layout.html.twig',
                 'indexUrl'         => 'pim_customentity_index?&customEntityName=entity',
                 'pre_render'       => true
             ]
