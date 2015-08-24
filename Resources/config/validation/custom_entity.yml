@@ -1,0 +1,3 @@
+Pim\Bundle\CustomEntityBundle\Entity\AbstractCustomEntity:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: code
