@@ -6,8 +6,6 @@
     {% set title = (customEntityName ~ ".overview")|trans %}
     {% oro_title_set({params:{'%title%': title}}) %}
 
-    {{ dump() }}
-
     {% set buttons %}
         {% if createUrl|default(false) %}
             {{ elements.createBtn(
