@@ -13,38 +13,41 @@
         }
     }) }}
 
-        {% block custom_entity_page_header %}
-            {% set buttons %}
-                {{ elements.backLink(indexUrl) }}
-                {% if deleteUrl|default(false) %}
-                    {{
-                        elements.deleteLink(
-                            deleteUrl,
-                            null,
-                            indexUrl,
-                            ('confirmation.remove.' ~ customEntityName)|trans,
-                            ('flash.' ~ customEntityName ~ '.removed')|trans
-                        )
-                    }}
-                {% endif %}
-                {{ elements.submitBtn() }}
-            {% endset %}
-            {{ elements.page_header(title, buttons, null, null, elements.updated(form.vars.id)) }}
-        {% endblock %}
-        {% block custom_entity_form_tabs %}
-            {{ elements.form_navbar(['properties']) }}
+    {% block custom_entity_page_header %}
+        {% set buttons %}
+            {{ elements.backLink(indexUrl) }}
+            {% if deleteUrl|default(false) %}
+                {{
+                    elements.deleteLink(
+                        deleteUrl,
+                        null,
+                        indexUrl,
+                        ('confirmation.remove.' ~ customEntityName)|trans,
+                        ('flash.' ~ customEntityName ~ '.removed')|trans
+                    )
+                }}
+            {% endif %}
+            {{ elements.submitBtn('', 'ok') }}
+        {% endset %}
 
-            <div class="row-fluid tab-content">
+        {{ elements.page_header(title, buttons, null, null, elements.updated(form.vars.id)) }}
+    {% endblock %}
 
-                {{ elements.form_errors(form) }}
+    {% block custom_entity_form_tabs %}
+        {{ elements.form_navbar(['properties']) }}
 
-                <div class="tab-pane active" id="properties">
-                    {% block custom_entity_form_properties %}
-                        {{ elements.accordion({ 'pane.accordion.general_properties': form_widget(form) }) }}
-                        {{ form_widget(form) }}
-                    {% endblock %}
-                </div>
+        <div class="tab-content">
+
+            {{ elements.form_errors(form) }}
+
+            <div class="tab-pane active" id="properties">
+                {% block custom_entity_form_properties %}
+                    {{ elements.accordion({ 'pane.accordion.general_properties': form_widget(form) }) }}
+                    {{ form_widget(form) }}
+                {% endblock %}
             </div>
-        {% endblock %}
+        </div>
+    {% endblock %}
+
     {{ form_end(form) }}
 {% endblock %}
