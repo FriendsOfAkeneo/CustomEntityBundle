@@ -1,5 +1,5 @@
 Properties: Properties
-
+pim_menu.tab.reference_data: Reference data
 # tabs and accordions
 pane.accordion:
     general_properties: General properties
@@ -7,6 +7,5 @@ pane.accordion:
 pim_custom_entity:
     export:
         limit_exceeded: Please select less than %limit% records
-
 properties:
     title: Properties
