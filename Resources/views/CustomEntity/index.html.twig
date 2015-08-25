@@ -1,24 +1,25 @@
 {% extends baseTemplate %}
 {% import 'PimDataGridBundle::macros.html.twig' as dataGrid %}
 
-{% set title = (customEntityName ~ ".overview")|trans %}
-{% oro_title_set({params:{'%title%': title}}) %}
-
 {% block content %}
 
-<div class="navigation clearfix navbar-extra navbar-extra-right">
+    {% set title = (customEntityName ~ ".overview")|trans %}
+    {% oro_title_set({params:{'%title%': title}}) %}
+
     {% set buttons %}
         {% if createUrl|default(false) %}
             {{ elements.createBtn(
                 customEntityName,
                 createUrl,
-                quickCreate ? 'dialog' : ''
+                quickCreate ? 'dialog' : '',
+                'pim_enrich_family_create',
+                'plus'
             ) }}
         {% endif %}
     {% endset %}
-    {{ elements.page_header(title, buttons, null) }}
-</div>
 
-{{ dataGrid.renderGrid(customEntityName, { localeCode: locale_code() }) }}
+    {{ elements.page_header(title, buttons) }}
+
+    {{ dataGrid.renderGrid(customEntityName, { localeCode: locale_code() }) }}
 
 {% endblock %}

@@ -99,6 +99,6 @@ abstract class AbstractViewableAction extends AbstractAction
         parent::setDefaultOptions($resolver);
 
         $resolver->setRequired(['template']);
-        $resolver->setDefaults(['base_template' => 'PimCustomEntityBundle::layout.html.twig']);
+        $resolver->setDefaults(['base_template' => 'PimEnrichBundle::layout.html.twig']);
     }
 }
