@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Overridden cause the data locale is not taken in account in the AjaxOptionController
+ * Overridden because the data locale is not taken into account in the AjaxOptionController
  *
  * @author Romain Monceau <romain@akeneo.com>
  */

@@ -49,7 +49,7 @@ class TranslatableCustomEntityRepository extends CustomEntityRepository
 
     /**
      * If the column defined as the sorting one belongs to the entity fields, we filter by this field
-     * Otherwise, we considered that it's a translation one
+     * Otherwise, we consider that it's a translation one
      *
      * {@inheritdoc}
      */
