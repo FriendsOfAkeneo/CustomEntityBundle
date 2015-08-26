@@ -75,4 +75,14 @@ abstract class AbstractCustomEntity extends AbstractReferenceData implements Ref
      * @return string
      */
     abstract public function getCustomEntityName();
+
+    /**
+     * Returns the sort order
+     *
+     * @return string
+     */
+    public static function getSortOrderColumn()
+    {
+        return 'code';
+    }
 }
