@@ -10,3 +10,5 @@ pim_custom_entity:
 
 properties:
     title: Propriétés
+
+pim_custom_entity.acl_group.reference_data: Référentiel
