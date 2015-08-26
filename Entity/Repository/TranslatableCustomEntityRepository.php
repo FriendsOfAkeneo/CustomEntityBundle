@@ -3,8 +3,6 @@
 namespace Pim\Bundle\CustomEntityBundle\Entity\Repository;
 
 use Doctrine\ORM\QueryBuilder;
-use Gedmo\Translator\TranslationInterface;
-use Pim\Bundle\TranslationBundle\Entity\TranslatableInterface;
 
 /**
  * Repository for translatable custom entities
