@@ -1,0 +1,2 @@
+parameters:
+    pim_ui.controller.ajax_option.class: Pim\Bundle\CustomEntityBundle\Controller\AjaxOptionController

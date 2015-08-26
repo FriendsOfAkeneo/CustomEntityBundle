@@ -22,7 +22,9 @@ class CustomEntityRepository extends ReferenceDataRepository
      */
     public function createDatagridQueryBuilder()
     {
-        return $this->createQueryBuilder('o');
+        return $this->createQueryBuilder(
+            $this->getAlias()
+        );
     }
 
     /**
@@ -35,11 +37,10 @@ class CustomEntityRepository extends ReferenceDataRepository
     public function applyMassActionParameters($qb, $inset, $values)
     {
         if ($values) {
-            $rootAlias = $qb->getRootAlias();
             $valueWhereCondition =
                 $inset
-                    ? $qb->expr()->in($rootAlias, $values)
-                    : $qb->expr()->notIn($rootAlias, $values);
+                    ? $qb->expr()->in($this->getAlias(), $values)
+                    : $qb->expr()->notIn($this->getAlias(), $values);
             $qb->andWhere($valueWhereCondition);
         }
 
@@ -82,8 +83,13 @@ class CustomEntityRepository extends ReferenceDataRepository
 
         $qb = $this->_em->createQueryBuilder();
         $qb
-            ->delete($this->_entityName, 'ref')
-            ->where($qb->expr()->in('ref.id', $ids));
+            ->delete($this->getEntityName(), $this->getAlias())
+            ->where(
+                $qb->expr()->in(
+                    sprintf('%s.id', $this->getAlias()),
+                    $ids
+                )
+            );
 
         return $qb->getQuery()->execute();
     }
@@ -103,9 +109,116 @@ class CustomEntityRepository extends ReferenceDataRepository
             throw new \InvalidArgumentException('Array must contain at least one reference data id');
         }
 
-        $qb = $this->createQueryBuilder('rd');
-        $qb->where($qb->expr()->in('rd.id', $referenceDataIds));
+        $qb = $this->createQueryBuilder($this->getAlias());
+        $qb->where(
+            $qb->expr()->in(
+                sprintf('%s.id', $this->getAlias()),
+                $referenceDataIds
+            )
+        );
 
         return new ArrayCollection($qb->getQuery()->getResult());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function findBySearch($search = null, array $options = [])
+    {
+        $qb = $this->findBySearchQB($search, $options);
+
+        return $qb->getQuery()->getArrayResult();
+    }
+
+    /**
+     * @param string $search
+     * @param array  $options
+     *
+     * @return QueryBuilder
+     */
+    protected function findBySearchQB($search, array $options)
+    {
+        if (null !== $labelProperty = $this->getReferenceDataLabelProperty()) {
+            $selectDql = sprintf(
+                '%s.%s as id, ' .
+                'CASE WHEN %s.%s IS NULL OR %s.%s = \'\' THEN CONCAT(\'[\', %s.code, \']\') ELSE %s.%s END AS text',
+                $this->getAlias(),
+                isset($options['type']) && 'code' === $options['type'] ? 'code' : 'id',
+                $this->getAlias(),
+                $labelProperty,
+                $this->getAlias(),
+                $labelProperty,
+                $this->getAlias(),
+                $this->getAlias(),
+                $labelProperty
+            );
+        } else {
+            $selectDql = sprintf(
+                '%s.%s as id, CONCAT(\'[\', %s.code, \']\') as text',
+                $this->getAlias(),
+                isset($options['type']) && 'code' === $options['type'] ? 'code' : 'id',
+                $this->getAlias()
+            );
+        }
+
+        $qb = $this->createQueryBuilder($this->getAlias());
+        $qb->select($selectDql);
+
+        // Overridden part - manage with sort order
+        $this->addSortOrder($qb);
+        // End of overridden part - manage with sort order
+
+        if (null !== $search) {
+            $searchDql = sprintf('%s.code LIKE :search', $this->getAlias());
+            if (null !== $labelProperty) {
+                $searchDql .= sprintf(' OR %s.%s LIKE :search', $this->getAlias(), $labelProperty);
+            }
+            $qb->andWhere($searchDql)->setParameter('search', "%$search%");
+        }
+
+        if (isset($options['limit'])) {
+            $qb->setMaxResults((int) $options['limit']);
+            if (isset($options['page'])) {
+                $qb->setFirstResult((int) $options['limit'] * ((int) $options['page'] - 1));
+            }
+        }
+
+        return $qb;
+    }
+
+    /**
+     * Add sort order in the findBySearch method
+     * Used in products datagrid filtering and product edit form
+     *
+     * @param QueryBuilder $qb
+     */
+    protected function addSortOrder(QueryBuilder $qb)
+    {
+        $sortOrder = $this->getSortOrderColumn();
+
+        $qb->orderBy(sprintf('%s.%s', $this->getAlias(), $sortOrder));
+        $qb->addOrderBy(sprintf('%s.code', $this->getAlias()));
+    }
+
+    /**
+     * @return string
+     */
+    protected function getSortOrderColumn()
+    {
+        $referenceDataClass = $this->getEntityName();
+
+        return $referenceDataClass::getSortOrderColumn();
+    }
+
+    /**
+     * Duplicate code due to method visibility
+     *
+     * {@inheritdoc}
+     */
+    protected function getReferenceDataLabelProperty()
+    {
+        $referenceDataClass = $this->getEntityName();
+
+        return $referenceDataClass::getLabelProperty();
     }
 }

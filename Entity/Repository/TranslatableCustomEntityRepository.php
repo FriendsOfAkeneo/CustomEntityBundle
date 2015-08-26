@@ -2,6 +2,8 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Entity\Repository;
 
+use Doctrine\ORM\QueryBuilder;
+
 /**
  * Repository for translatable custom entities
  *
@@ -17,7 +19,50 @@ class TranslatableCustomEntityRepository extends CustomEntityRepository
     public function createDatagridQueryBuilder()
     {
         return parent::createDatagridQueryBuilder()
-            ->leftJoin('o.translations', 'translation', 'WITH', 'translation.locale=:localeCode')
+            ->leftJoin(
+                sprintf('%s.translations', $this->getAlias()),
+                'translation',
+                'WITH',
+                'translation.locale=:localeCode'
+            )
             ->addSelect('translation');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function findBySearchQB($search, array $options)
+    {
+        $qb = parent::findBySearchQB($search, $options);
+
+        $qb
+            ->leftJoin(
+                sprintf('%s.translations', $this->getAlias()),
+                'translation',
+                'WITH',
+                'translation.locale=:localeCode'
+            )
+            ->setParameter('localeCode', $options['dataLocale']);
+
+        return $qb;
+    }
+
+    /**
+     * If the column defined as the sorting one belongs to the entity fields, we filter by this field
+     * Otherwise, we consider that it's a translation one
+     *
+     * {@inheritdoc}
+     */
+    protected function addSortOrder(QueryBuilder $qb)
+    {
+        $sortOrder = $this->getSortOrderColumn();
+
+        if ($this->getClassMetadata()->hasField($sortOrder)) {
+            parent::addSortOrder($qb);
+        } else {
+            $qb
+                ->orderBy(sprintf('translation.%s', $sortOrder))
+                ->addOrderBy(sprintf('%s.code', $this->getAlias()));
+        }
     }
 }
