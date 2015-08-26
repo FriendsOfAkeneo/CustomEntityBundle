@@ -9,3 +9,5 @@ pim_custom_entity:
         limit_exceeded: Please select less than %limit% records
 properties:
     title: Properties
+
+pim_custom_entity.acl_group.reference_data: Reference data
