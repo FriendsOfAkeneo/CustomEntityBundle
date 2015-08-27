@@ -69,7 +69,7 @@ class TranslatableCustomEntityRepository extends CustomEntityRepository
     /**
      * Adds select in the findBySearch method
      * Used in products datagrid filtering and product edit form
-     * This method is used by findBySearch method and it's not recommended to call it from somewhere else
+     * This method is used by findBySearch method and it's not recommended to call it from elsewhere
      *
      * {@inheritdoc}
      */
@@ -101,7 +101,7 @@ class TranslatableCustomEntityRepository extends CustomEntityRepository
     /**
      * Adds search on label or code in the findBySearch method
      * Used in products datagrid filtering and product edit form
-     * This method is used by findBySearch method and it's not recommended to call it from somewhere else
+     * This method is used by findBySearch method and it's not recommended to call it from elsewhere
      *
      * {@inheritdoc}
      */

@@ -160,7 +160,7 @@ class CustomEntityRepository extends ReferenceDataRepository
     /**
      * Adds select in the findBySearch method
      * Used in products datagrid filtering and product edit form
-     * This method is used by findBySearch method and it's not recommended to call it from somewhere else
+     * This method is used by findBySearch method and it's not recommended to call it from elsewhere
      *
      * @param QueryBuilder $qb
      */
@@ -190,7 +190,7 @@ class CustomEntityRepository extends ReferenceDataRepository
     /**
      * Adds search on label or code in the findBySearch method
      * Used in products datagrid filtering and product edit form
-     * This method is used by findBySearch method and it's not recommended to call it from somewhere else
+     * This method is used by findBySearch method and it's not recommended to call it from elsewhere
      *
      * @param QueryBuilder $qb
      * @param string       $search
@@ -221,7 +221,7 @@ class CustomEntityRepository extends ReferenceDataRepository
     /**
      * Adds sort order in the findBySearch method
      * Used in products datagrid filtering and product edit form
-     * This method is used by findBySearch method and it's not recommended to call it from somewhere else
+     * This method is used by findBySearch method and it's not recommended to call it from elsewhere
      *
      * @param QueryBuilder $qb
      */
