@@ -36,7 +36,7 @@ class CustomEntityRepository extends ReferenceDataRepository
      */
     public function applyMassActionParameters($qb, $inset, $values)
     {
-        if ($values) {
+        if (!empty($values)) {
             $valueWhereCondition =
                 $inset
                     ? $qb->expr()->in($this->getAlias(), $values)
@@ -163,8 +163,9 @@ class CustomEntityRepository extends ReferenceDataRepository
      * This method is used by findBySearch method and it's not recommended to call it from elsewhere
      *
      * @param QueryBuilder $qb
+     * @param array        $options
      */
-    protected function selectFields(QueryBuilder $qb)
+    protected function selectFields(QueryBuilder $qb, array $options)
     {
         $labelProperty = $this->getReferenceDataLabelProperty();
         $identifierField = isset($options['type']) && 'code' === $options['type'] ? 'code' : 'id';
