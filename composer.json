@@ -1,5 +1,5 @@
 {
-    "name": "akeneo/custom-entity-bundle",
+    "name": "akeneo-labs/custom-entity-bundle",
     "type": "symfony-bundle",
     "description": "Akeneo PIM Custom entity bundle",
     "keywords": ["pim", "akeneo", "ecommerce", "integration"],
