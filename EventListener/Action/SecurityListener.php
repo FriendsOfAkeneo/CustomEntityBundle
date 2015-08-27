@@ -83,17 +83,16 @@ class SecurityListener implements EventSubscriberInterface
             $resolver->setDefined(['acl']);
         }
         $resolver->setDefined(['acl_suffix']);
-        $resolver->setNormalizers(
-            [
-                'acl' => function ($actionOptions, $acl) use ($options) {
-                    if (null === $acl && isset($options['acl_prefix']) && isset($actionOptions['acl_suffix'])) {
-                        return $options['acl_prefix'] . $options['acl_separator'] .
-                            $actionOptions['acl_suffix'];
-                    }
-
-                    return $acl;
+        $resolver->setNormalizer(
+            'acl',
+            function ($actionOptions, $acl) use ($options) {
+                if (null === $acl && isset($options['acl_prefix']) && isset($actionOptions['acl_suffix'])) {
+                    return $options['acl_prefix'] . $options['acl_separator'] .
+                        $actionOptions['acl_suffix'];
                 }
-            ]
+
+                return $acl;
+            }
         );
         $customEntityName = $event->getAction()->getConfiguration()->getName();
         $normalizeActions = function ($options, $actionTypes) use ($customEntityName) {
@@ -108,12 +107,8 @@ class SecurityListener implements EventSubscriberInterface
             );
         };
         if ('index' === $event->getAction()->getType()) {
-            $resolver->setNormalizers(
-                    [
-                        'row_actions'  => $normalizeActions,
-                        'mass_actions' => $normalizeActions,
-                    ]
-            );
+            $resolver->setNormalizer('row_actions', $normalizeActions);
+            $resolver->setNormalizer('mass_actions', $normalizeActions);
         }
     }
 
