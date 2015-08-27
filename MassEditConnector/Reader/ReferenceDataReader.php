@@ -11,6 +11,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityNotFoundException;
 use Pim\Bundle\CustomEntityBundle\Entity\Repository\CustomEntityRepository;
 use Pim\Component\Connector\Repository\JobConfigurationRepositoryInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @author Romain Monceau <romain@akeneo.com>
@@ -40,7 +41,7 @@ class ReferenceDataReader extends AbstractConfigurableStepElement implements
         EntityManager $em
     ) {
         $this->jobConfigRepository = $jobConfigRepository;
-        $this->em                  = $em;
+        $this->em = $em;
     }
 
     /**
@@ -50,7 +51,10 @@ class ReferenceDataReader extends AbstractConfigurableStepElement implements
     {
         $config = $this->getJobConfiguration();
 
-        // TODO: validate configuration (reference_data + ids)
+        $resolver = new OptionsResolver();
+        $this->configureOptions($resolver);
+        $config = $resolver->resolve($config);
+
         if (null === $this->referenceDatas) {
             $this->referenceDatas = $this->getReferenceDatas($config['reference_data'], $config['ids']);
         }
@@ -124,5 +128,13 @@ class ReferenceDataReader extends AbstractConfigurableStepElement implements
     public function setStepExecution(StepExecution $stepExecution)
     {
         $this->stepExecution = $stepExecution;
+    }
+
+    protected function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setRequired([
+            'reference_data',
+            'ids'
+        ]);
     }
 }
