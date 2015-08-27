@@ -73,7 +73,7 @@ class TranslatableCustomEntityRepository extends CustomEntityRepository
      *
      * {@inheritdoc}
      */
-    protected function selectFields(QueryBuilder $qb)
+    protected function selectFields(QueryBuilder $qb, array $options)
     {
         $labelProperty = $this->getReferenceDataLabelProperty();
 

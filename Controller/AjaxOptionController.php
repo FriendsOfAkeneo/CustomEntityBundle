@@ -25,10 +25,7 @@ class AjaxOptionController extends BaseAjaxOptionController
         if ($repository instanceof ReferenceDataRepositoryInterface) {
             $options = $query->get('options', []) + ['dataLocale' => $query->get('dataLocale')];
 
-            $choices['results'] = $repository->findBySearch(
-                $query->get('search'),
-                $options
-            );
+            $choices = ['results' => $repository->findBySearch($query->get('search'), $options)];
 
             return new JsonResponse($choices);
         }
