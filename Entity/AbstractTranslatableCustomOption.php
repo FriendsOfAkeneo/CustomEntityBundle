@@ -31,4 +31,20 @@ abstract class AbstractTranslatableCustomOption extends AbstractTranslatableCust
 
         return $this;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getSortOrderColumn()
+    {
+        return 'label';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getLabelProperty()
+    {
+        return 'label';
+    }
 }

@@ -77,6 +77,14 @@ abstract class AbstractCustomEntity extends AbstractReferenceData implements Ref
     abstract public function getCustomEntityName();
 
     /**
+     * {@inheritdoc}
+     */
+    public static function getLabelProperty()
+    {
+        return 'code';
+    }
+
+    /**
      * Returns the sort order
      *
      * @return string

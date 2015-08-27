@@ -65,4 +65,59 @@ class TranslatableCustomEntityRepository extends CustomEntityRepository
                 ->addOrderBy(sprintf('%s.code', $this->getAlias()));
         }
     }
+
+    /**
+     * Add select in the findBySearch method
+     * Used in products datagrid filtering and product edit form
+     * This method is used by findBySearch method and it's not recommended to call it from somewhere else
+     *
+     * {@inheritdoc}
+     */
+    protected function selectFields(QueryBuilder $qb)
+    {
+        $labelProperty = $this->getReferenceDataLabelProperty();
+
+        if ($this->getClassMetadata()->hasField($labelProperty)) {
+            parent::selectFields($qb);
+        } else {
+            $identifierField = isset($options['type']) && 'code' === $options['type'] ? 'code' : 'id';
+
+            $qb
+                ->select(
+                    sprintf('%s.%s as id', $this->getAlias(), $identifierField)
+                )
+                ->addSelect(
+                    sprintf(
+                        'CASE WHEN translation.%s IS NULL '.
+                        'THEN CONCAT(\'[\', %s.code, \']\') ELSE translation.%s END AS text',
+                        $labelProperty,
+                        $this->getAlias(),
+                        $labelProperty
+                    )
+                );
+        }
+    }
+
+    /**
+     * Add search on label or code in the findBySearch method
+     * Used in products datagrid filtering and product edit form
+     * This method is used by findBySearch method and it's not recommended to call it from somewhere else
+     *
+     * {@inheritdoc}
+     */
+    protected function addSearchFilter(QueryBuilder $qb, $search)
+    {
+        $labelProperty = $this->getReferenceDataLabelProperty();
+
+        if ($this->getClassMetadata()->hasField($labelProperty)) {
+            parent::addSearchFilter($qb, $search);
+        } else {
+            $searchDql = sprintf(
+                '%s.code LIKE :search OR translation.%s LIKE :search',
+                $this->getAlias(),
+                $labelProperty
+            );
+            $qb->andWhere($searchDql)->setParameter('search', "%$search%");
+        }
+    }
 }
