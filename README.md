@@ -46,8 +46,10 @@ Some example usages for this bundle can be found in the [PIM documentation](http
 
 The full documentation for the bundle can be found in the [Resources/doc](Resources/doc/index.rst) folder.
 
+The cookbook section is only available for Akeneo PIM 1.3 (and previous versions): http://docs.akeneo.com/latest/cookbook/custom_entity/index.html
+We will create some for Akeneo PIM 1.4 as soon as possible.
 
 ## Contributing
 
-If you want to contribute to this open-source project, please read and sign the following [contributor agreement](http://www.akeneo.com/contributor-license-agreement/)
+If you want to contribute to this open-source project, thank you to read and sign the following [contributor agreement](http://www.akeneo.com/contributor-license-agreement/)
 
