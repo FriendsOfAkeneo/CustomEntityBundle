@@ -138,42 +138,13 @@ class CustomEntityRepository extends ReferenceDataRepository
      */
     protected function findBySearchQB($search, array $options)
     {
-        if (null !== $labelProperty = $this->getReferenceDataLabelProperty()) {
-            $selectDql = sprintf(
-                '%s.%s as id, ' .
-                'CASE WHEN %s.%s IS NULL OR %s.%s = \'\' THEN CONCAT(\'[\', %s.code, \']\') ELSE %s.%s END AS text',
-                $this->getAlias(),
-                isset($options['type']) && 'code' === $options['type'] ? 'code' : 'id',
-                $this->getAlias(),
-                $labelProperty,
-                $this->getAlias(),
-                $labelProperty,
-                $this->getAlias(),
-                $this->getAlias(),
-                $labelProperty
-            );
-        } else {
-            $selectDql = sprintf(
-                '%s.%s as id, CONCAT(\'[\', %s.code, \']\') as text',
-                $this->getAlias(),
-                isset($options['type']) && 'code' === $options['type'] ? 'code' : 'id',
-                $this->getAlias()
-            );
-        }
-
         $qb = $this->createQueryBuilder($this->getAlias());
-        $qb->select($selectDql);
 
-        // Overridden part - manage with sort order
+        $this->selectFields($qb);
         $this->addSortOrder($qb);
-        // End of overridden part - manage with sort order
 
         if (null !== $search) {
-            $searchDql = sprintf('%s.code LIKE :search', $this->getAlias());
-            if (null !== $labelProperty) {
-                $searchDql .= sprintf(' OR %s.%s LIKE :search', $this->getAlias(), $labelProperty);
-            }
-            $qb->andWhere($searchDql)->setParameter('search', "%$search%");
+            $this->addSearchFilter($qb, $search);
         }
 
         if (isset($options['limit'])) {
@@ -187,8 +158,70 @@ class CustomEntityRepository extends ReferenceDataRepository
     }
 
     /**
-     * Add sort order in the findBySearch method
+     * Adds select in the findBySearch method
      * Used in products datagrid filtering and product edit form
+     * This method is used by findBySearch method and it's not recommended to call it from elsewhere
+     *
+     * @param QueryBuilder $qb
+     */
+    protected function selectFields(QueryBuilder $qb)
+    {
+        $labelProperty = $this->getReferenceDataLabelProperty();
+        $identifierField = isset($options['type']) && 'code' === $options['type'] ? 'code' : 'id';
+
+        $qb
+            ->select(
+                sprintf('%s.%s AS id', $this->getAlias(), $identifierField)
+            )
+            ->addSelect(
+                sprintf(
+                    'CASE WHEN %s.%s IS NULL OR %s.%s = \'\' THEN CONCAT(\'[\', %s.code, \']\') ELSE %s.%s END AS text',
+                    $this->getAlias(),
+                    $labelProperty,
+                    $this->getAlias(),
+                    $labelProperty,
+                    $this->getAlias(),
+                    $this->getAlias(),
+                    $labelProperty
+                )
+            );
+    }
+
+    /**
+     * Adds search on label or code in the findBySearch method
+     * Used in products datagrid filtering and product edit form
+     * This method is used by findBySearch method and it's not recommended to call it from elsewhere
+     *
+     * @param QueryBuilder $qb
+     * @param string       $search
+     */
+    protected function addSearchFilter(QueryBuilder $qb, $search)
+    {
+        $labelProperty = $this->getReferenceDataLabelProperty();
+
+        $searchDql = sprintf('%s.code LIKE :search', $this->getAlias());
+        if ('code' !== $labelProperty) {
+            $searchDql .= sprintf(' OR %s.%s LIKE :search', $this->getAlias(), $labelProperty);
+        }
+        $qb->andWhere($searchDql)->setParameter('search', "%$search%");
+    }
+
+    /**
+     * Duplicate code due to method visibility
+     *
+     * {@inheritdoc}
+     */
+    protected function getReferenceDataLabelProperty()
+    {
+        $referenceDataClass = $this->getEntityName();
+
+        return $referenceDataClass::getLabelProperty();
+    }
+
+    /**
+     * Adds sort order in the findBySearch method
+     * Used in products datagrid filtering and product edit form
+     * This method is used by findBySearch method and it's not recommended to call it from elsewhere
      *
      * @param QueryBuilder $qb
      */
@@ -208,17 +241,5 @@ class CustomEntityRepository extends ReferenceDataRepository
         $referenceDataClass = $this->getEntityName();
 
         return $referenceDataClass::getSortOrderColumn();
-    }
-
-    /**
-     * Duplicate code due to method visibility
-     *
-     * {@inheritdoc}
-     */
-    protected function getReferenceDataLabelProperty()
-    {
-        $referenceDataClass = $this->getEntityName();
-
-        return $referenceDataClass::getLabelProperty();
     }
 }
