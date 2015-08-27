@@ -45,3 +45,9 @@ If you want to use the quick export and/or the mass edit features, you have to l
 Some example usages for this bundle can be found in the [PIM documentation](http://docs.akeneo.com/master/cookbook/custom_entity/index.html)
 
 The full documentation for the bundle can be found in the [Resources/doc](Resources/doc/index.rst) folder.
+
+
+## Contributing
+
+If you want to contribute to this open-source project, please read and sign the following [contributor agreement](http://www.akeneo.com/contributor-license-agreement/)
+
