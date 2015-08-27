@@ -84,7 +84,7 @@ class TranslatableCustomEntityRepository extends CustomEntityRepository
 
             $qb
                 ->select(
-                    sprintf('%s.%s as id', $this->getAlias(), $identifierField)
+                    sprintf('%s.%s AS id', $this->getAlias(), $identifierField)
                 )
                 ->addSelect(
                     sprintf(
