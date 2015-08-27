@@ -158,7 +158,7 @@ class CustomEntityRepository extends ReferenceDataRepository
     }
 
     /**
-     * Add select in the findBySearch method
+     * Adds select in the findBySearch method
      * Used in products datagrid filtering and product edit form
      * This method is used by findBySearch method and it's not recommended to call it from somewhere else
      *
@@ -188,7 +188,7 @@ class CustomEntityRepository extends ReferenceDataRepository
     }
 
     /**
-     * Add search on label or code in the findBySearch method
+     * Adds search on label or code in the findBySearch method
      * Used in products datagrid filtering and product edit form
      * This method is used by findBySearch method and it's not recommended to call it from somewhere else
      *
@@ -219,7 +219,7 @@ class CustomEntityRepository extends ReferenceDataRepository
     }
 
     /**
-     * Add sort order in the findBySearch method
+     * Adds sort order in the findBySearch method
      * Used in products datagrid filtering and product edit form
      * This method is used by findBySearch method and it's not recommended to call it from somewhere else
      *
