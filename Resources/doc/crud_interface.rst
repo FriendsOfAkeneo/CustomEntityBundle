@@ -7,36 +7,36 @@ CRUD Configuration
 The configuration for the CRUD actions of your custom entities must be in a file named 'config/custom_entities.yml',
 located in an activated bundle. To have a full working CRUD for an entity, the following configuration could be used:
 
-
 .. code-block:: yaml
 
+    # Resources/config/custom_entities.yml
+
     custom_entities:
-        my_entity:
-            extends: quick_create
-            entity_class: Acme\Bundle\CatalogBundle\Entity\MyEntity
+        color:
+            entity_class: Acme\Bundle\CustomBundle\Entity\Color
             options:
-                form_type: my_form_type
-                acl_prefix: my_acl_prefix
+                acl_prefix: acme_enrich_color
             actions:
+                edit:
+                    form_type: acme_enrich_color
                 create:
-                    form_options: { create: true }
+                    form_type: acme_enrich_color
+                mass_edit:
+                    form_type: acme_enrich_mass_edit_color
+                quick_export:
+                    service: pim_custom_entity.action.quick_export
+
 
 The root level of the file contains the configuration for all your entities, indexed by alias. The alias will be used in the
 CRUD URLs, and later, for the datagrid configuration.
 
 For each entity, the following options are available:
 
-abstract
-  Set to true if the definition is only meant to be extended
-extends
-  The alias of the extended configuration.
-  The bundle offers three base configurations that can be extended: default, quick_create, and mass_actions
-options
-  The global configuration options for the current entity
-actions
-  The configuration for the enabled CRUD actions
-entity_class
-  The class of the entity, **required** if the configuration is not abstract.
+- **abstract**: set to `true` if the definition is only meant to be extended
+- **extends**: the alias of the extended configuration. The bundle offers three base configurations that can be extended: default, quick_create, and mass_actions
+- **options**: general options for the CRUD
+- **actions**: the configuration for the enabled CRUD actions
+- **entity_class**: the class of the entity, **required** if the configuration is not abstract.
   (Container parameters can be used in the class value)
 
 
@@ -45,35 +45,23 @@ Global Configuration Options
 
 The following options can be used:
 
-manager
-  Alias of the CRUD object manager. Default is "default".
-acl_prefix
-  A prefix for all ACLs of the CRUD. If not set, no ACLs will be set.
-acl_separator
-  The separator between the ACL prefix and the ACL suffix. Default is "_"
-form_type
-  The default form type for form actions.
-form_options
-  The default form options for form actions.
-form_template
-  The default template for form actions.
+- **manager**: alias of the CRUD object manager. Default is "default".
+- **acl_prefix**: a prefix for all ACLs of the CRUD. If not set, no ACLs will be set.
+- **acl_separator**: the separator between the ACL prefix and the ACL suffix. Default is "_"
+- **form_type**: the default form type for form actions.
+- **form_options**: the default form options for form actions.
+- **form_template**: the default template for form actions.
 
 Common Action Options
 *********************
 
 The following options are common for all actions:
 
-service
-  The id of the action service
-enabled
-  Set to false if the action should not be enabled. **WARNING : This option is not inherited**
-route
-  The route for the action
-acl
-  The ACL for the action
-acl_suffix
-  If the global ``acl_prefix`` option is provided, and no acl is provided for the action, the acl option
-  will be set to <acl_prefix><acl_separator><acl_suffix>
+- **service**: the id of the action service
+- **enabled**: set to false if the action should not be enabled. **WARNING : This option is not inherited**
+- **route**: the route for the action
+- **acl**: the ACL for the action
+- **acl_suffix**: if the global ``acl_prefix`` option is provided, and no acl is provided for the action, the acl - **option** will be set to <acl_prefix><acl_separator><acl_suffix>
 
 
 Index Action Options
@@ -95,15 +83,10 @@ By default, the index action uses the ``pim_custom_entity.action.index`` service
                     row_actions: ['edit', 'delete']
 
 
-template
-  The template of the action
-row_actions
-  An array of action types available for each row on the grid
-quick_create
-   True if the create action should be displayed in a lightbox. *(Requires the use of the
-   **pim_custom_entity.action.quick_create** service for the create action)*
-quick_create_action_type
-   The action type for the quick create action
+- **emplate**: the template of the action
+- **row_actions**: an array of action types available for each row on the grid
+- **quick_create**: `true` if the create action should be displayed in a lightbox. It requires the use of the **pim_custom_entity.action.quick_create** service for the create action.
+- **quick_create_action_type**: the action type for the quick create action
 
 
 Create Action Options
@@ -131,24 +114,15 @@ By default, the create action uses the ``pim_custom_entity.action.create`` servi
                     save_options: {}
 
 
-template
-  The template of the action
-form_type
-   The form type used to create objects. **This option is required**
-form_options
-   Options which should be passed to the form factory
-redirect_route
-   The route to use for redirections on success
-redirect_route_parameters
-   The parameters for the redirect route
-success_message
-   A message which should be displayed on success
-create_values
-   An array of default properties for the created object
-create_options
-   An array of options which should be passed to the object manager for object creation
-save_options
-   An array of options which should be passed to the object manager for object saving
+- **template**: the template of the action
+- **form_type**: the form type used to create objects. **Required**
+- **form_options**: options which should be passed to the form factory
+- **redirect_route**: the route to use for redirections on success
+- **redirect_route_parameters**: the parameters for the redirect route
+- **success_message**: a message which should be displayed on success
+- **create_values**: an array of default properties for the created object
+- **create_options**: an array of options which should be passed to the object manager for object creation
+- **save_options**: an array of options which should be passed to the object manager for object saving
 
 
 Edit Action Options
@@ -173,20 +147,13 @@ By default, the edit action uses the ``pim_custom_entity.action.edit`` service w
                     success_message: flash.my_entity.updated
                     save_options: {}
 
-template
-  The template of the action
-form_type
-   The form type used to create objects. **This option is required**
-form_options
-   Options which should be passed to the form factory
-redirect_route
-   The route to use for redirections on success
-redirect_route_parameters
-   The parameters for the redirect route
-success_message
-   A message which should be displayed on success
-save_options:
-   An array of options which should be passed to the object manager for object saving
+- **template**: the template of the action
+- **form_type**: the form type used to create objects. **Required**
+- **form_options**: options which should be passed to the form factory
+- **redirect_route**: the route to use for redirections on success
+- **redirect_route_parameters**: the parameters for the redirect route
+- **success_message**: a message which should be displayed on success
+- **save_options**: an array of options which should be passed to the object manager for object saving
 
 
 Delete Action Options
@@ -219,9 +186,7 @@ By default, the show action uses the ``pim_custom_entity.action.show`` service w
                 show:
                     service:  pim_custom_entity.action.show
                     route:    pim_customentity_show
-                    template: AcmeCatalogBundle:MyEntity:show.html.twig
-
-You've to define the ``template`` option.
+                    template: AcmeCatalogBundle:MyEntity:show.html.twig # required
 
 The datagrid could be defined like that:
 
@@ -266,22 +231,18 @@ By default, the mass edit action uses the ``pim_custom_entity.action.mass_edit``
                     success_message: flash.my_entity.mass_edited
 
 
-template
-  The template of the action
-form_type
-   The form type used to create objects. **This option is required**
-form_options
-   Options which should be passed to the form factory
-redirect_route
-   The route to use for redirections on success
-redirect_route_parameters
-   The parameters for the redirect route
-success_message
-   A message which should be displayed on success
+- **template**: the template of the action
+- **form_type**: the form type used to create objects. **This option is required**
+- **form_options**: options which should be passed to the form factory
+- **redirect_route**: the route to use for redirections on success
+- **redirect_route_parameters**: the parameters for the redirect route
+- **success_message**: translation key of the message being displayed on success
 
-Also, you should defined the following things in the ``Resources\config\datagrid.yml`` file of the reference data entity.
+Also, you have to define the following configuration:
 
-..code-block:: yaml
+.. code-block:: yaml
+
+    # Resources\config\datagrid.yml
 
     custom_entities:
         my_entity:
@@ -292,15 +253,15 @@ Also, you should defined the following things in the ``Resources\config\datagrid
                     icon: edit
                     route: pim_customentity_massedit
                     route_parameters:
-                        customEntityName: brand
+                        customEntityName: my_entity
 
 
 Mass Delete
 ***********
 
-The mass delete feature should be defined in the ``Resources\config\datagrid.yml`` file of the reference data entity.
-
 .. code-block:: yaml
+
+    # Resources\config\datagrid.yml
 
     datagrid:
         my_entity_datagrid:
@@ -328,6 +289,8 @@ By default, the quick_export action uses the ``pim_custom_entity.action.quick_ex
 
 .. code-block:: yaml
 
+    # custom_entities.yml
+
     custom_entities:
         my_entity:
             entity_class: Acme\Bundle\CatalogBundle\Entity\MyEntity
@@ -337,11 +300,11 @@ By default, the quick_export action uses the ``pim_custom_entity.action.quick_ex
                     route:       pim_customentity_quickexport
                     job_profile: csv_reference_data_quick_export
 
-You can define another job profile if you want to export in another format. The job profile should be defined as a job fixtures as all Akeneo PIM backend tasks.
-
-Also, you should defined the following things in the ``Resources\config\datagrid.yml`` file of the reference data entity.
+Also, you should defined the following configuration :
 
 .. code-block:: yaml
+
+    # Resources\config\datagrid.yml
 
     custom_entities:
         my_entity:
@@ -366,6 +329,5 @@ Also, you should defined the following things in the ``Resources\config\datagrid
 Datagrid Configuration
 ----------------------
 
-The bundle will automatically add your configured actions to your oro datagrids if your datagrid extends the
-``custom_entity`` model. An example for a translatable option entity is available in the
+The bundle will automatically add your configured actions to your oro datagrids if your datagrid extends the ``custom_entity`` model. An example for a translatable option entity is available in the
 `examples folder <../examples/datagrid.yml>`_.

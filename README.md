@@ -37,14 +37,24 @@ and enable the bundle in the `app/AppKernel.php` file in the `registerBundles()`
         new Pim\Bundle\CustomEntityBundle\PimCustomEntityBundle(),
     ]
 
-If you want to use the quick export and/or the mass edit features, you have to load the job fixture defined in [Resources/fixtures/jobs.yml](Resources/fixtures/jobs.yml) file and to copy/paste its content to your installer.
+If you want to use the quick export and/or the mass edit features, you have to load the job fixture defined in  [Resources/fixtures/jobs.yml](Resources/fixtures/jobs.yml) file and to copy/paste its content to your installer.
+
+If your installation is already set up, you have to run the following command:
+
+.. code-block:: shell
+
+    php app/console akeneo:batch:create-job "Akeneo Mass Edit Connector" "reference_data_quick_export" "quick_export" "csv_reference_data_quick_export" '{    "delimiter": ";",    "enclosure": "\\",    "withHeader": true,    "filePath": "/tmp/reference_data_quick_export.csv"}'
 
 
 ## Documentation
 
 Some example usages for this bundle can be found in the [PIM documentation](http://docs.akeneo.com/master/cookbook/custom_entity/index.html)
 
-The full documentation for the bundle can be found in the [Resources/doc](Resources/doc/index.rst) folder.
+The custom entity bundle provides the following tools to help managing custom entities inside the Akeneo PIM.
+
+* [Abstract entities and repositories](Resources/doc/abstract_entities_and_repositories.rst)
+* [CRUD interface](Resources/doc/crud_interface.rst)
+* [CRUD managers](Resources/doc/crud_managers.rst)
 
 The cookbook section is only available for Akeneo PIM 1.3 (and previous versions): http://docs.akeneo.com/latest/cookbook/custom_entity/index.html
 We will create some for Akeneo PIM 1.4 as soon as possible.
@@ -52,4 +62,3 @@ We will create some for Akeneo PIM 1.4 as soon as possible.
 ## Contributing
 
 If you want to contribute to this open-source project, thank you to read and sign the following [contributor agreement](http://www.akeneo.com/contributor-license-agreement/)
-
