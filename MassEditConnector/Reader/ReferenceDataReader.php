@@ -11,6 +11,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityNotFoundException;
 use Pim\Bundle\CustomEntityBundle\Entity\Repository\CustomEntityRepository;
 use Pim\Component\Connector\Repository\JobConfigurationRepositoryInterface;
+use Pim\Component\ReferenceData\ConfigurationRegistry;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -32,16 +33,22 @@ class ReferenceDataReader extends AbstractConfigurableStepElement implements
     /** @var ArrayCollection */
     protected $referenceDatas;
 
+    /** @var  ConfigurationRegistry */
+    protected $registry;
+
     /**
      * @param JobConfigurationRepositoryInterface $jobConfigRepository
      * @param EntityManager                       $em
+     * @param ConfigurationRegistry               $registry
      */
     public function __construct(
         JobConfigurationRepositoryInterface $jobConfigRepository,
-        EntityManager $em
+        EntityManager $em,
+        ConfigurationRegistry $registry
     ) {
         $this->jobConfigRepository = $jobConfigRepository;
         $this->em = $em;
+        $this->registry = $registry;
     }
 
     /**
@@ -56,7 +63,9 @@ class ReferenceDataReader extends AbstractConfigurableStepElement implements
         $config = $resolver->resolve($config);
 
         if (null === $this->referenceDatas) {
-            $this->referenceDatas = $this->getReferenceDatas($config['reference_data'], $config['ids']);
+            if ($config['reference_data']) {
+                $this->referenceDatas = $this->getReferenceDatas($config['reference_data'], $config['ids']);
+            }
         }
 
         $result = $this->referenceDatas->current();
@@ -130,11 +139,19 @@ class ReferenceDataReader extends AbstractConfigurableStepElement implements
         $this->stepExecution = $stepExecution;
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     */
     protected function configureOptions(OptionsResolver $resolver)
     {
+        $allowedValues = array_map(function ($configuration) {
+            return $configuration->getClass();
+        }, $this->registry->all());
+
         $resolver->setRequired([
             'reference_data',
             'ids'
         ]);
+        $resolver->setAllowedValues('reference_data', $allowedValues);
     }
 }
