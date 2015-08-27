@@ -9,6 +9,7 @@ services:
         arguments:
             - @pim_connector.repository.job_configuration
             - @doctrine.orm.entity_manager
+            - @pim_reference_data.registry
 
     pim_custom_entity.mass_edit_connector.processor.reference_data_to_flat_array:
         class: %pim_custom_entity.mass_edit_connector.processor.reference_data_to_flat_array.class%
