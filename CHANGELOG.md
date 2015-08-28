@@ -7,7 +7,7 @@ CHANGELOG
 ## New feature
 
  - Compatibility with Akeneo PIM 1.4.x
- - Compliant with Akeneo PIM Reference datas feature
+ - Compliant with Akeneo PIM Reference data feature
  - Travis integration
  - Create generic reference data form type `Pim\Bundle\CustomEntityBundle\Form\Type\CustomEntityType`
  - Add default validation on code for reference datas
@@ -50,10 +50,10 @@ CHANGELOG
  - Inject `Pim\Bundle\DataGridBundle\Extension\MassAction\MassActionDispatcher` in `Pim\Bundle\CustomEntityBundle\Action\MassEditAction` instead of `Pim\Bundle\CustomEntityBundle\MassAction\DataGridQueryGenerator`
  - Inject `Pim\Bundle\DataGridBundle\Extension\MassAction\MassActionDispatcher`, `Pim\Bundle\ImportExportBundle\Entity\Repository\JobInstanceRepository`, `Akeneo\Bundle\BatchBundle\Launcher\JobLauncherInterface` and `Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface`
  in `Pim\Bundle\CustomEntityBundle\Action\QuickExportAction` of `Symfony\Bridge\Doctrine\RegistryInterface`, `Pim\Bundle\CustomEntityBundle\MassAction\DataGridQueryGenerator` and `Symfony\Component\Serializer\Serializer`
- - Repositories don't extend `Pim\Bundle\CatalogBundle\Doctrine\ReferableEntityRepository` neither implement `Pim\Bundle\UIBundle\Entity\Repository\OptionRepositoryInterface` anymore.
- - Methods `getOption`, `getOptionId`, `getOptionLabel` and `getOptions` has been removed from repositories
- - `Pim\Bundle\CustomEntityBundle\Entity\Repository\TranslatableCustomEntityRepository` don't implement Pim\Bundle\CustomEntityBundle\Entity\Repository\DatagridAwareRepositoryInterface` neither `Pim\Bundle\CustomEntityBundle\Entity\Repository\LocaleAwareRepositoryInterface`
- - Methods `createDatagridQueryBuilder` and `setLocale` and instance variable `locale` has been removed from `Pim\Bundle\CustomEntityBundle\Entity\Repository\TranslatableCustomEntityRepository`
+ - Repositories don't extend `Pim\Bundle\CatalogBundle\Doctrine\ReferableEntityRepository` or implement `Pim\Bundle\UIBundle\Entity\Repository\OptionRepositoryInterface` anymore.
+ - Methods `getOption`, `getOptionId`, `getOptionLabel` and `getOptions` have been removed from repositories
+ - `Pim\Bundle\CustomEntityBundle\Entity\Repository\TranslatableCustomEntityRepository` implements neither `Pim\Bundle\CustomEntityBundle\Entity\Repository\DatagridAwareRepositoryInterface` nor `Pim\Bundle\CustomEntityBundle\Entity\Repository\LocaleAwareRepositoryInterface`
+ - Methods `createDatagridQueryBuilder` and `setLocale` and instance variable `locale` have been removed from `Pim\Bundle\CustomEntityBundle\Entity\Repository\TranslatableCustomEntityRepository`
 
  - Change visibility of `Pim\Bundle\CustomEntityBundle\Factory\ActionFactory::$actions` from private to protected
  - Add abstract method `getCustomEntityName()` in `Pim\Bundle\CustomEntityBundle\Entity\AbstractCustomEntity`. This method should return the configuration name of your custom entity
@@ -137,4 +137,3 @@ CHANGELOG
 - Default configuration and strategy do not use quick create
 - Removed unused datagrid_namespace configuration option
 - Grid names are not suffixed by -grid anymore, and are the same as custom entity names
-
