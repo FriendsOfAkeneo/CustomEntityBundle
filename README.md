@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/akeneo-labs/CustomEntityBundle.svg?branch=master)](https://travis-ci.org/akeneo/CustomEntityBundle)
 
 ## Purpose
-Eases the creation of PIM reference datas and related views in the PIM.
+Facilitates the creation of PIM reference data and related views in the PIM.
 
 For more information, please see http://docs.akeneo.com/
 
