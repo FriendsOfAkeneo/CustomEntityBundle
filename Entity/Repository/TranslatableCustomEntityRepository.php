@@ -78,7 +78,7 @@ class TranslatableCustomEntityRepository extends CustomEntityRepository
         $labelProperty = $this->getReferenceDataLabelProperty();
 
         if ($this->getClassMetadata()->hasField($labelProperty)) {
-            parent::selectFields($qb);
+            parent::selectFields($qb, $options);
         } else {
             $identifierField = isset($options['type']) && 'code' === $options['type'] ? 'code' : 'id';
 

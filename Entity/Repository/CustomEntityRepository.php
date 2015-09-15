@@ -140,7 +140,7 @@ class CustomEntityRepository extends ReferenceDataRepository
     {
         $qb = $this->createQueryBuilder($this->getAlias());
 
-        $this->selectFields($qb);
+        $this->selectFields($qb, $options);
         $this->addSortOrder($qb);
 
         if (null !== $search) {
