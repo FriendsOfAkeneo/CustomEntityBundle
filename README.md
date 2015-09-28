@@ -27,7 +27,7 @@ You can install this bundle with composer (see requirements section):
 Then add the following lines **at the end** of your app/config/routing.yml :
 
     pim_customentity:
-        prefix: /enrich
+        prefix: /reference-data
         resource: "@PimCustomEntityBundle/Resources/config/routing.yml"
 
 and enable the bundle in the `app/AppKernel.php` file in the `registerBundles()` method:
