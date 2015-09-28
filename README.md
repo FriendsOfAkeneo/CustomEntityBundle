@@ -12,7 +12,7 @@ For more information, please see http://docs.akeneo.com/
 
 | CustomEntityBundle   | Akeneo PIM Community Edition |
 |:--------------------:|:----------------------------:|
-| (in progress) v1.6.* | dev-master (release v1.4.*)  |
+| v1.6.*               | v1.4.*                       |
 | v1.5.0-RC1           | v1.3.*                       |
 | v1.4.*               | v1.2.*                       |
 | v1.3.*               | v1.2.*                       |
