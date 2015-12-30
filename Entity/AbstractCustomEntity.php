@@ -71,7 +71,9 @@ abstract class AbstractCustomEntity extends AbstractReferenceData
      *
      * @return string
      */
-    abstract public function getCustomEntityName();
+    public function getCustomEntityName() {
+        return strtolower(join('', array_slice(explode('\\', __CLASS__), -1)));
+    }
 
     /**
      * {@inheritdoc}
