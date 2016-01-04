@@ -83,7 +83,7 @@ By default, the index action uses the ``pim_custom_entity.action.index`` service
                     row_actions: ['edit', 'delete']
 
 
-- **emplate**: the template of the action
+- **template**: the template of the action
 - **row_actions**: an array of action types available for each row on the grid
 - **quick_create**: `true` if the create action should be displayed in a lightbox. It requires the use of the **pim_custom_entity.action.quick_create** service for the create action.
 - **quick_create_action_type**: the action type for the quick create action
