@@ -1,0 +1,13 @@
+Properties: Eigenschaften
+pim_menu.tab.reference_data: Referenzdaten
+# tabs and accordions
+pane.accordion:
+    general_properties: Generelle Eigenschaften
+
+pim_custom_entity:
+    export:
+        limit_exceeded: Bitte wählen sie weniger als %limit% Datensätze
+properties:
+    title: Eigenschaften
+
+pim_custom_entity.acl_group.reference_data: Referenzdaten
