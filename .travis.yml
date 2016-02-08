@@ -9,17 +9,16 @@ sudo: false
 
 cache:
     directories:
-        - $HOME/.composer/cache/files
+        - $HOME/.composer/cache
 
 before_script:
     - phpenv config-add travis.php.ini
+    - echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
     - composer self-update --no-interaction
-
-install:
     - composer update --no-interaction --no-scripts
 
 script:
-    - bin/phpspec run -f dot
+    - ./bin/phpspec run
 
 notifications:
     slack: akeneo:RtMZyFyncKFKYKFT3kdzLvid
