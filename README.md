@@ -3,7 +3,6 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/akeneo/CustomEntityBundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/akeneo/CustomEntityBundle/?branch=master)
 [![Build Status](https://travis-ci.org/akeneo-labs/CustomEntityBundle.svg?branch=master)](https://travis-ci.org/akeneo/CustomEntityBundle)
 
-## Purpose
 Facilitates the creation of PIM reference data and related views in the PIM.
 
 For more information, please see http://docs.akeneo.com/
