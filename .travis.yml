@@ -19,6 +19,7 @@ matrix:
           env: DEPENDENCIES=dev
 
 before_install:
+    - phpenv config-add travis.php.ini
     - composer self-update
     - if [ "$DEPENDENCIES" = "dev" ]; then perl -pi -e 's/^}$/,"minimum-stability":"dev"}/' composer.json; fi;
 
