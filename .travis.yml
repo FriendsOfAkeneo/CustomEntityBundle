@@ -9,16 +9,21 @@ sudo: false
 
 cache:
     directories:
-        - $HOME/.composer/cache
+        - $HOME/.composer/cache/files
 
-before_script:
-    - phpenv config-add travis.php.ini
-    - echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
-    - composer self-update --no-interaction
-    - composer update --no-interaction --no-scripts
+matrix:
+    include:
+        - php: 5.4
+          env: COMPOSER_FLAGS='--prefer-lowest --prefer-stable' SYMFONY_DEPRECATIONS_HELPER=weak
+        - php: 5.6
+          env: DEPENDENCIES=dev
+
+before_install:
+    - composer self-update
+    - if [ "$DEPENDENCIES" = "dev" ]; then perl -pi -e 's/^}$/,"minimum-stability":"dev"}/' composer.json; fi;
 
 script:
-    - ./bin/phpspec run
+    - bin/phpspec run -f dot
 
 notifications:
     slack: akeneo:RtMZyFyncKFKYKFT3kdzLvid
