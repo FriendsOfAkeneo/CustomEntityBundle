@@ -2,7 +2,7 @@
 
 namespace spec\Pim\Bundle\CustomEntityBundle\Action;
 
-use Akeneo\Bundle\BatchBundle\Entity\JobInstance;
+use Akeneo\Component\Batch\Model\JobInstance;
 use Akeneo\Bundle\BatchBundle\Launcher\JobLauncherInterface;
 use PhpSpec\ObjectBehavior;
 use Pim\Bundle\CustomEntityBundle\Action\ActionFactory;
