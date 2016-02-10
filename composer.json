@@ -25,7 +25,7 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "akeneo/pim-community-dev": "1.5.*"
+        "akeneo/pim-community-dev": "1.4.*"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "2.*",
