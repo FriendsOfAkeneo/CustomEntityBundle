@@ -3,6 +3,7 @@
 namespace Pim\Bundle\CustomEntityBundle\Entity;
 
 use Akeneo\Component\Localization\Model\AbstractTranslation;
+use Akeneo\Component\Localization\Model\TranslationInterface;
 
 /**
  * @author    Antoine Guigan <antoine@akeneo.com>
@@ -11,7 +12,7 @@ use Akeneo\Component\Localization\Model\AbstractTranslation;
  *
  * @deprecated will be removed in 1.7, please use \Akeneo\Component\Localization\Model\AbstractTranslation
  */
-class AbstractCustomOptionTranslation extends AbstractTranslation
+class AbstractCustomOptionTranslation extends AbstractTranslation implements TranslationInterface
 {
     /**
      * @var string $label

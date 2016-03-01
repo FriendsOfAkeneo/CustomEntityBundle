@@ -29,4 +29,9 @@ class TranslatableCustomOptionSpec extends ObjectBehavior
     {
         $this->shouldHaveType('Pim\Bundle\CustomEntityBundle\Entity\AbstractTranslatableCustomOption');
     }
+
+    function it_is_translatable()
+    {
+        $this->shouldImplement('Akeneo\Component\Localization\Model\TranslatableInterface');
+    }
 }
