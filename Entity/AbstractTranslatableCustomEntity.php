@@ -3,8 +3,8 @@
 namespace Pim\Bundle\CustomEntityBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Pim\Bundle\TranslationBundle\Entity\AbstractTranslation;
-use Pim\Bundle\TranslationBundle\Entity\TranslatableInterface;
+use Akeneo\Component\Localization\Model\AbstractTranslation;
+use Akeneo\Component\Localization\Model\TranslatableInterface;
 
 /**
  * @author    Antoine Guigan <antoine@akeneo.com>

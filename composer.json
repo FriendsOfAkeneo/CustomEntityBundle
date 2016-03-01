@@ -2,7 +2,7 @@
     "name": "akeneo-labs/custom-entity-bundle",
     "type": "symfony-bundle",
     "description": "Akeneo PIM Custom entity bundle",
-    "keywords": ["pim", "akeneo", "ecommerce", "integration"],
+    "keywords": ["pim", "akeneo", "ecommerce", "integration", "reference data"],
     "homepage": "http://www.akeneo.com",
     "license": "OSL-3.0",
     "authors": [
@@ -16,23 +16,19 @@
             "type": "vcs",
             "url": "https://github.com/akeneo/pim-community-dev.git",
             "branch": "master"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/akeneo/platform.git",
-            "branch": "master"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require": {
-        "akeneo/pim-community-dev": "1.4.*"
+        "akeneo/pim-community-dev": "1.5.x-dev",
+        "doctrine/migrations": "1.0.0-alpha3@alpha"
     },
     "require-dev": {
-        "squizlabs/php_codesniffer": "2.*",
-        "pdepend/pdepend": "2.1.*",
-        "phpmd/phpmd": "1.*",
         "phpspec/phpspec": "2.1.*",
-        "fabpot/php-cs-fixer": "^2.0@dev"
+        "squizlabs/php_codesniffer": "2.3.*",
+        "phpmd/phpmd": "2.3.*",
+        "fabpot/php-cs-fixer": "@stable",
+        "henrikbjorn/phpspec-code-coverage": "1.0.*"
     },
     "config": {
         "bin-dir": "bin"
@@ -45,7 +41,7 @@
     "target-dir": "Pim/Bundle/CustomEntityBundle",
     "extra": {
         "branch-alias": {
-            "dev-master": "1.6.x-dev"
+            "dev-master": "1.7.x-dev"
         }
     }
 }
