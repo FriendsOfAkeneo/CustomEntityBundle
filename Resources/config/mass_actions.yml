@@ -1,5 +1,5 @@
 parameters:
-    pim_custom_entity.mass_action.mass_updater.class:             Pim\Bundle\CustomEntityBundle\MassAction\MassUpdater
+    pim_custom_entity.mass_action.mass_updater.class: Pim\Bundle\CustomEntityBundle\MassAction\MassUpdater
 
 services:
     pim_custom_entity.mass_action.mass_updater:
