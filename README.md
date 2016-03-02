@@ -41,7 +41,7 @@ If you want to use the quick export and/or the mass edit features, you have to l
 
 If your installation is already set up, you have to run the following command:
 
-    php app/console akeneo:batch:create-job "Akeneo Mass Edit Connector" "reference_data_quick_export" "quick_export" "csv_reference_data_quick_export" '{"delimiter": ";", "enclosure": "\\", "withHeader": true, "filePath": "/tmp/reference_data_quick_export.csv"}'
+    php app/console akeneo:batch:create-job "Akeneo Mass Edit Connector" "reference_data_quick_export" "quick_export" "csv_reference_data_quick_export" '{"delimiter": ";", "enclosure": "\"", "withHeader": true, "filePath": "/tmp/reference_data_quick_export.csv"}'
 
 
 ## Documentation
