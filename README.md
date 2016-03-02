@@ -1,6 +1,6 @@
 # CustomEntityBundle
 
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/akeneo/CustomEntityBundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/akeneo/CustomEntityBundle/?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/akeneo-labs/CustomEntityBundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/akeneo-labs/CustomEntityBundle/?branch=master)
 [![Build Status](https://travis-ci.org/akeneo-labs/CustomEntityBundle.svg?branch=master)](https://travis-ci.org/akeneo-labs/CustomEntityBundle)
 
 Facilitates the creation of PIM reference data and related views in the PIM.
@@ -11,6 +11,7 @@ For more information, please see http://docs.akeneo.com/
 
 | CustomEntityBundle   | Akeneo PIM Community Edition |
 |:--------------------:|:----------------------------:|
+| v1.7.*               | v1.5.*                       |
 | v1.6.*               | v1.4.*                       |
 | v1.5.0-RC1           | v1.3.*                       |
 | v1.4.*               | v1.2.*                       |
