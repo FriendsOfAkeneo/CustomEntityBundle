@@ -22,27 +22,34 @@ For more information, please see http://docs.akeneo.com/
 ## Installation
 You can install this bundle with composer (see requirements section):
 
+```bash
     $ php composer.phar require akeneo-labs/custom-entity-bundle:1.6.*
+```
 
 Then add the following lines **at the end** of your app/config/routing.yml :
 
+```yaml
     pim_customentity:
         prefix: /reference-data
         resource: "@PimCustomEntityBundle/Resources/config/routing.yml"
+```
 
 and enable the bundle in the `app/AppKernel.php` file in the `registerBundles()` method:
 
+```php
     $bundles = [
         // ...
         new Pim\Bundle\CustomEntityBundle\PimCustomEntityBundle(),
     ]
+```
 
 If you want to use the quick export and/or the mass edit features, you have to load the job fixture defined in  [Resources/fixtures/jobs.yml](Resources/fixtures/jobs.yml) file and to copy/paste its content to your installer.
 
 If your installation is already set up, you have to run the following command:
 
+```bash
     php app/console akeneo:batch:create-job "Akeneo Mass Edit Connector" "reference_data_quick_export" "quick_export" "csv_reference_data_quick_export" '{"delimiter": ";", "enclosure": "\"", "withHeader": true, "filePath": "/tmp/reference_data_quick_export.csv"}'
-
+```
 
 ## Documentation
 
