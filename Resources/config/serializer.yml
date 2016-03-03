@@ -1,5 +1,5 @@
 parameters:
-    pim_custom_entity.normalizer.referable.class:         Pim\Bundle\CustomEntityBundle\Normalizer\ReferableNormalizer
+    pim_custom_entity.normalizer.referable.class: Pim\Bundle\CustomEntityBundle\Normalizer\ReferableNormalizer
 
 services:
     pim_custom_entity.normalizer.referable:
