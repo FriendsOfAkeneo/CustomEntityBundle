@@ -20,7 +20,7 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "akeneo/pim-community-dev": "1.5.x-dev",
+        "akeneo/pim-community-dev": "1.5.*@rc",
         "doctrine/migrations": "1.0.0-alpha3@alpha"
     },
     "require-dev": {
