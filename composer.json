@@ -20,15 +20,15 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "akeneo/pim-community-dev": "1.5.x-dev",
-        "doctrine/migrations": "1.0.0-alpha3@alpha"
+        "akeneo/pim-community-dev": "1.5.*"
     },
     "require-dev": {
         "phpspec/phpspec": "2.1.*",
         "squizlabs/php_codesniffer": "2.3.*",
         "phpmd/phpmd": "2.3.*",
         "fabpot/php-cs-fixer": "@stable",
-        "henrikbjorn/phpspec-code-coverage": "1.0.*"
+        "henrikbjorn/phpspec-code-coverage": "1.0.*",
+        "doctrine/migrations": "1.0.0-alpha3@alpha"
     },
     "config": {
         "bin-dir": "bin"
