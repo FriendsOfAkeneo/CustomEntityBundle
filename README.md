@@ -53,7 +53,7 @@ If your installation is already set up, you have to run the following command:
 
 ## Documentation
 
-Some example usages for this bundle can be found in the [PIM documentation](http://docs.akeneo.com/master/cookbook/custom_entity/index.html)
+Some example usages for this bundle can be found in the [PIM documentation](http://docs.akeneo.com/master/cookbook/custom_entity/index.html) but it's only available for Akeneo PIM 1.3 (and previous versions). For last versions, you have to use reference datas in Akeneo PIM (http://docs.akeneo.com/latest/cookbook/catalog_structure/creating_a_reference_data.html).
 
 The custom entity bundle provides the following tools to help managing custom entities inside the Akeneo PIM.
 
@@ -61,8 +61,7 @@ The custom entity bundle provides the following tools to help managing custom en
 * [CRUD interface](Resources/doc/crud_interface.rst)
 * [CRUD managers](Resources/doc/crud_managers.rst)
 
-The cookbook section is only available for Akeneo PIM 1.3 (and previous versions): http://docs.akeneo.com/latest/cookbook/custom_entity/index.html
-We will create some for Akeneo PIM 1.4 as soon as possible.
+A demo project has been created [here](https://github.com/akeneo-labs/custom-entity-demo) to give more examples about what we can do.
 
 ## Contributing
 
