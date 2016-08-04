@@ -11,8 +11,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class ActionFactorySpec extends ObjectBehavior
 {
     public function let(
-        Registry $confRegistry,
-        ContainerInterface $container
+        ContainerInterface $container,
+        Registry $confRegistry
     ) {
         $this->beConstructedWith($container, $confRegistry);
     }
