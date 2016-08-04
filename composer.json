@@ -20,15 +20,14 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "akeneo/pim-community-dev": "1.5.*"
+        "akeneo/pim-community-dev": "1.6.x-dev@dev"
     },
     "require-dev": {
-        "phpspec/phpspec": "2.1.*",
+        "phpspec/phpspec": "3.0.0",
         "squizlabs/php_codesniffer": "2.3.*",
         "phpmd/phpmd": "2.3.*",
         "friendsofphp/php-cs-fixer": "@stable",
-        "henrikbjorn/phpspec-code-coverage": "1.0.*",
-        "doctrine/migrations": "1.0.0-alpha3@alpha"
+        "henrikbjorn/phpspec-code-coverage": "3.0.1"
     },
     "config": {
         "bin-dir": "bin"
@@ -41,7 +40,7 @@
     "target-dir": "Pim/Bundle/CustomEntityBundle",
     "extra": {
         "branch-alias": {
-            "dev-master": "1.7.x-dev"
+            "dev-master": "1.8.x-dev"
         }
     }
 }
