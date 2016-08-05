@@ -1,0 +1,13 @@
+parameters: ~
+
+services:
+    pim_custom_entity.step.csv_product.reference_data_quick_export:
+        class: '%pim_connector.step.item_step.class%'
+        arguments:
+            - 'quick_export'
+            - '@event_dispatcher'
+            - '@akeneo_batch.job_repository'
+            - '@pim_custom_entity.mass_edit_connector.reader.reference_data'
+            - '@pim_custom_entity.mass_edit_connector.processor.reference_data_to_flat_array'
+            - '@pim_custom_entity.mass_edit_connector.processor.reference_data_writer'
+            - 100

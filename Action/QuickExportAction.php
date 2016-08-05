@@ -80,10 +80,9 @@ class QuickExportAction extends AbstractAction
             );
         }
 
-        $rawConfiguration = [
-            'reference_data' => $this->configuration->getEntityClass(),
-            'ids'            => $this->massActionDispatcher->dispatch($request),
-        ];
+        $rawConfiguration = $jobInstance->getRawParameters();
+        $rawConfiguration['reference_data'] = $this->configuration->getEntityClass();
+        $rawConfiguration['ids'] = $this->massActionDispatcher->dispatch($request);
 
         $this->jobLauncher->launch($jobInstance, $this->getUser(), $rawConfiguration);
 

@@ -3,7 +3,6 @@
 namespace Pim\Bundle\CustomEntityBundle\MassEditConnector\Processor;
 
 use Pim\Bundle\EnrichBundle\Connector\Processor\AbstractProcessor;
-use Pim\Component\Connector\Repository\JobConfigurationRepositoryInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
@@ -17,15 +16,10 @@ class ReferenceDataToFlatArrayProcessor extends AbstractProcessor
     protected $normalizer;
 
     /**
-     * @param JobConfigurationRepositoryInterface $jobConfigurationRepo
      * @param NormalizerInterface                 $normalizer
      */
-    public function __construct(
-        JobConfigurationRepositoryInterface $jobConfigurationRepo,
-        NormalizerInterface $normalizer
-    ) {
-        parent::__construct($jobConfigurationRepo);
-
+    public function __construct(NormalizerInterface $normalizer)
+    {
         $this->normalizer = $normalizer;
     }
 
