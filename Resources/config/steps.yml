@@ -1,5 +1,3 @@
-parameters: ~
-
 services:
     pim_custom_entity.step.csv_product.reference_data_quick_export:
         class: '%pim_connector.step.item_step.class%'
