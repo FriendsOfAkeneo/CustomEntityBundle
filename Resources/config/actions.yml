@@ -77,7 +77,7 @@ services:
         arguments:
             - @pim_datagrid.extension.mass_action.dispatcher
             - @pim_import_export.repository.job_instance
-            - @pim_connector.launcher.simple_job_launcher
+            - @akeneo_batch.launcher.simple_job_launcher
             - @security.token_storage
 
     pim_custom_entity.action.create:

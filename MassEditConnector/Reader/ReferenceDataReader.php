@@ -3,29 +3,22 @@
 namespace Pim\Bundle\CustomEntityBundle\MassEditConnector\Reader;
 
 use Akeneo\Component\Batch\Model\StepExecution;
-use Akeneo\Component\Batch\Item\AbstractConfigurableStepElement;
 use Akeneo\Component\Batch\Item\ItemReaderInterface;
 use Akeneo\Component\Batch\Step\StepExecutionAwareInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityNotFoundException;
 use Pim\Bundle\CustomEntityBundle\Entity\Repository\CustomEntityRepository;
-use Pim\Component\Connector\Repository\JobConfigurationRepositoryInterface;
 use Pim\Component\ReferenceData\ConfigurationRegistry;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @author Romain Monceau <romain@akeneo.com>
  */
-class ReferenceDataReader extends AbstractConfigurableStepElement implements
-    ItemReaderInterface,
-    StepExecutionAwareInterface
+class ReferenceDataReader implements ItemReaderInterface, StepExecutionAwareInterface
 {
     /** @var StepExecution */
     protected $stepExecution;
-
-    /** @var JobConfigurationRepositoryInterface */
-    protected $jobConfigRepository;
 
     /** @var EntityManager */
     protected $em;
@@ -37,16 +30,13 @@ class ReferenceDataReader extends AbstractConfigurableStepElement implements
     protected $registry;
 
     /**
-     * @param JobConfigurationRepositoryInterface $jobConfigRepository
      * @param EntityManager                       $em
      * @param ConfigurationRegistry               $registry
      */
     public function __construct(
-        JobConfigurationRepositoryInterface $jobConfigRepository,
         EntityManager $em,
         ConfigurationRegistry $registry
     ) {
-        $this->jobConfigRepository = $jobConfigRepository;
         $this->em = $em;
         $this->registry = $registry;
     }
@@ -56,16 +46,14 @@ class ReferenceDataReader extends AbstractConfigurableStepElement implements
      */
     public function read()
     {
-        $config = $this->getJobConfiguration();
-
-        $resolver = new OptionsResolver();
-        $this->configureOptions($resolver);
-        $config = $resolver->resolve($config);
-
         if (null === $this->referenceDatas) {
-            if ($config['reference_data']) {
-                $this->referenceDatas = $this->getReferenceDatas($config['reference_data'], $config['ids']);
-            }
+
+            $jobExecution = $this->stepExecution->getJobExecution();
+            $jobParameters = $jobExecution->getJobParameters();
+            $this->referenceDatas = $this->getReferenceDatas(
+                $jobParameters->get('reference_data'),
+                $jobParameters->get('ids')
+            );
         }
 
         $result = $this->referenceDatas->current();
@@ -108,50 +96,8 @@ class ReferenceDataReader extends AbstractConfigurableStepElement implements
     /**
      * {@inheritdoc}
      */
-    protected function getJobConfiguration()
-    {
-        $jobExecution = $this->stepExecution->getJobExecution();
-        $massEditJobConf = $this->jobConfigRepository->findOneBy(['jobExecution' => $jobExecution]);
-
-        if (null === $massEditJobConf) {
-            throw new EntityNotFoundException(sprintf(
-                'No JobConfiguration found for jobExecution with id "%s"',
-                $jobExecution->getId()
-            ));
-        }
-
-        return json_decode(stripcslashes($massEditJobConf->getConfiguration()), true);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getConfigurationFields()
-    {
-        return [];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function setStepExecution(StepExecution $stepExecution)
     {
         $this->stepExecution = $stepExecution;
-    }
-
-    /**
-     * @param OptionsResolver $resolver
-     */
-    protected function configureOptions(OptionsResolver $resolver)
-    {
-        $allowedValues = array_map(function ($configuration) {
-            return $configuration->getClass();
-        }, $this->registry->all());
-
-        $resolver->setRequired([
-            'reference_data',
-            'ids'
-        ]);
-        $resolver->setAllowedValues('reference_data', $allowedValues);
     }
 }

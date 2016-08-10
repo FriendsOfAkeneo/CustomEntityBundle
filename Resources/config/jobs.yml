@@ -1,0 +1,37 @@
+parameters:
+    pim_custom_entity.connector_name.csv: 'Akeneo Mass Edit Connector'
+    pim_custom_entity.job_name.reference_data_quick_export: 'reference_data_quick_export'
+    pim_custom_entity.job.job_parameters.default_values_provider.quick_csv_export.class: Pim\Bundle\CustomEntityBundle\MassEditConnector\JobParameters\DefaultValuesProvider\QuickCsvExport
+    pim_custom_entity.job.job_parameters.constraint_collection_provider.quick_csv_export.class: Pim\Bundle\CustomEntityBundle\MassEditConnector\JobParameters\ConstraintCollectionProvider\QuickCsvExport
+
+services:
+    pim_custom_entity.job.reference_data_quick_export:
+        class: '%pim_connector.job.simple_job.class%'
+        arguments:
+            - '%pim_custom_entity.job_name.reference_data_quick_export%'
+            - '@event_dispatcher'
+            - '@akeneo_batch.job_repository'
+            -
+                - '@pim_custom_entity.step.csv_product.reference_data_quick_export'
+        tags:
+            - { name: akeneo_batch.job, connector: '%pim_custom_entity.connector_name.csv%', type: '%pim_enrich.job.quick_export_type%' }
+
+
+    pim_custom_entity.connector.job.job_parameters.default_values_provider.reference_data_quick_export:
+        class: '%pim_custom_entity.job.job_parameters.default_values_provider.quick_csv_export.class%'
+        arguments:
+            - '@pim_connector.job.job_parameters.default_values_provider.simple_csv_export'
+            -
+                - '%pim_custom_entity.job_name.reference_data_quick_export%'
+        tags:
+            - { name: akeneo_batch.job.job_parameters.default_values_provider }
+
+
+    pim_custom_entity.connector.job.job_parameters.constraint_collection_provider.reference_data_quick_export:
+        class: '%pim_custom_entity.job.job_parameters.constraint_collection_provider.quick_csv_export.class%'
+        arguments:
+            - '@pim_connector.job.job_parameters.constraint_collection_provider.simple_csv_export'
+            -
+                - '%pim_custom_entity.job_name.reference_data_quick_export%'
+        tags:
+            - { name: akeneo_batch.job.job_parameters.constraint_collection_provider }

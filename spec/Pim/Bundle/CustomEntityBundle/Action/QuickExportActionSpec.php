@@ -137,14 +137,10 @@ class QuickExportActionSpec extends ObjectBehavior
             ->getActionOptions('quick_export')
             ->willReturn(['job_profile' => 'csv_reference_data_quick_export']);
 
-        $rawConfig = addslashes(
-            json_encode(
-                [
-                    'reference_data' => 'entity_class',
-                    'ids'            => [2, 5]
-                ]
-            )
-        );
+        $rawConfig = [
+            'reference_data' => 'entity_class',
+            'ids'            => [2, 5]
+        ];
 
         $jobLauncher->launch($jobInstance, $user, $rawConfig)->shouldBeCalled();
 
