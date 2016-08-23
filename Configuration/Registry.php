@@ -67,4 +67,14 @@ class Registry
     {
         $this->configurations[$name] = $serviceId;
     }
+
+    /**
+     * Returns an array containing the name of all configurations
+     *
+     * @return array
+     */
+    public function getNames()
+    {
+        return array_keys($this->configurations);
+    }
 }
