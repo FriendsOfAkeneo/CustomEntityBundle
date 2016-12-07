@@ -1,4 +1,6 @@
-bin
-vendor
+bin/
+coverage/
+src/
+vendor/
 composer.phar
 composer.lock
