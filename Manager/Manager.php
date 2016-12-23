@@ -3,8 +3,10 @@
 namespace Pim\Bundle\CustomEntityBundle\Manager;
 
 use Akeneo\Bundle\StorageUtilsBundle\Doctrine\SmartManagerRegistry;
+use Akeneo\Component\StorageUtils\Remover\RemoverInterface;
 use Akeneo\Component\StorageUtils\Saver\SaverInterface;
 use Doctrine\Common\Util\ClassUtils;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
 /**
@@ -16,8 +18,8 @@ use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
  */
 class Manager implements ManagerInterface
 {
-    /** @var SmartManagerRegistry */
-    protected $doctrine;
+    /** @var EntityManagerInterface */
+    protected $em;
 
     /** @var PropertyAccessorInterface */
     protected $propertyAccessor;
@@ -25,19 +27,25 @@ class Manager implements ManagerInterface
     /** @var SaverInterface */
     protected $saver;
 
+    /** @var RemoverInterface */
+    protected $remover;
+
     /**
-     * @param SmartManagerRegistry      $doctrine
+     * @param EntityManagerInterface    $em
      * @param PropertyAccessorInterface $propertyAccessor
      * @param SaverInterface            $saver
+     * @param RemoverInterface          $remover
      */
     public function __construct(
-        SmartManagerRegistry $doctrine,
+        EntityManagerInterface $em,
         PropertyAccessorInterface $propertyAccessor,
-        SaverInterface $saver
+        SaverInterface $saver,
+        RemoverInterface $remover
     ) {
-        $this->doctrine = $doctrine;
+        $this->em      = $em;
         $this->propertyAccessor = $propertyAccessor;
-        $this->saver = $saver;
+        $this->saver    = $saver;
+        $this->remover  = $remover;
     }
 
     /**
@@ -58,7 +66,7 @@ class Manager implements ManagerInterface
      */
     public function find($entityClass, $id, array $options = array())
     {
-        return $this->doctrine->getRepository($entityClass)->find($id);
+        return $this->em->getRepository($entityClass)->find($id);
     }
 
     /**
@@ -74,22 +82,6 @@ class Manager implements ManagerInterface
      */
     public function remove($entity)
     {
-        $em = $this->getManager($entity);
-        $em->remove($entity);
-        $em->flush();
-    }
-
-    /**
-     * Returns the manager for an entity
-     *
-     * @param object|string $entity
-     *
-     * @return \Doctrine\Common\Persistence\ObjectManager
-     */
-    protected function getManager($entity)
-    {
-        return $this->doctrine->getManagerForClass(
-            is_object($entity) ? ClassUtils::getClass($entity) : $entity
-        );
+        $this->remover->remove($entity);
     }
 }

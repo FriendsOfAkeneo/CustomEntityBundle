@@ -5,3 +5,10 @@ services:
             - '@doctrine.orm.entity_manager'
             - '@event_dispatcher'
             - '%pim_reference_data.model.reference_data.interface%'
+
+    pim_custom_entity.remover.custom_entity:
+        class: '%pim_catalog.remover.base.class%'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@event_dispatcher'
+            - '%pim_reference_data.model.reference_data.interface%'
