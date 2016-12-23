@@ -1,0 +1,76 @@
+parameters:
+    pim_custom_entity.job.import.custom_entity.name: 'csv_custom_entity_import'
+    pim_custom_entity.job.connector: 'Custom Entity Connector'
+
+services:
+    # Jobs
+    pim_custom_entity.job.csv_import:
+        class: '%pim_connector.job.simple_job.class%'
+        arguments:
+            - '%pim_custom_entity.job.import.custom_entity.name%'
+            - '@event_dispatcher'
+            - '@akeneo_batch.job_repository'
+            -
+                - '@pim_connector.step.charset_validator'
+                - '@pim_custom_entity.step.csv_import'
+        tags:
+            - { name: akeneo_batch.job, connector: '%pim_custom_entity.job.connector%', type: '%pim_connector.job.import_type%' }
+
+    # Steps
+    pim_custom_entity.step.csv_import:
+        class: '%pim_connector.step.item_step.class%'
+        arguments:
+            - '%pim_connector.job.import_type%'
+            - '@event_dispatcher'
+            - '@akeneo_batch.job_repository'
+            - '@pim_custom_entity.reader.file.csv'
+            - '@pim_custom_entity.processor.denormalization.custom_entity'
+            - '@pim_custom_entity.writer.database.custom_entity'
+
+    # Readers
+    pim_custom_entity.reader.file.csv:
+        class: '%pim_connector.reader.file.csv.class%'
+        arguments:
+            - '@pim_connector.reader.file.csv_iterator_factory'
+            - '@pim_connector.array_converter.dummy'
+
+    # Processors
+    pim_custom_entity.processor.denormalization.custom_entity:
+        class: Pim\Bundle\CustomEntityBundle\Processor\Denormalization\Processor
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@pim_custom_entity.configuration.registry'
+            - '@validator'
+            - '@akeneo_storage_utils.doctrine.object_detacher'
+
+    # Writers
+    pim_custom_entity.writer.database.custom_entity:
+        class: '%pim_connector.writer.database.class%'
+        arguments:
+            - '@pim_custom_entity.saver.custom_entity'
+            - '@akeneo_storage_utils.doctrine.object_detacher'
+
+    # Constraints providers
+    pim_custom_entity.job.job_parameters.constraint_collection_provider.simple_csv_import:
+        class: '%pim_connector.job.job_parameters.constraint_collection_provider.simple_csv_import.class%'
+        arguments:
+            -
+                - '%pim_custom_entity.job.import.custom_entity.name%'
+        tags:
+            - { name: akeneo_batch.job.job_parameters.constraint_collection_provider }
+
+    pim_custom_entity.job_parameters.form_configuration_provider.simple_csv_import:
+        class: '%pim_import_export.job_parameters.form_configuration_provider.simple_csv_import.class%'
+        arguments:
+            -
+                - '%pim_custom_entity.job.import.custom_entity.name%'
+        tags:
+            - { name: pim_import_export.job_parameters.form_configuration_provider }
+
+    pim_custom_entity.job.job_parameters.default_values_provider.simple_csv_import:
+        class: '%pim_connector.job.job_parameters.default_values_provider.simple_csv_import.class%'
+        arguments:
+            -
+                - '%pim_custom_entity.job.import.custom_entity.name%'
+        tags:
+            - { name: akeneo_batch.job.job_parameters.default_values_provider }
