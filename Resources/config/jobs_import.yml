@@ -38,8 +38,9 @@ services:
     pim_custom_entity.processor.denormalization.custom_entity:
         class: Pim\Bundle\CustomEntityBundle\Processor\Denormalization\Processor
         arguments:
-            - '@doctrine.orm.entity_manager'
             - '@pim_custom_entity.configuration.registry'
+            - '@doctrine.orm.entity_manager'
+            - '@pim_custom_entity.updater.custom_entity'
             - '@validator'
             - '@akeneo_storage_utils.doctrine.object_detacher'
 

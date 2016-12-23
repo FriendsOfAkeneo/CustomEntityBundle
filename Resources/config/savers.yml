@@ -1,3 +1,6 @@
+parameters:
+    pim_custom_entity.updater.custom_entity.class: Pim\Bundle\CustomEntityBundle\Updater\Updater
+
 services:
     pim_custom_entity.saver.custom_entity:
         class: '%pim_catalog.saver.base.class%'
@@ -12,3 +15,6 @@ services:
             - '@doctrine.orm.entity_manager'
             - '@event_dispatcher'
             - '%pim_reference_data.model.reference_data.interface%'
+
+    pim_custom_entity.updater.custom_entity:
+        class: '%pim_custom_entity.updater.custom_entity.class%'

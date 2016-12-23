@@ -7,7 +7,7 @@ use Akeneo\Component\Batch\Item\ItemProcessorInterface;
 use Akeneo\Component\Batch\Model\StepExecution;
 use Akeneo\Component\Batch\Step\StepExecutionAwareInterface;
 use Akeneo\Component\StorageUtils\Detacher\ObjectDetacherInterface;
-use Doctrine\Common\Util\Inflector;
+use Akeneo\Component\StorageUtils\Updater\ObjectUpdaterInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Pim\Bundle\CustomEntityBundle\Configuration\Registry;
 use Pim\Bundle\CustomEntityBundle\Entity\Repository\CustomEntityRepository;
@@ -20,11 +20,14 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  */
 class Processor implements ItemProcessorInterface, StepExecutionAwareInterface
 {
+    /** @var Registry */
+    protected $confRegistry;
+
     /** @var EntityManagerInterface */
     protected $em;
 
-    /** @var Registry */
-    protected $confRegistry;
+    /** @var ObjectUpdaterInterface */
+    protected $updater;
 
     /** @var ValidatorInterface */
     protected $validator;
@@ -36,19 +39,22 @@ class Processor implements ItemProcessorInterface, StepExecutionAwareInterface
     protected $stepExecution;
 
     /**
-     * @param EntityManagerInterface $em
      * @param Registry $confRegistry
+     * @param EntityManagerInterface $em
+     * @param ObjectUpdaterInterface $updater
      * @param ValidatorInterface $validator
      * @param ObjectDetacherInterface $detacher
      */
     public function __construct(
-        EntityManagerInterface $em,
         Registry $confRegistry,
+        EntityManagerInterface $em,
+        ObjectUpdaterInterface $updater,
         ValidatorInterface $validator,
         ObjectDetacherInterface $detacher
     ) {
-        $this->em           = $em;
         $this->confRegistry = $confRegistry;
+        $this->em           = $em;
+        $this->updater      = $updater;
         $this->validator    = $validator;
         $this->detacher     = $detacher;
     }
@@ -62,13 +68,8 @@ class Processor implements ItemProcessorInterface, StepExecutionAwareInterface
             throw new \RuntimeException(sprintf('Column "%s" is mandatory', 'code'));
         }
 
-
         $entity = $this->findOrCreateObject($item);
-        foreach ($item as $key => $value) {
-            // TODO: Move in an updater
-            $method = 'set'. Inflector::classify($key);
-            $entity->$method($value);
-        }
+        $this->updater->update($entity, $item);
 
         $violations = $this->validator->validate($entity);
         if ($violations->count() > 0) {
