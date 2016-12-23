@@ -3,7 +3,6 @@
 namespace Pim\Bundle\CustomEntityBundle\Processor\Denormalization;
 
 use Akeneo\Component\Batch\Item\FileInvalidItem;
-use Akeneo\Component\Batch\Item\InvalidItemException;
 use Akeneo\Component\Batch\Item\ItemProcessorInterface;
 use Akeneo\Component\Batch\Model\StepExecution;
 use Akeneo\Component\Batch\Step\StepExecutionAwareInterface;
@@ -59,6 +58,11 @@ class Processor implements ItemProcessorInterface, StepExecutionAwareInterface
      */
     public function process($item)
     {
+        if (!isset($item['code'])) {
+            throw new \RuntimeException(sprintf('Column "%s" is mandatory', 'code'));
+        }
+
+
         $entity = $this->findOrCreateObject($item);
         foreach ($item as $key => $value) {
             // TODO: Move in an updater
@@ -68,7 +72,7 @@ class Processor implements ItemProcessorInterface, StepExecutionAwareInterface
 
         $violations = $this->validator->validate($entity);
         if ($violations->count() > 0) {
-            $this->objectDetacher->detach($entity);
+            $this->detacher->detach($entity);
             $this->skipItemWithConstraintViolations($item, $violations);
         }
 
@@ -83,6 +87,13 @@ class Processor implements ItemProcessorInterface, StepExecutionAwareInterface
         $this->stepExecution = $stepExecution;
     }
 
+    /**
+     * Finds or create reference data entity
+     *
+     * @param array $item
+     *
+     * @return null|object
+     */
     protected function findOrCreateObject(array $item)
     {
         $entity = $this->findObject($item);
@@ -94,12 +105,15 @@ class Processor implements ItemProcessorInterface, StepExecutionAwareInterface
         return $entity;
     }
 
+    /**
+     * Finds reference data entity
+     *
+     * @param array $item
+     *
+     * @return null|object
+     */
     protected function findObject(array $item)
     {
-        if (!isset($item['code'])) {
-            throw new \Exception('Code not found on the line');
-        }
-
         return $this->getRepository()->findOneByIdentifier($item['code']);
     }
 
@@ -111,6 +125,11 @@ class Processor implements ItemProcessorInterface, StepExecutionAwareInterface
         return $this->em->getRepository($this->getClassName());
     }
 
+    /**
+     * Gets class name from the conf registry
+     *
+     * @return string
+     */
     protected function getClassName()
     {
         $customEntityName = 'brand'; // TODO: Inject in batch job
@@ -119,7 +138,7 @@ class Processor implements ItemProcessorInterface, StepExecutionAwareInterface
     }
 
     /**
-     * @param array $itemskip
+     * @param array $item
      * @param ConstraintViolationListInterface $violations
      *
      * @throws InvalidItemFromViolationsException
@@ -128,15 +147,11 @@ class Processor implements ItemProcessorInterface, StepExecutionAwareInterface
         array $item,
         ConstraintViolationListInterface $violations
     ) {
-        if ($this->stepExecution) {
-            $this->stepExecution->incrementSummaryInfo('skip');
-        }
+        $this->stepExecution->incrementSummaryInfo('skip');
 
         throw new InvalidItemFromViolationsException(
             $violations,
-            new FileInvalidItem($item, ($this->stepExecution->getSummaryInfo('read_lines') + 1)),
-            [],
-            0
+            new FileInvalidItem($item, ($this->stepExecution->getSummaryInfo('read_lines') + 1))
         );
     }
 }
