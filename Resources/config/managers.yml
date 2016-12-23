@@ -9,8 +9,9 @@ services:
     pim_custom_entity.manager:
         class: %pim_custom_entity.manager.class%
         arguments:
-            - '@akeneo_storage_utils.doctrine.smart_manager_registry'
+            - '@doctrine.orm.entity_manager'
             - '@property_accessor'
             - '@pim_custom_entity.saver.custom_entity'
+            - '@pim_custom_entity.remover.custom_entity'
         tags:
             - { name: pim_custom_entity.manager, alias: default }
