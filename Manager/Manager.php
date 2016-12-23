@@ -3,6 +3,7 @@
 namespace Pim\Bundle\CustomEntityBundle\Manager;
 
 use Akeneo\Bundle\StorageUtilsBundle\Doctrine\SmartManagerRegistry;
+use Akeneo\Component\StorageUtils\Saver\SaverInterface;
 use Doctrine\Common\Util\ClassUtils;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
@@ -15,24 +16,28 @@ use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
  */
 class Manager implements ManagerInterface
 {
-    /**
-     * @var SmartManagerRegistry
-     */
+    /** @var SmartManagerRegistry */
     protected $doctrine;
 
-    /**
-     * @var PropertyAccessorInterface
-     */
+    /** @var PropertyAccessorInterface */
     protected $propertyAccessor;
+
+    /** @var SaverInterface */
+    protected $saver;
 
     /**
      * @param SmartManagerRegistry      $doctrine
      * @param PropertyAccessorInterface $propertyAccessor
+     * @param SaverInterface            $saver
      */
-    public function __construct(SmartManagerRegistry $doctrine, PropertyAccessorInterface $propertyAccessor)
-    {
+    public function __construct(
+        SmartManagerRegistry $doctrine,
+        PropertyAccessorInterface $propertyAccessor,
+        SaverInterface $saver
+    ) {
         $this->doctrine = $doctrine;
         $this->propertyAccessor = $propertyAccessor;
+        $this->saver = $saver;
     }
 
     /**
@@ -61,9 +66,7 @@ class Manager implements ManagerInterface
      */
     public function save($entity, array $options = array())
     {
-        $em = $this->getManager($entity);
-        $em->persist($entity);
-        $em->flush();
+        $this->saver->save($entity, $options);
     }
 
     /**
