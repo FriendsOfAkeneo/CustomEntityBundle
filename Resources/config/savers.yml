@@ -1,0 +1,7 @@
+services:
+    pim_custom_entity.saver.custom_entity:
+        class: '%pim_catalog.saver.base.class%'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@event_dispatcher'
+            - '%pim_reference_data.model.reference_data.interface%'

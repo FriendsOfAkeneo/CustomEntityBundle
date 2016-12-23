@@ -32,5 +32,8 @@ class PimCustomEntityExtension extends Extension
         $loader->load('controllers.yml');
         $loader->load('jobs.yml');
         $loader->load('steps.yml');
+
+        $loader->load('jobs_import.yml');
+        $loader->load('savers.yml');
     }
 }
