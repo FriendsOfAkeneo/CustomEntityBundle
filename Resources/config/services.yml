@@ -12,24 +12,6 @@ services:
         arguments:
             - '@service_container'
 
-    pim_custom_entity.controller:
-        class: %pim_custom_entity.controller.class%
-        scope: request
-        arguments:
-            - '@pim_custom_entity.action.factory'
-            - '@request'
-
-    pim_custom_entity.manager:
-        class: %pim_custom_entity.manager.class%
-        arguments:
-            - '@doctrine'
-            - '@property_accessor'
-
-    pim_custom_entity.manager_registry:
-        class: %pim_custom_entity.manager.class%
-        arguments:
-            - @pim_custom_entity.manager
-
     pim_custom_entity.action_event_manager:
         class: %pim_custom_entity.action_event_manager.class%
         arguments:
