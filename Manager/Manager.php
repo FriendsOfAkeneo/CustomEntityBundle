@@ -2,12 +2,10 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Manager;
 
-use Akeneo\Bundle\StorageUtilsBundle\Doctrine\SmartManagerRegistry;
 use Akeneo\Component\StorageUtils\Remover\RemoverInterface;
 use Akeneo\Component\StorageUtils\Saver\SaverInterface;
-use Doctrine\Common\Util\ClassUtils;
+use Akeneo\Component\StorageUtils\Updater\ObjectUpdaterInterface;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
 /**
  * Base implementation for ORM managers
@@ -21,8 +19,8 @@ class Manager implements ManagerInterface
     /** @var EntityManagerInterface */
     protected $em;
 
-    /** @var PropertyAccessorInterface */
-    protected $propertyAccessor;
+    /** @var ObjectUpdaterInterface */
+    protected $updater;
 
     /** @var SaverInterface */
     protected $saver;
@@ -31,21 +29,21 @@ class Manager implements ManagerInterface
     protected $remover;
 
     /**
-     * @param EntityManagerInterface    $em
-     * @param PropertyAccessorInterface $propertyAccessor
-     * @param SaverInterface            $saver
-     * @param RemoverInterface          $remover
+     * @param EntityManagerInterface $em
+     * @param ObjectUpdaterInterface $updater
+     * @param SaverInterface         $saver
+     * @param RemoverInterface       $remover
      */
     public function __construct(
         EntityManagerInterface $em,
-        PropertyAccessorInterface $propertyAccessor,
+        ObjectUpdaterInterface $updater,
         SaverInterface $saver,
         RemoverInterface $remover
     ) {
         $this->em      = $em;
-        $this->propertyAccessor = $propertyAccessor;
-        $this->saver    = $saver;
-        $this->remover  = $remover;
+        $this->updater = $updater;
+        $this->saver   = $saver;
+        $this->remover = $remover;
     }
 
     /**
@@ -53,12 +51,10 @@ class Manager implements ManagerInterface
      */
     public function create($entityClass, array $defaultValues = array(), array $options = array())
     {
-        $object = new $entityClass();
-        foreach ($defaultValues as $propertyPath => $value) {
-            $this->propertyAccessor->setValue($object, $propertyPath, $value);
-        }
+        $referenceData = new $entityClass();
+        $this->updater->update($referenceData, $defaultValues);
 
-        return $object;
+        return $referenceData;
     }
 
     /**

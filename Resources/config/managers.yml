@@ -10,7 +10,7 @@ services:
         class: %pim_custom_entity.manager.class%
         arguments:
             - '@doctrine.orm.entity_manager'
-            - '@property_accessor'
+            - '@pim_custom_entity.updater.custom_entity'
             - '@pim_custom_entity.saver.custom_entity'
             - '@pim_custom_entity.remover.custom_entity'
         tags:
