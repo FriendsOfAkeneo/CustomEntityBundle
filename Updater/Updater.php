@@ -6,12 +6,24 @@ use Akeneo\Component\StorageUtils\Updater\ObjectUpdaterInterface;
 use Doctrine\Common\Util\ClassUtils;
 use Doctrine\Common\Util\Inflector;
 use Pim\Component\ReferenceData\Model\ReferenceDataInterface;
+use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
 /**
  * @author Romain Monceau <romain@akeneo.com>
  */
 class Updater implements ObjectUpdaterInterface
 {
+    /** @var PropertyAccessorInterface */
+    protected $propertyAccessor;
+
+    /**
+     * @param PropertyAccessorInterface $propertyAccessor
+     */
+    public function __construct(PropertyAccessorInterface $propertyAccessor)
+    {
+        $this->propertyAccessor = $propertyAccessor;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -27,21 +39,10 @@ class Updater implements ObjectUpdaterInterface
             );
         }
 
-        foreach ($data as $field => $value) {
-            $this->setData($referenceData, $field, $value);
+        foreach ($data as $propertyPath => $value) {
+            $this->propertyAccessor->setValue($referenceData, $propertyPath, $value);
         }
 
         return $this;
-    }
-
-    /**
-     * @param ReferenceDataInterface $referenceData
-     * @param string $field
-     * @param mixed $value
-     */
-    protected function setData(ReferenceDataInterface $referenceData, $field, $value)
-    {
-        $method = 'set'. Inflector::classify($field);
-        $referenceData->$method($value);
     }
 }

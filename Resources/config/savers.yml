@@ -18,3 +18,5 @@ services:
 
     pim_custom_entity.updater.custom_entity:
         class: '%pim_custom_entity.updater.custom_entity.class%'
+        arguments:
+            - '@property_accessor'
