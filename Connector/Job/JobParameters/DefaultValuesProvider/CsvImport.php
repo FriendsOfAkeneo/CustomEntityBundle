@@ -1,6 +1,6 @@
 <?php
 
-namespace Pim\Bundle\CustomEntityBundle\Job\JobParameters;
+namespace Pim\Bundle\CustomEntityBundle\Connector\Job\JobParameters\DefaultValuesProvider;
 
 use Akeneo\Component\Batch\Job\JobInterface;
 use Akeneo\Component\Batch\Job\JobParameters\DefaultValuesProviderInterface;
@@ -8,7 +8,7 @@ use Akeneo\Component\Batch\Job\JobParameters\DefaultValuesProviderInterface;
 /**
  * @author Romain Monceau <romain@akeneo.com>
  */
-class DefaultValuesProvider implements DefaultValuesProviderInterface
+class CsvImport implements DefaultValuesProviderInterface
 {
     /** @var DefaultValuesProviderInterface */
     protected $simpleProvider;
