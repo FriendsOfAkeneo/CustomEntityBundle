@@ -7,6 +7,7 @@ use Akeneo\Component\Batch\Job\JobParameters\ConstraintCollectionProviderInterfa
 use Pim\Bundle\CustomEntityBundle\Configuration\Registry;
 use Symfony\Component\Validator\Constraints\Choice;
 use Symfony\Component\Validator\Constraints\Collection;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @author Romain Monceau <romain@akeneo.com>
@@ -35,9 +36,19 @@ class CustomEntityConstraintCollectionProvider implements ConstraintCollectionPr
      */
     public function getConstraintCollection()
     {
+        $referenceDataNames = $this->configurationRegistry->getNames();
+
         $baseConstraint   = $this->simpleProvider->getConstraintCollection();
         $constraintFields = $baseConstraint->fields;
-        $constraintFields['entity_name'] = new Choice($this->configurationRegistry->getNames()); // TODO: Get from manager
+        $constraintFields['entity_name'] = [
+            new NotBlank(),
+            new Choice(
+                [
+                    'choices' => array_combine($referenceDataNames, $referenceDataNames),
+                    'message' => 'The value must be one of the configured reference datas'
+                ]
+            )
+        ];
 
         return new Collection(['fields' => $constraintFields]);
     }

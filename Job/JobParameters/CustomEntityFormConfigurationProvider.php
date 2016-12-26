@@ -35,11 +35,13 @@ class CustomEntityFormConfigurationProvider implements FormConfigurationProvider
      */
     public function getFormConfiguration()
     {
+        $referenceDataNames = $this->configurationRegistry->getNames();
+
         $formOptions = [
             'entity_name' => [
                 'type' => 'choice',
                 'options' => [
-                    'choices'  => $this->configurationRegistry->getNames(),
+                    'choices'  => array_combine($referenceDataNames, $referenceDataNames),
                     'required' => true,
                     'select2'  => true,
                     'label'    => 'pim_custom_entity.import.csv.entity_name.label',
