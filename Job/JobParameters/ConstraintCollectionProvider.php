@@ -7,11 +7,12 @@ use Akeneo\Component\Batch\Job\JobParameters\ConstraintCollectionProviderInterfa
 use Pim\Bundle\CustomEntityBundle\Configuration\Registry;
 use Symfony\Component\Validator\Constraints\Choice;
 use Symfony\Component\Validator\Constraints\Collection;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @author Romain Monceau <romain@akeneo.com>
  */
-class CustomEntityConstraintCollectionProvider implements ConstraintCollectionProviderInterface
+class ConstraintCollectionProvider implements ConstraintCollectionProviderInterface
 {
     /** @var ConstraintCollectionProviderInterface */
     protected $simpleProvider;
@@ -21,6 +22,7 @@ class CustomEntityConstraintCollectionProvider implements ConstraintCollectionPr
 
     /**
      * @param ConstraintCollectionProviderInterface $simpleProvider
+     * @param Registry                              $configurationRegistry
      */
     public function __construct(
         ConstraintCollectionProviderInterface $simpleProvider,
@@ -31,13 +33,23 @@ class CustomEntityConstraintCollectionProvider implements ConstraintCollectionPr
     }
 
     /**
-     * @return Collection
+     * {@inheritdoc}
      */
     public function getConstraintCollection()
     {
+        $referenceDataNames = $this->configurationRegistry->getNames();
+
         $baseConstraint   = $this->simpleProvider->getConstraintCollection();
         $constraintFields = $baseConstraint->fields;
-        $constraintFields['entity_name'] = new Choice($this->configurationRegistry->getNames()); // TODO: Get from manager
+        $constraintFields['entity_name'] = [
+            new NotBlank(),
+            new Choice(
+                [
+                    'choices' => array_combine($referenceDataNames, $referenceDataNames),
+                    'message' => 'The value must be one of the configured reference datas'
+                ]
+            )
+        ];
 
         return new Collection(['fields' => $constraintFields]);
     }
@@ -47,6 +59,6 @@ class CustomEntityConstraintCollectionProvider implements ConstraintCollectionPr
      */
     public function supports(JobInterface $job)
     {
-        return 'csv_custom_entity_import' === $job->getName();
+        return 'csv_reference_data_import' === $job->getName();
     }
 }
