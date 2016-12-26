@@ -133,9 +133,9 @@ class Processor implements ItemProcessorInterface, StepExecutionAwareInterface
      */
     protected function getClassName()
     {
-        $customEntityName = 'brand'; // TODO: Inject in batch job
+        $referenceDataName = $this->stepExecution->getJobParameters()->get('reference_data_name');
 
-        return $this->confRegistry->get($customEntityName)->getEntityClass();
+        return $this->confRegistry->get($referenceDataName)->getEntityClass();
     }
 
     /**

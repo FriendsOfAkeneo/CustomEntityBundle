@@ -2,6 +2,7 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Connector\Reader\Database;
 
+use Akeneo\Component\Batch\Model\StepExecution;
 use Doctrine\ORM\EntityManagerInterface;
 use Pim\Bundle\CustomEntityBundle\Configuration\Registry;
 use Pim\Component\Connector\Reader\Database\AbstractReader;
@@ -32,7 +33,7 @@ class ReferenceDataReader extends AbstractReader
      */
     protected function getResults()
     {
-        $referenceDataName = 'brand'; // TODO: inject in batch
+        $referenceDataName  = $this->stepExecution->getJobParameters()->get('reference_data_name');
         $referenceDataClass = $this->confRegistry->get($referenceDataName)->getEntityClass();
 
         return new \ArrayIterator(

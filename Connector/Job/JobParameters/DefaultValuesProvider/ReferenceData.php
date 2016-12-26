@@ -8,17 +8,22 @@ use Akeneo\Component\Batch\Job\JobParameters\DefaultValuesProviderInterface;
 /**
  * @author Romain Monceau <romain@akeneo.com>
  */
-class CsvImport implements DefaultValuesProviderInterface
+class ReferenceData implements DefaultValuesProviderInterface
 {
     /** @var DefaultValuesProviderInterface */
     protected $simpleProvider;
 
+    /** @var string[] */
+    protected $supportedJobNames;
+
     /**
      * @param DefaultValuesProviderInterface $simpleProvider
+     * @param string[]                       $supportedJobNames
      */
-    public function __construct(DefaultValuesProviderInterface $simpleProvider)
+    public function __construct(DefaultValuesProviderInterface $simpleProvider, array $supportedJobNames)
     {
         $this->simpleProvider = $simpleProvider;
+        $this->supportedJobNames = $supportedJobNames;
     }
 
     /**
@@ -27,7 +32,7 @@ class CsvImport implements DefaultValuesProviderInterface
     public function getDefaultValues()
     {
         $defaultValues = $this->simpleProvider->getDefaultValues();
-        $defaultValues['entity_name'] = null;
+        $defaultValues['reference_data_name'] = null;
 
         return $defaultValues;
     }
@@ -37,6 +42,6 @@ class CsvImport implements DefaultValuesProviderInterface
      */
     public function supports(JobInterface $job)
     {
-        return 'csv_reference_data_import' === $job->getName();
+        return in_array($job->getName(), $this->supportedJobNames);
     }
 }

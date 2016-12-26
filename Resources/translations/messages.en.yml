@@ -17,6 +17,14 @@ batch_jobs.csv_reference_data_import:
     import.label: Import reference data
     label: Reference data import in CSV
 
-pim_custom_entity.import.csv.entity_name:
-    label: Reference data name
-    help: The reference data name you want to import
+batch_jobs.csv_reference_data_export:
+    export.label: Export reference data
+    label: Reference data export in CSV
+
+pim_custom_entity:
+    import.csv.entity_name:
+        label: Reference data name
+        help: The reference data name you want to import
+    export.csv.entity_name:
+        label: Reference data name
+        help: The reference data name you want to import
