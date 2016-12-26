@@ -9,7 +9,7 @@ use Pim\Bundle\ImportExportBundle\JobParameters\FormConfigurationProviderInterfa
 /**
  * @author Romain Monceau <romain@akeneo.com>
  */
-class CsvImport implements FormConfigurationProviderInterface
+class ReferenceData implements FormConfigurationProviderInterface
 {
     /** @var FormConfigurationProviderInterface */
     protected $simpleProvider;
@@ -17,16 +17,22 @@ class CsvImport implements FormConfigurationProviderInterface
     /** @var Registry */
     protected $configurationRegistry;
 
+    /** @var string[] */
+    protected $supportedJobNames;
+
     /**
      * @param FormConfigurationProviderInterface $simpleProvider
      * @param Registry                           $configurationRegistry
+     * @param string[]                           $supportedJobNames
      */
     public function __construct(
         FormConfigurationProviderInterface $simpleProvider,
-        Registry $configurationRegistry
+        Registry $configurationRegistry,
+        array $supportedJobNames
     ) {
         $this->simpleProvider        = $simpleProvider;
         $this->configurationRegistry = $configurationRegistry;
+        $this->supportedJobNames     = $supportedJobNames;
     }
 
     /**
@@ -37,7 +43,7 @@ class CsvImport implements FormConfigurationProviderInterface
         $referenceDataNames = $this->configurationRegistry->getNames();
 
         $formOptions = [
-            'entity_name' => [
+            'reference_data_name' => [
                 'type' => 'choice',
                 'options' => [
                     'choices'  => array_combine($referenceDataNames, $referenceDataNames),
@@ -57,6 +63,6 @@ class CsvImport implements FormConfigurationProviderInterface
      */
     public function supports(JobInterface $job)
     {
-        return 'csv_reference_data_import' === $job->getName();
+        return in_array($job->getName(), $this->supportedJobNames);
     }
 }

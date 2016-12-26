@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 /**
  * @author Romain Monceau <romain@akeneo.com>
  */
-class CsvImport implements ConstraintCollectionProviderInterface
+class ReferenceData implements ConstraintCollectionProviderInterface
 {
     /** @var ConstraintCollectionProviderInterface */
     protected $simpleProvider;
@@ -20,16 +20,22 @@ class CsvImport implements ConstraintCollectionProviderInterface
     /** @var Registry */
     protected $configurationRegistry;
 
+    /** @var string[] */
+    protected $supportedJobNames;
+
     /**
      * @param ConstraintCollectionProviderInterface $simpleProvider
      * @param Registry                              $configurationRegistry
+     * @param string[]                              $supportedJobNames
      */
     public function __construct(
         ConstraintCollectionProviderInterface $simpleProvider,
-        Registry $configurationRegistry
+        Registry $configurationRegistry,
+        array $supportedJobNames
     ) {
         $this->simpleProvider        = $simpleProvider;
         $this->configurationRegistry = $configurationRegistry;
+        $this->supportedJobNames     = $supportedJobNames;
     }
 
     /**
@@ -41,7 +47,7 @@ class CsvImport implements ConstraintCollectionProviderInterface
 
         $baseConstraint   = $this->simpleProvider->getConstraintCollection();
         $constraintFields = $baseConstraint->fields;
-        $constraintFields['entity_name'] = [
+        $constraintFields['reference_data_name'] = [
             new NotBlank(),
             new Choice(
                 [
@@ -59,6 +65,6 @@ class CsvImport implements ConstraintCollectionProviderInterface
      */
     public function supports(JobInterface $job)
     {
-        return 'csv_reference_data_import' === $job->getName();
+        return in_array($job->getName(), $this->supportedJobNames);
     }
 }
