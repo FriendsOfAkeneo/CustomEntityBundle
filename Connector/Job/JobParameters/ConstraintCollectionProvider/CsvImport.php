@@ -1,6 +1,6 @@
 <?php
 
-namespace Pim\Bundle\CustomEntityBundle\Job\JobParameters;
+namespace Pim\Bundle\CustomEntityBundle\Connector\Job\JobParameters\ConstraintCollectionProvider;
 
 use Akeneo\Component\Batch\Job\JobInterface;
 use Akeneo\Component\Batch\Job\JobParameters\ConstraintCollectionProviderInterface;
@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 /**
  * @author Romain Monceau <romain@akeneo.com>
  */
-class ConstraintCollectionProvider implements ConstraintCollectionProviderInterface
+class CsvImport implements ConstraintCollectionProviderInterface
 {
     /** @var ConstraintCollectionProviderInterface */
     protected $simpleProvider;

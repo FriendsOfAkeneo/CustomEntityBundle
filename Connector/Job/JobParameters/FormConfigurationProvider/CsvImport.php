@@ -1,6 +1,6 @@
 <?php
 
-namespace Pim\Bundle\CustomEntityBundle\Job\JobParameters;
+namespace Pim\Bundle\CustomEntityBundle\Connector\Job\JobParameters\FormConfigurationProvider;
 
 use Akeneo\Component\Batch\Job\JobInterface;
 use Pim\Bundle\CustomEntityBundle\Configuration\Registry;
@@ -9,7 +9,7 @@ use Pim\Bundle\ImportExportBundle\JobParameters\FormConfigurationProviderInterfa
 /**
  * @author Romain Monceau <romain@akeneo.com>
  */
-class FormConfigurationProvider implements FormConfigurationProviderInterface
+class CsvImport implements FormConfigurationProviderInterface
 {
     /** @var FormConfigurationProviderInterface */
     protected $simpleProvider;

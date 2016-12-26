@@ -1,6 +1,6 @@
 <?php
 
-namespace Pim\Bundle\CustomEntityBundle\Processor\Denormalization;
+namespace Pim\Bundle\CustomEntityBundle\Connector\Processor\Denormalization;
 
 use Akeneo\Component\Batch\Item\FileInvalidItem;
 use Akeneo\Component\Batch\Item\ItemProcessorInterface;
