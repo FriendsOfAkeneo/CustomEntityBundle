@@ -8,7 +8,7 @@ use Akeneo\Component\Batch\Job\JobParameters\DefaultValuesProviderInterface;
 /**
  * @author Romain Monceau <romain@akeneo.com>
  */
-class CustomEntityDefaultValuesProvider implements DefaultValuesProviderInterface
+class DefaultValuesProvider implements DefaultValuesProviderInterface
 {
     /** @var DefaultValuesProviderInterface */
     protected $simpleProvider;
@@ -26,10 +26,10 @@ class CustomEntityDefaultValuesProvider implements DefaultValuesProviderInterfac
      */
     public function getDefaultValues()
     {
-        $parameters = $this->simpleProvider->getDefaultValues();
-        $parameters['entity_name'] = null;
+        $defaultValues = $this->simpleProvider->getDefaultValues();
+        $defaultValues['entity_name'] = null;
 
-        return $parameters;
+        return $defaultValues;
     }
 
     /**
@@ -37,6 +37,6 @@ class CustomEntityDefaultValuesProvider implements DefaultValuesProviderInterfac
      */
     public function supports(JobInterface $job)
     {
-        return 'csv_custom_entity_import' === $job->getName();
+        return 'csv_reference_data_import' === $job->getName();
     }
 }

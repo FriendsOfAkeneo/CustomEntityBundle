@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 /**
  * @author Romain Monceau <romain@akeneo.com>
  */
-class CustomEntityConstraintCollectionProvider implements ConstraintCollectionProviderInterface
+class ConstraintCollectionProvider implements ConstraintCollectionProviderInterface
 {
     /** @var ConstraintCollectionProviderInterface */
     protected $simpleProvider;
@@ -22,6 +22,7 @@ class CustomEntityConstraintCollectionProvider implements ConstraintCollectionPr
 
     /**
      * @param ConstraintCollectionProviderInterface $simpleProvider
+     * @param Registry                              $configurationRegistry
      */
     public function __construct(
         ConstraintCollectionProviderInterface $simpleProvider,
@@ -32,7 +33,7 @@ class CustomEntityConstraintCollectionProvider implements ConstraintCollectionPr
     }
 
     /**
-     * @return Collection
+     * {@inheritdoc}
      */
     public function getConstraintCollection()
     {
@@ -58,6 +59,6 @@ class CustomEntityConstraintCollectionProvider implements ConstraintCollectionPr
      */
     public function supports(JobInterface $job)
     {
-        return 'csv_custom_entity_import' === $job->getName();
+        return 'csv_reference_data_import' === $job->getName();
     }
 }

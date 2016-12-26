@@ -3,14 +3,13 @@
 namespace Pim\Bundle\CustomEntityBundle\Job\JobParameters;
 
 use Akeneo\Component\Batch\Job\JobInterface;
-use Pim\Bundle\CustomEntityBundle\Configuration\Configuration;
 use Pim\Bundle\CustomEntityBundle\Configuration\Registry;
 use Pim\Bundle\ImportExportBundle\JobParameters\FormConfigurationProviderInterface;
 
 /**
  * @author Romain Monceau <romain@akeneo.com>
  */
-class CustomEntityFormConfigurationProvider implements FormConfigurationProviderInterface
+class FormConfigurationProvider implements FormConfigurationProviderInterface
 {
     /** @var FormConfigurationProviderInterface */
     protected $simpleProvider;
@@ -58,6 +57,6 @@ class CustomEntityFormConfigurationProvider implements FormConfigurationProvider
      */
     public function supports(JobInterface $job)
     {
-        return 'csv_custom_entity_import' === $job->getName();
+        return 'csv_reference_data_import' === $job->getName();
     }
 }
