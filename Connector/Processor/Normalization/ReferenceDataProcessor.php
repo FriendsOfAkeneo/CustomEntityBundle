@@ -7,9 +7,14 @@ use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
- * @author Romain Monceau <romain@akeneo.com>
+ * Generic normalizer processor for reference datas
+ * Only works for basic reference data
+ *
+ * @author    Romain Monceau <romain@akeneo.com>
+ * @copyright 2016 Akeneo SAS (http://www.akeneo.com)
+ * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class Processor implements ItemProcessorInterface
+class ReferenceDataProcessor implements ItemProcessorInterface
 {
     /** @var PropertyAccessorInterface */
     protected $propertyAccessor;
