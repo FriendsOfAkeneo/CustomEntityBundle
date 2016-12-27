@@ -1,13 +1,13 @@
 <?php
 
-namespace Pim\Bundle\CustomEntityBundle\MassEditConnector\JobParameters\DefaultValuesProvider;
+namespace Pim\Bundle\CustomEntityBundle\Connector\Job\JobParameters\DefaultValuesProvider;
 
 use Akeneo\Component\Batch\Job\JobInterface;
 use Akeneo\Component\Batch\Job\JobParameters\DefaultValuesProviderInterface;
 
 /**
  * Default values provider for the quick export csv
- * 
+ *
  * @author    Nicolas Dupont <nicolas@akeneo.com>
  * @copyright 2016 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)

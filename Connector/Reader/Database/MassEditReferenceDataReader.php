@@ -1,21 +1,23 @@
 <?php
 
-namespace Pim\Bundle\CustomEntityBundle\MassEditConnector\Reader;
+namespace Pim\Bundle\CustomEntityBundle\Connector\Reader\Database;
 
-use Akeneo\Component\Batch\Model\StepExecution;
 use Akeneo\Component\Batch\Item\ItemReaderInterface;
+use Akeneo\Component\Batch\Model\StepExecution;
 use Akeneo\Component\Batch\Step\StepExecutionAwareInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityNotFoundException;
 use Pim\Bundle\CustomEntityBundle\Entity\Repository\CustomEntityRepository;
 use Pim\Component\ReferenceData\ConfigurationRegistry;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * @author Romain Monceau <romain@akeneo.com>
+ * Reference data reader for quick export mass action
+ *
+ * @author    Romain Monceau <romain@akeneo.com>
+ * @copyright 2016 Akeneo SAS (http://www.akeneo.com)
+ * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class ReferenceDataReader implements ItemReaderInterface, StepExecutionAwareInterface
+class MassEditReferenceDataReader implements ItemReaderInterface, StepExecutionAwareInterface
 {
     /** @var StepExecution */
     protected $stepExecution;
@@ -30,8 +32,8 @@ class ReferenceDataReader implements ItemReaderInterface, StepExecutionAwareInte
     protected $registry;
 
     /**
-     * @param EntityManager                       $em
-     * @param ConfigurationRegistry               $registry
+     * @param EntityManager         $em
+     * @param ConfigurationRegistry $registry
      */
     public function __construct(
         EntityManager $em,

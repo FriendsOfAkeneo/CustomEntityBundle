@@ -1,13 +1,9 @@
 parameters:
     pim_custom_entity.reader.database.reference_data.class: Pim\Bundle\CustomEntityBundle\Connector\Reader\Database\ReferenceDataReader
+    pim_custom_entity.reader.database.mass_edit_reference_data.class: Pim\Bundle\CustomEntityBundle\Connector\Reader\Database\MassEditReferenceDataReader
 
     pim_custom_entity.processor.denormalization.reference_data.class: Pim\Bundle\CustomEntityBundle\Connector\Processor\Denormalization\ReferenceDataProcessor
     pim_custom_entity.processor.normalization.reference_data.class: Pim\Bundle\CustomEntityBundle\Connector\Processor\Normalization\ReferenceDataProcessor
-
-    pim_custom_entity.mass_edit_connector.reader.reference_data.class: Pim\Bundle\CustomEntityBundle\MassEditConnector\Reader\ReferenceDataReader
-    pim_custom_entity.mass_edit_connector.processor.reference_data_to_flat_array.class: Pim\Bundle\CustomEntityBundle\MassEditConnector\Processor\ReferenceDataToFlatArrayProcessor
-    pim_custom_entity.mass_edit_connector.writer.reference_data.class: Pim\Bundle\CustomEntityBundle\MassEditConnector\Writer\ReferenceDataWriter
-
 
 services:
     # Readers
@@ -53,19 +49,9 @@ services:
             - '@pim_connector.factory.flat_item_buffer'
             - '@pim_connector.writer.file.flat_item_buffer_flusher'
 
-
     # Quick export connector
-    pim_custom_entity.mass_edit_connector.reader.reference_data:
-        class: %pim_custom_entity.mass_edit_connector.reader.reference_data.class%
+    pim_custom_entity.reader.database.mass_edit_reference_data:
+        class: '%pim_custom_entity.reader.database.mass_edit_reference_data.class%'
         arguments:
-            - @doctrine.orm.entity_manager
-            - @pim_reference_data.registry
-
-    pim_custom_entity.mass_edit_connector.processor.reference_data_to_flat_array:
-        class: %pim_custom_entity.mass_edit_connector.processor.reference_data_to_flat_array.class%
-        arguments:
-            - @pim_serializer
-
-    pim_custom_entity.mass_edit_connector.processor.reference_data_writer:
-        class: %pim_custom_entity.mass_edit_connector.writer.reference_data.class%
-        parent: pim_connector.writer.file.csv
+            - '@doctrine.orm.entity_manager'
+            - '@pim_reference_data.registry'
