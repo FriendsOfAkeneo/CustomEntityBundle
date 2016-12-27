@@ -16,9 +16,14 @@ use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
- * @author Romain Monceau <romain@akeneo.com>
+ * Generic denormalizer processor for reference data
+ * Only works for basic reference data
+ *
+ * @author    Romain Monceau <romain@akeneo.com>
+ * @copyright 2016 Akeneo SAS (http://www.akeneo.com)
+ * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class Processor implements ItemProcessorInterface, StepExecutionAwareInterface
+class ReferenceDataProcessor implements ItemProcessorInterface, StepExecutionAwareInterface
 {
     /** @var Registry */
     protected $confRegistry;

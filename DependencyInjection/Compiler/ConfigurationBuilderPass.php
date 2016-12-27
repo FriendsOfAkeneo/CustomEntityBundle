@@ -74,7 +74,7 @@ class ConfigurationBuilderPass implements CompilerPassInterface
             unset($options['service'], $options['enabled']);
             $definition->addMethodCall('addAction', [$type, $service, $options]);
         }
-        $serviceName = sprintf('pim_custom_entity_bundle.configuration.%s', $name);
+        $serviceName = sprintf('pim_custom_entity.configuration.%s', $name);
         $container->addDefinitions([$serviceName => $definition]);
         $container->getDefinition('pim_custom_entity.configuration.registry')
             ->addMethodCall('add', [$name, $serviceName]);

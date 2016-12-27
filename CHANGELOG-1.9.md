@@ -7,3 +7,6 @@
 
 ## Improvements
 - Compliance with Akeneo PIM entity API (Saver, Updater, Remover)
+
+## BC Breaks:
+- `Manager` class changes all its construct method parameters

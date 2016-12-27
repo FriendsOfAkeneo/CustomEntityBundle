@@ -6,7 +6,11 @@ use Akeneo\Component\Batch\Job\JobInterface;
 use Akeneo\Component\Batch\Job\JobParameters\DefaultValuesProviderInterface;
 
 /**
- * @author Romain Monceau <romain@akeneo.com>
+ * Default value provider for reference data list
+ *
+ * @author    Romain Monceau <romain@akeneo.com>
+ * @copyright 2016 Akeneo SAS (http://www.akeneo.com)
+ * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 class ReferenceData implements DefaultValuesProviderInterface
 {
@@ -22,7 +26,7 @@ class ReferenceData implements DefaultValuesProviderInterface
      */
     public function __construct(DefaultValuesProviderInterface $simpleProvider, array $supportedJobNames)
     {
-        $this->simpleProvider = $simpleProvider;
+        $this->simpleProvider    = $simpleProvider;
         $this->supportedJobNames = $supportedJobNames;
     }
 
