@@ -27,32 +27,30 @@ class ManagerSpec extends ObjectBehavior
         $this->shouldHaveType('Pim\Bundle\CustomEntityBundle\Manager\Manager');
     }
 
-    public function it_creates_objects(PropertyAccessorInterface $propertyAccessor)
+    public function it_creates_objects($updater)
     {
-        $propertyAccessor->setValue(Argument::type('stdClass'), 'key1', 'value1')->shouldBeCalled();
-        $propertyAccessor->setValue(Argument::type('stdClass'), 'key2', 'value2')->shouldBeCalled();
+        $updater->update(Argument::type('stdClass'), ['key1' => 'value1', 'key2' => 'value2'])->shouldBeCalled();
         $this->create('stdClass', ['key1' => 'value1', 'key2' => 'value2'])->shouldHaveType('stdClass');
     }
 
-    public function it_finds_objects(EntityRepository $repository)
+    public function it_finds_objects($em, EntityRepository $repository)
     {
+        $em->getRepository('entity_class')->willReturn($repository);
         $repository->find('id')->willReturn('success');
         $this->find('entity_class', 'id')->shouldReturn('success');
     }
 
-    public function it_saves_objects(EntityManager $entityManager)
+    public function it_saves_objects($saver)
     {
-        $object = new \stdClass;
-        $entityManager->persist($object)->shouldBeCalled();
-        $entityManager->flush()->shouldBeCalled();
-        $this->save($object);
+        $object = new \stdClass();
+        $saver->save($object, [])->shouldBeCalled();
+        $this->save($object, []);
     }
 
-    public function it_removes_objects(EntityManager $entityManager)
+    public function it_removes_objects($remover)
     {
-        $object = new \stdClass;
-        $entityManager->remove($object)->shouldBeCalled();
-        $entityManager->flush()->shouldBeCalled();
+        $object = new \stdClass();
+        $remover->remove($object)->shouldBeCalled();
         $this->remove($object);
     }
 }
