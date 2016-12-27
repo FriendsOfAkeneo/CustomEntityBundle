@@ -3,23 +3,24 @@
 namespace spec\Pim\Bundle\CustomEntityBundle\Manager;
 
 use Akeneo\Bundle\StorageUtilsBundle\Doctrine\SmartManagerRegistry;
+use Akeneo\Component\StorageUtils\Saver\SaverInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use PhpSpec\ObjectBehavior;
+use Pim\Bundle\CustomEntityBundle\Updater\Updater;
+use Pim\Component\Catalog\Updater\Remover\RemoverInterface;
 use Prophecy\Argument;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
 class ManagerSpec extends ObjectBehavior
 {
     public function let(
-        SmartManagerRegistry $doctrine,
-        EntityRepository $repository,
-        EntityManager $entityManager,
-        PropertyAccessorInterface $propertyAccessor
+        EntityManager $em,
+        Updater $updater,
+        SaverInterface $saver,
+        RemoverInterface $remover
     ) {
-        $doctrine->getRepository('entity_class')->willReturn($repository);
-        $doctrine->getManagerForClass('stdClass')->willReturn($entityManager);
-        $this->beConstructedWith($doctrine, $propertyAccessor);
+        $this->beConstructedWith($em, $updater, $saver, $remover);
     }
 
     public function it_is_initializable()
