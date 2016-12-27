@@ -2,13 +2,12 @@
 
 namespace spec\Pim\Bundle\CustomEntityBundle\Manager;
 
-use Akeneo\Bundle\StorageUtilsBundle\Doctrine\SmartManagerRegistry;
+use Akeneo\Component\StorageUtils\Remover\RemoverInterface;
 use Akeneo\Component\StorageUtils\Saver\SaverInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use PhpSpec\ObjectBehavior;
 use Pim\Bundle\CustomEntityBundle\Updater\Updater;
-use Pim\Component\Catalog\Updater\Remover\RemoverInterface;
 use Prophecy\Argument;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
