@@ -2,24 +2,24 @@
 
 namespace spec\Pim\Bundle\CustomEntityBundle\Manager;
 
-use Akeneo\Bundle\StorageUtilsBundle\Doctrine\SmartManagerRegistry;
+use Akeneo\Component\StorageUtils\Remover\RemoverInterface;
+use Akeneo\Component\StorageUtils\Saver\SaverInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use PhpSpec\ObjectBehavior;
+use Pim\Bundle\CustomEntityBundle\Updater\Updater;
 use Prophecy\Argument;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
 class ManagerSpec extends ObjectBehavior
 {
     public function let(
-        SmartManagerRegistry $doctrine,
-        EntityRepository $repository,
-        EntityManager $entityManager,
-        PropertyAccessorInterface $propertyAccessor
+        EntityManager $em,
+        Updater $updater,
+        SaverInterface $saver,
+        RemoverInterface $remover
     ) {
-        $doctrine->getRepository('entity_class')->willReturn($repository);
-        $doctrine->getManagerForClass('stdClass')->willReturn($entityManager);
-        $this->beConstructedWith($doctrine, $propertyAccessor);
+        $this->beConstructedWith($em, $updater, $saver, $remover);
     }
 
     public function it_is_initializable()
@@ -27,32 +27,30 @@ class ManagerSpec extends ObjectBehavior
         $this->shouldHaveType('Pim\Bundle\CustomEntityBundle\Manager\Manager');
     }
 
-    public function it_creates_objects(PropertyAccessorInterface $propertyAccessor)
+    public function it_creates_objects($updater)
     {
-        $propertyAccessor->setValue(Argument::type('stdClass'), 'key1', 'value1')->shouldBeCalled();
-        $propertyAccessor->setValue(Argument::type('stdClass'), 'key2', 'value2')->shouldBeCalled();
+        $updater->update(Argument::type('stdClass'), ['key1' => 'value1', 'key2' => 'value2'])->shouldBeCalled();
         $this->create('stdClass', ['key1' => 'value1', 'key2' => 'value2'])->shouldHaveType('stdClass');
     }
 
-    public function it_finds_objects(EntityRepository $repository)
+    public function it_finds_objects($em, EntityRepository $repository)
     {
+        $em->getRepository('entity_class')->willReturn($repository);
         $repository->find('id')->willReturn('success');
         $this->find('entity_class', 'id')->shouldReturn('success');
     }
 
-    public function it_saves_objects(EntityManager $entityManager)
+    public function it_saves_objects($saver)
     {
-        $object = new \stdClass;
-        $entityManager->persist($object)->shouldBeCalled();
-        $entityManager->flush()->shouldBeCalled();
-        $this->save($object);
+        $object = new \stdClass();
+        $saver->save($object, [])->shouldBeCalled();
+        $this->save($object, []);
     }
 
-    public function it_removes_objects(EntityManager $entityManager)
+    public function it_removes_objects($remover)
     {
-        $object = new \stdClass;
-        $entityManager->remove($object)->shouldBeCalled();
-        $entityManager->flush()->shouldBeCalled();
+        $object = new \stdClass();
+        $remover->remove($object)->shouldBeCalled();
         $this->remove($object);
     }
 }

@@ -204,7 +204,7 @@ abstract class AbstractAction implements ActionInterface
             $this->options['find_options']
         );
 
-        if (!$entity) {
+        if (null === $entity) {
             throw new NotFoundHttpException();
         }
 

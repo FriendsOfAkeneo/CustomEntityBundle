@@ -2,9 +2,10 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Manager;
 
-use Akeneo\Bundle\StorageUtilsBundle\Doctrine\SmartManagerRegistry;
-use Doctrine\Common\Util\ClassUtils;
-use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
+use Akeneo\Component\StorageUtils\Remover\RemoverInterface;
+use Akeneo\Component\StorageUtils\Saver\SaverInterface;
+use Akeneo\Component\StorageUtils\Updater\ObjectUpdaterInterface;
+use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * Base implementation for ORM managers
@@ -15,24 +16,34 @@ use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
  */
 class Manager implements ManagerInterface
 {
-    /**
-     * @var SmartManagerRegistry
-     */
-    protected $doctrine;
+    /** @var EntityManagerInterface */
+    protected $em;
+
+    /** @var ObjectUpdaterInterface */
+    protected $updater;
+
+    /** @var SaverInterface */
+    protected $saver;
+
+    /** @var RemoverInterface */
+    protected $remover;
 
     /**
-     * @var PropertyAccessorInterface
+     * @param EntityManagerInterface $em
+     * @param ObjectUpdaterInterface $updater
+     * @param SaverInterface         $saver
+     * @param RemoverInterface       $remover
      */
-    protected $propertyAccessor;
-
-    /**
-     * @param SmartManagerRegistry      $doctrine
-     * @param PropertyAccessorInterface $propertyAccessor
-     */
-    public function __construct(SmartManagerRegistry $doctrine, PropertyAccessorInterface $propertyAccessor)
-    {
-        $this->doctrine = $doctrine;
-        $this->propertyAccessor = $propertyAccessor;
+    public function __construct(
+        EntityManagerInterface $em,
+        ObjectUpdaterInterface $updater,
+        SaverInterface $saver,
+        RemoverInterface $remover
+    ) {
+        $this->em      = $em;
+        $this->updater = $updater;
+        $this->saver   = $saver;
+        $this->remover = $remover;
     }
 
     /**
@@ -40,12 +51,10 @@ class Manager implements ManagerInterface
      */
     public function create($entityClass, array $defaultValues = array(), array $options = array())
     {
-        $object = new $entityClass();
-        foreach ($defaultValues as $propertyPath => $value) {
-            $this->propertyAccessor->setValue($object, $propertyPath, $value);
-        }
+        $referenceData = new $entityClass();
+        $this->updater->update($referenceData, $defaultValues);
 
-        return $object;
+        return $referenceData;
     }
 
     /**
@@ -53,7 +62,7 @@ class Manager implements ManagerInterface
      */
     public function find($entityClass, $id, array $options = array())
     {
-        return $this->doctrine->getRepository($entityClass)->find($id);
+        return $this->em->getRepository($entityClass)->find($id);
     }
 
     /**
@@ -61,9 +70,7 @@ class Manager implements ManagerInterface
      */
     public function save($entity, array $options = array())
     {
-        $em = $this->getManager($entity);
-        $em->persist($entity);
-        $em->flush();
+        $this->saver->save($entity, $options);
     }
 
     /**
@@ -71,22 +78,6 @@ class Manager implements ManagerInterface
      */
     public function remove($entity)
     {
-        $em = $this->getManager($entity);
-        $em->remove($entity);
-        $em->flush();
-    }
-
-    /**
-     * Returns the manager for an entity
-     *
-     * @param object|string $entity
-     *
-     * @return \Doctrine\Common\Persistence\ObjectManager
-     */
-    protected function getManager($entity)
-    {
-        return $this->doctrine->getManagerForClass(
-            is_object($entity) ? ClassUtils::getClass($entity) : $entity
-        );
+        $this->remover->remove($entity);
     }
 }

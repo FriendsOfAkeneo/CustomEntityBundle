@@ -1,0 +1,57 @@
+parameters:
+    pim_custom_entity.reader.database.reference_data.class: Pim\Bundle\CustomEntityBundle\Connector\Reader\Database\ReferenceDataReader
+    pim_custom_entity.reader.database.mass_edit_reference_data.class: Pim\Bundle\CustomEntityBundle\Connector\Reader\Database\MassEditReferenceDataReader
+
+    pim_custom_entity.processor.denormalization.reference_data.class: Pim\Bundle\CustomEntityBundle\Connector\Processor\Denormalization\ReferenceDataProcessor
+    pim_custom_entity.processor.normalization.reference_data.class: Pim\Bundle\CustomEntityBundle\Connector\Processor\Normalization\ReferenceDataProcessor
+
+services:
+    # Readers
+    pim_custom_entity.reader.file.csv:
+        class: '%pim_connector.reader.file.csv.class%'
+        arguments:
+            - '@pim_connector.reader.file.csv_iterator_factory'
+            - '@pim_connector.array_converter.dummy'
+
+    pim_custom_entity.reader.database.reference_data:
+        class: '%pim_custom_entity.reader.database.reference_data.class%'
+        arguments:
+            - '@pim_custom_entity.configuration.registry'
+            - '@doctrine.orm.entity_manager'
+
+    # Processors
+    pim_custom_entity.processor.denormalization.reference_data:
+        class: '%pim_custom_entity.processor.denormalization.reference_data.class%'
+        arguments:
+            - '@pim_custom_entity.configuration.registry'
+            - '@doctrine.orm.entity_manager'
+            - '@pim_custom_entity.updater.custom_entity'
+            - '@validator'
+            - '@akeneo_storage_utils.doctrine.object_detacher'
+
+    pim_custom_entity.processor.normalization.reference_data:
+        class: '%pim_custom_entity.processor.normalization.reference_data.class%'
+        arguments:
+            - '@property_accessor'
+            - '@pim_serializer'
+
+    # Writers
+    pim_custom_entity.writer.database.custom_entity:
+        class: '%pim_connector.writer.database.class%'
+        arguments:
+            - '@pim_custom_entity.saver.custom_entity'
+            - '@akeneo_storage_utils.doctrine.object_detacher'
+
+    pim_custom_entity.writer.file.csv_reference_data:
+        class: '%pim_connector.writer.file.csv.class%'
+        arguments:
+            - '@pim_connector.array_converter.dummy'
+            - '@pim_connector.factory.flat_item_buffer'
+            - '@pim_connector.writer.file.flat_item_buffer_flusher'
+
+    # Quick export connector
+    pim_custom_entity.reader.database.mass_edit_reference_data:
+        class: '%pim_custom_entity.reader.database.mass_edit_reference_data.class%'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@pim_reference_data.registry'

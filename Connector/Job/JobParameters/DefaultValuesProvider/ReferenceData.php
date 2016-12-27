@@ -1,32 +1,32 @@
 <?php
 
-namespace Pim\Bundle\CustomEntityBundle\MassEditConnector\JobParameters\DefaultValuesProvider;
+namespace Pim\Bundle\CustomEntityBundle\Connector\Job\JobParameters\DefaultValuesProvider;
 
 use Akeneo\Component\Batch\Job\JobInterface;
 use Akeneo\Component\Batch\Job\JobParameters\DefaultValuesProviderInterface;
 
 /**
- * Default values provider for the quick export csv
- * 
- * @author    Nicolas Dupont <nicolas@akeneo.com>
+ * Default value provider for reference data list
+ *
+ * @author    Romain Monceau <romain@akeneo.com>
  * @copyright 2016 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class QuickCsvExport implements DefaultValuesProviderInterface
+class ReferenceData implements DefaultValuesProviderInterface
 {
-    /** @var DefaultValuesProviderInterface $simpleProvider */
+    /** @var DefaultValuesProviderInterface */
     protected $simpleProvider;
 
-    /** @var array */
+    /** @var string[] */
     protected $supportedJobNames;
 
     /**
      * @param DefaultValuesProviderInterface $simpleProvider
-     * @param array                          $supportedJobNames
+     * @param string[]                       $supportedJobNames
      */
     public function __construct(DefaultValuesProviderInterface $simpleProvider, array $supportedJobNames)
     {
-        $this->simpleProvider = $simpleProvider;
+        $this->simpleProvider    = $simpleProvider;
         $this->supportedJobNames = $supportedJobNames;
     }
 
@@ -36,8 +36,7 @@ class QuickCsvExport implements DefaultValuesProviderInterface
     public function getDefaultValues()
     {
         $defaultValues = $this->simpleProvider->getDefaultValues();
-        $defaultValues['reference_data'] = null;
-        $defaultValues['ids'] = null;
+        $defaultValues['reference_data_name'] = null;
 
         return $defaultValues;
     }
