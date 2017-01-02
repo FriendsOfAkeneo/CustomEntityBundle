@@ -7,24 +7,23 @@ pane.accordion:
 pim_custom_entity:
     export:
         limit_exceeded: Please select less than %limit% records
-properties:
-    title: Properties
-
-pim_custom_entity.acl_group.reference_data: Reference data
-
-batch_jobs.csv_reference_data_import:
-    validation.label: Validation
-    import.label: Import reference data
-    label: Reference data import in CSV
-
-batch_jobs.csv_reference_data_export:
-    export.label: Export reference data
-    label: Reference data export in CSV
-
-pim_custom_entity:
+        csv.entity_name:
+            label: Reference data name
+            help: The reference data name you want to import
     import.csv.entity_name:
         label: Reference data name
         help: The reference data name you want to import
-    export.csv.entity_name:
-        label: Reference data name
-        help: The reference data name you want to import
+    acl_group.reference_data: Reference data
+
+properties:
+    title: Properties
+
+batch_jobs:
+    csv_reference_data_import:
+        validation.label: Validation
+        import.label: Import reference data
+        label: Reference data import in CSV
+
+    csv_reference_data_export:
+        export.label: Export reference data
+        label: Reference data export in CSV
