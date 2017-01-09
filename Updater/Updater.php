@@ -34,6 +34,8 @@ class Updater implements ObjectUpdaterInterface
 
     /**
      * @param PropertyAccessorInterface $propertyAccessor
+     * @param LocaleRepositoryInterface $localeRepository
+     * @param EntityManagerInterface $em
      */
     public function __construct(
         PropertyAccessorInterface $propertyAccessor,
