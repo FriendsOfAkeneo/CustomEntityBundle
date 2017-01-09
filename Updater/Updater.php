@@ -4,7 +4,10 @@ namespace Pim\Bundle\CustomEntityBundle\Updater;
 
 use Akeneo\Component\StorageUtils\Updater\ObjectUpdaterInterface;
 use Doctrine\Common\Util\ClassUtils;
-use Doctrine\Common\Util\Inflector;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityNotFoundException;
+use Doctrine\ORM\Mapping\ClassMetadataInfo;
+use Pim\Component\Catalog\Repository\LocaleRepositoryInterface;
 use Pim\Component\ReferenceData\Model\ReferenceDataInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
@@ -20,12 +23,26 @@ class Updater implements ObjectUpdaterInterface
     /** @var PropertyAccessorInterface */
     protected $propertyAccessor;
 
+    /** @var LocaleRepositoryInterface */
+    protected $localeRepository;
+
+    /** @var EntityManagerInterface */
+    protected $em;
+
+    /** @var ClassMetadataInfo */
+    protected $classMetadata;
+
     /**
      * @param PropertyAccessorInterface $propertyAccessor
      */
-    public function __construct(PropertyAccessorInterface $propertyAccessor)
-    {
+    public function __construct(
+        PropertyAccessorInterface $propertyAccessor,
+        LocaleRepositoryInterface $localeRepository,
+        EntityManagerInterface $em
+    ) {
         $this->propertyAccessor = $propertyAccessor;
+        $this->localeRepository = $localeRepository;
+        $this->em               = $em;
     }
 
     /**
@@ -44,9 +61,115 @@ class Updater implements ObjectUpdaterInterface
         }
 
         foreach ($data as $propertyPath => $value) {
-            $this->propertyAccessor->setValue($referenceData, $propertyPath, $value);
+            $this->updateProperty($referenceData, $propertyPath, $value);
         }
 
-        return $this;
+        return $referenceData;
+    }
+
+    /**
+     * @param ReferenceDataInterface $referenceData
+     * @param string $propertyPath
+     * @param mixed $value
+     */
+    protected function updateProperty(ReferenceDataInterface $referenceData, $propertyPath, $value)
+    {
+        if ($this->propertyAccessor->isWritable($referenceData, $propertyPath)) {
+            if ($this->isAssociation($referenceData, $propertyPath)) {
+                $this->updateAssociatedEntity($referenceData, $propertyPath, $value);
+            } else {
+                $this->propertyAccessor->setValue($referenceData, $propertyPath, $value);
+            }
+        } elseif ($this->isAssociation($referenceData, 'translations')) {
+            $this->updateTranslation($referenceData, $propertyPath, $value);
+        }
+    }
+
+    /**
+     * Updates an entity linked to the reference data
+     *
+     * @param ReferenceDataInterface $referenceData
+     * @param string $propertyPath
+     * @param mixed $value
+     *
+     * @throws EntityNotFoundException
+     */
+    protected function updateAssociatedEntity(ReferenceDataInterface $referenceData, $propertyPath, $value)
+    {
+        $associationMapping = $this->getAssociationMapping($referenceData, $propertyPath);
+        $associationRepo  = $this->em->getRepository($associationMapping['translations']['targetEntity']);
+        $associatedEntity = $associationRepo->findOneBy(['code' => $value]);
+        if (null === $associatedEntity) {
+            throw new EntityNotFoundException(
+                sprintf('Associated entity "%s" with code "%" not found', $associatedEntity['targetEntity'], $value)
+            );
+        }
+
+        $this->propertyAccessor->setValue($referenceData, $propertyPath, $associatedEntity);
+    }
+
+    /**
+     * Updates a reference data translation from the translatable reference data
+     *
+     * @param ReferenceDataInterface $referenceData
+     * @param string $propertyPath
+     * @param mixed $value
+     *
+     * @throws \InvalidArgumentException
+     */
+    protected function updateTranslation(ReferenceDataInterface $referenceData, $propertyPath, $value)
+    {
+        $translationPattern = '/^(?<property>[a-zA-Z0-9-_]+)-(?<locale>[a-z]{2}_[A-Z]{2})$/';
+        if (preg_match($translationPattern, $propertyPath, $matches)
+            && (isset($matches['property']) && isset($matches['locale']))
+        ) {
+            if (!in_array($matches['locale'], $this->localeRepository->getActivatedLocaleCodes())) {
+                throw new \InvalidArgumentException(
+                    sprintf('Locale "%" is not activated', $matches['locale'])
+                );
+            }
+
+            if ($this->propertyAccessor->isWritable($referenceData, $matches['property'])) {
+                $referenceData->setLocale($matches['locale']);
+                $this->propertyAccessor->setValue($referenceData, $matches['property'], $value);
+            }
+        }
+    }
+
+    /**
+     * @param ReferenceDataInterface $referenceData
+     *
+     * @return \Doctrine\Common\Persistence\Mapping\ClassMetadata|ClassMetadataInfo
+     */
+    protected function getClassMetadata(ReferenceDataInterface $referenceData)
+    {
+        if (null === $this->classMetadata) {
+            $this->classMetadata = $this->em->getClassMetadata(ClassUtils::getClass($referenceData));
+        }
+
+        return $this->classMetadata;
+    }
+
+    /**
+     * @param ReferenceDataInterface $referenceData
+     *
+     * @return array
+     */
+    protected function getAssociationMappings(ReferenceDataInterface $referenceData)
+    {
+        return $this->getClassMetadata($referenceData)->getAssociationMappings();
+    }
+
+    /**
+     * @param ReferenceDataInterface $referenceData
+     * @param string $property
+     *
+     * @return bool
+     */
+    protected function isAssociation(ReferenceDataInterface $referenceData, $property)
+    {
+        $associationMappings = $this->getAssociationMappings($referenceData);
+
+        return isset($associationMappings[$property]);
     }
 }
