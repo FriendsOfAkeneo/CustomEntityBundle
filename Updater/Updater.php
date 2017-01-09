@@ -96,8 +96,8 @@ class Updater implements ObjectUpdaterInterface
      */
     protected function updateAssociatedEntity(ReferenceDataInterface $referenceData, $propertyPath, $value)
     {
-        $associationMapping = $this->getAssociationMapping($referenceData, $propertyPath);
-        $associationRepo  = $this->em->getRepository($associationMapping['translations']['targetEntity']);
+        $associationMapping = $this->getAssociationMapping($referenceData, 'translations');
+        $associationRepo  = $this->em->getRepository($associationMapping['targetEntity']);
         $associatedEntity = $associationRepo->findOneBy(['code' => $value]);
         if (null === $associatedEntity) {
             throw new EntityNotFoundException(
@@ -171,5 +171,18 @@ class Updater implements ObjectUpdaterInterface
         $associationMappings = $this->getAssociationMappings($referenceData);
 
         return isset($associationMappings[$property]);
+    }
+
+    /**
+     * @param ReferenceDataInterface $referenceData
+     * @param string $property
+     *
+     * @return array
+     */
+    protected function getAssociationMapping(ReferenceDataInterface $referenceData, $property)
+    {
+        $associationMappings = $this->getAssociationMappings($referenceData);
+
+        return $associationMappings[$property];
     }
 }

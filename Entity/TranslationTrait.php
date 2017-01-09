@@ -3,7 +3,13 @@
 namespace Pim\Bundle\CustomEntityBundle\Entity;
 
 /**
- * @author Romain Monceau <romain@akeneo.com>
+ * Trait for translation entities
+ *
+ * @see Akeneo\Component\Localization\Model\TranslationInterface
+ *
+ * @author    Romain Monceau <romain@akeneo.com>
+ * @copyright 2017 Akeneo SAS (http://www.akeneo.com)
+ * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 trait TranslationTrait
 {
@@ -13,7 +19,7 @@ trait TranslationTrait
     /** @var string */
     protected $locale;
 
-    /** @var string */
+    /** @var int */
     protected $foreignKey;
 
     /**
@@ -27,11 +33,11 @@ trait TranslationTrait
     }
 
     /**
-     * Set locale
+     * Sets locale
      *
      * @param string $locale
      *
-     * @return AbstractTranslation
+     * @return TranslationTrait
      */
     public function setLocale($locale)
     {
@@ -41,7 +47,7 @@ trait TranslationTrait
     }
 
     /**
-     * Get locale
+     * Gets locale
      *
      * @return string $locale
      */
@@ -51,11 +57,11 @@ trait TranslationTrait
     }
 
     /**
-     * Set foreignKey
+     * Sets foreignKey
      *
-     * @param string $foreignKey
+     * @param int $foreignKey
      *
-     * @return AbstractTranslation
+     * @return TranslationTrait
      */
     public function setForeignKey($foreignKey)
     {
@@ -65,9 +71,9 @@ trait TranslationTrait
     }
 
     /**
-     * Get foreignKey
+     * Gets foreignKey
      *
-     * @return string $foreignKey
+     * @return int $foreignKey
      */
     public function getForeignKey()
     {
