@@ -20,3 +20,5 @@ services:
         class: '%pim_custom_entity.updater.custom_entity.class%'
         arguments:
             - '@property_accessor'
+            - '@pim_catalog.repository.locale'
+            - '@doctrine.orm.entity_manager'
