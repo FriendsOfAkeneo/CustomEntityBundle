@@ -121,7 +121,7 @@ class Updater implements ObjectUpdaterInterface
      */
     protected function updateTranslation(ReferenceDataInterface $referenceData, $propertyPath, $value)
     {
-        $translationPattern = '/^(?<property>[a-zA-Z0-9-_]+)-(?<locale>[a-z]{2}_[A-Z]{2})$/';
+        $translationPattern = '/^(?<property>[a-zA-Z0-9_-]+)-(?<locale>[a-z]{2}_[A-Z]{2})$/';
         if (preg_match($translationPattern, $propertyPath, $matches)
             && (isset($matches['property']) && isset($matches['locale']))
         ) {
