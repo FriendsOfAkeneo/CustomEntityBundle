@@ -98,7 +98,7 @@ class Updater implements ObjectUpdaterInterface
      */
     protected function updateAssociatedEntity(ReferenceDataInterface $referenceData, $propertyPath, $value)
     {
-        $associationMapping = $this->getAssociationMapping($referenceData, 'translations');
+        $associationMapping = $this->getAssociationMapping($referenceData, $propertyPath);
         $associationRepo  = $this->em->getRepository($associationMapping['targetEntity']);
         $associatedEntity = $associationRepo->findOneBy(['code' => $value]);
         if (null === $associatedEntity) {
@@ -127,7 +127,7 @@ class Updater implements ObjectUpdaterInterface
         ) {
             if (!in_array($matches['locale'], $this->localeRepository->getActivatedLocaleCodes())) {
                 throw new \InvalidArgumentException(
-                    sprintf('Locale "%" is not activated', $matches['locale'])
+                    sprintf('Locale "%s" is not activated', $matches['locale'])
                 );
             }
 

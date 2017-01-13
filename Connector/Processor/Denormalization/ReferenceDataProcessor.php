@@ -3,6 +3,7 @@
 namespace Pim\Bundle\CustomEntityBundle\Connector\Processor\Denormalization;
 
 use Akeneo\Component\Batch\Item\FileInvalidItem;
+use Akeneo\Component\Batch\Item\InvalidItemException;
 use Akeneo\Component\Batch\Item\ItemProcessorInterface;
 use Akeneo\Component\Batch\Model\StepExecution;
 use Akeneo\Component\Batch\Step\StepExecutionAwareInterface;
@@ -74,7 +75,11 @@ class ReferenceDataProcessor implements ItemProcessorInterface, StepExecutionAwa
         }
 
         $entity = $this->findOrCreateObject($item);
-        $this->updater->update($entity, $item);
+        try {
+            $this->updater->update($entity, $item);
+        } catch (\Exception $e) {
+            $this->skipItemWithMessage($item, $e->getMessage(), $e);
+        }
 
         $violations = $this->validator->validate($entity);
         if ($violations->count() > 0) {
@@ -159,5 +164,28 @@ class ReferenceDataProcessor implements ItemProcessorInterface, StepExecutionAwa
             $violations,
             new FileInvalidItem($item, ($this->stepExecution->getSummaryInfo('read_lines') + 1))
         );
+    }
+
+    /**
+     * Sets an item as skipped and throws an invalid item exception
+     *
+     * @param array      $item
+     * @param \Exception $previousException
+     * @param string     $message
+     *
+     * @throws InvalidItemException
+     */
+    protected function skipItemWithMessage(array $item, $message, \Exception $previousException = null)
+    {
+        if ($this->stepExecution) {
+            $this->stepExecution->incrementSummaryInfo('skip');
+        }
+
+        $invalidItem = new FileInvalidItem(
+            $item,
+            ($this->stepExecution->getSummaryInfo('read_lines') + 1)
+        );
+
+        throw new InvalidItemException($message, $invalidItem, [], 0, $previousException);
     }
 }
