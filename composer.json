@@ -18,9 +18,9 @@
             "branch": "master"
         }
     ],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "require": {
-        "akeneo/pim-community-dev": "~1.6.0"
+        "akeneo/pim-community-dev": "1.7.x-dev@dev"
     },
     "require-dev": {
         "phpspec/phpspec": "3.0.0",
