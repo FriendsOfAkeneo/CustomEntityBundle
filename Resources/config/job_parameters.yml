@@ -65,23 +65,24 @@ services:
         tags:
             - { name: akeneo_batch.job.job_parameters.default_values_provider }
 
-    # Form configuration providers
-    pim_custom_entity.job.job_parameters.form_configuration_provider.reference_data_csv_import:
-        class: '%pim_custom_entity.job.job_parameters.form_configuration_provider.reference_data.class%'
-        arguments:
-            - '@pim_import_export.job_parameters.form_configuration_provider.simple_csv_import'
-            - '@pim_custom_entity.configuration.registry'
-            -
-                - '%pim_custom_entity.job_name.csv_reference_data_import%'
-        tags:
-            - { name: pim_import_export.job_parameters.form_configuration_provider }
+#TODO
+#    # Form configuration providers
+#    pim_custom_entity.job.job_parameters.form_configuration_provider.reference_data_csv_import:
+#        class: '%pim_custom_entity.job.job_parameters.form_configuration_provider.reference_data.class%'
+#        arguments:
+#            - '@pim_import_export.job_parameters.form_configuration_provider.simple_csv_import'
+#            - '@pim_custom_entity.configuration.registry'
+#            -
+#                - '%pim_custom_entity.job_name.csv_reference_data_import%'
+#        tags:
+#            - { name: pim_import_export.job_parameters.form_configuration_provider }
 
-    pim_custom_entity.job.job_parameters.form_configuration_provider.reference_data_csv_export:
-        class: '%pim_custom_entity.job.job_parameters.form_configuration_provider.reference_data.class%'
-        arguments:
-            - '@pim_import_export.job_parameters.form_configuration_provider.simple_csv_export'
-            - '@pim_custom_entity.configuration.registry'
-            -
-                - '%pim_custom_entity.job_name.csv_reference_data_export%'
-        tags:
-            - { name: pim_import_export.job_parameters.form_configuration_provider }
+#    pim_custom_entity.job.job_parameters.form_configuration_provider.reference_data_csv_export:
+#        class: '%pim_custom_entity.job.job_parameters.form_configuration_provider.reference_data.class%'
+#        arguments:
+#            - '@pim_import_export.job_parameters.form_configuration_provider.simple_csv_export'
+#            - '@pim_custom_entity.configuration.registry'
+#            -
+#                - '%pim_custom_entity.job_name.csv_reference_data_export%'
+#        tags:
+#            - { name: pim_import_export.job_parameters.form_configuration_provider }

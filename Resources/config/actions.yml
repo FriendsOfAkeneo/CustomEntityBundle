@@ -76,7 +76,7 @@ services:
         scope: prototype
         arguments:
             - @pim_datagrid.extension.mass_action.dispatcher
-            - @pim_import_export.repository.job_instance
+            - @akeneo_batch.job.job_instance_repository
             - @akeneo_batch.launcher.simple_job_launcher
             - @security.token_storage
 
