@@ -1,0 +1,9 @@
+pim_custom_entity:
+    export.csv.entity_name:
+        label: Reference data name
+        help: The reference data name you want to import
+        no_reference_data: No reference data availables
+    import.csv.entity_name:
+        label: Reference data name
+        help: The reference data name you want to import
+        no_reference_data: No reference data availables

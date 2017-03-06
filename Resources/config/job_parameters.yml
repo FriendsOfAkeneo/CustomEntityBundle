@@ -1,7 +1,6 @@
 parameters:
     pim_custom_entity.job.job_parameters.constraint_collection_provider.reference_data.class:   Pim\Bundle\CustomEntityBundle\Connector\Job\JobParameters\ConstraintCollectionProvider\ReferenceData
     pim_custom_entity.job.job_parameters.default_values_provider.reference_data.class:          Pim\Bundle\CustomEntityBundle\Connector\Job\JobParameters\DefaultValuesProvider\ReferenceData
-    pim_custom_entity.job.job_parameters.form_configuration_provider.reference_data.class:      Pim\Bundle\CustomEntityBundle\Connector\Job\JobParameters\FormConfigurationProvider\ReferenceData
 
     pim_custom_entity.job.job_parameters.default_values_provider.quick_csv_export.class:        Pim\Bundle\CustomEntityBundle\Connector\Job\JobParameters\DefaultValuesProvider\QuickCsvExport
     pim_custom_entity.job.job_parameters.constraint_collection_provider.quick_csv_export.class: Pim\Bundle\CustomEntityBundle\Connector\Job\JobParameters\ConstraintCollectionProvider\QuickCsvExport
@@ -65,7 +64,34 @@ services:
         tags:
             - { name: akeneo_batch.job.job_parameters.default_values_provider }
 
-#TODO
+    # Job Instances configuration
+    pim_custom_entity.job.job_instance_configuration.reference_data_csv_import:
+        class: '%pim_enrich.provider.form.job_instance.class%'
+        arguments:
+            -
+                csv_reference_data_import: reference-data-job-instance-csv-import
+        tags:
+            - { name: pim_enrich.provider.form, priority: 90 }
+
+    pim_custom_entity.job.job_instance_configuration.reference_data_csv_export:
+        class: '%pim_enrich.provider.form.job_instance.class%'
+        arguments:
+            -
+                csv_reference_data_export: reference-data-job-instance-csv-export
+        tags:
+            - { name: pim_enrich.provider.form, priority: 90 }
+
+#    pim_custom_entity.job.job_instance_configuration.reference_data_quick_export:
+#        class: '%pim_enrich.provider.form.job_instance.class%'
+#        arguments:
+#            -
+#                '%pim_custom_entity.job_name.csv_reference_data_quick_export%' : reference-data-job-instance-quick-export
+#        tags:
+#            - { name: pim_enrich.provider.form, priority: 90 }
+
+
+
+
 #    # Form configuration providers
 #    pim_custom_entity.job.job_parameters.form_configuration_provider.reference_data_csv_import:
 #        class: '%pim_custom_entity.job.job_parameters.form_configuration_provider.reference_data.class%'
