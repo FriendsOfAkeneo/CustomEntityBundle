@@ -105,8 +105,10 @@ abstract class AbstractFormAction extends AbstractViewableAction
     /**
      * Gets the variables that should be present on the template
      *
-     * @param Request $request
-     * @param Form    $form
+     * @param Request       $request
+     * @param FormInterface $form
+     *
+     * @return array
      */
     protected function getTemplateVars(Request $request, FormInterface $form)
     {
@@ -149,7 +151,7 @@ abstract class AbstractFormAction extends AbstractViewableAction
      * @param Request $request
      * @param object  $object
      *
-     * @return Form
+     * @return FormInterface
      */
     protected function createForm(Request $request, $object)
     {

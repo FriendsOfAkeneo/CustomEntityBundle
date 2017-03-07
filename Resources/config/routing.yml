@@ -43,3 +43,8 @@ pim_customentity_delete:
     requirements:
         id: \d+
     methods: [DELETE, POST]
+
+pim_customentity_list:
+    path: /names
+    defaults: { _controller: pim_custom_entity.rest_controller:listAction}
+    methods: [GET]

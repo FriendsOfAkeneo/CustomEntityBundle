@@ -8,7 +8,6 @@ parameters:
     pim_custom_entity.action.show.class:         Pim\Bundle\CustomEntityBundle\Action\ShowAction
     pim_custom_entity.action.history.class:      Pim\Bundle\CustomEntityBundle\Action\HistoryAction
     pim_custom_entity.action.mass_edit.class:    Pim\Bundle\CustomEntityBundle\Action\MassEditAction
-    pim_custom_entity.action.mass_delete.class:  Pim\Bundle\CustomEntityBundle\Action\MassDeleteAction
     pim_custom_entity.action.quick_export.class: Pim\Bundle\CustomEntityBundle\Action\QuickExportAction
 
 services:
