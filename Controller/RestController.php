@@ -1,7 +1,7 @@
 <?php
 
-
 namespace Pim\Bundle\CustomEntityBundle\Controller;
+
 use Pim\Bundle\CustomEntityBundle\Configuration\Registry;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -27,6 +27,8 @@ class RestController
     }
 
     /**
+     * Return the list of registred references data
+     *
      * @return JsonResponse
      */
     public function listAction()
