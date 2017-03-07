@@ -7,15 +7,10 @@
     {% set subtitle = (customEntityName ~ '.mass_edit.subtitle')|transchoice(objectCount) %}
     {{ elements.page_header(title, null, subtitle) }}
 
-    <div class="row">
-        <div class="offset1">
-            <h3>{{ title }}</h3>
-            <h4>{{ (customEntityName ~ '.mass_edit.message')|transchoice(objectCount) }}</h4>
-        </div>
-    </div>
-    {{ form_start(form, { 'action': formAction }) }}
+    <div class="AknFormContainer AknFormContainer--withPadding">
+        {{ form_start(form, { 'action': formAction }) }}
         <div class="row buffer-top">
-            <div class="offset1 span12 mass-edit-form">
+            <div class="AknFormContainer AknFormContainer--withPadding mass-edit-form">
                 <div class="errors">
                     {{ elements.form_errors(form) }}
                 </div>
@@ -23,21 +18,22 @@
             </div>
         </div>
         <div class="row buffer-top">
-            <div class="offset1">
-                <div class="control-group">
-                    <div class="control">
-                        <input id="massedit_confirm" type="checkbox" required="required" class="pull-left">
-                    </div>
-                    <label for="massedit_confirm" class="buffer-left">
-                        {{ (customEntityName ~ '.mass_edit.confirm')|transchoice(objectCount) }}
-                    </label>
+            <div class="AknFormContainer AknFormContainer--withPadding">
+                <div class="AknFieldContainer">
+                    <input id="massedit_confirm" type="checkbox" required="required">
+                    <label for="massedit_confirm"
+                           class="AknFieldContainer-label">{{ (customEntityName ~ '.mass_edit.confirm')|transchoice(objectCount) }}</label>
                 </div>
-            </div>
-            <div class="offset1">
-                {{ elements.link('btn.cancel', indexUrl) }}
-                {{ elements.submitBtn('btn.save') }}
-            </div>
-        </div>
 
-    {{ form_end(form) }}
+
+            </div>
+            <div class="AknButtonList AknButtonList--right configuration">
+                {{ elements.link('btn.cancel', indexUrl, {icon: 'chevron-left', class: 'AknButtonList-item btn-cancel'}) }}
+                {{ elements.submitBtn('btn.save', 'chevron-right', 'AknButtonList-item') }}
+            </div>
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+
 {% endblock %}
