@@ -8,7 +8,7 @@ sudo: false
 
 cache:
     directories:
-        - $HOME/.composer/cache
+        - $HOME/.composer/cache/files
 
 before_script:
     - phpenv config-add travis.php.ini
