@@ -1,7 +1,7 @@
 language: php
 php:
     - "5.6"
-    - "7.0"
+    - "7.1"
 
 # Allow to use container infrastructure
 sudo: false
@@ -12,12 +12,9 @@ cache:
 
 before_script:
     - phpenv config-add travis.php.ini
+    - phpenv config-rm xdebug.ini || echo "xdebug not available for PHP $TRAVIS_PHP_VERSION"
     - echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
-    - composer self-update --no-interaction
     - composer update --no-interaction --no-scripts
 
 script:
     - ./bin/phpspec run
-
-notifications:
-    slack: akeneo:RtMZyFyncKFKYKFT3kdzLvid
