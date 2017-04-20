@@ -5,6 +5,7 @@ namespace Pim\Bundle\CustomEntityBundle\Entity\Repository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\QueryBuilder;
 use Pim\Bundle\ReferenceDataBundle\Doctrine\ORM\Repository\ReferenceDataRepository;
+use Pim\Component\Api\Repository\PageableRepositoryInterface;
 
 /**
  * Repository for the custom entity
@@ -13,7 +14,7 @@ use Pim\Bundle\ReferenceDataBundle\Doctrine\ORM\Repository\ReferenceDataReposito
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class CustomEntityRepository extends ReferenceDataRepository
+class CustomEntityRepository extends ReferenceDataRepository implements PageableRepositoryInterface
 {
     /**
      * Create a query builder used for the datagrid
@@ -148,13 +149,63 @@ class CustomEntityRepository extends ReferenceDataRepository
         }
 
         if (isset($options['limit'])) {
-            $qb->setMaxResults((int) $options['limit']);
+            $qb->setMaxResults((int)$options['limit']);
             if (isset($options['page'])) {
-                $qb->setFirstResult((int) $options['limit'] * ((int) $options['page'] - 1));
+                $qb->setFirstResult((int)$options['limit'] * ((int)$options['page'] - 1));
             }
         }
 
         return $qb;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function searchAfterOffset(array $criteria, array $orders, $limit, $offset)
+    {
+        $qb = $this->createQueryBuilder($this->getAlias());
+
+        foreach ($criteria as $field => $criterion) {
+            $qb->andWhere(
+                $qb->expr()->eq(sprintf('%s.%s', $field), $this->getAlias(), $qb->expr()->literal($criterion))
+            );
+        }
+
+        foreach ($orders as $field => $sort) {
+            $qb->addOrderBy(sprintf('%s.%s', $this->getAlias(), $field), $sort);
+        }
+
+        if (null !== $offset) {
+            $qb->setFirstResult($offset);
+        }
+
+        return $qb->setMaxResults($limit)
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function count(array $criteria = [])
+    {
+        try {
+            $qb = $this->createQueryBuilder($this->getAlias());
+
+            foreach ($criteria as $field => $criterion) {
+                $qb->andWhere(
+                    $qb->expr()->eq(sprintf('%s.%s', $field), $this->getAlias(), $qb->expr()->literal($criterion))
+                );
+            }
+
+            return (int)$qb
+                ->select(sprintf('COUNT(%s.id)', $this->getAlias()))
+                ->getQuery()
+                ->getSingleScalarResult();
+
+        } catch (UnexpectedResultException $e) {
+            return 0;
+        }
     }
 
     /**
