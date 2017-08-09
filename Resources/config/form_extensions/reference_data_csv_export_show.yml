@@ -99,7 +99,7 @@ extensions:
         position: 155
         targetZone: global-settings
         config:
-            fieldCode: configuration.referenceDataName
+            fieldCode: configuration.reference_data_name
             readOnly: true
             label: pim_custom_entity.import.csv.entity_name.label
             tooltip: pim_custom_entity.import.csv.entity_name.help
