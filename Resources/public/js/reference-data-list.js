@@ -12,13 +12,17 @@ define([
     'underscore',
     'oro/translator',
     'pim/fetcher-registry',
-    'pim/job/common/edit/field/select'
+    'pim/job/common/edit/field/select',
+    'pim/job/common/edit/field/field',
+    'pim/common/property'
 ], function (
     $,
     _,
     __,
     FetcherRegistry,
-    SelectField
+    SelectField,
+    BaseField,
+    propertyAccessor
 ) {
     return SelectField.extend({
         /**
@@ -36,6 +40,20 @@ define([
                     this.config.options = referenceDataList;
                 }
             }.bind(this));
+        },
+        /**
+         * {@inheritdoc}
+         */
+        render: function () {
+            if (!this.config.value) {
+                this.config.value = _.first(_.keys(this.config.options));
+                var data = propertyAccessor.updateProperty(this.getFormData(), this.getFieldCode(), this.config.value);
+
+                this.setData(data);
+            }
+            BaseField.prototype.render.apply(this, arguments);
+
+            this.$('.select2').select2();
         }
     });
 });
