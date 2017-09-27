@@ -1,4 +1,15 @@
+pim_menu:
+    tab.reference_data: Reference data
+    item.reference_data: Reference data
+    navigation.reference_data: Reference data
+
 pim_custom_entity:
+    index_title: Overview
+    create_popin.title: Create
+    button:
+        create: Create
+    message:
+        created: Successfully created new reference data
     export.csv.entity_name:
         label: Reference data name
         help: The reference data name you want to import
@@ -7,3 +18,14 @@ pim_custom_entity:
         label: Reference data name
         help: The reference data name you want to import
         no_reference_data: No reference data availables
+
+page_title:
+    pim_customentity_index: 'Reference data - Overview'
+    pim_customentity_create: 'Reference data - Create'
+    pim_customentity_massedit: 'Reference data'
+    pim_customentity_quickexport: 'Reference data'
+    pim_customentity_edit: 'Reference data'
+    pim_customentity_show: 'Reference data'
+    pim_customentity_history: 'Reference data'
+    pim_customentity_delete: 'Reference data'
+    pim_customentity_list: 'Reference data'

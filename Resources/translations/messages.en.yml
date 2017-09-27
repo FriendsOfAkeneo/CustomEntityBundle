@@ -1,5 +1,4 @@
 Properties: Properties
-pim_menu.tab.reference_data: Reference data
 # tabs and accordions
 pane.accordion:
     general_properties: General properties
