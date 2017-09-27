@@ -1,7 +1,6 @@
 {% extends baseTemplate %}
 
 {% set title = (customEntityName ~ ( form.vars.value.id ? '.edit' : '.create'))|trans ~ (form.vars.value.id ? ' - ' ~ form.vars.value : "") %}
-{% oro_title_set({ params: { ('%title%'): title } }) %}
 
 {% block content %}
     {{ JSFV(form) }}
