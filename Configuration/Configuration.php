@@ -57,7 +57,7 @@ class Configuration implements ConfigurationInterface
      * @param string $action
      * @param array  $options
      */
-    public function addAction($type, $action, array $options = [])
+    public function addAction($type, $action, array $options = []): void
     {
         $this->actions[$type] = $action;
         $this->actionOptions[$type] = $options;
@@ -66,7 +66,7 @@ class Configuration implements ConfigurationInterface
     /**
      * {@inheritdoc}
      */
-    public function getAction($type)
+    public function getAction($type): string
     {
         return $this->actions[$type];
     }
@@ -74,7 +74,7 @@ class Configuration implements ConfigurationInterface
     /**
      * {@inheritdoc}
      */
-    public function getActionOptions($type)
+    public function getActionOptions($type): array
     {
         return $this->actionOptions[$type];
     }
@@ -82,7 +82,7 @@ class Configuration implements ConfigurationInterface
     /**
      * {@inheritdoc}
      */
-    public function getEntityClass()
+    public function getEntityClass(): string
     {
         return $this->entityClass;
     }
@@ -90,7 +90,7 @@ class Configuration implements ConfigurationInterface
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -98,7 +98,7 @@ class Configuration implements ConfigurationInterface
     /**
      * {@inheritdoc}
      */
-    public function hasAction($type)
+    public function hasAction($type): bool
     {
         return isset($this->actions[$type]);
     }
@@ -106,7 +106,7 @@ class Configuration implements ConfigurationInterface
     /**
      * {@inheritdoc}
      */
-    public function getOptions()
+    public function getOptions(): array
     {
         return $this->options;
     }
@@ -116,9 +116,12 @@ class Configuration implements ConfigurationInterface
      *
      * @param OptionsResolver $resolver
      */
-    protected function setDefaultOptions(OptionsResolver $resolver)
+    protected function setDefaultOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(['manager' => 'default']);
+        $resolver->setDefaults([
+            'manager'            => 'default',
+            'edit_fom_extension' => null,
+        ]);
         $event = new ConfigurationEvent($this, $resolver);
         $this->eventDispatcher->dispatch(ConfigurationEvents::CONFIGURE, $event);
     }
