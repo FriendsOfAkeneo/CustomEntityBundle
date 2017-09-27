@@ -8,7 +8,7 @@ services:
         scope: request
         arguments:
             - '@pim_custom_entity.action.factory'
-            - '@request'
+            - '@request_stack'
 
     pim_custom_entity.rest_controller:
         class: '%pim_custom_entity.rest_controller.class%'

@@ -2,6 +2,20 @@ extensions:
     reference-data-job-instance-csv-export-show:
         module: pim/form/common/edit-form
 
+    pim-job-instance-xlsx-base-export-show-main-image:
+        module: pim/form/common/main-image
+        parent: reference-data-job-instance-csv-export-show
+        targetZone: main-image
+        config:
+            path: bundles/pimui/images/illustration-export-xlsx.svg
+
+    pim-job-instance-xlsx-base-export-show-breadcrumbs:
+        module: pim/common/breadcrumbs
+        parent: reference-data-job-instance-csv-export-show
+        targetZone: breadcrumbs
+        config:
+            tab: pim-menu-exports
+
     reference-data-job-instance-csv-export-show-tabs:
         module: pim/form/common/form-tabs
         parent: reference-data-job-instance-csv-export-show
@@ -53,7 +67,7 @@ extensions:
         module: pim/job/common/edit/field/text
         parent: reference-data-job-instance-csv-export-show-properties
         position: 120
-        targetZone: global-settings
+        targetZone: properties
         config:
             fieldCode: configuration.filePath
             readOnly: true
@@ -64,7 +78,7 @@ extensions:
         module: pim/job/common/edit/field/text
         parent: reference-data-job-instance-csv-export-show-properties
         position: 130
-        targetZone: global-settings
+        targetZone: properties
         config:
             fieldCode: configuration.delimiter
             readOnly: true
@@ -75,7 +89,7 @@ extensions:
         module: pim/job/common/edit/field/text
         parent: reference-data-job-instance-csv-export-show-properties
         position: 140
-        targetZone: global-settings
+        targetZone: properties
         config:
             fieldCode: configuration.enclosure
             readOnly: true
@@ -86,7 +100,7 @@ extensions:
         module: pim/job/common/edit/field/switch
         parent: reference-data-job-instance-csv-export-show-properties
         position: 150
-        targetZone: global-settings
+        targetZone: properties
         config:
             fieldCode: configuration.withHeader
             readOnly: true
@@ -94,10 +108,10 @@ extensions:
             tooltip: pim_enrich.form.job_instance.tab.properties.with_header.help
 
     reference-data-job-instance-csv-export-show-properties-reference-data-names:
-        module: reference-data-list
+        module: custom_entity/field/select2
         parent: reference-data-job-instance-csv-export-show-properties
         position: 155
-        targetZone: global-settings
+        targetZone: properties
         config:
             fieldCode: configuration.reference_data_name
             readOnly: true
@@ -116,15 +130,6 @@ extensions:
         targetZone: meta
         position: 100
 
-    reference-data-job-instance-csv-export-show-back-to-grid:
-        module: pim/form/common/back-to-grid
-        parent: reference-data-job-instance-csv-export-show
-        targetZone: back
-        aclResourceId: pim_importexport_export_profile_index
-        position: 80
-        config:
-            backUrl: pim_importexport_export_profile_index
-
     reference-data-job-instance-csv-export-show-edit:
         module: pim/common/redirect
         parent: reference-data-job-instance-csv-export-show
@@ -133,6 +138,7 @@ extensions:
         config:
             label: pim_enrich.form.job_instance.button.edit.title
             route: pim_importexport_export_profile_edit
+            buttonClass: AknButton AknButton--action
             identifier:
                 path: code
                 name: code

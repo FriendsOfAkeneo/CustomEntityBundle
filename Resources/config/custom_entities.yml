@@ -1,21 +1,9 @@
 custom_entities:
     default:
-        class: %pim_custom_entity.configuration.default.class%
+        class: '%pim_custom_entity.configuration.default.class%'
         extends: ~
         abstract: true
         actions:
-            index:
-                service: pim_custom_entity.action.index
-                acl_suffix: index
-            edit:
-                service: pim_custom_entity.action.edit
-                acl_suffix: edit
-            delete:
-                service: pim_custom_entity.action.delete
-                acl_suffix: delete
-            create:
-                service: pim_custom_entity.action.create
-                acl_suffix: edit
             mass_edit:
                 service: pim_custom_entity.action.mass_edit
                 enabled: false
@@ -24,10 +12,6 @@ custom_entities:
                 service: pim_custom_entity.action.mass_delete
                 enabled: false
                 acl_suffix: delete
-            show:
-                service: pim_custom_entity.action.show
-                enabled: false
-                acl_suffix: edit
             history:
                 service: pim_custom_entity.action.history
                 enabled: false

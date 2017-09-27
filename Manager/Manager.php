@@ -6,6 +6,7 @@ use Akeneo\Component\StorageUtils\Remover\RemoverInterface;
 use Akeneo\Component\StorageUtils\Saver\SaverInterface;
 use Akeneo\Component\StorageUtils\Updater\ObjectUpdaterInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
  * Base implementation for ORM managers
@@ -27,29 +28,34 @@ class Manager implements ManagerInterface
 
     /** @var RemoverInterface */
     protected $remover;
+    /** @var NormalizerInterface */
+    private $normalizer;
 
     /**
      * @param EntityManagerInterface $em
      * @param ObjectUpdaterInterface $updater
      * @param SaverInterface         $saver
      * @param RemoverInterface       $remover
+     * @param NormalizerInterface    $normalizer
      */
     public function __construct(
         EntityManagerInterface $em,
         ObjectUpdaterInterface $updater,
         SaverInterface $saver,
-        RemoverInterface $remover
+        RemoverInterface $remover,
+        NormalizerInterface $normalizer
     ) {
-        $this->em      = $em;
+        $this->em = $em;
         $this->updater = $updater;
-        $this->saver   = $saver;
+        $this->saver = $saver;
         $this->remover = $remover;
+        $this->normalizer = $normalizer;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function create($entityClass, array $defaultValues = array(), array $options = array())
+    public function create($entityClass, array $defaultValues = [], array $options = [])
     {
         $referenceData = new $entityClass();
         $this->updater->update($referenceData, $defaultValues);
@@ -60,7 +66,7 @@ class Manager implements ManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function find($entityClass, $id, array $options = array())
+    public function find($entityClass, $id, array $options = [])
     {
         return $this->em->getRepository($entityClass)->find($id);
     }
@@ -68,7 +74,7 @@ class Manager implements ManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function save($entity, array $options = array())
+    public function save($entity, array $options = []): void
     {
         $this->saver->save($entity, $options);
     }
@@ -76,8 +82,16 @@ class Manager implements ManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function remove($entity)
+    public function remove($entity): void
     {
         $this->remover->remove($entity);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function normalize($entity, $format = null, array $context = []): array
+    {
+        return $this->normalizer->normalize($entity, $format, $context);
     }
 }
