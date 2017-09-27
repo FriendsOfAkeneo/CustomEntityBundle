@@ -35,7 +35,7 @@ class Updater implements ObjectUpdaterInterface
     /**
      * @param PropertyAccessorInterface $propertyAccessor
      * @param LocaleRepositoryInterface $localeRepository
-     * @param EntityManagerInterface $em
+     * @param EntityManagerInterface    $em
      */
     public function __construct(
         PropertyAccessorInterface $propertyAccessor,
@@ -44,13 +44,13 @@ class Updater implements ObjectUpdaterInterface
     ) {
         $this->propertyAccessor = $propertyAccessor;
         $this->localeRepository = $localeRepository;
-        $this->em               = $em;
+        $this->em = $em;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function update($referenceData, array $data, array $options = [])
+    public function update($referenceData, array $data, array $options = []): ReferenceDataInterface
     {
         if (!$referenceData instanceof ReferenceDataInterface) {
             throw new \InvalidArgumentException(
@@ -71,10 +71,10 @@ class Updater implements ObjectUpdaterInterface
 
     /**
      * @param ReferenceDataInterface $referenceData
-     * @param string $propertyPath
-     * @param mixed $value
+     * @param string                 $propertyPath
+     * @param mixed                  $value
      */
-    protected function updateProperty(ReferenceDataInterface $referenceData, $propertyPath, $value)
+    protected function updateProperty(ReferenceDataInterface $referenceData, $propertyPath, $value): void
     {
         if ($this->propertyAccessor->isWritable($referenceData, $propertyPath)) {
             if ($this->isAssociation($referenceData, $propertyPath)) {
@@ -91,15 +91,15 @@ class Updater implements ObjectUpdaterInterface
      * Updates an entity linked to the reference data
      *
      * @param ReferenceDataInterface $referenceData
-     * @param string $propertyPath
-     * @param mixed $value
+     * @param string                 $propertyPath
+     * @param mixed                  $value
      *
      * @throws EntityNotFoundException
      */
-    protected function updateAssociatedEntity(ReferenceDataInterface $referenceData, $propertyPath, $value)
+    protected function updateAssociatedEntity(ReferenceDataInterface $referenceData, $propertyPath, $value): void
     {
         $associationMapping = $this->getAssociationMapping($referenceData, $propertyPath);
-        $associationRepo  = $this->em->getRepository($associationMapping['targetEntity']);
+        $associationRepo = $this->em->getRepository($associationMapping['targetEntity']);
         $associatedEntity = $associationRepo->findOneBy(['code' => $value]);
         if (null === $associatedEntity) {
             throw new EntityNotFoundException(
@@ -114,12 +114,12 @@ class Updater implements ObjectUpdaterInterface
      * Updates a reference data translation from the translatable reference data
      *
      * @param ReferenceDataInterface $referenceData
-     * @param string $propertyPath
-     * @param mixed $value
+     * @param string                 $propertyPath
+     * @param mixed                  $value
      *
      * @throws \InvalidArgumentException
      */
-    protected function updateTranslation(ReferenceDataInterface $referenceData, $propertyPath, $value)
+    protected function updateTranslation(ReferenceDataInterface $referenceData, $propertyPath, $value): void
     {
         $translationPattern = '/^(?<property>[a-zA-Z0-9_-]+)-(?<locale>[a-z]{2}_[A-Z]{2})$/';
         if (preg_match($translationPattern, $propertyPath, $matches)
@@ -143,7 +143,7 @@ class Updater implements ObjectUpdaterInterface
      *
      * @return \Doctrine\Common\Persistence\Mapping\ClassMetadata|ClassMetadataInfo
      */
-    protected function getClassMetadata(ReferenceDataInterface $referenceData)
+    protected function getClassMetadata(ReferenceDataInterface $referenceData): ClassMetadataInfo
     {
         if (null === $this->classMetadata) {
             $this->classMetadata = $this->em->getClassMetadata(ClassUtils::getClass($referenceData));
@@ -157,18 +157,18 @@ class Updater implements ObjectUpdaterInterface
      *
      * @return array
      */
-    protected function getAssociationMappings(ReferenceDataInterface $referenceData)
+    protected function getAssociationMappings(ReferenceDataInterface $referenceData): array
     {
         return $this->getClassMetadata($referenceData)->getAssociationMappings();
     }
 
     /**
      * @param ReferenceDataInterface $referenceData
-     * @param string $property
+     * @param string                 $property
      *
      * @return bool
      */
-    protected function isAssociation(ReferenceDataInterface $referenceData, $property)
+    protected function isAssociation(ReferenceDataInterface $referenceData, $property): bool
     {
         $associationMappings = $this->getAssociationMappings($referenceData);
 
@@ -177,11 +177,11 @@ class Updater implements ObjectUpdaterInterface
 
     /**
      * @param ReferenceDataInterface $referenceData
-     * @param string $property
+     * @param string                 $property
      *
      * @return array
      */
-    protected function getAssociationMapping(ReferenceDataInterface $referenceData, $property)
+    protected function getAssociationMapping(ReferenceDataInterface $referenceData, $property): array
     {
         $associationMappings = $this->getAssociationMappings($referenceData);
 
