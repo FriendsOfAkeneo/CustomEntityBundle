@@ -1,0 +1,24 @@
+Acme\Bundle\CustomBundle\Entity\Brand:
+    repositoryClass: Pim\Bundle\CustomEntityBundle\Entity\Repository\CustomEntityRepository
+    type: entity
+    table: acme_reference_data_brand
+    changeTrackingPolicy: DEFERRED_EXPLICIT
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        code:
+            type: string
+            length: 255
+            unique: true
+        sortOrder:
+            type: integer
+    manyToOne:
+        fabric:
+            targetEntity: Acme\Bundle\CustomBundle\Entity\Fabric
+            joinColum:
+                name: fabric_id
+                referencedColumnName: id
+    lifecycleCallbacks: {  }

@@ -1,0 +1,4 @@
+parameters:
+    pim_custom_entity.entity.color.class:  Acme\Bundle\CustomBundle\Entity\Color
+    pim_custom_entity.entity.fabric.class: Acme\Bundle\CustomBundle\Entity\Fabric
+    pim_custom_entity.entity.brand.class:  Acme\Bundle\CustomBundle\Entity\Brand

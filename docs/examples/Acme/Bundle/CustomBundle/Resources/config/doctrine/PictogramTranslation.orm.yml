@@ -1,0 +1,30 @@
+Acme\Bundle\CustomBundle\Entity\PictogramTranslation:
+    type: entity
+    table: acme_custom_pictogram_translation
+    changeTrackingPolicy: DEFERRED_EXPLICIT
+    uniqueConstraints:
+        locale_foreign_key_idx:
+            columns:
+                - locale
+                - foreign_key
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        label:
+            type: string
+            length: 100
+            nullable: true
+        locale:
+            type: string
+            length: 20
+    manyToOne:
+        foreignKey:
+            targetEntity: Acme\Bundle\CustomBundle\Entity\Pictogram
+            inversedBy: translations
+            joinColumns:
+                foreign_key:
+                    referencedColumnName: id
+                    onDelete: CASCADE

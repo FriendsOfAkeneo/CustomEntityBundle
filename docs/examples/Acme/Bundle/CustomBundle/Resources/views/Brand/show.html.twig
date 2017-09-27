@@ -1,0 +1,11 @@
+{% extends 'PimEnrichBundle::layout.html.twig' %}
+
+{% block content %}
+    {% set title = 'brand.title'|trans ~ ' - ' ~ object %}
+    {% set buttons %}
+        {{ elements.backLink(path('pim_customentity_index', { customEntityName: customEntityName })) }}
+    {% endset %}
+
+    {{ elements.page_header(title, buttons) }}
+
+{% endblock %}

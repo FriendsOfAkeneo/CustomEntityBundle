@@ -1,0 +1,14 @@
+services:
+    acme_custom.saver.color:
+        class: '%akeneo_storage_utils.saver.base.class%'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@event_dispatcher'
+            - '%acme_app.entity.color.class%'
+
+    acme_custom.saver.fabric:
+        class: '%akeneo_storage_utils.saver.base.class%'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@event_dispatcher'
+            - '%acme_app.entity.fabric.class%'

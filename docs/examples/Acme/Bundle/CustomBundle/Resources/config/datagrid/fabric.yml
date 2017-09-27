@@ -1,0 +1,68 @@
+datagrid:
+    fabric:
+        options:
+            entityHint: fabric
+        source:
+            type: pim_datasource_default
+            entity: Acme\Bundle\CustomBundle\Entity\Fabric
+            repository_method: createDatagridQueryBuilder
+        columns:
+            code:
+                label: Code
+            name:
+                label: name
+        properties:
+            id: ~
+            show_link:
+                type: url
+                route: pim_customentity_show
+                params:
+                    - id
+                    - customEntityName
+            edit_link:
+                type: url
+                route: pim_customentity_edit
+                params:
+                    - id
+                    - customEntityName
+            delete_link:
+                type: url
+                route: pim_customentity_delete
+                params:
+                    - id
+                    - customEntityName
+        actions:
+            show:
+                type:      navigate
+                label:     Show the reference data
+                icon:      eye-open
+                link:      show_link
+            edit:
+                type:      navigate
+                label:     Edit the reference data
+                icon:      edit
+                link:      edit_link
+                rowAction: true
+            delete:
+                type:  delete
+                label: Delete the reference data
+                icon:  trash
+                link:  delete_link
+        filters:
+            columns:
+                code:
+                    type:      string
+                    label:     Code
+                    data_name: rd.code
+                name:
+                    type:      string
+                    label:     Name
+                    data_name: rd.name
+        sorters:
+            columns:
+                code:
+                    data_name: rd.code
+                name:
+                    data_name: rd.name
+            default:
+                code: '%oro_datagrid.extension.orm_sorter.class%::DIRECTION_ASC'

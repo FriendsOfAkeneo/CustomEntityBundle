@@ -1,0 +1,12 @@
+acme_custom:
+    fabric:
+        field.label:
+            code: Code
+            name: Name
+            alternative_name: Alternative name
+
+    menu.item.reference_data:
+        color: Color
+        brand: Brand
+        fabric: Fabric
+        pictogram: Pictogram

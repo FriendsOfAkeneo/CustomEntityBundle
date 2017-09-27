@@ -1,0 +1,20 @@
+services:
+    pim_custom.form.type.fabric:
+        class: Acme\Bundle\CustomBundle\Form\Type\FabricType
+        tags:
+            - { name: form.type, alias: acme_enrich_fabric }
+
+    pim_custom.form.type.brand:
+        class: Acme\Bundle\CustomBundle\Form\Type\BrandType
+        tags:
+            - { name: form.type, alias: acme_enrich_brand }
+
+    pim_custom.form.type.brand_mass_edit:
+        class: Acme\Bundle\CustomBundle\Form\Type\BrandMassEditType
+        tags:
+            - { name: form.type, alias: acme_enrich_brand_mass_edit }
+
+    pim_custom.form.type.pictogram:
+        class: Acme\Bundle\CustomBundle\Form\Type\PictogramType
+        tags:
+            - { name: form.type, alias: acme_enrich_pictogram }
