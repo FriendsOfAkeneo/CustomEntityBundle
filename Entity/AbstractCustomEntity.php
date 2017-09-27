@@ -2,6 +2,7 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Entity;
 
+use DateTime;
 use Pim\Component\ReferenceData\Model\AbstractReferenceData;
 
 /**
@@ -11,24 +12,24 @@ use Pim\Component\ReferenceData\Model\AbstractReferenceData;
  */
 abstract class AbstractCustomEntity extends AbstractReferenceData
 {
-    /** @var \DateTime */
+    /** @var DateTime */
     protected $created;
 
-    /** @var \DateTime */
+    /** @var DateTime */
     protected $updated;
 
     /**
      * {@inheritdoc}
      */
-    public function getReference()
+    public function getReference(): string
     {
         return $this->code;
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getCreated()
+    public function getCreated(): DateTime
     {
         return $this->created;
     }
@@ -36,7 +37,7 @@ abstract class AbstractCustomEntity extends AbstractReferenceData
     /**
      * @return \DateTime
      */
-    public function getUpdated()
+    public function getUpdated(): DateTime
     {
         return $this->updated;
     }
@@ -46,7 +47,7 @@ abstract class AbstractCustomEntity extends AbstractReferenceData
      *
      * @return AbstractCustomEntity
      */
-    public function setCreated(\DateTime $created)
+    public function setCreated(DateTime $created): AbstractCustomEntity
     {
         $this->created = $created;
 
@@ -58,7 +59,7 @@ abstract class AbstractCustomEntity extends AbstractReferenceData
      *
      * @return AbstractCustomEntity
      */
-    public function setUpdated(\DateTime $updated)
+    public function setUpdated(DateTime $updated): AbstractCustomEntity
     {
         $this->updated = $updated;
 
@@ -71,14 +72,15 @@ abstract class AbstractCustomEntity extends AbstractReferenceData
      *
      * @return string
      */
-    public function getCustomEntityName() {
+    public function getCustomEntityName(): string
+    {
         return strtolower(join('', array_slice(explode('\\', __CLASS__), -1)));
     }
 
     /**
      * {@inheritdoc}
      */
-    public static function getLabelProperty()
+    public static function getLabelProperty(): string
     {
         return 'code';
     }
@@ -88,7 +90,7 @@ abstract class AbstractCustomEntity extends AbstractReferenceData
      *
      * @return string
      */
-    public static function getSortOrderColumn()
+    public static function getSortOrderColumn(): string
     {
         return 'code';
     }
