@@ -6,7 +6,7 @@ extensions:
                title: pim_custom_entity.create_popin.title
                subTitle: pim_menu.tab.pictogram
             successMessage: pim_custom_entity.message.created
-            editRoute: pim_custom_entity_edit
+            editRoute: pim_customentity_edit
             routerKey: code
             postUrl:
                 route: pim_customentity_create
@@ -21,21 +21,3 @@ extensions:
         config:
             identifier: code
             label: acme_custom.pictogram.field.label.code
-
-    pim-pictogram-create-name:
-        module: pim/form/common/creation/field
-        parent: pim-pictogram-create-modal
-        targetZone: fields
-        position: 20
-        config:
-            identifier: name
-            label: acme_custom.pictogram.field.label.name
-
-    pim-pictogram-create-alternative-name:
-        module: pim/form/common/creation/field
-        parent: pim-pictogram-create-modal
-        targetZone: fields
-        position: 30
-        config:
-            identifier: alternativeName
-            label: acme_custom.pictogram.field.label.alternative_name

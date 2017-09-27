@@ -1,13 +1,6 @@
 extensions:
     pim-color-index:
-        module: pim/common/simple-view
-        targetZone: self
-        config:
-            template: pim/template/product/index
-            templateParams:
-                gridName: color
-        forwarded-events:
-            grid_load:start: grid_load:start
+        module: pim/form/common/index/index
 
     pim-color-index-grid-title:
         module: pim/common/grid-title
@@ -15,6 +8,35 @@ extensions:
         targetZone: title
         config:
             title: pim_custom_entity.index_title
+
+    pim-color-index-breadcrumbs:
+        module: pim/common/breadcrumbs
+        parent: pim-color-index
+        targetZone: breadcrumbs
+        config:
+            tab: pim-menu-reference_data
+
+    pim-color-index-grid-filters-list:
+        module: oro/datafilter/filters-list
+        parent: pim-color-index
+        targetZone: filters
+
+    pim-color-index-grid-filters-manage:
+        module: oro/datafilter/filters-button
+        parent: pim-color-index
+        targetZone: filters
+
+    pim-color-index-pagination:
+        module: oro/datagrid/pagination-input
+        parent: pim-color-index
+        targetZone: toolbar
+
+    pim-color-index-grid:
+        module: pim/form/common/index/grid
+        parent: pim-color-index
+        targetZone: content
+        config:
+            alias: color
 
     pim-color-index-create-button:
         module: pim/form/common/index/create-button
@@ -24,45 +46,3 @@ extensions:
         config:
            title:     pim_custom_entity.button.create
            modalForm: pim-color-create-modal
-
-    pim-color-index-breadcrumbs:
-        module: pim/common/breadcrumbs
-        parent: pim-color-index
-        targetZone: breadcrumbs
-        config:
-            tab: pim-menu-reference_data
-
-    pim-color-index-user-navigation:
-        module: pim/menu/user-navigation
-        parent: pim-color-index
-        targetZone: user-menu
-        config:
-            userAccount: pim_menu.user.user_account
-            logout: pim_menu.user.logout
-
-    pim-color-index-mass-actions:
-        module: pim/grid/mass-actions
-        parent: pim-color-index
-        targetZone: mass-actions
-        config:
-            label: pim_enrich.entity.product.selected
-
-    pim-color-index-actions-panel:
-        module: oro/datagrid/actions-panel
-        parent: pim-color-index-mass-actions
-        targetZone: actions-panel
-
-    pim-color-index-pagination:
-        module: oro/datagrid/pagination-input
-        parent: pim-color-index
-        targetZone: toolbar
-
-    pim-color-index-grid:
-        module: pim/grid/table
-        parent: pim-color-index
-        targetZone: grid
-        config:
-            gridName: color
-            localeParamName: dataLocale
-            datagridLoadUrl: pim_datagrid_load
-

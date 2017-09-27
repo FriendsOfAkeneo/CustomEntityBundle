@@ -3,9 +3,9 @@ datagrid:
         extends: translatable-entity-grid
         options:
             entityHint: pictogram
+            manageFilters: false
             locale_parameter: localeCode
         source:
-            #type: pim_custom_entity
             type: pim_datasource_default
             entity: Acme\Bundle\CustomBundle\Entity\Pictogram
             repository_method: createDatagridQueryBuilder
@@ -37,11 +37,6 @@ datagrid:
                     - id
                     - customEntityName
         actions:
-            show:
-                type:      navigate
-                label:     Show the reference data
-                icon:      eye-open
-                link:      show_link
             edit:
                 type:      navigate
                 label:     Edit the reference data
@@ -53,26 +48,6 @@ datagrid:
                 label: Delete the reference data
                 icon:  trash
                 link:  delete_link
-        filters:
-            columns:
-                code:
-                    type:      string
-                    label:     Code
-                    data_name: rd.code
-                label:
-                    type:      string
-                    label:     Label
-                    data_name: translation.label
-                created:
-                    type:             date
-                    label:            Created
-                    data_name:        rd.created
-                    filter_by_having: true
-                updated:
-                    type:             date
-                    label:            Updated
-                    data_name:        rd.udapted
-                    filter_by_having: true
         sorters:
             columns:
                 code:
@@ -85,3 +60,23 @@ datagrid:
                     data_name: rd.udapted
             default:
                 code: '%oro_datagrid.extension.orm_sorter.class%::DIRECTION_ASC'
+        filters:
+            columns:
+                code:
+                    type:      string
+                    label:     Code
+                    data_name: rd.code
+                label:
+                    type:      search
+                    label:     Label
+                    data_name: translation.label
+                created:
+                    type:             date
+                    label:            Created
+                    data_name:        rd.created
+                    filter_by_having: true
+                updated:
+                    type:             date
+                    label:            Updated
+                    data_name:        rd.udapted
+                    filter_by_having: true

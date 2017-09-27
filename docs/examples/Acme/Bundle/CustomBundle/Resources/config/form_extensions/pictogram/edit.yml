@@ -1,41 +1,41 @@
 extensions:
-    pim-fabric-edit-form:
+    pim-pictogram-edit-form:
         module: pim/form/common/edit-form
 
-    pim-fabric-edit-form-breadcrumbs:
+    pim-pictogram-edit-form-breadcrumbs:
         module: pim/common/breadcrumbs
-        parent: pim-fabric-edit-form
+        parent: pim-pictogram-edit-form
         targetZone: breadcrumbs
         config:
             tab: pim-menu-reference_data
             item: pim-menu-reference_data-color
 
-    pim-fabric-edit-form-cache-invalidator:
+    pim-pictogram-edit-form-cache-invalidator:
         module: pim/cache-invalidator
-        parent: pim-fabric-edit-form
+        parent: pim-pictogram-edit-form
         position: 1000
 
-    pim-fabric-edit-form-form-tabs:
+    pim-pictogram-edit-form-form-tabs:
         module: pim/form/common/form-tabs
-        parent: pim-fabric-edit-form
+        parent: pim-pictogram-edit-form
         targetZone: content
         position: 100
 
-#    pim-fabric-edit-form-label:
+#    pim-pictogram-edit-form-label:
 #        module: pim/form/common/label
-#        parent: pim-fabric-edit-form
+#        parent: pim-pictogram-edit-form
 #        targetZone: title
 #        position: 100
 
-    pim-fabric-edit-form-secondary-actions:
+    pim-pictogram-edit-form-secondary-actions:
         module: pim/form/common/secondary-actions
-        parent: pim-fabric-edit-form
+        parent: pim-pictogram-edit-form
         targetZone: buttons
         position: 50
 
-    pim-fabric-edit-form-delete:
+    pim-pictogram-edit-form-delete:
         module: pim/group-edit-form/delete
-        parent: pim-fabric-edit-form-secondary-actions
+        parent: pim-pictogram-edit-form-secondary-actions
         targetZone: secondary-actions
         aclResourceId: pim_enrich_group_remove
         position: 100
@@ -47,45 +47,45 @@ extensions:
                 fail: error.removing.group
             redirect: pim_customentity_index
 
-    pim-fabric-edit-form-save-buttons:
+    pim-pictogram-edit-form-save-buttons:
         module: pim/form/common/save-buttons
-        parent: pim-fabric-edit-form
+        parent: pim-pictogram-edit-form
         targetZone: buttons
         position: 120
 
-    pim-fabric-edit-form-save:
+    pim-pictogram-edit-form-save:
         module: pim/form/common/save
-        parent: pim-fabric-edit-form
+        parent: pim-pictogram-edit-form
         targetZone: buttons
         position: 0
 
-    pim-fabric-edit-form-properties-tab:
+    pim-pictogram-edit-form-properties-tab:
         module: pim/common/tab
-        parent: pim-fabric-edit-form-form-tabs
+        parent: pim-pictogram-edit-form-form-tabs
         targetZone: container
         position: 100
         config:
             label: 'pim_custom_entity.form.tab.properties.title'
 
-    pim-fabric-edit-form-properties:
+    pim-pictogram-edit-form-properties:
         module: pim/common/simple-view
-        parent: pim-fabric-edit-form-properties-tab
+        parent: pim-pictogram-edit-form-properties-tab
         targetZone: self
         config:
             template: pim/template/form/tab/sections
 
-    pim-fabric-edit-form-history:
+    pim-pictogram-edit-form-history:
         module: pim/common/tab/history
-        parent: pim-fabric-edit-form-form-tabs
+        parent: pim-pictogram-edit-form-form-tabs
         targetZone: container
         position: 110
         config:
             class: 'group'
             title: 'pim_custom_entity.form.tab.history.title'
 
-    pim-fabric-edit-form-state:
+    pim-pictogram-edit-form-state:
         module: pim/form/common/state
-        parent: pim-fabric-edit-form
+        parent: pim-pictogram-edit-form
         targetZone: state
         position: 900
         config:
