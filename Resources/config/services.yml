@@ -8,11 +8,16 @@ parameters:
 
 services:
     pim_custom_entity.configuration.registry:
-        class: %pim_custom_entity.configuration.registry.class%
+        class: '%pim_custom_entity.configuration.registry.class%'
         arguments:
             - '@service_container'
 
     pim_custom_entity.action_event_manager:
-        class: %pim_custom_entity.action_event_manager.class%
+        class: '%pim_custom_entity.action_event_manager.class%'
         arguments:
             - '@event_dispatcher'
+
+    pim_custom_entity.factory.custom_entity:
+        class: Pim\Bundle\CustomEntityBundle\Entity\CustomEntityFactory
+        arguments:
+            - '@pim_custom_entity.configuration.registry'

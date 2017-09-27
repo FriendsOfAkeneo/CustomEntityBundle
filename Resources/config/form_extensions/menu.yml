@@ -1,0 +1,27 @@
+extensions:
+    # Settings
+    pim-menu-reference_data:
+        module: pim/menu/tab
+        parent: pim-menu
+        position: 111
+        targetZone: mainMenu
+        config:
+            title: pim_menu.tab.reference_data
+            iconModifier: iconSettings
+
+    pim-menu-reference_data-column:
+        module: pim/menu/column
+        parent: pim-menu
+        position: 500
+        targetZone: column
+        config:
+            stateCode: pim-menu-reference_data
+            tab: pim-menu-reference_data
+            navigationTitle: pim_menu.navigation.reference_data
+
+    pim-menu-reference_data-navigation-block:
+        module: pim/menu/navigation-block
+        parent: pim-menu-reference_data-column
+        targetZone: navigation
+        config:
+            title: pim_menu.navigation.reference_data

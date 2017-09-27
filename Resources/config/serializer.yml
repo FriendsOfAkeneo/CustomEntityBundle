@@ -1,11 +1,17 @@
 parameters:
     pim_custom_entity.normalizer.referable.class: Pim\Bundle\CustomEntityBundle\Normalizer\ReferableNormalizer
+    pim_custom_entity.normalizer.custom_entity.class: Pim\Bundle\CustomEntityBundle\Normalizer\CustomEntityNormalizer
 
 services:
     pim_custom_entity.normalizer.referable:
-        class: %pim_custom_entity.normalizer.referable.class%
+        class: '%pim_custom_entity.normalizer.referable.class%'
         arguments:
             - ['csv', 'flat']
         tags:
             - { name: pim_versioning.serializer.normalizer, priority: 100 }
             - { name: pim_serializer.normalizer, priority: 100 }
+
+    pim_custom_entity.normalizer.internal_api.custom_entity:
+        class: '%pim_custom_entity.normalizer.custom_entity.class%'
+        arguments:
+            - '@pim_serializer'
