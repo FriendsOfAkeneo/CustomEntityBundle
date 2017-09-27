@@ -37,7 +37,7 @@ class ActionEventManager
      * @param ActionInterface $action
      * @param OptionsResolver $optionsResolver
      */
-    public function dipatchConfigureEvent(ActionInterface $action, OptionsResolver $optionsResolver)
+    public function dipatchConfigureEvent(ActionInterface $action, OptionsResolver $optionsResolver): void
     {
         $event = new ConfigureActionEvent($action, $optionsResolver);
         $this->eventDispatcher->dispatch(ActionEvents::CONFIGURE, $event);
@@ -48,7 +48,7 @@ class ActionEventManager
      *
      * @param ActionInterface $action
      */
-    public function dispatchPreExecuteEvent(ActionInterface $action)
+    public function dispatchPreExecuteEvent(ActionInterface $action): void
     {
         $event = new ActionEvent($action);
         $this->eventDispatcher->dispatch(ActionEvents::PRE_EXECUTE, $event);
@@ -62,7 +62,7 @@ class ActionEventManager
      *
      * @return Response
      */
-    public function dispatchPostExecuteEvent(ActionInterface $action, Response $response)
+    public function dispatchPostExecuteEvent(ActionInterface $action, Response $response): Response
     {
         $event = new PostExecuteActionEvent($action, $response);
         $this->eventDispatcher->dispatch(ActionEvents::POST_EXECUTE, $event);
