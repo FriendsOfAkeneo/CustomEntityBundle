@@ -20,10 +20,10 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "akeneo/pim-community-dev": "1.7.*"
+        "akeneo/pim-community-dev": "dev-master@dev"
     },
     "require-dev": {
-        "phpspec/phpspec": "3.0.0",
+        "phpspec/phpspec": "3.0",
         "friendsofphp/php-cs-fixer": "@stable"
     },
     "config": {
