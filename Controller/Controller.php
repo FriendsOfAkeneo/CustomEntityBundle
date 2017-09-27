@@ -4,6 +4,7 @@ namespace Pim\Bundle\CustomEntityBundle\Controller;
 
 use Pim\Bundle\CustomEntityBundle\Action\ActionFactory;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -28,12 +29,12 @@ class Controller
 
     /**
      * @param ActionFactory $actionFactory
-     * @param Request       $request
+     * @param RequestStack  $requestStack
      */
-    public function __construct(ActionFactory $actionFactory, Request $request)
+    public function __construct(ActionFactory $actionFactory, RequestStack $requestStack)
     {
         $this->actionFactory = $actionFactory;
-        $this->request = $request;
+        $this->request = $requestStack->getCurrentRequest();
     }
 
     /**
