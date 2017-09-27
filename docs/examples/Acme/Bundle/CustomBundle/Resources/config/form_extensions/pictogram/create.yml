@@ -1,0 +1,41 @@
+extensions:
+    pim-pictogram-create-modal:
+        module: custom_entity/form/creation/modal
+        config:
+            labels:
+               title: pim_custom_entity.create_popin.title
+               subTitle: pim_menu.tab.pictogram
+            successMessage: pim_custom_entity.message.created
+            editRoute: pim_custom_entity_edit
+            routerKey: code
+            postUrl:
+                route: pim_customentity_create
+                parameters:
+                    customEntityName: pictogram
+
+    pim-pictogram-create-code:
+        module: pim/form/common/creation/field
+        parent: pim-pictogram-create-modal
+        targetZone: fields
+        position: 10
+        config:
+            identifier: code
+            label: acme_custom.pictogram.field.label.code
+
+    pim-pictogram-create-name:
+        module: pim/form/common/creation/field
+        parent: pim-pictogram-create-modal
+        targetZone: fields
+        position: 20
+        config:
+            identifier: name
+            label: acme_custom.pictogram.field.label.name
+
+    pim-pictogram-create-alternative-name:
+        module: pim/form/common/creation/field
+        parent: pim-pictogram-create-modal
+        targetZone: fields
+        position: 30
+        config:
+            identifier: alternativeName
+            label: acme_custom.pictogram.field.label.alternative_name

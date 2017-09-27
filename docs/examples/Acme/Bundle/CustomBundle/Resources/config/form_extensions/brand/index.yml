@@ -1,0 +1,68 @@
+extensions:
+    pim-brand-index:
+        module: pim/common/simple-view
+        targetZone: self
+        config:
+            template: pim/template/product/index
+            templateParams:
+                gridName: brand
+        forwarded-events:
+            grid_load:start: grid_load:start
+
+    pim-brand-index-grid-title:
+        module: pim/common/grid-title
+        parent: pim-brand-index
+        targetZone: title
+        config:
+            title: pim_custom_entity.index_title
+
+    pim-brand-index-create-button:
+        module: pim/form/common/index/create-button
+        parent: pim-brand-index
+        targetZone: buttons
+        aclResourceId: pim_enrich_product_create
+        config:
+           title:     pim_custom_entity.button.create
+           modalForm: pim-brand-create-modal
+
+    pim-brand-index-breadcrumbs:
+        module: pim/common/breadcrumbs
+        parent: pim-brand-index
+        targetZone: breadcrumbs
+        config:
+            tab: pim-menu-reference_data
+
+    pim-brand-index-user-navigation:
+        module: pim/menu/user-navigation
+        parent: pim-brand-index
+        targetZone: user-menu
+        config:
+            userAccount: pim_menu.user.user_account
+            logout: pim_menu.user.logout
+
+    pim-brand-index-mass-actions:
+        module: pim/grid/mass-actions
+        parent: pim-brand-index
+        targetZone: mass-actions
+        config:
+            label: pim_enrich.entity.product.selected
+
+    pim-brand-index-actions-panel:
+        module: oro/datagrid/actions-panel
+        parent: pim-brand-index-mass-actions
+        targetZone: actions-panel
+
+    pim-brand-index-pagination:
+        module: oro/datagrid/pagination-input
+        parent: pim-brand-index
+        targetZone: toolbar
+
+    pim-brand-index-grid:
+        module: pim/grid/table
+        parent: pim-brand-index
+        targetZone: grid
+        config:
+            gridName: brand
+            localeParamName: dataLocale
+            datagridLoadUrl: pim_datagrid_load
+

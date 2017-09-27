@@ -1,0 +1,113 @@
+extensions:
+    pim-color-create-modal:
+        module: custom_entity/form/creation/modal
+        config:
+            labels:
+               title: pim_custom_entity.create_popin.title
+               subTitle: pim_menu.tab.color
+            successMessage: pim_custom_entity.message.created
+            editRoute: pim_customentity_edit
+            routerKey: code
+            postUrl:
+                route: pim_customentity_create
+                parameters:
+                    customEntityName: color
+
+    pim-color-create-code:
+        module: pim/form/common/creation/field
+        parent: pim-color-create-modal
+        targetZone: fields
+        position: 10
+        config:
+            identifier: code
+            label: acme_custom.color.field.label.code
+
+    pim-color-create-name:
+        module: pim/form/common/creation/field
+        parent: pim-color-create-modal
+        targetZone: fields
+        position: 20
+        config:
+            identifier: name
+            label: acme_custom.color.field.label.name
+
+    pim-color-create-hex:
+        module: pim/form/common/creation/field
+        parent: pim-color-create-modal
+        targetZone: fields
+        position: 30
+        config:
+            identifier: hex
+            label: acme_custom.color.field.label.hex
+
+    pim-color-create-red:
+        module: pim/form/common/creation/field
+        parent: pim-color-create-modal
+        targetZone: fields
+        position: 40
+        config:
+            identifier: red
+            label: acme_custom.color.field.label.red
+
+    pim-color-create-green:
+        module: pim/form/common/creation/field
+        parent: pim-color-create-modal
+        targetZone: fields
+        position: 50
+        config:
+            identifier: green
+            label: acme_custom.color.field.label.name
+
+    pim-color-create-blue:
+        module: pim/form/common/creation/field
+        parent: pim-color-create-modal
+        targetZone: fields
+        position: 60
+        config:
+            identifier: blue
+            label: acme_custom.color.field.label.name
+
+    pim-color-create-hue:
+        module: pim/form/common/creation/field
+        parent: pim-color-create-modal
+        targetZone: fields
+        position: 70
+        config:
+            identifier: hue
+            label: acme_custom.color.field.label.name
+
+    pim-color-create-hsl:
+        module: pim/form/common/creation/field
+        parent: pim-color-create-modal
+        targetZone: fields
+        position: 80
+        config:
+            identifier: hslSaturation
+            label: acme_custom.color.field.label.name
+
+    pim-color-create-light:
+        module: pim/form/common/creation/field
+        parent: pim-color-create-modal
+        targetZone: fields
+        position: 90
+        config:
+            identifier: light
+            label: acme_custom.color.field.label.name
+
+    pim-color-create-hsv:
+        module: pim/form/common/creation/field
+        parent: pim-color-create-modal
+        targetZone: fields
+        position: 100
+        config:
+            identifier: hsvSaturation
+            label: acme_custom.color.field.label.name
+
+    pim-color-create-value:
+        module: pim/form/common/creation/field
+        parent: pim-color-create-modal
+        targetZone: fields
+        position: 110
+        config:
+            identifier: value
+            label: acme_custom.color.field.label.name

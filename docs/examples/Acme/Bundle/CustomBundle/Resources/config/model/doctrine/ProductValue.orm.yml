@@ -1,0 +1,46 @@
+Acme\Bundle\CustomBundle\Model\ProductValue:
+    type: entity
+    table: pim_catalog_product_value
+    changeTrackingPolicy: DEFERRED_EXPLICIT
+    manyToOne:
+        color:
+            targetEntity: Acme\Bundle\CustomBundle\Entity\Color
+            joinColumn:
+                name: color_id
+                referencedColumnName: id
+        pictogram:
+            targetEntity: Acme\Bundle\CustomBundle\Entity\Pictogram
+            joinColumn:
+                name: pictogram_id
+                referencedColumnName: id
+    manyToMany:
+        fabrics:
+            targetEntity: Acme\Bundle\CustomBundle\Entity\Fabric
+            cascade:
+                - refresh
+            joinTable:
+                name: acme_catalog_product_value_fabric
+                joinColumns:
+                    value_id:
+                        referencedColumnName: id
+                        nullable: true
+                        onDelete: CASCADE
+                inverseJoinColumns:
+                    fabric_id:
+                        referencedColumnName: id
+                        nullable: false
+        brands:
+            targetEntity: Acme\Bundle\CustomBundle\Entity\Brand
+            cascade:
+                - refresh
+            joinTable:
+                name: acme_catalog_product_value_brand
+                joinColumns:
+                    value_id:
+                        referencedColumnName: id
+                        nullable: true
+                        onDelete: CASCADE
+                inverseJoinColumns:
+                    brand_id:
+                        referencedColumnName: id
+                        nullable: false

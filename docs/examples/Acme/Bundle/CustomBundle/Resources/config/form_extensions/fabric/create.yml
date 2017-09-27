@@ -1,0 +1,40 @@
+extensions:
+    pim-fabric-create-modal:
+        module: custom_entity/form/creation/modal
+        config:
+            labels:
+               title: pim_custom_entity.create_popin.title
+               subTitle: pim_menu.tab.fabric
+            successMessage: pim_custom_entity.message.created
+            editRoute: pim_customentity_edit
+            postUrl:
+                route: pim_customentity_create
+                parameters:
+                    customEntityName: fabric
+
+    pim-fabric-create-code:
+        module: pim/form/common/creation/field
+        parent: pim-fabric-create-modal
+        targetZone: fields
+        position: 10
+        config:
+            identifier: code
+            label: acme_custom.fabric.field.label.code
+
+    pim-fabric-create-name:
+        module: pim/form/common/creation/field
+        parent: pim-fabric-create-modal
+        targetZone: fields
+        position: 20
+        config:
+            identifier: name
+            label: acme_custom.fabric.field.label.name
+
+    pim-fabric-create-alternative-name:
+        module: pim/form/common/creation/field
+        parent: pim-fabric-create-modal
+        targetZone: fields
+        position: 30
+        config:
+            identifier: alternativeName
+            label: acme_custom.fabric.field.label.alternative_name

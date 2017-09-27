@@ -1,0 +1,62 @@
+extensions:
+    pim-fabric-edit-form:
+        module: pim/form/common/edit-form
+
+    pim-fabric-edit-form-breadcrumbs:
+        module: pim/common/breadcrumbs
+        parent: pim-fabric-edit-form
+        targetZone: breadcrumbs
+        config:
+            tab: pim-menu-reference_data
+            item: pim-menu-reference_data-foo
+
+    pim-fabric-edit-form-cache-invalidator:
+        module: pim/cache-invalidator
+        parent: pim-fabric-edit-form
+        position: 1000
+
+#    pim-fabric-edit-form-label:
+#        module: pim/form/common/label
+#        parent: pim-fabric-edit-form
+#        targetZone: title
+#        position: 100
+#
+    pim-fabric-edit-form-secondary-actions:
+        module: pim/form/common/secondary-actions
+        parent: pim-fabric-edit-form
+        targetZone: buttons
+        position: 50
+
+    pim-fabric-edit-form-delete:
+        module: pim/group-edit-form/delete
+        parent: pim-fabric-edit-form-secondary-actions
+        targetZone: secondary-actions
+        aclResourceId: pim_enrich_group_remove
+        position: 100
+        config:
+            trans:
+                title: confirmation.remove.group
+                container: pim_enrich.confirmation.delete_item
+                success: flash.group.removed
+                fail: error.removing.group
+            redirect: pim_customentity_index
+
+    pim-fabric-edit-form-save-buttons:
+        module: pim/form/common/save-buttons
+        parent: pim-fabric-edit-form
+        targetZone: buttons
+        position: 120
+
+    pim-fabric-edit-form-save:
+        module: pim/group-edit-form/save
+        parent: pim-fabric-edit-form
+        targetZone: buttons
+        position: 0
+
+    pim-fabric-edit-form-state:
+        module: pim/form/common/state
+        parent: pim-fabric-edit-form
+        targetZone: state
+        position: 900
+        config:
+            entity: pim_enrich.entity.group.title

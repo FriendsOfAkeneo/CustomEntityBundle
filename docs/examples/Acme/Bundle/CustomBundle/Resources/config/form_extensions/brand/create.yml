@@ -1,0 +1,32 @@
+extensions:
+    pim-brand-create-modal:
+        module: custom_entity/form/creation/modal
+        config:
+            labels:
+               title: pim_custom_entity.create_popin.title
+               subTitle: pim_menu.tab.brand
+            successMessage: pim_custom_entity.message.created
+            editRoute: pim_customentity_edit
+            routerKey: code
+            postUrl:
+                route: pim_customentity_create
+                parameters:
+                    customEntityName: brand
+
+    pim-brand-create-code:
+        module: pim/form/common/creation/field
+        parent: pim-brand-create-modal
+        targetZone: fields
+        position: 10
+        config:
+            identifier: code
+            label: acme_custom.brand.field.label.code
+
+    pim-brand-create-fabric:
+        module: pim/form/common/creation/field
+        parent: pim-brand-create-modal
+        targetZone: fields
+        position: 20
+        config:
+            identifier: fabric
+            label: acme_custom.brand.field.label.name
