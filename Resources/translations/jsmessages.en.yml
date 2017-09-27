@@ -6,6 +6,10 @@ pim_menu:
 pim_custom_entity:
     index_title: Overview
     create_popin.title: Create
+    form:
+        tab:
+            history.title: History
+            properties.title: Properties
     button:
         create: Create
     message:

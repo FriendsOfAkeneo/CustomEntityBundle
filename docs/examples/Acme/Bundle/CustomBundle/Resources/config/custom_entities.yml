@@ -1,9 +1,13 @@
 custom_entities:
     color:
         entity_class: Acme\Bundle\CustomBundle\Entity\Color
+        options:
+            edit_fom_extension: pim-color-edit-form
 
     fabric:
         entity_class: Acme\Bundle\CustomBundle\Entity\Fabric
+        options:
+            edit_fom_extension: pim-fabric-edit-form
 
     brand:
         extends: quick_create
@@ -20,9 +24,6 @@ custom_entities:
                 acl: acme_enrich_brand_create
                 form_type: pim_custom_entity
                 service: pim_custom_entity.action.create
-            delete:
-                acl: acme_enrich_brand_delete
-                service: pim_custom_entity.action.delete
             show:
                 service: pim_custom_entity.action.show
                 template: AcmeCustomBundle:Brand:show.html.twig

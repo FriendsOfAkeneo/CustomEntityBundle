@@ -2,6 +2,7 @@ datagrid:
     color:
         options:
             entityHint: color
+            manageFilters: false
         source:
             type: pim_datasource_default
             entity: Acme\Bundle\CustomBundle\Entity\Color
@@ -13,12 +14,6 @@ datagrid:
                 label: Name
         properties:
             id: ~
-            show_link:
-                type: url
-                route: pim_customentity_show
-                params:
-                    - id
-                    - customEntityName
             edit_link:
                 type: url
                 route: pim_customentity_edit
@@ -32,11 +27,6 @@ datagrid:
                     - id
                     - customEntityName
         actions:
-            show:
-                type:      navigate
-                label:     Show the reference data
-                icon:      eye-open
-                link:      show_link
             edit:
                 type:      navigate
                 label:     Edit the reference data
@@ -48,16 +38,6 @@ datagrid:
                 label: Delete the reference data
                 icon:  trash
                 link:  delete_link
-        filters:
-            columns:
-                code:
-                    type:      string
-                    label:     Code
-                    data_name: rd.code
-                name:
-                    type:      string
-                    label:     Name
-                    data_name: rd.name
         sorters:
             columns:
                 code:
@@ -66,3 +46,13 @@ datagrid:
                     data_name: rd.name
             default:
                 code: '%oro_datagrid.extension.orm_sorter.class%::DIRECTION_ASC'
+        filters:
+            columns:
+                name:
+                    type:      search
+                    label:     Name
+                    data_name: rd.name
+                code:
+                    type:      string
+                    label:     Code
+                    data_name: rd.code
