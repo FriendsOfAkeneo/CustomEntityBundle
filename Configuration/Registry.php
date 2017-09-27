@@ -21,7 +21,7 @@ class Registry
     /**
      * @var array
      */
-    protected $configurations = array();
+    protected $configurations = [];
 
     /**
      * Constructor
@@ -40,7 +40,7 @@ class Registry
      *
      * @return boolean
      */
-    public function has($name)
+    public function has($name): bool
     {
         return isset($this->configurations[$name]);
     }
@@ -52,7 +52,7 @@ class Registry
      *
      * @return ConfigurationInterface
      */
-    public function get($name)
+    public function get($name): ConfigurationInterface
     {
         return $this->container->get($this->configurations[$name]);
     }
@@ -63,7 +63,7 @@ class Registry
      * @param string $name
      * @param string $serviceId
      */
-    public function add($name, $serviceId)
+    public function add($name, $serviceId): void
     {
         $this->configurations[$name] = $serviceId;
     }
@@ -73,7 +73,7 @@ class Registry
      *
      * @return array
      */
-    public function getNames()
+    public function getNames(): array
     {
         return array_keys($this->configurations);
     }

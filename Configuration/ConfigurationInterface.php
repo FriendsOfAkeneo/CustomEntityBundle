@@ -16,7 +16,7 @@ interface ConfigurationInterface
      *
      * @return string
      */
-    public function getName();
+    public function getName(): string;
 
     /**
      * Returns true if an action of the concerned type is registered
@@ -25,7 +25,7 @@ interface ConfigurationInterface
      *
      * @return boolean
      */
-    public function hasAction($type);
+    public function hasAction($type): bool;
 
     /**
      * Returns the id of the action service
@@ -34,7 +34,7 @@ interface ConfigurationInterface
      *
      * @return string
      */
-    public function getAction($type);
+    public function getAction($type): string;
 
     /**
      * Returns the options for a specific action type
@@ -43,19 +43,19 @@ interface ConfigurationInterface
      *
      * @return array
      */
-    public function getActionOptions($type);
+    public function getActionOptions($type): array;
 
     /**
      * Returns the class of the managed entity
      *
      * @return string
      */
-    public function getEntityClass();
+    public function getEntityClass(): string;
 
     /**
      * Returns the global options of the action
      *
      * @return array
      */
-    public function getOptions();
+    public function getOptions(): array;
 }
