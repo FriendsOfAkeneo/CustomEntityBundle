@@ -6,17 +6,15 @@ use Akeneo\Component\Localization\Model\AbstractTranslation;
 use Akeneo\Component\Localization\Model\TranslationInterface;
 
 /**
- * @author    Antoine Guigan <antoine@akeneo.com>
- * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
- * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @author     Antoine Guigan <antoine@akeneo.com>
+ * @copyright  2013 Akeneo SAS (http://www.akeneo.com)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  *
  * @deprecated will be removed in 1.7, please use \Akeneo\Component\Localization\Model\AbstractTranslation
  */
 class AbstractCustomOptionTranslation extends AbstractTranslation implements TranslationInterface
 {
-    /**
-     * @var string $label
-     */
+    /** @var string $label */
     protected $label;
 
     /**
@@ -24,7 +22,7 @@ class AbstractCustomOptionTranslation extends AbstractTranslation implements Tra
      *
      * @return AbstractCustomOptionTranslation
      */
-    public function setLabel($label)
+    public function setLabel($label): AbstractCustomOptionTranslation
     {
         $this->label = $label;
 
@@ -32,9 +30,9 @@ class AbstractCustomOptionTranslation extends AbstractTranslation implements Tra
     }
 
     /**
-     * @return AbstractCustomOptionTranslation
+     * @return string
      */
-    public function getLabel()
+    public function getLabel(): string
     {
         return $this->label;
     }
@@ -42,8 +40,8 @@ class AbstractCustomOptionTranslation extends AbstractTranslation implements Tra
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
-        return (string) $this->label;
+        return (string)$this->label;
     }
 }

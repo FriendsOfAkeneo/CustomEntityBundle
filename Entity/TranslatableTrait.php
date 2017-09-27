@@ -2,13 +2,13 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Entity;
 
-use Akeneo\Component\Localization\Model\TranslatableInterface;
 use Akeneo\Component\Localization\Model\TranslationInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Trait for translatable entity
  *
- * @see Akeneo\Component\Localization\Model\TranslatableInterface
+ * @see       Akeneo\Component\Localization\Model\TranslatableInterface
  *
  * @author    Romain Monceau <romain@akeneo.com>
  * @copyright 2017 Akeneo SAS (http://www.akeneo.com)
@@ -25,9 +25,11 @@ trait TranslatableTrait
     /**
      * Gets translation for current locale
      *
+     * @param null|string $locale
+     *
      * @return TranslatableTrait
      */
-    public function getTranslation($locale = null)
+    public function getTranslation(?string $locale = null)
     {
         $locale = ($locale) ? $locale : $this->locale;
         if (!$locale) {
@@ -53,7 +55,7 @@ trait TranslatableTrait
      *
      * @return ArrayCollection
      */
-    public function getTranslations()
+    public function getTranslations(): ArrayCollection
     {
         return $this->translations;
     }
@@ -65,7 +67,7 @@ trait TranslatableTrait
      *
      * @return TranslatableTrait
      */
-    public function addTranslation(TranslationInterface $translation)
+    public function addTranslation(TranslationInterface $translation): TranslatableTrait
     {
         if (!$this->translations->contains($translation)) {
             $this->translations->add($translation);
