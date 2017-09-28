@@ -3,10 +3,11 @@
 namespace spec\Pim\Bundle\CustomEntityBundle\Configuration;
 
 use PhpSpec\ObjectBehavior;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ConfigurationSpec extends ObjectBehavior
 {
-    public function let(\Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher)
+    public function let(EventDispatcherInterface $eventDispatcher)
     {
         $this->beConstructedWith($eventDispatcher, 'entity', 'entity_class');
     }

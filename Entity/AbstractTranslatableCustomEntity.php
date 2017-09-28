@@ -56,7 +56,6 @@ abstract class AbstractTranslatableCustomEntity extends AbstractCustomEntity imp
         }
 
         $translationClass = $this->getTranslationFQCN();
-        /** @var TranslationInterface $translation */
         $translation = new $translationClass();
         $translation->setLocale($locale);
         $translation->setForeignKey($this);

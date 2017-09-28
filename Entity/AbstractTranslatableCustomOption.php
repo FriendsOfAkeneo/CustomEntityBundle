@@ -19,13 +19,13 @@ abstract class AbstractTranslatableCustomOption extends AbstractTranslatableCust
     {
         $translated = $this->getTranslation() ? $this->getTranslation()->getLabel() : null;
 
-        return ($translated !== '' && $translated !== null) ? $translated : '[' . $this->getCode() . ']';
+        return ($translated !== '' && $translated !== null) ? $translated : sprintf('[%s]', $this->getCode());
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setLabel(string $label): AbstractTranslatableCustomOption
+    public function setLabel(string $label): AbstractTranslatableCustomEntity
     {
         $this->getTranslation()->setLabel($label);
 

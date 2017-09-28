@@ -2,12 +2,14 @@
 
 namespace spec\Pim\Bundle\CustomEntityBundle\Entity;
 
+use Akeneo\Component\Localization\Model\TranslatableInterface;
 use PhpSpec\ObjectBehavior;
-use Pim\Bundle\CustomEntityBundle\Entity\AbstractTranslatableCustomOption;
+use Pim\Bundle\CustomEntityBundle\Entity\AbstractCustomEntity;
+use Pim\Bundle\CustomEntityBundle\Entity\AbstractTranslatableCustomEntity;
 
-class TranslatableCustomOption extends AbstractTranslatableCustomOption
+class TranslatableCustomOption extends AbstractTranslatableCustomEntity
 {
-    public function getCustomEntityName()
+    public function getCustomEntityName(): string
     {
         return 'custom_option_name';
     }
@@ -22,16 +24,16 @@ class TranslatableCustomOptionSpec extends ObjectBehavior
 {
     function let()
     {
-        $this->beAnInstanceOf('spec\Pim\Bundle\CustomEntityBundle\Entity\TranslatableCustomOption');
+        $this->beAnInstanceOf(TranslatableCustomOption::class);
     }
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('Pim\Bundle\CustomEntityBundle\Entity\AbstractTranslatableCustomOption');
+        $this->shouldHaveType(AbstractCustomEntity::class);
     }
 
     function it_is_translatable()
     {
-        $this->shouldImplement('Akeneo\Component\Localization\Model\TranslatableInterface');
+        $this->shouldImplement(TranslatableInterface::class);
     }
 }

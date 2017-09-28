@@ -7,7 +7,7 @@ use Pim\Bundle\CustomEntityBundle\Entity\AbstractTranslatableCustomEntity;
 
 class TranslatableCustomEntity extends AbstractTranslatableCustomEntity
 {
-    public function getCustomEntityName()
+    public function getCustomEntityName(): string
     {
         return 'custom_option_name';
     }

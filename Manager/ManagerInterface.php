@@ -2,6 +2,8 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Manager;
 
+use Pim\Bundle\CustomEntityBundle\Entity\AbstractCustomEntity;
+
 /**
  * Base interface for custom entity managers
  *
@@ -12,7 +14,7 @@ namespace Pim\Bundle\CustomEntityBundle\Manager;
 interface ManagerInterface
 {
     /**
-     * Create an entity
+     * Creates an entity
      *
      * @param string $entityClass
      * @param array  $defaultValues
@@ -29,7 +31,7 @@ interface ManagerInterface
      * @param mixed  $id
      * @param array  $options
      *
-     * @return object
+     * @return AbstractCustomEntity|null
      */
     public function find($entityClass, $id, array $options = []);
 
@@ -42,14 +44,14 @@ interface ManagerInterface
     public function save($entity, array $options = []): void;
 
     /**
-     * Remove the entity
+     * Removes the entity
      *
      * @param object $entity
      */
     public function remove($entity): void;
 
     /**
-     * Normalize custom entity object to array
+     * Normalizes custom entity object to array
      *
      * @param       $entity
      * @param null  $format

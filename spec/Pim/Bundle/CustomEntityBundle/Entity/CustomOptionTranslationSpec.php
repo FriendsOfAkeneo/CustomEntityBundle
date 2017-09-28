@@ -8,7 +8,7 @@ use Pim\Bundle\CustomEntityBundle\Entity\AbstractCustomOptionTranslation;
 
 class CustomOptionTranslation extends AbstractCustomOptionTranslation
 {
-    public function getCustomEntityName()
+    public function getCustomEntityName(): string
     {
         return 'custom_option_translation_name';
     }

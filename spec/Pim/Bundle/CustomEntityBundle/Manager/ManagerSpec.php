@@ -7,9 +7,10 @@ use Akeneo\Component\StorageUtils\Saver\SaverInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use PhpSpec\ObjectBehavior;
+use Pim\Bundle\CustomEntityBundle\Manager\Manager;
 use Pim\Bundle\CustomEntityBundle\Updater\Updater;
 use Prophecy\Argument;
-use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class ManagerSpec extends ObjectBehavior
 {
@@ -17,14 +18,15 @@ class ManagerSpec extends ObjectBehavior
         EntityManager $em,
         Updater $updater,
         SaverInterface $saver,
-        RemoverInterface $remover
+        RemoverInterface $remover,
+        NormalizerInterface $normalizer
     ) {
-        $this->beConstructedWith($em, $updater, $saver, $remover);
+        $this->beConstructedWith($em, $updater, $saver, $remover, $normalizer);
     }
 
     public function it_is_initializable()
     {
-        $this->shouldHaveType('Pim\Bundle\CustomEntityBundle\Manager\Manager');
+        $this->shouldHaveType(Manager::class);
     }
 
     public function it_creates_objects($updater)
