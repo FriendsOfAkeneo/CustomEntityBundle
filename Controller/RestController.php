@@ -7,8 +7,9 @@ use Pim\Bundle\CustomEntityBundle\Entity\AbstractCustomEntity;
 use Pim\Bundle\CustomEntityBundle\Manager\ManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -43,18 +44,16 @@ class RestController extends AbstractController
     /**
      * Creates a custom entity
      *
-     * @param RequestStack $requestStack
-     * @param string       $customEntityName
+     * @param Request $request
+     * @param string  $customEntityName
      *
      * @return JsonResponse
      */
-    public function createAction(RequestStack $requestStack, string $customEntityName): JsonResponse
+    public function createAction(Request $request, string $customEntityName): JsonResponse
     {
-        $request = $requestStack->getCurrentRequest();
-
         $entity = $this->getManager($customEntityName)->create(
             $this->getEntityClass($customEntityName),
-            json_decode($request->getContent(), true)
+            $this->getDecodedContent($request->getContent())
         );
 
         $this->getManager($customEntityName)->save($entity);
@@ -78,13 +77,6 @@ class RestController extends AbstractController
     public function getAction(string $customEntityName, int $id): JsonResponse
     {
         $entity = $this->findEntity($customEntityName, $id);
-
-        if (null === $entity) {
-            throw new NotFoundHttpException(
-                sprintf('Unable to find the entity "%s" with id %d', $customEntityName, $id)
-            );
-        }
-
         $normalized = $this->normalize($customEntityName, $entity);
 
         return new JsonResponse($normalized);
@@ -101,14 +93,27 @@ class RestController extends AbstractController
     public function removeAction(string $customEntityName, int $id): JsonResponse
     {
         $entity = $this->findEntity($customEntityName, $id);
-
-        if (null === $entity) {
-            throw new NotFoundHttpException(
-                sprintf('Unable to find the entity "%s" with id %d', $customEntityName, $id)
-            );
-        }
-
         $this->getManager($customEntityName)->remove($entity);
+
+        return new JsonResponse(null, Response::HTTP_NO_CONTENT);
+    }
+
+    /**
+     * Update and save a custom entity
+     *
+     * @param Request $request
+     * @param string  $customEntityName
+     * @param int     $id
+     *
+     * @return JsonResponse
+     */
+    public function updateAction(Request $request, string $customEntityName, int $id): JsonResponse
+    {
+        $data = $this->getDecodedContent($request->getContent());
+        $entity = $this->findEntity($customEntityName, $id);
+        $manager = $this->getManager($customEntityName);
+        $manager->update($entity, $data);
+        $manager->save($entity);
 
         return new JsonResponse(null, Response::HTTP_NO_CONTENT);
     }
@@ -149,6 +154,12 @@ class RestController extends AbstractController
         $manager = $this->getManager($customEntityName);
         $entity = $manager->find($this->getEntityClass($customEntityName), $id);
 
+        if (null === $entity) {
+            throw new NotFoundHttpException(
+                sprintf('Unable to find the entity "%s" with code "%d"', $customEntityName, $id)
+            );
+        }
+
         return $entity;
     }
 
@@ -171,5 +182,25 @@ class RestController extends AbstractController
         $normalized = $manager->normalize($entity, 'internal_api', $context);
 
         return $normalized;
+    }
+
+    /**
+     * Get the JSON decoded content. If the content is not a valid JSON, it throws an error 400.
+     *
+     * @param string $content content of a request to decode
+     *
+     * @throws BadRequestHttpException
+     *
+     * @return array
+     */
+    protected function getDecodedContent($content)
+    {
+        $decodedContent = json_decode($content, true);
+
+        if (null === $decodedContent) {
+            throw new BadRequestHttpException('Invalid json payload received');
+        }
+
+        return $decodedContent;
     }
 }

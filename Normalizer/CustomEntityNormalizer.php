@@ -42,8 +42,8 @@ class CustomEntityNormalizer implements NormalizerInterface
         ];
 
         $normalizedEntity['meta'] = [
-            'customEntityName' => $context['customEntityName'],
             'id'               => $entity->getId(),
+            'customEntityName' => $context['customEntityName'],
             'form'             => $context['form'],
         ];
 

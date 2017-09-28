@@ -27,6 +27,14 @@ pim_customentity_get:
         _controller: pim_custom_entity.rest_controller:getAction
     methods: [GET]
 
+pim_customentity_rest_edit:
+    path: /rest/{customEntityName}/{id}/edit
+    defaults:
+        _controller: pim_custom_entity.rest_controller:updateAction
+    requirements:
+        id: \d+
+    methods: [POST]
+
 pim_customentity_edit:
     path: /{customEntityName}/{id}/edit
     requirements:

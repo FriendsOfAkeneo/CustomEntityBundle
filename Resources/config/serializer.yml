@@ -1,6 +1,7 @@
 parameters:
     pim_custom_entity.normalizer.referable.class: Pim\Bundle\CustomEntityBundle\Normalizer\ReferableNormalizer
     pim_custom_entity.normalizer.custom_entity.class: Pim\Bundle\CustomEntityBundle\Normalizer\CustomEntityNormalizer
+    pim_custom_entity.normalizer.standard.minimal.class: Pim\Bundle\CustomEntityBundle\Normalizer\Standard\MinimalStandardNormalizer
 
 services:
     pim_custom_entity.normalizer.referable:
@@ -15,3 +16,9 @@ services:
         class: '%pim_custom_entity.normalizer.custom_entity.class%'
         arguments:
             - '@pim_serializer'
+
+    pim_custom_entity.normalizer.standard.minimal:
+        public: false
+        class: '%pim_custom_entity.normalizer.standard.minimal.class%'
+        tags:
+            - { name: pim_serializer.normalizer, priority: 150 }

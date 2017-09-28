@@ -2,8 +2,8 @@
 
 namespace Acme\Bundle\CustomBundle\Entity;
 
-use Akeneo\Component\Localization\Model\TranslationInterface;
 use Akeneo\Component\Localization\Model\AbstractTranslation;
+use Akeneo\Component\Localization\Model\TranslationInterface;
 
 /**
  * @author Romain Monceau <romain@akeneo.com>

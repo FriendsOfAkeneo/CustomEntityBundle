@@ -1,9 +1,4 @@
 services:
-    pim_custom.form.type.fabric:
-        class: Acme\Bundle\CustomBundle\Form\Type\FabricType
-        tags:
-            - { name: form.type, alias: acme_enrich_fabric }
-
     pim_custom.form.type.brand:
         class: Acme\Bundle\CustomBundle\Form\Type\BrandType
         tags:

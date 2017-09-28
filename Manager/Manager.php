@@ -74,7 +74,15 @@ class Manager implements ManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function save($entity, array $options = []): void
+    public function update($entity, array $normalizedData): void
+    {
+        $this->updater->update($entity, $normalizedData);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function save($entity, ?array $options = []): void
     {
         $this->saver->save($entity, $options);
     }

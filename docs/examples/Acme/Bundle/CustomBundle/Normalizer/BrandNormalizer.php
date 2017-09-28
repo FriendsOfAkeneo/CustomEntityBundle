@@ -13,13 +13,20 @@ class BrandNormalizer implements NormalizerInterface
     /** @var string[] */
     protected $supportedFormats = ['csv', 'flat'];
 
-    public function normalize($entity, $format = null, array $context = array())
+    public function normalize($entity, $format = null, array $context = [])
     {
         return [
-            'code' => $entity->getCode()
+            'id'   => $entity->getId(),
+            'code' => $entity->getCode(),
         ];
     }
 
+    /**
+     * @param mixed $data
+     * @param null  $format
+     *
+     * @return bool
+     */
     public function supportsNormalization($data, $format = null)
     {
         return $data instanceof Brand && in_array($format, $this->supportedFormats);

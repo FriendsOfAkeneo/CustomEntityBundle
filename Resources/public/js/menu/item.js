@@ -15,6 +15,19 @@ define(
     function (BaseForm, router) {
         return BaseForm.extend({
             /**
+             * {@inheritdoc}
+             */
+            configure: function () {
+                this.trigger('pim_menu:column:register_navigation_item', {
+                    code: this.getRoute(),
+                    label: this.getLabel(),
+                    position: this.position
+                });
+
+                BaseForm.prototype.configure.apply(this, arguments);
+            },
+
+            /**
              * {@inheritDoc}
              */
             redirect: function (event) {
