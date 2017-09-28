@@ -7,6 +7,8 @@ use Akeneo\Component\Batch\Model\JobInstance;
 use Akeneo\Bundle\BatchBundle\Launcher\JobLauncherInterface;
 use PhpSpec\ObjectBehavior;
 use Pim\Bundle\CustomEntityBundle\Action\ActionFactory;
+use Pim\Bundle\CustomEntityBundle\Action\ActionInterface;
+use Pim\Bundle\CustomEntityBundle\Action\QuickExportAction;
 use Pim\Bundle\CustomEntityBundle\Configuration\Configuration;
 use Pim\Bundle\CustomEntityBundle\Configuration\ConfigurationInterface;
 use Pim\Bundle\CustomEntityBundle\Event\ActionEventManager;
@@ -102,12 +104,12 @@ class QuickExportActionSpec extends ObjectBehavior
 
     public function it_is_an_action_interface()
     {
-        $this->shouldHaveType('Pim\Bundle\CustomEntityBundle\Action\ActionInterface');
+        $this->shouldHaveType(ActionInterface::class);
     }
 
     public function it_is_initializable()
     {
-        $this->shouldHaveType('Pim\Bundle\CustomEntityBundle\Action\QuickExportAction');
+        $this->shouldHaveType(QuickExportAction::class);
     }
 
     public function it_returns_quick_export_as_type()

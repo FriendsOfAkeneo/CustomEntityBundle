@@ -5,15 +5,13 @@ namespace Pim\Bundle\CustomEntityBundle\Controller;
 use Pim\Bundle\CustomEntityBundle\Configuration\Registry;
 use Pim\Bundle\CustomEntityBundle\Entity\AbstractCustomEntity;
 use Pim\Bundle\CustomEntityBundle\Manager\ManagerInterface;
-use Pim\Component\ReferenceData\Model\ReferenceDataInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- *
  * @author    JM Leroux <jean-marie.leroux@akeneo.com>
  * @copyright 2017 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
@@ -43,15 +41,17 @@ class RestController extends AbstractController
     }
 
     /**
-     * Create a custom entity
+     * Creates a custom entity
      *
-     * @param Request $request
-     * @param string  $customEntityName
+     * @param RequestStack $requestStack
+     * @param string       $customEntityName
      *
      * @return JsonResponse
      */
-    public function createAction(Request $request, string $customEntityName): JsonResponse
+    public function createAction(RequestStack $requestStack, string $customEntityName): JsonResponse
     {
+        $request = $requestStack->getCurrentRequest();
+
         $entity = $this->getManager($customEntityName)->create(
             $this->getEntityClass($customEntityName),
             json_decode($request->getContent(), true)
@@ -68,7 +68,7 @@ class RestController extends AbstractController
     }
 
     /**
-     * Removes custom entity
+     * Get a custom entity
      *
      * @param string $customEntityName
      * @param int    $id
@@ -80,7 +80,9 @@ class RestController extends AbstractController
         $entity = $this->findEntity($customEntityName, $id);
 
         if (null === $entity) {
-            throw new NotFoundHttpException();
+            throw new NotFoundHttpException(
+                sprintf('Unable to find the entity "%s" with id %d', $customEntityName, $id)
+            );
         }
 
         $normalized = $this->normalize($customEntityName, $entity);
@@ -89,7 +91,7 @@ class RestController extends AbstractController
     }
 
     /**
-     * Removes custom entity
+     * Removes a custom entity
      *
      * @param string $customEntityName
      * @param int    $id
@@ -101,7 +103,9 @@ class RestController extends AbstractController
         $entity = $this->findEntity($customEntityName, $id);
 
         if (null === $entity) {
-            throw new NotFoundHttpException();
+            throw new NotFoundHttpException(
+                sprintf('Unable to find the entity "%s" with id %d', $customEntityName, $id)
+            );
         }
 
         $this->getManager($customEntityName)->remove($entity);
@@ -109,6 +113,11 @@ class RestController extends AbstractController
         return new JsonResponse(null, Response::HTTP_NO_CONTENT);
     }
 
+    /**
+     * @param string $customEntityName
+     *
+     * @return ManagerInterface
+     */
     protected function getManager(string $customEntityName): ManagerInterface
     {
         $configuration = $this->registry->get($customEntityName);
@@ -117,6 +126,11 @@ class RestController extends AbstractController
         return $managerRegistry->getFromConfiguration($configuration);
     }
 
+    /**
+     * @param string $customEntityName
+     *
+     * @return string
+     */
     protected function getEntityClass(string $customEntityName): string
     {
         $configuration = $this->registry->get($customEntityName);
@@ -124,7 +138,13 @@ class RestController extends AbstractController
         return $configuration->getEntityClass();
     }
 
-    protected function findEntity(string $customEntityName, int $id): ReferenceDataInterface
+    /**
+     * @param string $customEntityName
+     * @param int    $id
+     *
+     * @return AbstractCustomEntity
+     */
+    protected function findEntity(string $customEntityName, int $id): AbstractCustomEntity
     {
         $manager = $this->getManager($customEntityName);
         $entity = $manager->find($this->getEntityClass($customEntityName), $id);
@@ -132,6 +152,14 @@ class RestController extends AbstractController
         return $entity;
     }
 
+    /**
+     * Normalizes an entity into the internal array format
+     *
+     * @param string               $customEntityName
+     * @param AbstractCustomEntity $entity
+     *
+     * @return array
+     */
     protected function normalize(string $customEntityName, AbstractCustomEntity $entity): array
     {
         $manager = $this->getManager($customEntityName);

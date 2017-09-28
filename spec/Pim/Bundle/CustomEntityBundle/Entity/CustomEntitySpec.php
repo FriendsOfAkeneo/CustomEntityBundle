@@ -7,7 +7,7 @@ use Pim\Bundle\CustomEntityBundle\Entity\AbstractCustomEntity;
 
 class CustomEntity extends AbstractCustomEntity
 {
-    public function getCustomEntityName()
+    public function getCustomEntityName(): string
     {
         return 'custom_entity_name';
     }

@@ -32,7 +32,7 @@ define(
                         ).then(_.identity).done(function (entity) {
                             deferred.resolve(entity);
                         }).fail(function (promise, status, error) {
-                            console.error('Error during fetching: ', error);
+                            console.error('Error fetching: ', error);
 
                             return deferred.reject(promise);
                         });

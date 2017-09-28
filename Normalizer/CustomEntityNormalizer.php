@@ -6,7 +6,10 @@ use Pim\Bundle\CustomEntityBundle\Entity\AbstractCustomEntity;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
- * Internal API normalizer
+ * Internal API normalizer.
+ *
+ * Used to generate JSON rest responses.
+ * @see \Pim\Bundle\CustomEntityBundle\Controller\RestController
  *
  * @author    JM Leroux <jean-marie.leroux@akeneo.com>
  * @copyright 2017 Akeneo SAS (http://www.akeneo.com)

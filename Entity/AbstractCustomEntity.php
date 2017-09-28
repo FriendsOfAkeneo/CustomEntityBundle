@@ -2,7 +2,6 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Entity;
 
-use DateTime;
 use Pim\Component\ReferenceData\Model\AbstractReferenceData;
 
 /**
@@ -12,10 +11,10 @@ use Pim\Component\ReferenceData\Model\AbstractReferenceData;
  */
 abstract class AbstractCustomEntity extends AbstractReferenceData
 {
-    /** @var DateTime */
+    /** @var \DateTime */
     protected $created;
 
-    /** @var DateTime */
+    /** @var \DateTime */
     protected $updated;
 
     /**
@@ -27,9 +26,9 @@ abstract class AbstractCustomEntity extends AbstractReferenceData
     }
 
     /**
-     * @return DateTime
+     * @return \DateTime
      */
-    public function getCreated(): DateTime
+    public function getCreated(): \DateTime
     {
         return $this->created;
     }
@@ -37,7 +36,7 @@ abstract class AbstractCustomEntity extends AbstractReferenceData
     /**
      * @return \DateTime
      */
-    public function getUpdated(): DateTime
+    public function getUpdated(): \DateTime
     {
         return $this->updated;
     }
@@ -47,7 +46,7 @@ abstract class AbstractCustomEntity extends AbstractReferenceData
      *
      * @return AbstractCustomEntity
      */
-    public function setCreated(DateTime $created): AbstractCustomEntity
+    public function setCreated(\DateTime $created): AbstractCustomEntity
     {
         $this->created = $created;
 
@@ -59,7 +58,7 @@ abstract class AbstractCustomEntity extends AbstractReferenceData
      *
      * @return AbstractCustomEntity
      */
-    public function setUpdated(DateTime $updated): AbstractCustomEntity
+    public function setUpdated(\DateTime $updated): AbstractCustomEntity
     {
         $this->updated = $updated;
 

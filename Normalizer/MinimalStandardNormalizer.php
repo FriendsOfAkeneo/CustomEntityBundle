@@ -6,7 +6,7 @@ use Pim\Bundle\CustomEntityBundle\Entity\AbstractCustomEntity;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
- * Internal API normalizer
+ * Standard API normalizer, minimal version.
  *
  * @author    JM Leroux <jean-marie.leroux@akeneo.com>
  * @copyright 2017 Akeneo SAS (http://www.akeneo.com)
@@ -15,7 +15,7 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 class MinimalStandardNormalizer implements NormalizerInterface
 {
     /** @var array $supportedFormats */
-    protected $supportedFormats = ['external_api'];
+    protected $supportedFormats = ['standard'];
 
     /** @var NormalizerInterface */
     protected $standardEntityNormalizer;
@@ -30,7 +30,6 @@ class MinimalStandardNormalizer implements NormalizerInterface
 
     /**
      * {@inheritdoc}
-     * @param AbstractCustomEntity $entity
      */
     public function normalize($entity, $format = null, array $context = []): array
     {

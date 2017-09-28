@@ -5,22 +5,26 @@ namespace spec\Pim\Bundle\CustomEntityBundle\Controller;
 use PhpSpec\ObjectBehavior;
 use Pim\Bundle\CustomEntityBundle\Action\ActionFactory;
 use Pim\Bundle\CustomEntityBundle\Action\ActionInterface;
+use Pim\Bundle\CustomEntityBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class ControllerSpec extends ObjectBehavior
 {
     public function let(
-        Request $request,
+        RequestStack $requestStack,
         ActionFactory $actionFactory,
-        ActionInterface $action
+        ActionInterface $action,
+        Request $request
     ) {
-        $this->beConstructedWith($actionFactory, $request);
+        $requestStack->getCurrentRequest()->willReturn($request);
+        $this->beConstructedWith($actionFactory, $requestStack);
         $actionFactory->getAction('entity', 'action')->willReturn($action);
     }
 
     public function it_is_initializable()
     {
-        $this->shouldHaveType('Pim\Bundle\CustomEntityBundle\Controller\Controller');
+        $this->shouldHaveType(Controller::class);
     }
 
     public function it_calls_actions(
