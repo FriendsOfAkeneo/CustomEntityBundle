@@ -20,13 +20,13 @@ extensions:
         position: 10
         config:
             identifier: code
-            label: acme_custom.brand.field.label.code
+            label: pim_custom_entity.form.field.label.code
 
     pim-brand-create-fabric:
-        module: pim/form/common/creation/field
+        module: pim/reference-simple-select-field
         parent: pim-brand-create-modal
         targetZone: fields
         position: 20
         config:
             identifier: fabric
-            label: acme_custom.brand.field.label.name
+            label: acme_custom.brand.field.label.fabric
