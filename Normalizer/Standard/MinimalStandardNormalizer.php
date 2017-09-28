@@ -1,6 +1,6 @@
 <?php
 
-namespace Pim\Bundle\CustomEntityBundle\Normalizer;
+namespace Pim\Bundle\CustomEntityBundle\Normalizer\Standard;
 
 use Pim\Bundle\CustomEntityBundle\Entity\AbstractCustomEntity;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
@@ -16,17 +16,6 @@ class MinimalStandardNormalizer implements NormalizerInterface
 {
     /** @var array $supportedFormats */
     protected $supportedFormats = ['standard'];
-
-    /** @var NormalizerInterface */
-    protected $standardEntityNormalizer;
-
-    /**
-     * @param NormalizerInterface $standardNormalizer
-     */
-    public function __construct(NormalizerInterface $standardNormalizer)
-    {
-        $this->standardEntityNormalizer = $standardNormalizer;
-    }
 
     /**
      * {@inheritdoc}

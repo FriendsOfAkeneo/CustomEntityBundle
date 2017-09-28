@@ -202,7 +202,6 @@ class CustomEntityRepository extends ReferenceDataRepository implements Pageable
                 ->select(sprintf('COUNT(%s.id)', $this->getAlias()))
                 ->getQuery()
                 ->getSingleScalarResult();
-
         } catch (UnexpectedResultException $e) {
             return 0;
         }

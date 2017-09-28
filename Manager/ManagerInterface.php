@@ -39,6 +39,14 @@ interface ManagerInterface
      * Saves the entity
      *
      * @param object $entity
+     * @param array  $normalizedData
+     */
+    public function update($entity, array $normalizedData): void;
+
+    /**
+     * Saves the entity
+     *
+     * @param object $entity
      * @param array  $options
      */
     public function save($entity, array $options = []): void;
