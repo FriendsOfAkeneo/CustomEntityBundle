@@ -24,7 +24,7 @@
     },
     "require-dev": {
         "phpspec/phpspec": "3.0",
-        "friendsofphp/php-cs-fixer": "@stable"
+        "friendsofphp/php-cs-fixer": "^2.6"
     },
     "config": {
         "bin-dir": "bin"
