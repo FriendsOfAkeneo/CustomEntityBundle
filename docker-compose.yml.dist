@@ -1,0 +1,17 @@
+version: '2'
+
+services:
+  fpm:
+    image: akeneo/fpm:php-7.1
+    environment:
+      COMPOSER_HOME: /home/docker/.composer
+    user: docker
+    volumes:
+      - ./:/srv/custom_entity
+      - ~/.composer:/home/docker/.composer
+    working_dir: /srv/custom_entity
+    networks:
+      - akeneo-ceb
+
+networks:
+  akeneo-ceb: ~
