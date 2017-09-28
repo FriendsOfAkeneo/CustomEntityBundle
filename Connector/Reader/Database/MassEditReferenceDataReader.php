@@ -49,7 +49,6 @@ class MassEditReferenceDataReader implements ItemReaderInterface, StepExecutionA
     public function read()
     {
         if (null === $this->referenceDatas) {
-
             $jobExecution = $this->stepExecution->getJobExecution();
             $jobParameters = $jobExecution->getJobParameters();
             $this->referenceDatas = $this->getReferenceDatas(
