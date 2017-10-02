@@ -4,8 +4,10 @@ namespace Pim\Bundle\CustomEntityBundle\Action;
 
 use Akeneo\Bundle\BatchBundle\Job\JobInstanceRepository;
 use Akeneo\Bundle\BatchBundle\Launcher\JobLauncherInterface;
+use Oro\Bundle\DataGridBundle\Extension\MassAction\MassActionParametersParser;
 use Pim\Bundle\CustomEntityBundle\Event\ActionEventManager;
 use Pim\Bundle\CustomEntityBundle\Manager\Registry as ManagerRegistry;
+use Pim\Bundle\DataGridBundle\Adapter\GridFilterAdapterInterface;
 use Pim\Bundle\DataGridBundle\Extension\MassAction\MassActionDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,16 +37,24 @@ class QuickExportAction extends AbstractAction
     /** @var TokenStorageInterface */
     protected $tokenStorage;
 
+    /** @var MassActionParametersParser */
+    protected $parameterParser;
+
+    /** @var GridFilterAdapterInterface */
+    protected $gridFilterAdapter;
+
     /**
-     * @param ActionFactory         $actionFactory
-     * @param ActionEventManager    $eventManager
-     * @param ManagerRegistry       $managerRegistry
-     * @param RouterInterface       $router
-     * @param TranslatorInterface   $translator
-     * @param MassActionDispatcher  $massActionDispatcher
-     * @param JobInstanceRepository $jobInstanceRepo
-     * @param JobLauncherInterface  $jobLauncher
-     * @param TokenStorageInterface $tokenStorage
+     * @param ActionFactory              $actionFactory
+     * @param ActionEventManager         $eventManager
+     * @param ManagerRegistry            $managerRegistry
+     * @param RouterInterface            $router
+     * @param TranslatorInterface        $translator
+     * @param MassActionDispatcher       $massActionDispatcher
+     * @param JobInstanceRepository      $jobInstanceRepo
+     * @param JobLauncherInterface       $jobLauncher
+     * @param TokenStorageInterface      $tokenStorage
+     * @param MassActionParametersParser $parameterParser
+     * @param GridFilterAdapterInterface $gridFilterAdapter
      */
     public function __construct(
         ActionFactory $actionFactory,
@@ -55,7 +65,9 @@ class QuickExportAction extends AbstractAction
         MassActionDispatcher $massActionDispatcher,
         JobInstanceRepository $jobInstanceRepo,
         JobLauncherInterface $jobLauncher,
-        TokenStorageInterface $tokenStorage
+        TokenStorageInterface $tokenStorage,
+        MassActionParametersParser $parameterParser,
+        GridFilterAdapterInterface $gridFilterAdapter
     ) {
         parent::__construct($actionFactory, $eventManager, $managerRegistry, $router, $translator);
 
@@ -63,6 +75,8 @@ class QuickExportAction extends AbstractAction
         $this->jobInstanceRepo      = $jobInstanceRepo;
         $this->jobLauncher          = $jobLauncher;
         $this->tokenStorage         = $tokenStorage;
+        $this->parameterParser      = $parameterParser;
+        $this->gridFilterAdapter    = $gridFilterAdapter;
     }
 
     /**
@@ -80,11 +94,15 @@ class QuickExportAction extends AbstractAction
             );
         }
 
-        $rawConfiguration = $jobInstance->getRawParameters();
-        $rawConfiguration['reference_data'] = $this->configuration->getEntityClass();
-        $rawConfiguration['ids'] = $this->massActionDispatcher->dispatch($request);
+        $parameters = $this->parameterParser->parse($request);
 
-        $this->jobLauncher->launch($jobInstance, $this->getUser(), $rawConfiguration);
+        $rawParameters = $jobInstance->getRawParameters();
+        $rawParameters['reference_data'] = $this->configuration->getEntityClass();
+        $rawParameters['ids'] = $parameters['values'];
+        //$rawConfiguration['ids'] = $this->massActionDispatcher->dispatch($request);
+
+        $configuration = array_merge($rawParameters, $rawParameters);
+        $this->jobLauncher->launch($jobInstance, $this->getUser(), $configuration);
 
         return new Response();
     }
@@ -96,7 +114,7 @@ class QuickExportAction extends AbstractAction
      *
      * @throws TokenNotFoundException
      *
-     * @see Symfony\Component\Security\Core\Authentication\Token\TokenInterface::getUser()
+     * @see \Symfony\Component\Security\Core\Authentication\Token\TokenInterface::getUser()
      */
     protected function getUser()
     {
