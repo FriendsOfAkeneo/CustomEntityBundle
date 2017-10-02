@@ -10,21 +10,23 @@
 define(
     [
         'pim/menu/item',
-        'pim/router'
+        'pim/router',
+        'routing'
     ],
-    function (BaseForm, router) {
+    function (BaseForm, router, Routing) {
         return BaseForm.extend({
+
             /**
              * {@inheritdoc}
              */
-            configure: function () {
-                this.trigger('pim_menu:column:register_navigation_item', {
-                    code: this.getRoute(),
-                    label: this.getLabel(),
-                    position: this.position
-                });
+            render: function () {
+                this.$el.empty().append(this.template({
+                    title: this.getLabel(),
+                    url: Routing.generateHash(this.getRoute(), this.getRouteParams()),
+                    active: this.active
+                }));
 
-                BaseForm.prototype.configure.apply(this, arguments);
+                this.delegateEvents();
             },
 
             /**
