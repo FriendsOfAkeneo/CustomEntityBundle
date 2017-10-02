@@ -81,6 +81,7 @@ datagrid:
                 entity_name: brand
                 acl_resource: ~
                 handler: mass_delete
+                className: 'AknButton AknButton--important AknButtonList-item'
                 messages:
                     confirm_title: pim_datagrid.mass_action.delete.confirm_title
                     confirm_content: pim_datagrid.mass_action.delete.confirm_content
@@ -88,15 +89,11 @@ datagrid:
                     success: pim_datagrid.mass_action.delete.success
                     error: pim_datagrid.mass_action.delete.error
                     empty_selection: pim_datagrid.mass_action.delete.empty_selection
-                launcherOptions:
-                    icon: trash
-                className: AknActionButton
 
             quick_export_csv:
                 type: export
                 label: pim.grid.mass_action.quick_export.csv_all
-                icon: download
-                className: AknActionButton
+                className:  'AknButton AknButton--action AknButtonList-item'
                 handler: custom_quick_export
                 route: pim_customentity_quickexport
                 route_parameters:
@@ -111,8 +108,7 @@ datagrid:
             mass_edit:
                 type: redirect
                 label: Mass Edit
-                icon: pencil
-                className: AknActionButton
+                className: 'AknButton AknButton--action AknButtonList-item'
                 handler: custom_mass_edit
                 route: pim_customentity_massedit
                 route_parameters:

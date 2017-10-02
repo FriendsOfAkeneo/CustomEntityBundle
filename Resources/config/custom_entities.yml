@@ -25,6 +25,7 @@ custom_entities:
         abstract: true
         actions:
             index:
+                service: pim_custom_entity.action.quick_create
                 quick_create: true
             create:
                 service: pim_custom_entity.action.quick_create
