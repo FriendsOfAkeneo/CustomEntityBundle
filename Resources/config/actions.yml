@@ -43,12 +43,12 @@ services:
     pim_custom_entity.action.index:
         class: '%pim_custom_entity.action.index.class%'
         parent: pim_custom_entity.action.viewable
-        scope: prototype
+        shared: false
 
     pim_custom_entity.action.delete:
         class: '%pim_custom_entity.action.delete.class%'
         parent: pim_custom_entity.action
-        scope: prototype
+        shared: false
 
     pim_custom_entity.action.form:
         abstract: true
@@ -59,12 +59,12 @@ services:
     pim_custom_entity.action.edit:
         class: '%pim_custom_entity.action.edit.class%'
         parent: pim_custom_entity.action.form
-        scope: prototype
+        shared: false
 
     pim_custom_entity.action.mass_edit:
         class: '%pim_custom_entity.action.mass_edit.class%'
         parent: pim_custom_entity.action.form
-        scope: prototype
+        shared: false
         arguments:
             - '@pim_datagrid.extension.mass_action.dispatcher'
             - '@pim_custom_entity.mass_action.mass_updater'
@@ -72,19 +72,21 @@ services:
     pim_custom_entity.action.quick_export:
         class: '%pim_custom_entity.action.quick_export.class%'
         parent: pim_custom_entity.action
-        scope: prototype
+        shared: false
         arguments:
             - '@pim_datagrid.extension.mass_action.dispatcher'
             - '@akeneo_batch.job.job_instance_repository'
             - '@akeneo_batch.launcher.simple_job_launcher'
             - '@security.token_storage'
+            - '@oro_datagrid.mass_action.parameters_parser'
+            - '@pim_datagrid.adapter.oro_to_pim_grid_filter'
 
     pim_custom_entity.action.create:
         class: '%pim_custom_entity.action.create.class%'
         parent: pim_custom_entity.action.form
-        scope: prototype
+        shared: false
 
     pim_custom_entity.action.quick_create:
         class: '%pim_custom_entity.action.quick_create.class%'
         parent: pim_custom_entity.action.form
-        scope: prototype
+        shared: false
