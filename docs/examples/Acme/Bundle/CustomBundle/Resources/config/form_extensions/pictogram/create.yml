@@ -4,7 +4,7 @@ extensions:
         config:
             labels:
                title: pim_custom_entity.create_popin.title
-               subTitle: pim_menu.tab.pictogram
+               subTitle: acme_custom.menu.item.reference_data.pictogram
             successMessage: pim_custom_entity.message.created
             editRoute: pim_customentity_edit
             routerKey: code

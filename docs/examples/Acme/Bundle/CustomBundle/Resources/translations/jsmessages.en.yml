@@ -2,10 +2,25 @@ acme_custom:
     brand:
         index_title: "] -Inf, 1] {{ count }} Brand|] 1, Inf [{{ count }} Brands"
         selected: brands selected
+        field.label:
+            code: Code
+        form:
+            tab.properties.section.common: Common
 
     color:
         index_title: "] -Inf, 1] {{ count }} Color|] 1, Inf [{{ count }} Colors"
         selected: colors selected
+        field:
+            label.code: Code
+            label.name: Name
+            label.hex: Hex code
+            label.red: Red value
+            label.green: Green value
+            label.blue: Blue value
+            label.hue: Hue value
+            label.hsl: HSL value
+            label.light: Light value
+            label.value: Value
 
     fabric:
         index_title: "] -Inf, 1] {{ count }} Fabric|] 1, Inf [{{ count }} Fabrics"
@@ -18,6 +33,8 @@ acme_custom:
     pictogram:
         index_title: "] -Inf, 1] {{ count }} Pictogram|] 1, Inf [{{ count }} Pictograms"
         selected: pictograms selected
+        field.label:
+            code: Code
 
     menu.item.reference_data:
         color: Color

@@ -4,7 +4,7 @@ extensions:
         config:
             labels:
                title: pim_custom_entity.create_popin.title
-               subTitle: pim_menu.tab.color
+               subTitle: acme_custom.menu.item.reference_data.color
             successMessage: pim_custom_entity.message.created
             editRoute: pim_customentity_edit
             routerKey: code
@@ -56,7 +56,7 @@ extensions:
         position: 50
         config:
             identifier: green
-            label: acme_custom.color.field.label.name
+            label: acme_custom.color.field.label.green
 
     pim-color-create-blue:
         module: pim/form/common/creation/field
@@ -65,7 +65,7 @@ extensions:
         position: 60
         config:
             identifier: blue
-            label: acme_custom.color.field.label.name
+            label: acme_custom.color.field.label.blue
 
     pim-color-create-hue:
         module: pim/form/common/creation/field
@@ -74,7 +74,7 @@ extensions:
         position: 70
         config:
             identifier: hue
-            label: acme_custom.color.field.label.name
+            label: acme_custom.color.field.label.hue
 
     pim-color-create-hsl:
         module: pim/form/common/creation/field
@@ -83,7 +83,7 @@ extensions:
         position: 80
         config:
             identifier: hslSaturation
-            label: acme_custom.color.field.label.name
+            label: acme_custom.color.field.label.hsl
 
     pim-color-create-light:
         module: pim/form/common/creation/field
@@ -92,7 +92,7 @@ extensions:
         position: 90
         config:
             identifier: light
-            label: acme_custom.color.field.label.name
+            label: acme_custom.color.field.label.light
 
     pim-color-create-hsv:
         module: pim/form/common/creation/field
@@ -101,7 +101,7 @@ extensions:
         position: 100
         config:
             identifier: hsvSaturation
-            label: acme_custom.color.field.label.name
+            label: acme_custom.color.field.label.hsv
 
     pim-color-create-value:
         module: pim/form/common/creation/field
@@ -110,4 +110,4 @@ extensions:
         position: 110
         config:
             identifier: value
-            label: acme_custom.color.field.label.name
+            label: acme_custom.color.field.label.value

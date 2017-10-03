@@ -8,7 +8,7 @@ extensions:
         targetZone: breadcrumbs
         config:
             tab: pim-menu-reference_data
-            item: pim-menu-reference_data-foo
+            item: pim-menu-reference_data-brand
 
     pim-brand-edit-form-cache-invalidator:
         module: pim/cache-invalidator
@@ -21,12 +21,6 @@ extensions:
         targetZone: content
         position: 100
 
-#    pim-brand-edit-form-label:
-#        module: pim/form/common/label
-#        parent: pim-brand-edit-form
-#        targetZone: title
-#        position: 100
-#
     pim-brand-edit-form-secondary-actions:
         module: pim/form/common/secondary-actions
         parent: pim-brand-edit-form
@@ -82,7 +76,7 @@ extensions:
         targetZone: container
         position: 100
         config:
-            label: 'pim_custom_entity.form.tab.properties.title'
+            label: pim_custom_entity.form.tab.properties.title
 
     pim-brand-edit-form-properties:
         module: pim/common/simple-view
@@ -97,8 +91,8 @@ extensions:
         targetZone: container
         position: 110
         config:
-            class: 'group'
-            title: 'pim_custom_entity.form.tab.history.title'
+            class: group
+            title: pim_custom_entity.form.tab.history.title
 
     pim-brand-edit-form-state:
         module: pim/form/common/state
@@ -123,7 +117,7 @@ extensions:
         config:
             template: pim/template/form/tab/section
             templateParams:
-                sectionTitle: pim_enrich.form.brand.tab.properties.section.common
+                sectionTitle: acme_custom.brand.form.tab.properties.section.common
                 dropZone: content
 
     pim-brand-edit-form-properties-code:
