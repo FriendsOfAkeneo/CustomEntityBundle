@@ -1,13 +1,33 @@
 extensions:
     pim-color-index:
-        module: pim/form/common/index/index
+        module: pim/common/simple-view
+        config:
+            template: pim/template/common/default-template
+        forwarded-events:
+            grid_load:start: grid_load:start
+            grid_load:complete: grid_load:complete
+
+    pim-color-index-grid-container:
+        module: pim/common/simple-view
+        parent: pim-color-index
+        targetZone: content
+        config:
+            template: pim/template/form/index/index
+
+    pim-color-index-user-navigation:
+        module: pim/menu/user-navigation
+        parent: pim-color-index
+        targetZone: user-menu
+        config:
+            userAccount: pim_menu.user.user_account
+            logout: pim_menu.user.logout
 
     pim-color-index-grid-title:
         module: pim/common/grid-title
         parent: pim-color-index
         targetZone: title
         config:
-            title: pim_custom_entity.index_title
+            title: acme_custom.color.index_title
 
     pim-color-index-breadcrumbs:
         module: pim/common/breadcrumbs
@@ -15,26 +35,40 @@ extensions:
         targetZone: breadcrumbs
         config:
             tab: pim-menu-reference_data
+            item: acme_custom-menu-reference_data-item-color
 
     pim-color-index-grid-filters-list:
         module: oro/datafilter/filters-list
-        parent: pim-color-index
+        parent: pim-color-index-grid-container
         targetZone: filters
 
     pim-color-index-grid-filters-manage:
         module: oro/datafilter/filters-button
-        parent: pim-color-index
+        parent: pim-color-index-grid-container
         targetZone: filters
+
+    pim-color-index-mass-actions:
+        module: pim/grid/mass-actions
+        parent: pim-color-index
+        targetZone: bottom-panel
+        config:
+            label: acme_custom.color.selected
+
+    pim-color-index-actions-panel:
+        module: oro/datagrid/actions-panel
+        parent: pim-color-index-mass-actions
+        targetZone: actions-panel
 
     pim-color-index-pagination:
         module: oro/datagrid/pagination-input
-        parent: pim-color-index
+        parent: pim-color-index-grid-container
         targetZone: toolbar
 
     pim-color-index-grid:
         module: pim/form/common/index/grid
         parent: pim-color-index
         targetZone: content
+        position: 1000
         config:
             alias: color
 

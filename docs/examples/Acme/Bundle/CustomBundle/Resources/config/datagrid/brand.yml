@@ -2,6 +2,7 @@ datagrid:
     brand:
         options:
             entityHint: brand
+            manageFilters: false
         source:
             type: pim_datasource_default
             entity: Acme\Bundle\CustomBundle\Entity\Brand
