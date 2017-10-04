@@ -6,6 +6,7 @@ acme_custom:
             code: Code
         form:
             tab.properties.section.common: Common
+            tab.properties.section.label_translations: Labels
 
     color:
         index_title: "] -Inf, 1] {{ count }} Color|] 1, Inf [{{ count }} Colors"

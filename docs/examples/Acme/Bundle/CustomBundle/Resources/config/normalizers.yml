@@ -1,23 +1,15 @@
 services:
-    pim_serializer.normalizer.flat.brand:
-        public: false
-        class: Acme\Bundle\CustomBundle\Normalizer\BrandNormalizer
-        arguments:
-            - '@pim_catalog.filter.chained'
-        tags:
-            - { name: pim_serializer.normalizer, priority: 150 }
-
     pim_custom_entity.normalizer.standard.color:
         public: false
         class: Acme\Bundle\CustomBundle\Normalizer\Standard\ColorNormalizer
         tags:
-            - { name: pim_serializer.normalizer, priority: 150 }
+            - { name: pim_serializer.normalizer, priority: 200 }
 
     pim_custom_entity.normalizer.standard.fabric:
         public: false
         class: Acme\Bundle\CustomBundle\Normalizer\Standard\FabricNormalizer
         tags:
-            - { name: pim_serializer.normalizer, priority: 150 }
+            - { name: pim_serializer.normalizer, priority: 200 }
 
     pim_custom_entity.normalizer.standard.brand:
         public: false
@@ -25,4 +17,4 @@ services:
         arguments:
             - '@pim_custom_entity.normalizer.standard.fabric'
         tags:
-            - { name: pim_serializer.normalizer, priority: 150 }
+            - { name: pim_serializer.normalizer, priority: 200 }

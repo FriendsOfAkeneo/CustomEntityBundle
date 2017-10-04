@@ -8,7 +8,7 @@ extensions:
         targetZone: breadcrumbs
         config:
             tab: pim-menu-reference_data
-            item: pim-menu-reference_data-color
+            item: pim-menu-reference_data-pictogram
 
     pim-pictogram-edit-form-cache-invalidator:
         module: pim/cache-invalidator
@@ -21,11 +21,11 @@ extensions:
         targetZone: content
         position: 100
 
-#    pim-pictogram-edit-form-label:
-#        module: pim/form/common/label
-#        parent: pim-pictogram-edit-form
-#        targetZone: title
-#        position: 100
+    pim-pictogram-edit-form-label:
+        module: pim/form/common/label
+        parent: pim-pictogram-edit-form
+        targetZone: title
+        position: 90
 
     pim-pictogram-edit-form-secondary-actions:
         module: pim/form/common/secondary-actions
@@ -54,10 +54,19 @@ extensions:
         position: 120
 
     pim-pictogram-edit-form-save:
-        module: pim/form/common/save
+        module: custom_entity/form/common/save-form
         parent: pim-pictogram-edit-form
         targetZone: buttons
         position: 0
+        config:
+            updateSuccessMessage: pim_enrich.entity.attribute.info.update_successful
+            updateFailureMessage: pim_enrich.entity.attribute.info.update_failed
+            notReadyMessage: pim_enrich.entity.attribute.info.field_not_ready
+            url: pim_customentity_rest_edit
+            route_params:
+                customEntityName: pictogram
+            redirectAfter: pim_customentity_edit
+            excludedProperties: []
 
     pim-pictogram-edit-form-properties-tab:
         module: pim/common/tab
@@ -80,8 +89,8 @@ extensions:
         targetZone: container
         position: 110
         config:
-            class: 'group'
-            title: 'pim_custom_entity.form.tab.history.title'
+            class: pictogram
+            title: pim_custom_entity.form.tab.history.title
 
     pim-pictogram-edit-form-state:
         module: pim/form/common/state
@@ -89,4 +98,44 @@ extensions:
         targetZone: state
         position: 900
         config:
-            entity: pim_enrich.entity.group.title
+            entity: 'acme_custom.entity.pictogram.title'
+
+    pim-pictogram-edit-form-properties-common:
+        module: pim/common/simple-view
+        parent: pim-pictogram-edit-form-properties
+        targetZone: accordion
+        position: 100
+        config:
+            template: pim/template/form/tab/section
+            templateParams:
+                sectionTitle: pim_custom_entity.form.tab.properties.section.common
+                dropZone: content
+
+    pim-pictogram-edit-form-properties-code:
+        module: pim/attribute-edit-form/properties/text
+        parent: pim-pictogram-edit-form-properties-common
+        targetZone: content
+        position: 90
+        config:
+            fieldName: code
+            required: true
+            readOnly: true
+
+    pim-pictogram-edit-form-properties-translation-section:
+        module: pim/common/simple-view
+        parent: pim-pictogram-edit-form-properties
+        targetZone: accordion
+        position: 110
+        config:
+            template: pim/template/form/tab/section
+            templateParams:
+                sectionTitle: pim_custom_entity.form.group.tab.properties.label_translations
+                dropZone: content
+
+    pim-pictogram-edit-form-properties-translation:
+        module: pim/common/properties/translation
+        parent: pim-pictogram-edit-form-properties-translation-section
+        targetZone: content
+        position: 100
+        config:
+            fieldBaseId: 'pim_enrich_group_form_label_'

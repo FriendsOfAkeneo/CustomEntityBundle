@@ -21,12 +21,12 @@ extensions:
         targetZone: content
         position: 100
 
-#    pim-color-edit-form-label:
-#        module: pim/form/common/label
-#        parent: pim-color-edit-form
-#        targetZone: title
-#        position: 100
-#
+    pim-color-edit-form-label:
+        module: pim/form/common/label
+        parent: pim-color-edit-form
+        targetZone: title
+        position: 100
+
     pim-color-edit-form-secondary-actions:
         module: pim/form/common/secondary-actions
         parent: pim-color-edit-form
@@ -123,7 +123,7 @@ extensions:
         config:
             template: pim/template/form/tab/section
             templateParams:
-                sectionTitle: pim_enrich.form.color.tab.properties.section.common
+                sectionTitle: pim_custom_entity.form.tab.properties.section.common
                 dropZone: content
 
     pim-color-edit-form-properties-code:

@@ -8,7 +8,8 @@ use Akeneo\Component\Localization\Model\TranslationInterface;
 /**
  * @author Romain Monceau <romain@akeneo.com>
  */
-class PictogramTranslation extends AbstractTranslation implements TranslationInterface
+class PictogramTranslation extends AbstractTranslation
+    implements TranslationInterface, TranslatableCustomEntityInterface
 {
     /**
      * @var string $label
@@ -18,9 +19,9 @@ class PictogramTranslation extends AbstractTranslation implements TranslationInt
     /**
      * @param string $label
      *
-     * @return TranslationInterface
+     * @return TranslatableCustomEntityInterface
      */
-    public function setLabel($label)
+    public function setLabel(string $label): TranslatableCustomEntityInterface
     {
         $this->label = $label;
 
@@ -28,9 +29,9 @@ class PictogramTranslation extends AbstractTranslation implements TranslationInt
     }
 
     /**
-     * @return TranslationInterface
+     * @return string
      */
-    public function getLabel()
+    public function getLabel(): string
     {
         return $this->label;
     }
@@ -40,6 +41,6 @@ class PictogramTranslation extends AbstractTranslation implements TranslationInt
      */
     public function __toString()
     {
-        return (string) $this->label;
+        return (string)$this->label;
     }
 }

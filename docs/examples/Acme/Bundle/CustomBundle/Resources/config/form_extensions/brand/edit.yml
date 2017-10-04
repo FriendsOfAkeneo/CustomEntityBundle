@@ -15,6 +15,12 @@ extensions:
         parent: pim-brand-edit-form
         position: 1000
 
+    pim-color-edit-form-label:
+        module: pim/form/common/label
+        parent: pim-color-edit-form
+        targetZone: title
+        position: 90
+
     pim-brand-edit-form-form-tabs:
         module: pim/form/common/form-tabs
         parent: pim-brand-edit-form
@@ -117,7 +123,7 @@ extensions:
         config:
             template: pim/template/form/tab/section
             templateParams:
-                sectionTitle: acme_custom.brand.form.tab.properties.section.common
+                sectionTitle: pim_custom_entity.form.tab.properties.section.common
                 dropZone: content
 
     pim-brand-edit-form-properties-code:
