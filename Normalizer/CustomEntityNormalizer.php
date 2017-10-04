@@ -3,13 +3,14 @@
 namespace Pim\Bundle\CustomEntityBundle\Normalizer;
 
 use Pim\Bundle\CustomEntityBundle\Entity\AbstractCustomEntity;
+use Pim\Bundle\CustomEntityBundle\Entity\AbstractTranslatableCustomEntity;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
  * Internal API normalizer.
  *
  * Used to generate JSON rest responses.
- * @see \Pim\Bundle\CustomEntityBundle\Controller\RestController
+ * @see       \Pim\Bundle\CustomEntityBundle\Controller\RestController
  *
  * @author    JM Leroux <jean-marie.leroux@akeneo.com>
  * @copyright 2017 Akeneo SAS (http://www.akeneo.com)
@@ -32,22 +33,30 @@ class CustomEntityNormalizer implements NormalizerInterface
     }
 
     /**
-     * {@inheritdoc}
      * @param AbstractCustomEntity $entity
+     * @param null                 $format
+     * @param array                $context
+     *
+     * @return array
      */
     public function normalize($entity, $format = null, array $context = []): array
     {
-        $normalizedEntity = [
-            'data' => $this->pimSerializer->normalize($entity, 'standard', $context),
-        ];
+        $normalizedEntity = $this->pimSerializer->normalize($entity, 'standard', $context);
 
-        $normalizedEntity['meta'] = [
+        if (!isset($normalizedEntity['labels'])) {
+            $normalizedEntity['labels'] = $this->getLabels($entity);
+        }
+
+        $meta = [
             'id'               => $entity->getId(),
             'customEntityName' => $context['customEntityName'],
             'form'             => $context['form'],
         ];
 
-        return $normalizedEntity;
+        return [
+            'data' => $normalizedEntity,
+            'meta' => $meta,
+        ];
     }
 
     /**
@@ -56,5 +65,22 @@ class CustomEntityNormalizer implements NormalizerInterface
     public function supportsNormalization($data, $format = null): bool
     {
         return $data instanceof AbstractCustomEntity && in_array($format, $this->supportedFormats);
+    }
+
+    /**
+     * @param AbstractCustomEntity $entity
+     *
+     * @return array
+     */
+    protected function getLabels(AbstractCustomEntity $entity): array
+    {
+        $labels = [];
+        if ($entity instanceof AbstractTranslatableCustomEntity) {
+            foreach ($entity->getTranslations() as $translation) {
+                $labels[$translation->getLocale()] = $translation->getLabel();
+            }
+        }
+
+        return $labels;
     }
 }

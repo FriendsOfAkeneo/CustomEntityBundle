@@ -53,7 +53,7 @@ define(
 
                         if (this.config.redirectAfter) {
                             const params = Object.assign(
-                                {identifier: entity.id},
+                                {id: entity.id},
                                 this.config.route_params
                             );
 

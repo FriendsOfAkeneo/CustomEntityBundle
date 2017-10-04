@@ -18,7 +18,11 @@ class MinimalStandardNormalizer implements NormalizerInterface
     protected $supportedFormats = ['standard'];
 
     /**
-     * {@inheritdoc}
+     * @param AbstractCustomEntity $entity
+     * @param null                 $format
+     * @param array                $context
+     *
+     * @return array
      */
     public function normalize($entity, $format = null, array $context = []): array
     {

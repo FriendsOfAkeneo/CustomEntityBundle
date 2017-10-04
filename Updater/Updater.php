@@ -2,11 +2,13 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Updater;
 
+use Akeneo\Component\Localization\Model\TranslatableInterface;
 use Akeneo\Component\StorageUtils\Updater\ObjectUpdaterInterface;
 use Doctrine\Common\Util\ClassUtils;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
+use Pim\Bundle\CustomEntityBundle\Entity\AbstractTranslatableCustomEntity;
 use Pim\Component\Catalog\Repository\LocaleRepositoryInterface;
 use Pim\Component\ReferenceData\Model\ReferenceDataInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
@@ -76,14 +78,25 @@ class Updater implements ObjectUpdaterInterface
      */
     protected function updateProperty(ReferenceDataInterface $referenceData, $propertyPath, $value): void
     {
-        if ($this->propertyAccessor->isWritable($referenceData, $propertyPath)) {
-            if ($this->isAssociation($referenceData, $propertyPath)) {
-                $this->updateAssociatedEntity($referenceData, $propertyPath, $value);
-            } else {
-                $this->propertyAccessor->setValue($referenceData, $propertyPath, $value);
-            }
-        } elseif ($this->isAssociation($referenceData, 'translations')) {
-            $this->updateTranslation($referenceData, $propertyPath, $value);
+        if ('id' === $propertyPath) {
+            return;
+        }
+
+        if ('code' === $propertyPath) {
+            $referenceData->setCode($value);
+
+            return;
+        }
+
+        if ($this->isAssociation($referenceData, 'translations')) {
+            $this->updateTranslations($referenceData, $propertyPath, $value);
+
+            return;
+        }
+        if ($this->isAssociation($referenceData, $propertyPath)) {
+            $this->updateAssociatedEntity($referenceData, $propertyPath, $value);
+        } else {
+            $this->propertyAccessor->setValue($referenceData, $propertyPath, $value);
         }
     }
 
@@ -113,28 +126,22 @@ class Updater implements ObjectUpdaterInterface
     /**
      * Updates a reference data translation from the translatable reference data
      *
-     * @param ReferenceDataInterface $referenceData
-     * @param string                 $propertyPath
-     * @param mixed                  $value
+     * @param AbstractTranslatableCustomEntity $referenceData
+     * @param string                           $propertyPath
+     * @param mixed                            $values
      *
      * @throws \InvalidArgumentException
      */
-    protected function updateTranslation(ReferenceDataInterface $referenceData, $propertyPath, $value): void
+    protected function updateTranslations(AbstractTranslatableCustomEntity $referenceData, $propertyPath, $values): void
     {
-        $translationPattern = '/^(?<property>[a-zA-Z0-9_-]+)-(?<locale>[a-z]{2}_[A-Z]{2})$/';
-        if (preg_match($translationPattern, $propertyPath, $matches)
-            && (isset($matches['property']) && isset($matches['locale']))
-        ) {
-            if (!in_array($matches['locale'], $this->localeRepository->getActivatedLocaleCodes())) {
+        foreach ($values as $locale => $value) {
+            if (!in_array($locale, $this->localeRepository->getActivatedLocaleCodes())) {
                 throw new \InvalidArgumentException(
-                    sprintf('Locale "%s" is not activated', $matches['locale'])
+                    sprintf('Locale "%s" is not activated', $locale)
                 );
             }
-
-            if ($this->propertyAccessor->isWritable($referenceData, $matches['property'])) {
-                $referenceData->setLocale($matches['locale']);
-                $this->propertyAccessor->setValue($referenceData, $matches['property'], $value);
-            }
+            $translation = $referenceData->getTranslation($locale);
+            $translation->setLabel($value);
         }
     }
 

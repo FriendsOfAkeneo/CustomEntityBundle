@@ -85,9 +85,9 @@ abstract class AbstractTranslatableCustomEntity extends AbstractCustomEntity imp
     }
 
     /**
-     * {@inheritdoc}
+     * @return ArrayCollection|TranslationInterface[]
      */
-    public function getTranslations(): ArrayCollection
+    public function getTranslations()
     {
         return $this->translations;
     }

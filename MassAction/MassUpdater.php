@@ -35,7 +35,7 @@ class MassUpdater
      * @param array  $data
      * @param array  $ids
      */
-    public function updateEntities($class, array $data, array $ids)
+    public function updateEntities(string $class, array $data, array $ids): void
     {
         $qb = $this->doctrine->getManager()->createQueryBuilder()
             ->update($class, 'o')

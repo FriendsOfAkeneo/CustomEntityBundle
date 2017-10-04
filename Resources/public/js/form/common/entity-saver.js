@@ -18,7 +18,7 @@ define(
              */
             getUrl(identifier) {
                 const defaultParams = {
-                    identifier: identifier
+                    id: identifier
                 };
 
                 const routeParams = Object.assign({}, this.getRouteParams(), defaultParams);

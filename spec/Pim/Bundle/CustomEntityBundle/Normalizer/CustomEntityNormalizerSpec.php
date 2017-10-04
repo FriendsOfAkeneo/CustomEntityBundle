@@ -20,6 +20,13 @@ class CustomEntityNormalizerSpec extends ObjectBehavior
         $this->shouldImplement(NormalizerInterface::class);
     }
 
+    public function it_supports_only_internal_format(AbstractCustomEntity $entity)
+    {
+        $this->supportsNormalization($entity, 'internal_api')->shouldReturn(true);
+        $this->supportsNormalization($entity, 'external_api')->shouldReturn(false);
+        $this->supportsNormalization($entity, 'standard')->shouldReturn(false);
+    }
+
     public function it_normalizes_objects(NormalizerInterface $pimSerializer, AbstractCustomEntity $entity)
     {
         $entity->getId()->willReturn(666);
@@ -29,13 +36,19 @@ class CustomEntityNormalizerSpec extends ObjectBehavior
             'form'             => 'foo_form_extension',
         ];
 
+        $normalizedEntity = [
+            'foo'    => 'bar',
+            'labels' => [
+                'en_US' => 'foo',
+                'fr_FR' => 'bar',
+            ],
+        ];
+
         $pimSerializer->normalize($entity, 'standard', $context)
-            ->willReturn(['normalized_entity']);
+            ->willReturn($normalizedEntity);
 
         $expected = [
-            'data' => [
-                'normalized_entity'
-            ],
+            'data' => $normalizedEntity,
             'meta' => [
                 'id'               => 666,
                 'customEntityName' => 'fooEntity',
@@ -46,10 +59,31 @@ class CustomEntityNormalizerSpec extends ObjectBehavior
         $this->normalize($entity, 'standard', $context)->shouldReturn($expected);
     }
 
-    public function it_supports_only_internal_format(AbstractCustomEntity $entity)
+    public function it_adds_default_labels(NormalizerInterface $pimSerializer, AbstractCustomEntity $entity)
     {
-        $this->supportsNormalization($entity, 'internal_api')->shouldReturn(true);
-        $this->supportsNormalization($entity, 'external_api')->shouldReturn(false);
-        $this->supportsNormalization($entity, 'standard')->shouldReturn(false);
+        $entity->getId()->willReturn(666);
+
+        $context = [
+            'customEntityName' => 'fooEntity',
+            'form'             => 'foo_form_extension',
+        ];
+
+        $normalizedEntity = [
+            'foo' => 'bar',
+        ];
+
+        $pimSerializer->normalize($entity, 'standard', $context)
+            ->willReturn($normalizedEntity);
+
+        $expected = [
+            'data' => $normalizedEntity + ['labels' => []],
+            'meta' => [
+                'id'               => 666,
+                'customEntityName' => 'fooEntity',
+                'form'             => 'foo_form_extension',
+            ],
+        ];
+
+        $this->normalize($entity, 'standard', $context)->shouldReturn($expected);
     }
 }

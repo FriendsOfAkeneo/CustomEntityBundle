@@ -10,7 +10,9 @@ pim_custom_entity:
         field.label.code: Code
         tab:
             history.title: History
-            properties.title: Properties
+            properties:
+                title: Properties
+                section.common: Common
     button:
         create: Create
     message:

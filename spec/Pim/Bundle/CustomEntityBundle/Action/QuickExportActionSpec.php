@@ -5,6 +5,7 @@ namespace spec\Pim\Bundle\CustomEntityBundle\Action;
 use Akeneo\Bundle\BatchBundle\Job\JobInstanceRepository;
 use Akeneo\Component\Batch\Model\JobInstance;
 use Akeneo\Bundle\BatchBundle\Launcher\JobLauncherInterface;
+use Oro\Bundle\DataGridBundle\Extension\MassAction\MassActionParametersParser;
 use PhpSpec\ObjectBehavior;
 use Pim\Bundle\CustomEntityBundle\Action\ActionFactory;
 use Pim\Bundle\CustomEntityBundle\Action\ActionInterface;
@@ -14,6 +15,7 @@ use Pim\Bundle\CustomEntityBundle\Configuration\ConfigurationInterface;
 use Pim\Bundle\CustomEntityBundle\Event\ActionEventManager;
 use Pim\Bundle\CustomEntityBundle\Manager\ManagerInterface;
 use Pim\Bundle\CustomEntityBundle\Manager\Registry as ManagerRegistry;
+use Pim\Bundle\DataGridBundle\Adapter\GridFilterAdapterInterface;
 use Pim\Bundle\DataGridBundle\Extension\MassAction\MassActionDispatcher;
 use Prophecy\Argument;
 use Symfony\Component\HttpFoundation\ParameterBag;
@@ -40,6 +42,8 @@ class QuickExportActionSpec extends ObjectBehavior
         JobInstanceRepository $jobInstanceRepository,
         JobLauncherInterface $jobLauncher,
         TokenStorageInterface $tokenStorage,
+        MassActionParametersParser $parameterParser,
+        GridFilterAdapterInterface $gridFilterAdapter,
         Request $request,
         ParameterBag $attributes,
         ConfigurationInterface $configuration,
@@ -55,7 +59,9 @@ class QuickExportActionSpec extends ObjectBehavior
             $massActionDispatcher,
             $jobInstanceRepository,
             $jobLauncher,
-            $tokenStorage
+            $tokenStorage,
+            $parameterParser,
+            $gridFilterAdapter
         );
 
         // initialize configuration
@@ -89,7 +95,7 @@ class QuickExportActionSpec extends ObjectBehavior
         $translator->trans(Argument::type('string'), Argument::any())->will(
             function ($arguments) {
                 if (!isset($arguments[1])) {
-                    $arguments[1] = array();
+                    $arguments[1] = [];
                 }
 
                 $translated = sprintf('<%s>', $arguments[0]);
@@ -141,7 +147,7 @@ class QuickExportActionSpec extends ObjectBehavior
 
         $rawConfig = [
             'reference_data' => 'entity_class',
-            'ids'            => [2, 5]
+            'ids'            => [2, 5],
         ];
 
         $jobLauncher->launch($jobInstance, $user, $rawConfig)->shouldBeCalled();
@@ -167,7 +173,7 @@ class QuickExportActionSpec extends ObjectBehavior
                 'The job instance "csv_reference_data_quick_export" does not exist. Please contact your administrator'
             )
         )
-        ->duringDoExecute($request);
+            ->duringDoExecute($request);
     }
 
     public function it_throws_an_exception_when_user_is_no_longer_authenticated(
