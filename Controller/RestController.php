@@ -67,6 +67,11 @@ class RestController
             $this->getDecodedContent($request->getContent())
         );
 
+        $errors = $this->validator->validate($entity);
+        if (count($errors) > 0) {
+            throw new BadRequestHttpException('Invalid data');
+        }
+
         $this->getManager($customEntityName)->save($entity);
 
         $responseContent = [
@@ -124,6 +129,12 @@ class RestController
         $entity = $this->findEntity($customEntityName, $id);
         $manager = $this->getManager($customEntityName);
         $manager->update($entity, $data);
+
+        $errors = $this->validator->validate($entity);
+        if (count($errors) > 0) {
+            throw new BadRequestHttpException('Invalid data');
+        }
+
         $manager->save($entity);
 
         return new JsonResponse(null, Response::HTTP_NO_CONTENT);

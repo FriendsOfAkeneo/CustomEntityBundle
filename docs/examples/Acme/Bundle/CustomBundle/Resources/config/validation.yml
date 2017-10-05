@@ -1,0 +1,6 @@
+Acme\Bundle\CustomBundle\Entity\Color:
+    properties:
+        code:
+            - NotBlank: ~
+        name:
+            - NotBlank: ~

@@ -137,3 +137,13 @@ extensions:
             fieldName: code
             required: true
             readOnly: true
+
+    pim-color-edit-form-properties-name:
+        module: pim/attribute-edit-form/properties/text
+        parent: pim-color-edit-form-properties-common
+        targetZone: content
+        position: 95
+        config:
+            fieldName: name
+            required: true
+            readOnly: false
