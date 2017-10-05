@@ -1,0 +1,3 @@
+pim_customentity:
+    prefix: /reference-data
+    resource: "@PimCustomEntityBundle/Resources/config/routing.yml"

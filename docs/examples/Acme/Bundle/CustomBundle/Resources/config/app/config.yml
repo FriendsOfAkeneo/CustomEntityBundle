@@ -1,0 +1,14 @@
+# Config to add to the main application config
+pim_reference_data:
+    fabrics:
+        class: AcmeEnterprise\Bundle\AppBundle\Entity\Fabric
+        type: multi
+    color:
+        class: AcmeEnterprise\Bundle\AppBundle\Entity\Color
+        type: simple
+    brand:
+        class: AcmeEnterprise\Bundle\AppBundle\Entity\Brand
+        type: multi
+    pictogram:
+        class: AcmeEnterprise\Bundle\AppBundle\Entity\Pictogram
+        type: simple
