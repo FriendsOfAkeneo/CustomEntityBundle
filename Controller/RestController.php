@@ -2,31 +2,42 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Controller;
 
-use Pim\Bundle\CustomEntityBundle\Configuration\Registry;
+use Pim\Bundle\CustomEntityBundle\Configuration\Registry as ConfigurationRegistry;
 use Pim\Bundle\CustomEntityBundle\Entity\AbstractCustomEntity;
 use Pim\Bundle\CustomEntityBundle\Manager\ManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Pim\Bundle\CustomEntityBundle\Manager\Registry as ManagerRegistry;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * @author    Anaël Chardan <anael.chardan@akeneo.com
+ * @author    JM Leroux <jean-marie.leroux@akeneo.com>
  * @copyright 2017 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class RestController extends AbstractController
+class RestController
 {
-    /**
-     * @var Registry
-     */
-    protected $registry;
+    /** @var ConfigurationRegistry */
+    protected $configurations;
 
-    public function __construct(Registry $registry)
-    {
-        $this->registry = $registry;
+    /** @var ManagerRegistry */
+    protected $managers;
+
+    /** @var ValidatorInterface */
+    protected $validator;
+
+    public function __construct(
+        ConfigurationRegistry $configurations,
+        ManagerRegistry $managers,
+        ValidatorInterface $validator
+    ) {
+        $this->configurations = $configurations;
+        $this->managers = $managers;
+        $this->validator = $validator;
     }
 
     /**
@@ -36,7 +47,7 @@ class RestController extends AbstractController
      */
     public function listAction()
     {
-        $referenceDataNames = $this->registry->getNames();
+        $referenceDataNames = $this->configurations->getNames();
 
         return new JsonResponse(array_combine($referenceDataNames, $referenceDataNames));
     }
@@ -125,10 +136,9 @@ class RestController extends AbstractController
      */
     protected function getManager(string $customEntityName): ManagerInterface
     {
-        $configuration = $this->registry->get($customEntityName);
-        $managerRegistry = $this->container->get('pim_custom_entity.manager.registry');
+        $configuration = $this->configurations->get($customEntityName);
 
-        return $managerRegistry->getFromConfiguration($configuration);
+        return $this->managers->getFromConfiguration($configuration);
     }
 
     /**
@@ -138,7 +148,7 @@ class RestController extends AbstractController
      */
     protected function getEntityClass(string $customEntityName): string
     {
-        $configuration = $this->registry->get($customEntityName);
+        $configuration = $this->configurations->get($customEntityName);
 
         return $configuration->getEntityClass();
     }

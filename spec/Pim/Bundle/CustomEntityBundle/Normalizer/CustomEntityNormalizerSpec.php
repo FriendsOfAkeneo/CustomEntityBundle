@@ -58,32 +58,4 @@ class CustomEntityNormalizerSpec extends ObjectBehavior
 
         $this->normalize($entity, 'standard', $context)->shouldReturn($expected);
     }
-
-    public function it_adds_default_labels(NormalizerInterface $pimSerializer, AbstractCustomEntity $entity)
-    {
-        $entity->getId()->willReturn(666);
-
-        $context = [
-            'customEntityName' => 'fooEntity',
-            'form'             => 'foo_form_extension',
-        ];
-
-        $normalizedEntity = [
-            'foo' => 'bar',
-        ];
-
-        $pimSerializer->normalize($entity, 'standard', $context)
-            ->willReturn($normalizedEntity);
-
-        $expected = [
-            'data' => $normalizedEntity + ['labels' => []],
-            'meta' => [
-                'id'               => 666,
-                'customEntityName' => 'fooEntity',
-                'form'             => 'foo_form_extension',
-            ],
-        ];
-
-        $this->normalize($entity, 'standard', $context)->shouldReturn($expected);
-    }
 }

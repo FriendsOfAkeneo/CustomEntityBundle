@@ -26,9 +26,6 @@
         "phpspec/phpspec": "3.0",
         "friendsofphp/php-cs-fixer": "^2.6"
     },
-    "config": {
-        "bin-dir": "bin"
-    },
     "autoload": {
         "psr-0": {
             "Pim\\Bundle\\CustomEntityBundle\\": ""

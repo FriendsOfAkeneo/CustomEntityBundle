@@ -8,8 +8,7 @@ use Akeneo\Component\Localization\Model\TranslationInterface;
 /**
  * @author Romain Monceau <romain@akeneo.com>
  */
-class PictogramTranslation extends AbstractTranslation
-    implements TranslationInterface, TranslatableCustomEntityInterface
+class PictogramTranslation extends AbstractTranslation implements TranslationInterface, TranslatableCustomEntityInterface
 {
     /**
      * @var string $label

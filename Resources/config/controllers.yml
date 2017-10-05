@@ -16,3 +16,5 @@ services:
         scope: request
         arguments:
             - '@pim_custom_entity.configuration.registry'
+            - '@pim_custom_entity.manager.registry'
+            - '@validator'

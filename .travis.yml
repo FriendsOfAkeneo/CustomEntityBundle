@@ -11,7 +11,8 @@ before_script:
     - phpenv config-add travis.php.ini
     - phpenv config-rm xdebug.ini || echo "xdebug not available for PHP $TRAVIS_PHP_VERSION"
     - echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
-    - composer update --no-interaction --no-scripts
+    - composer install --no-interaction --no-scripts
 
 script:
-    - ./bin/phpspec run
+    - ./vendor/bin/phpspec run
+    - ./vendor/bin/php-cs-fixer fix --diff --dry-run --config=.php_cs.php
