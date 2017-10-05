@@ -1,5 +1,6 @@
 parameters:
     pim_ui.controller.ajax_option.class: Pim\Bundle\CustomEntityBundle\Controller\AjaxOptionController
+    pimee_ui.controller.ajax_option.class: Pim\Bundle\CustomEntityBundle\Controller\EnterpriseAjaxOptionController
     pim_custom_entity.rest_controller.class: Pim\Bundle\CustomEntityBundle\Controller\RestController
 
 services:
