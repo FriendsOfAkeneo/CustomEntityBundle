@@ -14,7 +14,7 @@ pim_customentity_create:
     methods: [POST]
 
 pim_customentity_delete:
-    path: /{customEntityName}/{id}/delete
+    path: /rest/{customEntityName}/{id}/delete
     defaults:
         _controller: pim_custom_entity.rest_controller:removeAction
     requirements:

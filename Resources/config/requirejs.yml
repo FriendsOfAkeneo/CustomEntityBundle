@@ -4,9 +4,11 @@ config:
         custom_entity/form/creation/modal: pimcustomentity/js/form/creation/modal
         custom_entity/form/common/entity-saver: pimcustomentity/js/form/common/entity-saver
         custom_entity/form/common/save-form: pimcustomentity/js/form/common/save-form
+        custom_entity/form/common/delete: pimcustomentity/js/form/common/delete
         custom_entity/controller/list: pimcustomentity/js/controller/custom_entity-list
         custom_entity/controller/edit: pimcustomentity/js/controller/custom_entity-edit
         custom_entity/fetcher: pimcustomentity/js/fetcher/custom_entity-fetcher
+        custom_entity/remover/reference-data: pimcustomentity/js/remover/reference-data-remover
 
     config:
         pim/fetcher-registry:

@@ -34,12 +34,14 @@ extensions:
         position: 50
 
     pim-color-edit-form-delete:
-        module: pim/group-edit-form/delete
+        module: custom_entity/form/common/delete
         parent: pim-color-edit-form-secondary-actions
         targetZone: secondary-actions
-        aclResourceId: pim_enrich_group_remove
         position: 100
         config:
+            route: pim_customentity_delete
+            routeParams:
+                customEntityName: color
             trans:
                 title: acme_custom.message.confirmation.remove.color
                 container: pim_enrich.confirmation.delete_item
@@ -97,7 +99,7 @@ extensions:
         targetZone: container
         position: 110
         config:
-            class: 'group'
+            class: color
             title: 'pim_custom_entity.form.tab.history.title'
 
     pim-color-edit-form-state:

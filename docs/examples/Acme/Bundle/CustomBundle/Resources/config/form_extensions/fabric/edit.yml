@@ -34,12 +34,15 @@ extensions:
         position: 50
 
     pim-fabric-edit-form-delete:
-        module: pim/group-edit-form/delete
+        module: custom_entity/form/common/delete
         parent: pim-fabric-edit-form-secondary-actions
         targetZone: secondary-actions
         aclResourceId: pim_enrich_group_remove
         position: 100
         config:
+            route: pim_customentity_delete
+            routeParams:
+                customEntityName: fabric
             trans:
                 title: confirmation.remove.group
                 container: pim_enrich.confirmation.delete_item
