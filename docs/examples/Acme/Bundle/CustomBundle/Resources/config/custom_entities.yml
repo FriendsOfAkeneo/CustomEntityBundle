@@ -9,34 +9,19 @@ custom_entities:
         options:
             edit_fom_extension: pim-fabric-edit-form
 
+    pictogram:
+        entity_class: Acme\Bundle\CustomBundle\Entity\Pictogram
+        options:
+            edit_fom_extension: pim-pictogram-edit-form
+
     brand:
         extends: quick_create
         entity_class: Acme\Bundle\CustomBundle\Entity\Brand
         options:
             edit_fom_extension: pim-brand-edit-form
         actions:
-            edit:
-                acl: acme_enrich_brand_edit
-                form_type: acme_enrich_brand
-                service: pim_custom_entity.action.edit
             mass_edit:
                 form_type: acme_enrich_brand_mass_edit
                 service: pim_custom_entity.action.mass_edit
             quick_export:
                 service: pim_custom_entity.action.quick_export
-
-    pictogram:
-        entity_class: Acme\Bundle\CustomBundle\Entity\Pictogram
-        options:
-            edit_fom_extension: pim-pictogram-edit-form
-        actions:
-            create:
-                service: pim_custom_entity.action.create
-                form_type: acme_enrich_pictogram
-                form_options:
-                    translation_class: Acme\Bundle\CustomBundle\Entity\PictogramTranslation
-            edit:
-                service: pim_custom_entity.action.edit
-                form_type: acme_enrich_pictogram
-                form_options:
-                    translation_class: Acme\Bundle\CustomBundle\Entity\PictogramTranslation

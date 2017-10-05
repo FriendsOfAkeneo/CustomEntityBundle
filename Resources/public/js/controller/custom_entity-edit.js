@@ -6,12 +6,9 @@ define(
         'oro/translator',
         'pim/controller/front',
         'pim/form-builder',
-        'pim/fetcher-registry',
-        'pim/user-context',
-        'pim/dialog',
-        'pim/page-title'
+        'pim/fetcher-registry'
     ],
-    function (_, __, BaseController, FormBuilder, FetcherRegistry, UserContext, Dialog, PageTitle) {
+    function (_, __, BaseController, FormBuilder, FetcherRegistry) {
         return BaseController.extend({
             /**
              * {@inheritdoc}
