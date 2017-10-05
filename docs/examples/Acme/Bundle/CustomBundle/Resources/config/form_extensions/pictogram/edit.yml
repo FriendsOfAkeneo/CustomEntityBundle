@@ -22,7 +22,7 @@ extensions:
         position: 100
 
     pim-pictogram-edit-form-label:
-        module: pim/form/common/label
+        module: custom_entity/form/common/label
         parent: pim-pictogram-edit-form
         targetZone: title
         position: 90

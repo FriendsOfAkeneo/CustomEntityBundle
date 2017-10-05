@@ -1,3 +1,7 @@
+# Normalizers
+# The custom entities normalizer priority must be > 150 to take priority on the
+# Pim\Bundle\CustomEntityBundle\Normalizer\Standard\MinimalStandardNormalizer
+
 services:
     pim_custom_entity.normalizer.standard.color:
         public: false
@@ -8,6 +12,12 @@ services:
     pim_custom_entity.normalizer.standard.fabric:
         public: false
         class: Acme\Bundle\CustomBundle\Normalizer\Standard\FabricNormalizer
+        tags:
+            - { name: pim_serializer.normalizer, priority: 200 }
+
+    pim_custom_entity.normalizer.standard.pictogram:
+        public: false
+        class: Acme\Bundle\CustomBundle\Normalizer\Standard\PictogramNormalizer
         tags:
             - { name: pim_serializer.normalizer, priority: 200 }
 

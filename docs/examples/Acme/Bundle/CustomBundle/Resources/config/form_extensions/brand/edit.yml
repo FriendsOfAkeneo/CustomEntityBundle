@@ -16,7 +16,7 @@ extensions:
         position: 1000
 
     pim-color-edit-form-label:
-        module: pim/form/common/label
+        module: custom_entity/form/common/label
         parent: pim-color-edit-form
         targetZone: title
         position: 90

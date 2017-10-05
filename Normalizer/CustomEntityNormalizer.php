@@ -43,10 +43,6 @@ class CustomEntityNormalizer implements NormalizerInterface
     {
         $normalizedEntity = $this->pimSerializer->normalize($entity, 'standard', $context);
 
-        if (!isset($normalizedEntity['labels'])) {
-            $normalizedEntity['labels'] = $this->getLabels($entity);
-        }
-
         $meta = [
             'id'               => $entity->getId(),
             'customEntityName' => $context['customEntityName'],
