@@ -1,0 +1,9 @@
+parameters:
+    acme_custom.repository.choice.class: Acme\Bundle\CustomBundle\Repository\ChoicesRepository
+
+services:
+    acme_custom.repository.choice.fabric:
+            class: "%acme_custom.repository.choice.class%"
+            arguments:
+                - "@doctrine.orm.entity_manager"
+                - "%pim_custom_entity.entity.brand.class%"

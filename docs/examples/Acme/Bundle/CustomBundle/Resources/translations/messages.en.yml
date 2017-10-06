@@ -1,0 +1,120 @@
+confirmation.remove:
+    brand: Do you really want to delete this brand?
+    color: Do you really want to delete this color?
+    fabric: Do you really want to delete this fabric?
+    pictogram: Do you really want to delete this pictogram?
+
+flash:
+    brand:
+        created: The brand has been created
+        removed: The brand has been removed
+        updated: The brand has been updated
+
+    color:
+        created: The color has been created
+        removed: The color has been removed
+        updated: The color has been updated
+
+    fabric:
+        created: The fabric has been created
+        removed: The fabric has been removed
+        updated: The fabric has been updated
+
+    pictogram:
+        created: The pictogram has been created
+        removed: The pictogram has been removed
+        updated: The pictogram has been updated
+
+error.removing:
+    brand: The brand could not be removed
+    color: The color could not be removed
+    fabric: The fabric could not be removed
+    pictogram: The pictogram could not be removed
+
+brand:
+    overview: Brand overview
+    edit: Edit a brand
+    create: Create a brand
+    this:
+        edit: Edit this brand
+        show: Show this brand
+        delete: Delete this brand
+    mass_edit:
+        title: Mass edit these Brands
+        subtitle: Edit this brand|Edit these brands
+        confirm: Confirm update
+
+color:
+    overview: Color overview
+    edit: Edit a color
+    create: Create a color
+    this:
+        edit: Edit this color
+        show: Show this color
+        delete: Delete this color
+
+fabric:
+    overview: Fabric overview
+    edit: Edit a fabric
+    create: Create a fabric
+    this:
+        edit: Edit this fabric
+        show: Show this fabric
+        delete: Delete this fabric
+
+pictogram:
+    overview: Pictogram overview
+    edit: Edit a pictogram
+    create: Create a pictogram
+    this:
+        edit: Edit this pictogram
+        show: Show this pictogram
+        delete: Delete this pictogram
+
+btn.create:
+    brand: Create a brand
+    color: Create a color
+    fabric: Create a fabric
+    pictogram: Create a pictogram
+
+pim_custom_entity.reference_data.brand:
+    edit: Edit a brand
+    create: Create a brand
+    index: List brands
+    delete: Delete a brand
+    menu_entry: Brands
+
+pim_custom_entity.reference_data.color:
+    edit: Edit a color
+    create: Create a color
+    index: List colors
+    menu_entry: Colors
+
+pim_custom_entity.reference_data.fabric:
+    menu_entry: Fabrics
+
+pim_custom_entity.reference_data.pictogram:
+    menu_entry: Pictograms
+
+acme_custom:
+    acl:
+        brand:
+            index: List Brand
+            create: Create Brand
+            edit: Edit Brand
+            delete: Delete Brand
+        color:
+            index: List Color
+            create: Create Color
+            edit: Edit Color
+            delete: Delete Color
+        fabric:
+            index: List Fabric
+            create: Create Fabric
+            edit: Edit Fabric
+            delete: Delete Fabric
+        pictogram:
+            index: List Pictogram
+            create: Create Pictogram
+            edit: Edit Pictogram
+            delete: Delete Pictogram

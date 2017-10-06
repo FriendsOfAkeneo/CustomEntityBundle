@@ -6,6 +6,7 @@ use Pim\Bundle\CustomEntityBundle\Configuration\ConfigurationInterface;
 use Pim\Bundle\CustomEntityBundle\Event\ActionEventManager;
 use Pim\Bundle\CustomEntityBundle\Manager\Registry as ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Router;
@@ -17,7 +18,7 @@ use Symfony\Component\Translation\TranslatorInterface;
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-abstract class AbstractAction implements ActionInterface
+abstract class AbstractAction implements RouteAwareActionInterface
 {
     /**
      * @var ActionFactory
@@ -90,7 +91,7 @@ abstract class AbstractAction implements ActionInterface
     /**
      * {@inheritdoc}
      */
-    public function getConfiguration()
+    public function getConfiguration(): ConfigurationInterface
     {
         return $this->configuration;
     }
@@ -98,7 +99,7 @@ abstract class AbstractAction implements ActionInterface
     /**
      * {@inheritdoc}
      */
-    public function getRoute()
+    public function getRoute(): string
     {
         return $this->options['route'];
     }
@@ -119,7 +120,7 @@ abstract class AbstractAction implements ActionInterface
     /**
      * {@inheritdoc}
      */
-    public function getOptions()
+    public function getOptions(): array
     {
         return $this->options;
     }
@@ -144,7 +145,7 @@ abstract class AbstractAction implements ActionInterface
     /**
      * {@inheritdoc}
      */
-    public function execute(Request $request)
+    public function execute(Request $request): Response
     {
         $this->eventManager->dispatchPreExecuteEvent($this);
         $response = $this->doExecute($request);
@@ -170,6 +171,8 @@ abstract class AbstractAction implements ActionInterface
      * @param object $object
      * @param array  $parameters
      * @param mixed  $referenceType
+     *
+     * @return string
      */
     protected function getActionUrl(
         $actionType,

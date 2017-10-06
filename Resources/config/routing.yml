@@ -1,50 +1,61 @@
-pim_customentity_index:
-    path: /{customEntityName}/.{_format}
-    defaults: { _controller: pim_customentity.controller:executeAction, _format: html, actionType: index }
-    requirements:
-        _format: html|json|csv
-
-pim_customentity_create:
-    path: /{customEntityName}/create
-    defaults: { _controller: pim_customentity.controller:executeAction, actionType: create }
-
-pim_customentity_massedit:
-    path: /{customEntityName}/mass-edit
-    defaults: { _controller: pim_customentity.controller:executeAction, actionType: mass_edit }
-
-pim_customentity_quickexport:
-    path: /{customEntityName}/export.{_format}
+pim_customentity_rest_list:
+    path: /rest
     defaults:
-        _controller: pim_customentity.controller:executeAction
-        actionType: quick_export
-        _format: csv
+        _controller: pim_custom_entity.rest_controller:listAction
+    methods: [GET]
 
-pim_customentity_edit:
-    path: /{customEntityName}/{id}/edit
-    defaults: { _controller: pim_customentity.controller:executeAction, actionType: edit }
-    requirements:
-        id: \d+
+pim_customentity_index:
+    path: /{customEntityName}
 
-pim_customentity_show:
-    path: /{customEntityName}/{id}
-    defaults: { _controller: pim_customentity.controller:executeAction, actionType: show }
-    requirements:
-        id: \d+
+pim_customentity_rest_create:
+    path: /rest/{customEntityName}/create
+    defaults:
+        _controller: pim_custom_entity.controller:executeAction
+        actionType: rest_create
+    methods: [POST]
 
-pim_customentity_history:
-    path: /{customEntityName}/{id}/history
-    defaults: { _controller: pim_customentity.controller:executeAction, actionType: history }
-    requirements:
-        id: \d+
-
-pim_customentity_delete:
-    path: /{customEntityName}/{id}/delete
-    defaults: { _controller: pim_customentity.controller:executeAction, actionType: delete }
+pim_customentity_rest_delete:
+    path: /rest/{customEntityName}/{id}/delete
+    defaults:
+        _controller: pim_custom_entity.controller:executeAction
+        actionType: rest_delete
     requirements:
         id: \d+
     methods: [DELETE, POST]
 
-pim_customentity_list:
-    path: /names
-    defaults: { _controller: pim_custom_entity.rest_controller:listAction}
+pim_customentity_rest_get:
+    path: /rest/{customEntityName}/{id}
+    defaults:
+        _controller: pim_custom_entity.controller:executeAction
+        actionType: rest_get
     methods: [GET]
+
+pim_customentity_rest_edit:
+    path: /rest/{customEntityName}/{id}/edit
+    defaults:
+        _controller: pim_custom_entity.controller:executeAction
+        actionType: rest_update
+    requirements:
+        id: \d+
+    methods: [POST]
+
+pim_customentity_massedit:
+    path: /{customEntityName}/mass-edit
+    defaults:
+        _controller: pim_custom_entity.controller:executeAction
+        actionType: mass_edit
+
+pim_customentity_quickexport:
+    path: /{customEntityName}/export.{_format}
+    defaults:
+        _controller: pim_custom_entity.controller:executeAction
+        actionType: quick_export
+        _format: csv
+
+pim_customentity_history:
+    path: /{customEntityName}/{id}/history
+    defaults:
+        _controller: pim_custom_entity.controller:executeAction
+        actionType: history
+    requirements:
+        id: \d+

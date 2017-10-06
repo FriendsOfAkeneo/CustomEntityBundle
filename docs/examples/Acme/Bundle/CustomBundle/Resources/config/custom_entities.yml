@@ -1,0 +1,20 @@
+custom_entities:
+    color:
+        entity_class: Acme\Bundle\CustomBundle\Entity\Color
+        options:
+            edit_fom_extension: pim-color-edit-form
+
+    fabric:
+        entity_class: Acme\Bundle\CustomBundle\Entity\Fabric
+        options:
+            edit_fom_extension: pim-fabric-edit-form
+
+    pictogram:
+        entity_class: Acme\Bundle\CustomBundle\Entity\Pictogram
+        options:
+            edit_fom_extension: pim-pictogram-edit-form
+
+    brand:
+        entity_class: Acme\Bundle\CustomBundle\Entity\Brand
+        options:
+            edit_fom_extension: pim-brand-edit-form

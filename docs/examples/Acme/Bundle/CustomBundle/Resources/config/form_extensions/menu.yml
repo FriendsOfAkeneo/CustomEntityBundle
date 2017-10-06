@@ -1,0 +1,40 @@
+extensions:
+    acme_custom-menu-reference_data-item-color:
+        module: pim/menu/item
+        parent: pim-menu-reference_data-navigation-block
+        position: 10
+        config:
+            title: acme_custom.menu.item.reference_data.color
+            to: pim_customentity_index
+            routeParams:
+                customEntityName: color
+
+    acme_custom-menu-reference_data-item-fabric:
+        module: pim/menu/item
+        parent: pim-menu-reference_data-navigation-block
+        position: 20
+        config:
+            title: acme_custom.menu.item.reference_data.fabric
+            to: pim_customentity_index
+            routeParams:
+                customEntityName: fabric
+
+    acme_custom-menu-reference_data-item-brand:
+        module: pim/menu/item
+        parent: pim-menu-reference_data-navigation-block
+        position: 30
+        config:
+            title: acme_custom.menu.item.reference_data.brand
+            to: pim_customentity_index
+            routeParams:
+                customEntityName: brand
+
+    acme_custom-menu-reference_data-item-pictogram:
+        module: pim/menu/item
+        parent: pim-menu-reference_data-navigation-block
+        position: 40
+        config:
+            title: acme_custom.menu.item.reference_data.pictogram
+            to: pim_customentity_index
+            routeParams:
+                customEntityName: pictogram

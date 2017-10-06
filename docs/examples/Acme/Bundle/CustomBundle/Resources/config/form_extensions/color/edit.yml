@@ -1,0 +1,150 @@
+extensions:
+    pim-color-edit-form:
+        module: pim/form/common/edit-form
+        aclResourceId: acme_custom_color_edit
+
+    pim-color-edit-form-breadcrumbs:
+        module: pim/common/breadcrumbs
+        parent: pim-color-edit-form
+        targetZone: breadcrumbs
+        config:
+            tab: pim-menu-reference_data
+            item: pim-menu-reference_data-foo
+
+    pim-color-edit-form-cache-invalidator:
+        module: pim/cache-invalidator
+        parent: pim-color-edit-form
+        position: 1000
+
+    pim-color-edit-form-form-tabs:
+        module: pim/form/common/form-tabs
+        parent: pim-color-edit-form
+        targetZone: content
+        position: 100
+
+    pim-color-edit-form-label:
+        module: custom_entity/form/common/label
+        parent: pim-color-edit-form
+        targetZone: title
+        position: 100
+
+    pim-color-edit-form-secondary-actions:
+        module: pim/form/common/secondary-actions
+        parent: pim-color-edit-form
+        targetZone: buttons
+        position: 50
+
+    pim-color-edit-form-delete:
+        module: custom_entity/form/common/delete
+        parent: pim-color-edit-form-secondary-actions
+        targetZone: secondary-actions
+        position: 100
+        config:
+            route: pim_customentity_rest_delete
+            routeParams:
+                customEntityName: color
+            trans:
+                title: acme_custom.message.confirmation.remove.color
+                container: pim_enrich.confirmation.delete_item
+                success: pim_custom_entity.message.confirmation.removed
+                fail: pim_custom_entity.error.removing
+            redirect: pim_customentity_index
+
+    pim-color-edit-form-save-buttons:
+        module: pim/form/common/save-buttons
+        parent: pim-color-edit-form
+        targetZone: buttons
+        position: 120
+
+    pim-color-edit-form-state:
+        module: pim/form/common/state
+        parent: pim-color-edit-form
+        targetZone: state
+        position: 900
+        config:
+            entity: pim_enrich.entity.group.title
+
+    pim-color-edit-form-save:
+        module: custom_entity/form/common/save-form
+        parent: pim-color-edit-form
+        targetZone: buttons
+        position: 0
+        config:
+            updateSuccessMessage: pim_enrich.entity.attribute.info.update_successful
+            updateFailureMessage: pim_enrich.entity.attribute.info.update_failed
+            notReadyMessage: pim_enrich.entity.attribute.info.field_not_ready
+            url: pim_customentity_rest_edit
+            route_params:
+                customEntityName: color
+            redirectAfter: pim_customentity_rest_get
+            excludedProperties: []
+
+    pim-color-edit-form-properties-tab:
+        module: pim/common/tab
+        parent: pim-color-edit-form-form-tabs
+        targetZone: container
+        position: 100
+        config:
+            label: 'pim_custom_entity.form.tab.properties.title'
+
+    pim-color-edit-form-properties:
+        module: pim/common/simple-view
+        parent: pim-color-edit-form-properties-tab
+        targetZone: self
+        config:
+            template: pim/template/form/tab/sections
+
+    pim-color-edit-form-history:
+        module: pim/common/tab/history
+        parent: pim-color-edit-form-form-tabs
+        targetZone: container
+        position: 110
+        config:
+            class: color
+            title: 'pim_custom_entity.form.tab.history.title'
+
+    pim-color-edit-form-state:
+        module: pim/form/common/state
+        parent: pim-color-edit-form
+        targetZone: state
+        position: 900
+        config:
+            entity: pim_enrich.entity.group.title
+
+    pim-color-edit-form-properties:
+        module: pim/common/simple-view
+        parent: pim-color-edit-form-properties-tab
+        targetZone: self
+        config:
+            template: pim/template/form/tab/sections
+
+    pim-color-edit-form-properties-common:
+        module: pim/common/simple-view
+        parent: pim-color-edit-form-properties
+        targetZone: accordion
+        position: 100
+        config:
+            template: pim/template/form/tab/section
+            templateParams:
+                sectionTitle: pim_custom_entity.form.tab.properties.section.common
+                dropZone: content
+
+    pim-color-edit-form-properties-code:
+        module: pim/attribute-edit-form/properties/text
+        parent: pim-color-edit-form-properties-common
+        targetZone: content
+        position: 90
+        config:
+            fieldName: code
+            required: true
+            readOnly: true
+
+    pim-color-edit-form-properties-name:
+        module: pim/attribute-edit-form/properties/text
+        parent: pim-color-edit-form-properties-common
+        targetZone: content
+        position: 95
+        config:
+            fieldName: name
+            required: true
+            readOnly: false

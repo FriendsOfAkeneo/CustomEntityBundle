@@ -1,0 +1,150 @@
+extensions:
+    pim-fabric-edit-form:
+        module: pim/form/common/edit-form
+
+    pim-fabric-edit-form-breadcrumbs:
+        module: pim/common/breadcrumbs
+        parent: pim-fabric-edit-form
+        targetZone: breadcrumbs
+        config:
+            tab: pim-menu-reference_data
+            item: pim-menu-reference_data-color
+
+    pim-fabric-edit-form-cache-invalidator:
+        module: pim/cache-invalidator
+        parent: pim-fabric-edit-form
+        position: 1000
+
+    pim-fabric-edit-form-form-tabs:
+        module: pim/form/common/form-tabs
+        parent: pim-fabric-edit-form
+        targetZone: content
+        position: 100
+
+    pim-fabric-edit-form-label:
+        module: custom_entity/form/common/label
+        parent: pim-fabric-edit-form
+        targetZone: title
+        position: 100
+
+    pim-fabric-edit-form-secondary-actions:
+        module: pim/form/common/secondary-actions
+        parent: pim-fabric-edit-form
+        targetZone: buttons
+        position: 50
+
+    pim-fabric-edit-form-delete:
+        module: custom_entity/form/common/delete
+        parent: pim-fabric-edit-form-secondary-actions
+        targetZone: secondary-actions
+        aclResourceId: pim_enrich_group_remove
+        position: 100
+        config:
+            route: pim_customentity_rest_delete
+            routeParams:
+                customEntityName: fabric
+            trans:
+                title: confirmation.remove.group
+                container: pim_enrich.confirmation.delete_item
+                success: flash.group.removed
+                fail: error.removing.group
+            redirect: pim_customentity_index
+
+    pim-fabric-edit-form-save-buttons:
+        module: pim/form/common/save-buttons
+        parent: pim-fabric-edit-form
+        targetZone: buttons
+        position: 120
+
+    pim-fabric-edit-form-save:
+        module: custom_entity/form/common/save-form
+        parent: pim-fabric-edit-form
+        targetZone: buttons
+        position: 0
+        config:
+            updateSuccessMessage: pim_enrich.entity.attribute.info.update_successful
+            updateFailureMessage: pim_enrich.entity.attribute.info.update_failed
+            notReadyMessage: pim_enrich.entity.attribute.info.field_not_ready
+            url: pim_customentity_rest_edit
+            route_params:
+                customEntityName: fabric
+            redirectAfter: pim_customentity_rest_get
+            excludedProperties: []
+
+    pim-fabric-edit-form-properties-tab:
+        module: pim/common/tab
+        parent: pim-fabric-edit-form-form-tabs
+        targetZone: container
+        position: 100
+        config:
+            label: 'pim_custom_entity.form.tab.properties.title'
+
+    pim-fabric-edit-form-properties:
+        module: pim/common/simple-view
+        parent: pim-fabric-edit-form-properties-tab
+        targetZone: self
+        config:
+            template: pim/template/form/tab/sections
+
+    pim-fabric-edit-form-history:
+        module: pim/common/tab/history
+        parent: pim-fabric-edit-form-form-tabs
+        targetZone: container
+        position: 110
+        config:
+            class: 'group'
+            title: 'pim_custom_entity.form.tab.history.title'
+
+    pim-fabric-edit-form-state:
+        module: pim/form/common/state
+        parent: pim-fabric-edit-form
+        targetZone: state
+        position: 900
+        config:
+            entity: pim_enrich.entity.group.title
+
+    pim-fabric-edit-form-properties:
+        module: pim/common/simple-view
+        parent: pim-fabric-edit-form-properties-tab
+        targetZone: self
+        config:
+            template: pim/template/form/tab/sections
+
+    pim-fabric-edit-form-properties-common:
+        module: pim/common/simple-view
+        parent: pim-fabric-edit-form-properties
+        targetZone: accordion
+        position: 100
+        config:
+            template: pim/template/form/tab/section
+            templateParams:
+                sectionTitle: pim_custom_entity.form.tab.properties.section.common
+                dropZone: content
+
+    pim-fabric-edit-form-properties-code:
+        module: pim/attribute-edit-form/properties/text
+        parent: pim-fabric-edit-form-properties-common
+        targetZone: content
+        position: 90
+        config:
+            fieldName: code
+            required: true
+            readOnly: true
+
+    pim-fabric-edit-form-properties-name:
+        module: pim/attribute-edit-form/properties/text
+        parent: pim-fabric-edit-form-properties-common
+        targetZone: content
+        position: 91
+        config:
+            fieldName: name
+            required: true
+
+    pim-fabric-edit-form-properties-alternative_name:
+        module: pim/attribute-edit-form/properties/text
+        parent: pim-fabric-edit-form-properties-common
+        targetZone: content
+        position: 92
+        config:
+            fieldName: alternativeName
+            required: true

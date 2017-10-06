@@ -1,0 +1,32 @@
+Acme\Bundle\CustomBundle\Entity\Pictogram:
+    type: entity
+    table: acme_custom_pictogram
+    repositoryClass: Pim\Bundle\CustomEntityBundle\Entity\Repository\TranslatableCustomEntityRepository
+    changeTrackingPolicy: DEFERRED_EXPLICIT
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        code:
+            type: string
+            length: 100
+            unique: true
+        created:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: create
+        updated:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: update
+    oneToMany:
+        translations:
+            targetEntity: Acme\Bundle\CustomBundle\Entity\PictogramTranslation
+            mappedBy: foreignKey
+            cascade:
+                - persist
+                - detach

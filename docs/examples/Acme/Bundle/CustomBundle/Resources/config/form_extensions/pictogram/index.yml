@@ -1,0 +1,82 @@
+extensions:
+    pim-pictogram-index:
+        module: pim/common/simple-view
+        config:
+            template: pim/template/common/default-template
+        forwarded-events:
+            grid_load:start: grid_load:start
+            grid_load:complete: grid_load:complete
+
+    pim-pictogram-index-grid-container:
+        module: pim/common/simple-view
+        parent: pim-pictogram-index
+        targetZone: content
+        config:
+            template: pim/template/form/index/index
+
+    pim-pictogram-index-user-navigation:
+        module: pim/menu/user-navigation
+        parent: pim-pictogram-index
+        targetZone: user-menu
+        config:
+            userAccount: pim_menu.user.user_account
+            logout: pim_menu.user.logout
+
+    pim-pictogram-index-grid-title:
+        module: pim/common/grid-title
+        parent: pim-pictogram-index
+        targetZone: title
+        config:
+            title: acme_custom.pictogram.index_title
+
+    pim-pictogram-index-breadcrumbs:
+        module: pim/common/breadcrumbs
+        parent: pim-pictogram-index
+        targetZone: breadcrumbs
+        config:
+            tab: pim-menu-reference_data
+            item: acme_custom-menu-reference_data-item-pictogram
+
+    pim-pictogram-index-grid-filters-list:
+        module: oro/datafilter/filters-list
+        parent: pim-pictogram-index-grid-container
+        targetZone: filters
+
+    pim-pictogram-index-mass-actions:
+        module: pim/grid/mass-actions
+        parent: pim-pictogram-index
+        targetZone: bottom-panel
+        config:
+            label: acme_custom.pictogram.selected
+
+    pim-pictogram-index-actions-panel:
+        module: oro/datagrid/actions-panel
+        parent: pim-pictogram-index-mass-actions
+        targetZone: actions-panel
+
+    pim-pictogram-index-grid-filters-manage:
+        module: oro/datafilter/filters-button
+        parent: pim-pictogram-index-grid-container
+        targetZone: filters
+
+    pim-pictogram-index-pagination:
+        module: oro/datagrid/pagination-input
+        parent: pim-pictogram-index-grid-container
+        targetZone: toolbar
+
+    pim-pictogram-index-grid:
+        module: pim/form/common/index/grid
+        parent: pim-pictogram-index
+        targetZone: content
+        position: 1000
+        config:
+            alias: pictogram
+
+    pim-pictogram-index-create-button:
+        module: pim/form/common/index/create-button
+        parent: pim-pictogram-index
+        targetZone: buttons
+        aclResourceId: pim_enrich_product_create
+        config:
+           title:     pim_custom_entity.button.create
+           modalForm: pim-pictogram-create-modal

@@ -20,14 +20,11 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "akeneo/pim-community-dev": "1.7.*"
+        "akeneo/pim-community-dev": "2.0.*"
     },
     "require-dev": {
-        "phpspec/phpspec": "3.0.0",
-        "friendsofphp/php-cs-fixer": "@stable"
-    },
-    "config": {
-        "bin-dir": "bin"
+        "phpspec/phpspec": "3.0",
+        "friendsofphp/php-cs-fixer": "^2.6"
     },
     "autoload": {
         "psr-0": {

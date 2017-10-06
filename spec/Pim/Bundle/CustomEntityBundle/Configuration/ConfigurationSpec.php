@@ -3,17 +3,19 @@
 namespace spec\Pim\Bundle\CustomEntityBundle\Configuration;
 
 use PhpSpec\ObjectBehavior;
+use Pim\Bundle\CustomEntityBundle\Configuration\Configuration;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ConfigurationSpec extends ObjectBehavior
 {
-    public function let(\Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher)
+    public function let(EventDispatcherInterface $eventDispatcher)
     {
         $this->beConstructedWith($eventDispatcher, 'entity', 'entity_class');
     }
 
     public function it_is_initializable()
     {
-        $this->shouldHaveType('Pim\Bundle\CustomEntityBundle\Configuration\Configuration');
+        $this->shouldHaveType(Configuration::class);
         $this->getName()->shouldReturn('entity');
         $this->getEntityClass()->shouldReturn('entity_class');
     }

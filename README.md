@@ -22,11 +22,22 @@ For more information, please see http://docs.akeneo.com/
 | v1.2.*               | v1.1.*                       |
 | v1.1.*               | v1.1.*                       |
 
+## Disclaimer
+
+The 2.0.0 custom entity bundle is in bêta state because of missing features:
+- mass edit
+- quick export
+- mass delete
+- missing translations
+- outdated documentation
+
+Work is in progress and we will release a stable version very soon.
+
 ## Installation
 You can install this bundle with composer (see requirements section):
 
 ```bash
-    php composer.phar require akeneo-labs/custom-entity-bundle:1.10.*
+    php composer.phar require akeneo-labs/custom-entity-bundle:2.0.0@beta
 ```
 
 Then add the following lines **at the end** of your app/config/routing.yml :
@@ -51,7 +62,7 @@ If you want to use the quick export and/or the mass edit features, you have to l
 If your installation is already set up, you have to run the following command:
 
 ```bash
-    php app/console akeneo:batch:create-job "Akeneo Mass Edit Connector" "csv_reference_data_quick_export" "quick_export" "csv_reference_data_quick_export" '{"delimiter": ";", "enclosure": "\"", "withHeader": true, "filePath": "/tmp/reference_data_quick_export.csv"}'
+    php bin/console akeneo:batch:create-job "Akeneo Mass Edit Connector" "csv_reference_data_quick_export" "quick_export" "csv_reference_data_quick_export" '{"delimiter": ";", "enclosure": "\"", "withHeader": true, "filePath": "/tmp/reference_data_quick_export.csv"}'
 ```
 
 ## Documentation

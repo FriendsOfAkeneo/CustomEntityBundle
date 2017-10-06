@@ -4,6 +4,7 @@ namespace Pim\Bundle\CustomEntityBundle\Action;
 
 use Pim\Bundle\CustomEntityBundle\Configuration\ConfigurationInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Common interface for actions
@@ -26,36 +27,24 @@ interface ActionInterface
      *
      * @return ConfigurationInterface
      */
-    public function getConfiguration();
+    public function getConfiguration(): ConfigurationInterface;
 
     /**
      * Execute the action
      *
      * @param Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public function execute(Request $request);
+    public function execute(Request $request): Response;
 
     /**
      * @return string
      */
-    public function getRoute();
-
-    /**
-     * @param mixed
-     *
-     * @return array
-     */
-    public function getRouteParameters($object = null);
-
-    /**
-     * @return string
-     */
-    public function getType();
+    public function getType(): string;
 
     /**
      * @return array
      */
-    public function getOptions();
+    public function getOptions(): array;
 }

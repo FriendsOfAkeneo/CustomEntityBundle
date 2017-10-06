@@ -3,6 +3,6 @@ parameters:
 
 services:
     pim_custom_entity.versioning.update_guesser:
-        class: %pim_custom_entity.versioning.update_guesser.class%
+        class: '%pim_custom_entity.versioning.update_guesser.class%'
         tags:
             - { name: pim_versioning.update_guesser }

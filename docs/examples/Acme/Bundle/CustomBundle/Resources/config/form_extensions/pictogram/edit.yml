@@ -1,0 +1,144 @@
+extensions:
+    pim-pictogram-edit-form:
+        module: pim/form/common/edit-form
+
+    pim-pictogram-edit-form-breadcrumbs:
+        module: pim/common/breadcrumbs
+        parent: pim-pictogram-edit-form
+        targetZone: breadcrumbs
+        config:
+            tab: pim-menu-reference_data
+            item: pim-menu-reference_data-pictogram
+
+    pim-pictogram-edit-form-cache-invalidator:
+        module: pim/cache-invalidator
+        parent: pim-pictogram-edit-form
+        position: 1000
+
+    pim-pictogram-edit-form-form-tabs:
+        module: pim/form/common/form-tabs
+        parent: pim-pictogram-edit-form
+        targetZone: content
+        position: 100
+
+    pim-pictogram-edit-form-label:
+        module: custom_entity/form/common/label
+        parent: pim-pictogram-edit-form
+        targetZone: title
+        position: 90
+
+    pim-pictogram-edit-form-secondary-actions:
+        module: pim/form/common/secondary-actions
+        parent: pim-pictogram-edit-form
+        targetZone: buttons
+        position: 50
+
+    pim-pictogram-edit-form-delete:
+        module: custom_entity/form/common/delete
+        parent: pim-pictogram-edit-form-secondary-actions
+        targetZone: secondary-actions
+        aclResourceId: pim_enrich_group_remove
+        position: 100
+        config:
+            route: pim_customentity_rest_delete
+            routeParams:
+                customEntityName: pictogram
+            trans:
+                title: confirmation.remove.group
+                container: pim_enrich.confirmation.delete_item
+                success: flash.group.removed
+                fail: error.removing.group
+            redirect: pim_customentity_index
+
+    pim-pictogram-edit-form-save-buttons:
+        module: pim/form/common/save-buttons
+        parent: pim-pictogram-edit-form
+        targetZone: buttons
+        position: 120
+
+    pim-pictogram-edit-form-save:
+        module: custom_entity/form/common/save-form
+        parent: pim-pictogram-edit-form
+        targetZone: buttons
+        position: 0
+        config:
+            updateSuccessMessage: pim_enrich.entity.attribute.info.update_successful
+            updateFailureMessage: pim_enrich.entity.attribute.info.update_failed
+            notReadyMessage: pim_enrich.entity.attribute.info.field_not_ready
+            url: pim_customentity_rest_edit
+            route_params:
+                customEntityName: pictogram
+            redirectAfter: pim_customentity_rest_get
+            excludedProperties: []
+
+    pim-pictogram-edit-form-properties-tab:
+        module: pim/common/tab
+        parent: pim-pictogram-edit-form-form-tabs
+        targetZone: container
+        position: 100
+        config:
+            label: 'pim_custom_entity.form.tab.properties.title'
+
+    pim-pictogram-edit-form-properties:
+        module: pim/common/simple-view
+        parent: pim-pictogram-edit-form-properties-tab
+        targetZone: self
+        config:
+            template: pim/template/form/tab/sections
+
+    pim-pictogram-edit-form-history:
+        module: pim/common/tab/history
+        parent: pim-pictogram-edit-form-form-tabs
+        targetZone: container
+        position: 110
+        config:
+            class: pictogram
+            title: pim_custom_entity.form.tab.history.title
+
+    pim-pictogram-edit-form-state:
+        module: pim/form/common/state
+        parent: pim-pictogram-edit-form
+        targetZone: state
+        position: 900
+        config:
+            entity: 'acme_custom.entity.pictogram.title'
+
+    pim-pictogram-edit-form-properties-common:
+        module: pim/common/simple-view
+        parent: pim-pictogram-edit-form-properties
+        targetZone: accordion
+        position: 100
+        config:
+            template: pim/template/form/tab/section
+            templateParams:
+                sectionTitle: pim_custom_entity.form.tab.properties.section.common
+                dropZone: content
+
+    pim-pictogram-edit-form-properties-code:
+        module: pim/attribute-edit-form/properties/text
+        parent: pim-pictogram-edit-form-properties-common
+        targetZone: content
+        position: 90
+        config:
+            fieldName: code
+            required: true
+            readOnly: true
+
+    pim-pictogram-edit-form-properties-translation-section:
+        module: pim/common/simple-view
+        parent: pim-pictogram-edit-form-properties
+        targetZone: accordion
+        position: 110
+        config:
+            template: pim/template/form/tab/section
+            templateParams:
+                sectionTitle: pim_custom_entity.form.group.tab.properties.label_translations
+                dropZone: content
+
+    pim-pictogram-edit-form-properties-translation:
+        module: pim/common/properties/translation
+        parent: pim-pictogram-edit-form-properties-translation-section
+        targetZone: content
+        position: 100
+        config:
+            fieldBaseId: 'pim_enrich_group_form_label_'

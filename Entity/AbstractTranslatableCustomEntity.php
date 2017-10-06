@@ -2,9 +2,10 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Entity;
 
+use Akeneo\Component\Localization\Model\AbstractTranslation;
+use Akeneo\Component\Localization\Model\TranslatableInterface;
 use Akeneo\Component\Localization\Model\TranslationInterface;
 use Doctrine\Common\Collections\ArrayCollection;
-use Akeneo\Component\Localization\Model\TranslatableInterface;
 
 /**
  * @author    Antoine Guigan <antoine@akeneo.com>
@@ -13,14 +14,10 @@ use Akeneo\Component\Localization\Model\TranslatableInterface;
  */
 abstract class AbstractTranslatableCustomEntity extends AbstractCustomEntity implements TranslatableInterface
 {
-    /**
-     * @var ArrayCollection
-     */
+    /** @var ArrayCollection */
     protected $translations;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $locale;
 
     /**
@@ -34,7 +31,7 @@ abstract class AbstractTranslatableCustomEntity extends AbstractCustomEntity imp
     /**
      * {@inheritdoc}
      */
-    public function addTranslation(TranslationInterface $translation)
+    public function addTranslation(TranslationInterface $translation): TranslatableInterface
     {
         if (!$this->translations->contains($translation)) {
             $this->translations->add($translation);
@@ -46,7 +43,7 @@ abstract class AbstractTranslatableCustomEntity extends AbstractCustomEntity imp
     /**
      * {@inheritdoc}
      */
-    public function getTranslation($locale = null)
+    public function getTranslation(?string $locale = null): AbstractTranslation
     {
         $locale = ($locale) ? $locale : $this->locale;
         if (!$locale) {
@@ -59,7 +56,7 @@ abstract class AbstractTranslatableCustomEntity extends AbstractCustomEntity imp
         }
 
         $translationClass = $this->getTranslationFQCN();
-        $translation      = new $translationClass();
+        $translation = new $translationClass();
         $translation->setLocale($locale);
         $translation->setForeignKey($this);
         $this->addTranslation($translation);
@@ -70,7 +67,7 @@ abstract class AbstractTranslatableCustomEntity extends AbstractCustomEntity imp
     /**
      * {@inheritdoc}
      */
-    public function setLocale($locale)
+    public function setLocale($locale): TranslatableInterface
     {
         $this->locale = $locale;
 
@@ -80,7 +77,7 @@ abstract class AbstractTranslatableCustomEntity extends AbstractCustomEntity imp
     /**
      * {@inheritdoc}
      */
-    public function removeTranslation(TranslationInterface $translation)
+    public function removeTranslation(TranslationInterface $translation): TranslatableInterface
     {
         $this->translations->removeElement($translation);
 
@@ -88,7 +85,7 @@ abstract class AbstractTranslatableCustomEntity extends AbstractCustomEntity imp
     }
 
     /**
-     * {@inheritdoc}
+     * @return ArrayCollection|TranslationInterface[]
      */
     public function getTranslations()
     {
@@ -98,12 +95,12 @@ abstract class AbstractTranslatableCustomEntity extends AbstractCustomEntity imp
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         $translation = $this->getTranslation();
 
-        return ($translation && (string) $translation)
-            ? (string) $translation
-            : (string) $this->code;
+        return ($translation && (string)$translation)
+            ? (string)$translation
+            : (string)$this->code;
     }
 }

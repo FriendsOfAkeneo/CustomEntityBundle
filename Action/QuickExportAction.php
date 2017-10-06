@@ -4,8 +4,10 @@ namespace Pim\Bundle\CustomEntityBundle\Action;
 
 use Akeneo\Bundle\BatchBundle\Job\JobInstanceRepository;
 use Akeneo\Bundle\BatchBundle\Launcher\JobLauncherInterface;
+use Oro\Bundle\DataGridBundle\Extension\MassAction\MassActionParametersParser;
 use Pim\Bundle\CustomEntityBundle\Event\ActionEventManager;
 use Pim\Bundle\CustomEntityBundle\Manager\Registry as ManagerRegistry;
+use Pim\Bundle\DataGridBundle\Adapter\GridFilterAdapterInterface;
 use Pim\Bundle\DataGridBundle\Extension\MassAction\MassActionDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,6 +19,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
+ * TODO jml: rework all this action before stable release
  * @author    Antoine Guigan <antoine@akeneo.com>
  * @copyright 2014 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
@@ -35,16 +38,24 @@ class QuickExportAction extends AbstractAction
     /** @var TokenStorageInterface */
     protected $tokenStorage;
 
+    /** @var MassActionParametersParser */
+    protected $parameterParser;
+
+    /** @var GridFilterAdapterInterface */
+    protected $gridFilterAdapter;
+
     /**
-     * @param ActionFactory         $actionFactory
-     * @param ActionEventManager    $eventManager
-     * @param ManagerRegistry       $managerRegistry
-     * @param RouterInterface       $router
-     * @param TranslatorInterface   $translator
-     * @param MassActionDispatcher  $massActionDispatcher
-     * @param JobInstanceRepository $jobInstanceRepo
-     * @param JobLauncherInterface  $jobLauncher
-     * @param TokenStorageInterface $tokenStorage
+     * @param ActionFactory              $actionFactory
+     * @param ActionEventManager         $eventManager
+     * @param ManagerRegistry            $managerRegistry
+     * @param RouterInterface            $router
+     * @param TranslatorInterface        $translator
+     * @param MassActionDispatcher       $massActionDispatcher
+     * @param JobInstanceRepository      $jobInstanceRepo
+     * @param JobLauncherInterface       $jobLauncher
+     * @param TokenStorageInterface      $tokenStorage
+     * @param MassActionParametersParser $parameterParser
+     * @param GridFilterAdapterInterface $gridFilterAdapter
      */
     public function __construct(
         ActionFactory $actionFactory,
@@ -55,14 +66,18 @@ class QuickExportAction extends AbstractAction
         MassActionDispatcher $massActionDispatcher,
         JobInstanceRepository $jobInstanceRepo,
         JobLauncherInterface $jobLauncher,
-        TokenStorageInterface $tokenStorage
+        TokenStorageInterface $tokenStorage,
+        MassActionParametersParser $parameterParser,
+        GridFilterAdapterInterface $gridFilterAdapter
     ) {
         parent::__construct($actionFactory, $eventManager, $managerRegistry, $router, $translator);
 
         $this->massActionDispatcher = $massActionDispatcher;
-        $this->jobInstanceRepo      = $jobInstanceRepo;
-        $this->jobLauncher          = $jobLauncher;
-        $this->tokenStorage         = $tokenStorage;
+        $this->jobInstanceRepo = $jobInstanceRepo;
+        $this->jobLauncher = $jobLauncher;
+        $this->tokenStorage = $tokenStorage;
+        $this->parameterParser = $parameterParser;
+        $this->gridFilterAdapter = $gridFilterAdapter;
     }
 
     /**
@@ -80,11 +95,15 @@ class QuickExportAction extends AbstractAction
             );
         }
 
-        $rawConfiguration = $jobInstance->getRawParameters();
-        $rawConfiguration['reference_data'] = $this->configuration->getEntityClass();
-        $rawConfiguration['ids'] = $this->massActionDispatcher->dispatch($request);
+        $parameters = $this->parameterParser->parse($request);
 
-        $this->jobLauncher->launch($jobInstance, $this->getUser(), $rawConfiguration);
+        $rawParameters = $jobInstance->getRawParameters();
+        $rawParameters['reference_data'] = $this->configuration->getEntityClass();
+        $rawParameters['ids'] = $parameters['values'];
+        //$rawConfiguration['ids'] = $this->massActionDispatcher->dispatch($request);
+
+        $configuration = array_merge($rawParameters, $rawParameters);
+        $this->jobLauncher->launch($jobInstance, $this->getUser(), $configuration);
 
         return new Response();
     }
@@ -96,7 +115,7 @@ class QuickExportAction extends AbstractAction
      *
      * @throws TokenNotFoundException
      *
-     * @see Symfony\Component\Security\Core\Authentication\Token\TokenInterface::getUser()
+     * @see \Symfony\Component\Security\Core\Authentication\Token\TokenInterface::getUser()
      */
     protected function getUser()
     {
@@ -116,9 +135,9 @@ class QuickExportAction extends AbstractAction
         $resolver->setDefined(['limit']);
         $resolver->setDefaults(
             [
-                'route'               => 'pim_customentity_quickexport',
-                'job_profile'         => 'csv_reference_data_quick_export',
-                'serializer_context'  => [],
+                'route'              => 'pim_customentity_quickexport',
+                'job_profile'        => 'csv_reference_data_quick_export',
+                'serializer_context' => [],
             ]
         );
     }
@@ -126,7 +145,7 @@ class QuickExportAction extends AbstractAction
     /**
      * {@inheritdoc}
      */
-    public function getType()
+    public function getType(): string
     {
         return 'quick_export';
     }

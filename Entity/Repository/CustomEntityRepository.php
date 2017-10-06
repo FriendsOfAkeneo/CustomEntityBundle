@@ -23,9 +23,7 @@ class CustomEntityRepository extends ReferenceDataRepository implements Pageable
      */
     public function createDatagridQueryBuilder()
     {
-        return $this->createQueryBuilder(
-            $this->getAlias()
-        );
+        return $this->createQueryBuilder($this->getAlias());
     }
 
     /**
@@ -63,6 +61,11 @@ class CustomEntityRepository extends ReferenceDataRepository implements Pageable
                 }
             )
         );
+
+        // TODO : rework this part
+        // I reset the orderBy clause because it is buggy.
+        // @see https://github.com/akeneo/pim-community-dev/blob/master/src/Pim/Bundle/DataGridBundle/Datasource/ResultRecord/Orm/ObjectIdHydrator.php#L55
+        $qb->resetDQLPart('orderBy');
 
         // remove limit of the query
         $qb->setMaxResults(null);
@@ -202,7 +205,6 @@ class CustomEntityRepository extends ReferenceDataRepository implements Pageable
                 ->select(sprintf('COUNT(%s.id)', $this->getAlias()))
                 ->getQuery()
                 ->getSingleScalarResult();
-
         } catch (UnexpectedResultException $e) {
             return 0;
         }

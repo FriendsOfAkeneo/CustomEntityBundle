@@ -1,0 +1,23 @@
+extensions:
+    pim-pictogram-create-modal:
+        module: custom_entity/form/creation/modal
+        config:
+            labels:
+               title: pim_custom_entity.create_popin.title
+               subTitle: acme_custom.menu.item.reference_data.pictogram
+            successMessage: pim_custom_entity.message.created
+            editRoute: pim_customentity_rest_get
+            routerKey: code
+            postUrl:
+                route: pim_customentity_rest_create
+                parameters:
+                    customEntityName: pictogram
+
+    pim-pictogram-create-code:
+        module: pim/form/common/creation/field
+        parent: pim-pictogram-create-modal
+        targetZone: fields
+        position: 10
+        config:
+            identifier: code
+            label: acme_custom.pictogram.field.label.code

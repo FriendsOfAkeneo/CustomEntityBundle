@@ -1,56 +1,18 @@
 custom_entities:
     default:
-        class: %pim_custom_entity.configuration.default.class%
+        class: '%pim_custom_entity.configuration.default.class%'
         extends: ~
         abstract: true
         actions:
-            index:
-                service: pim_custom_entity.action.index
-                acl_suffix: index
-            edit:
-                service: pim_custom_entity.action.edit
-                acl_suffix: edit
-            delete:
-                service: pim_custom_entity.action.delete
-                acl_suffix: delete
-            create:
-                service: pim_custom_entity.action.create
-                acl_suffix: edit
-            mass_edit:
-                service: pim_custom_entity.action.mass_edit
-                enabled: false
-                acl_suffix: edit
-            mass_delete:
-                service: pim_custom_entity.action.mass_delete
-                enabled: false
-                acl_suffix: delete
-            show:
-                service: pim_custom_entity.action.show
-                enabled: false
-                acl_suffix: edit
-            history:
-                service: pim_custom_entity.action.history
-                enabled: false
-                acl_suffix: edit
-            quick_export:
-                service: pim_custom_entity.action.quick_export
-                enabled: false
-                acl_suffix: index
-
-    quick_create:
-        abstract: true
-        actions:
-            index:
-                quick_create: true
-            create:
-                service: pim_custom_entity.action.quick_create
-
-    mass_actions:
-        abstract: true
-        actions:
-            index:
-                mass_actions: [ mass_edit, mass_delete, quick_export]
-            mass_delete:
+            rest_get:
+                service: pim_custom_entity.action.rest.get
                 enabled: true
-            quick_export:
+            rest_delete:
+                service: pim_custom_entity.action.rest.delete
+                enabled: true
+            rest_create:
+                service: pim_custom_entity.action.rest.create
+                enabled: true
+            rest_update:
+                service: pim_custom_entity.action.rest.update
                 enabled: true

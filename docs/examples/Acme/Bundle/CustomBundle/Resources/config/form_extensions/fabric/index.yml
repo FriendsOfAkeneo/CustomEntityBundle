@@ -1,0 +1,82 @@
+extensions:
+    pim-fabric-index:
+        module: pim/common/simple-view
+        config:
+            template: pim/template/common/default-template
+        forwarded-events:
+            grid_load:start: grid_load:start
+            grid_load:complete: grid_load:complete
+
+    pim-fabric-index-grid-container:
+        module: pim/common/simple-view
+        parent: pim-fabric-index
+        targetZone: content
+        config:
+            template: pim/template/form/index/index
+
+    pim-fabric-index-user-navigation:
+        module: pim/menu/user-navigation
+        parent: pim-fabric-index
+        targetZone: user-menu
+        config:
+            userAccount: pim_menu.user.user_account
+            logout: pim_menu.user.logout
+
+    pim-fabric-index-grid-title:
+        module: pim/common/grid-title
+        parent: pim-fabric-index
+        targetZone: title
+        config:
+            title: acme_custom.fabric.index_title
+
+    pim-fabric-index-breadcrumbs:
+        module: pim/common/breadcrumbs
+        parent: pim-fabric-index
+        targetZone: breadcrumbs
+        config:
+            tab: pim-menu-reference_data
+            item: acme_custom-menu-reference_data-item-fabric
+
+    pim-fabric-index-grid-filters-list:
+        module: oro/datafilter/filters-list
+        parent: pim-fabric-index-grid-container
+        targetZone: filters
+
+    pim-fabric-index-grid-filters-manage:
+        module: oro/datafilter/filters-button
+        parent: pim-fabric-index-grid-container
+        targetZone: filters
+
+    pim-fabric-index-mass-actions:
+        module: pim/grid/mass-actions
+        parent: pim-fabric-index
+        targetZone: bottom-panel
+        config:
+            label: acme_custom.fabric.selected
+
+    pim-fabric-index-actions-panel:
+        module: oro/datagrid/actions-panel
+        parent: pim-fabric-index-mass-actions
+        targetZone: actions-panel
+
+    pim-fabric-index-pagination:
+        module: oro/datagrid/pagination-input
+        parent: pim-fabric-index-grid-container
+        targetZone: toolbar
+
+    pim-fabric-index-grid:
+        module: pim/form/common/index/grid
+        parent: pim-fabric-index
+        targetZone: content
+        position: 1000
+        config:
+            alias: fabric
+
+    pim-fabric-index-create-button:
+        module: pim/form/common/index/create-button
+        parent: pim-fabric-index
+        targetZone: buttons
+        aclResourceId: pim_enrich_product_create
+        config:
+           title:     pim_custom_entity.button.create
+           modalForm: pim-fabric-create-modal

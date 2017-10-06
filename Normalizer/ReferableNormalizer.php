@@ -14,15 +14,11 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
  */
 class ReferableNormalizer implements NormalizerInterface
 {
-    /**
-     * @var array
-     */
+    /** @var string[] */
     protected $allowedformats;
 
     /**
-     * Constructor
-     *
-     * @param array $allowedformats
+     * @param string[] $allowedformats
      */
     public function __construct(array $allowedformats)
     {
@@ -32,7 +28,7 @@ class ReferableNormalizer implements NormalizerInterface
     /**
      * {@inheritdoc}
      */
-    public function normalize($object, $format = null, array $context = array())
+    public function normalize($object, $format = null, array $context = []): array
     {
         if (array_key_exists('field_name', $context)) {
             return [
@@ -46,7 +42,7 @@ class ReferableNormalizer implements NormalizerInterface
     /**
      * {@inheritdoc}
      */
-    public function supportsNormalization($data, $format = null)
+    public function supportsNormalization($data, $format = null): bool
     {
         return $data instanceof AbstractCustomEntity && in_array($format, $this->allowedformats);
     }

@@ -2,6 +2,20 @@ extensions:
     reference-data-job-instance-csv-import-show:
         module: pim/form/common/edit-form
 
+    pim-job-instance-xlsx-base-import-show-main-image:
+        module: pim/form/common/main-image
+        parent: pim-job-instance-xlsx-base-import-show
+        targetZone: main-image
+        config:
+            path: bundles/pimui/images/illustration-import-xlsx.svg
+
+    pim-job-instance-xlsx-base-import-show-breadcrumbs:
+        module: pim/common/breadcrumbs
+        parent: pim-job-instance-xlsx-base-import-show
+        targetZone: breadcrumbs
+        config:
+            tab: pim-menu-imports
+
     reference-data-job-instance-csv-import-show-tabs:
         module: pim/form/common/form-tabs
         parent: reference-data-job-instance-csv-import-show
@@ -59,7 +73,7 @@ extensions:
         module: pim/job/common/edit/field/text
         parent: reference-data-job-instance-csv-import-show-properties
         position: 120
-        targetZone: global-settings
+        targetZone: properties
         config:
             fieldCode: configuration.filePath
             readOnly: true
@@ -70,7 +84,7 @@ extensions:
         module: pim/job/common/edit/field/text
         parent: reference-data-job-instance-csv-import-show-properties
         position: 130
-        targetZone: global-settings
+        targetZone: properties
         config:
             fieldCode: configuration.escape
             readOnly: true
@@ -81,7 +95,7 @@ extensions:
         module: pim/job/common/edit/field/text
         parent: reference-data-job-instance-csv-import-show-properties
         position: 140
-        targetZone: global-settings
+        targetZone: properties
         config:
             fieldCode: configuration.delimiter
             readOnly: true
@@ -92,7 +106,7 @@ extensions:
         module: pim/job/common/edit/field/text
         parent: reference-data-job-instance-csv-import-show-properties
         position: 150
-        targetZone: global-settings
+        targetZone: properties
         config:
             fieldCode: configuration.enclosure
             readOnly: true
@@ -100,10 +114,10 @@ extensions:
             tooltip: pim_enrich.form.job_instance.tab.properties.enclosure.help
 
     reference-data-job-instance-csv-import-show-properties-reference-data-names:
-        module: reference-data-list
+        module: custom_entity/field/select2
         parent: reference-data-job-instance-csv-import-show-properties
         position: 155
-        targetZone: global-settings
+        targetZone: properties
         config:
             fieldCode: configuration.reference_data_name
             readOnly: false
@@ -114,7 +128,7 @@ extensions:
         module: pim/job/common/edit/field/switch
         parent: reference-data-job-instance-csv-import-show-properties
         position: 160
-        targetZone: global-settings
+        targetZone: properties
         config:
             fieldCode: configuration.uploadAllowed
             readOnly: true
@@ -132,15 +146,6 @@ extensions:
         parent: reference-data-job-instance-csv-import-show
         targetZone: meta
         position: 100
-
-    reference-data-job-instance-csv-import-show-back-to-grid:
-        module: pim/form/common/back-to-grid
-        parent: reference-data-job-instance-csv-import-show
-        targetZone: back
-        aclResourceId: pim_importexport_import_profile_index
-        position: 80
-        config:
-            backUrl: pim_importexport_import_profile_index
 
     reference-data-job-instance-csv-import-show-edit:
         module: pim/common/redirect

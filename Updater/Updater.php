@@ -2,11 +2,13 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Updater;
 
+use Akeneo\Component\Localization\Model\TranslatableInterface;
 use Akeneo\Component\StorageUtils\Updater\ObjectUpdaterInterface;
 use Doctrine\Common\Util\ClassUtils;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
+use Pim\Bundle\CustomEntityBundle\Entity\AbstractTranslatableCustomEntity;
 use Pim\Component\Catalog\Repository\LocaleRepositoryInterface;
 use Pim\Component\ReferenceData\Model\ReferenceDataInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
@@ -35,7 +37,7 @@ class Updater implements ObjectUpdaterInterface
     /**
      * @param PropertyAccessorInterface $propertyAccessor
      * @param LocaleRepositoryInterface $localeRepository
-     * @param EntityManagerInterface $em
+     * @param EntityManagerInterface    $em
      */
     public function __construct(
         PropertyAccessorInterface $propertyAccessor,
@@ -44,13 +46,13 @@ class Updater implements ObjectUpdaterInterface
     ) {
         $this->propertyAccessor = $propertyAccessor;
         $this->localeRepository = $localeRepository;
-        $this->em               = $em;
+        $this->em = $em;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function update($referenceData, array $data, array $options = [])
+    public function update($referenceData, array $data, array $options = []): ReferenceDataInterface
     {
         if (!$referenceData instanceof ReferenceDataInterface) {
             throw new \InvalidArgumentException(
@@ -71,19 +73,31 @@ class Updater implements ObjectUpdaterInterface
 
     /**
      * @param ReferenceDataInterface $referenceData
-     * @param string $propertyPath
-     * @param mixed $value
+     * @param string                 $propertyPath
+     * @param mixed                  $value
      */
-    protected function updateProperty(ReferenceDataInterface $referenceData, $propertyPath, $value)
+    protected function updateProperty(ReferenceDataInterface $referenceData, $propertyPath, $value): void
     {
-        if ($this->propertyAccessor->isWritable($referenceData, $propertyPath)) {
-            if ($this->isAssociation($referenceData, $propertyPath)) {
-                $this->updateAssociatedEntity($referenceData, $propertyPath, $value);
-            } else {
-                $this->propertyAccessor->setValue($referenceData, $propertyPath, $value);
-            }
-        } elseif ($this->isAssociation($referenceData, 'translations')) {
-            $this->updateTranslation($referenceData, $propertyPath, $value);
+        if ('id' === $propertyPath) {
+            return;
+        }
+
+        if ('code' === $propertyPath) {
+            $referenceData->setCode($value);
+
+            return;
+        }
+
+        if ($this->isAssociation($referenceData, 'translations')
+            || $this->isAssociation($referenceData, 'labels')) {
+            $this->updateTranslations($referenceData, $propertyPath, $value);
+
+            return;
+        }
+        if ($this->isAssociation($referenceData, $propertyPath)) {
+            $this->updateAssociatedEntity($referenceData, $propertyPath, $value);
+        } else {
+            $this->propertyAccessor->setValue($referenceData, $propertyPath, $value);
         }
     }
 
@@ -91,15 +105,15 @@ class Updater implements ObjectUpdaterInterface
      * Updates an entity linked to the reference data
      *
      * @param ReferenceDataInterface $referenceData
-     * @param string $propertyPath
-     * @param mixed $value
+     * @param string                 $propertyPath
+     * @param mixed                  $value
      *
      * @throws EntityNotFoundException
      */
-    protected function updateAssociatedEntity(ReferenceDataInterface $referenceData, $propertyPath, $value)
+    protected function updateAssociatedEntity(ReferenceDataInterface $referenceData, $propertyPath, $value): void
     {
         $associationMapping = $this->getAssociationMapping($referenceData, $propertyPath);
-        $associationRepo  = $this->em->getRepository($associationMapping['targetEntity']);
+        $associationRepo = $this->em->getRepository($associationMapping['targetEntity']);
         $associatedEntity = $associationRepo->findOneBy(['code' => $value]);
         if (null === $associatedEntity) {
             throw new EntityNotFoundException(
@@ -113,28 +127,22 @@ class Updater implements ObjectUpdaterInterface
     /**
      * Updates a reference data translation from the translatable reference data
      *
-     * @param ReferenceDataInterface $referenceData
-     * @param string $propertyPath
-     * @param mixed $value
+     * @param AbstractTranslatableCustomEntity $referenceData
+     * @param string                           $propertyPath
+     * @param mixed                            $values
      *
      * @throws \InvalidArgumentException
      */
-    protected function updateTranslation(ReferenceDataInterface $referenceData, $propertyPath, $value)
+    protected function updateTranslations(AbstractTranslatableCustomEntity $referenceData, $propertyPath, $values): void
     {
-        $translationPattern = '/^(?<property>[a-zA-Z0-9_-]+)-(?<locale>[a-z]{2}_[A-Z]{2})$/';
-        if (preg_match($translationPattern, $propertyPath, $matches)
-            && (isset($matches['property']) && isset($matches['locale']))
-        ) {
-            if (!in_array($matches['locale'], $this->localeRepository->getActivatedLocaleCodes())) {
+        foreach ($values as $locale => $value) {
+            if (!in_array($locale, $this->localeRepository->getActivatedLocaleCodes())) {
                 throw new \InvalidArgumentException(
-                    sprintf('Locale "%s" is not activated', $matches['locale'])
+                    sprintf('Locale "%s" is not activated', $locale)
                 );
             }
-
-            if ($this->propertyAccessor->isWritable($referenceData, $matches['property'])) {
-                $referenceData->setLocale($matches['locale']);
-                $this->propertyAccessor->setValue($referenceData, $matches['property'], $value);
-            }
+            $translation = $referenceData->getTranslation($locale);
+            $translation->setLabel($value);
         }
     }
 
@@ -143,7 +151,7 @@ class Updater implements ObjectUpdaterInterface
      *
      * @return \Doctrine\Common\Persistence\Mapping\ClassMetadata|ClassMetadataInfo
      */
-    protected function getClassMetadata(ReferenceDataInterface $referenceData)
+    protected function getClassMetadata(ReferenceDataInterface $referenceData): ClassMetadataInfo
     {
         if (null === $this->classMetadata) {
             $this->classMetadata = $this->em->getClassMetadata(ClassUtils::getClass($referenceData));
@@ -157,18 +165,18 @@ class Updater implements ObjectUpdaterInterface
      *
      * @return array
      */
-    protected function getAssociationMappings(ReferenceDataInterface $referenceData)
+    protected function getAssociationMappings(ReferenceDataInterface $referenceData): array
     {
         return $this->getClassMetadata($referenceData)->getAssociationMappings();
     }
 
     /**
      * @param ReferenceDataInterface $referenceData
-     * @param string $property
+     * @param string                 $property
      *
      * @return bool
      */
-    protected function isAssociation(ReferenceDataInterface $referenceData, $property)
+    protected function isAssociation(ReferenceDataInterface $referenceData, $property): bool
     {
         $associationMappings = $this->getAssociationMappings($referenceData);
 
@@ -177,11 +185,11 @@ class Updater implements ObjectUpdaterInterface
 
     /**
      * @param ReferenceDataInterface $referenceData
-     * @param string $property
+     * @param string                 $property
      *
      * @return array
      */
-    protected function getAssociationMapping(ReferenceDataInterface $referenceData, $property)
+    protected function getAssociationMapping(ReferenceDataInterface $referenceData, $property): array
     {
         $associationMappings = $this->getAssociationMappings($referenceData);
 
