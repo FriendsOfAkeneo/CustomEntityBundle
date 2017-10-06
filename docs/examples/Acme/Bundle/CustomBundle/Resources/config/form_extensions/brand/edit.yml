@@ -46,8 +46,8 @@ extensions:
             trans:
                 title: acme_custom.message.confirmation.remove.brand
                 container: pim_enrich.confirmation.delete_item
-                success: acme_custom.message.removed.brand
-                fail: acme_custom.error.removing.brand
+                success: pim_custom_entity.message.confirmation.removed
+                fail: pim_custom_entity.error.removing
             redirect: pim_customentity_index
 
     pim-brand-edit-form-save-buttons:
@@ -76,7 +76,7 @@ extensions:
             url: pim_customentity_rest_edit
             route_params:
                 customEntityName: brand
-            redirectAfter: pim_customentity_rest_edit
+            redirectAfter: pim_customentity_edit
             excludedProperties: []
 
     pim-brand-edit-form-properties-tab:
@@ -100,7 +100,7 @@ extensions:
         targetZone: container
         position: 110
         config:
-            class: group
+            class: brand
             title: pim_custom_entity.form.tab.history.title
 
     pim-brand-edit-form-state:

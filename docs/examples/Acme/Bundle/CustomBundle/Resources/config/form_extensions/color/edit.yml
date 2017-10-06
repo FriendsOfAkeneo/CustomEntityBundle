@@ -45,8 +45,8 @@ extensions:
             trans:
                 title: acme_custom.message.confirmation.remove.color
                 container: pim_enrich.confirmation.delete_item
-                success: acme_custom.message.removed.color
-                fail: acme_custom.error.removing.color
+                success: pim_custom_entity.message.confirmation.removed
+                fail: pim_custom_entity.error.removing
             redirect: pim_customentity_index
 
     pim-color-edit-form-save-buttons:

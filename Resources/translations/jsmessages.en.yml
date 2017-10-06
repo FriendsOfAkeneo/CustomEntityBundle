@@ -17,6 +17,9 @@ pim_custom_entity:
         create: Create
     message:
         created: Successfully created new reference data
+        removed: Successfully removed reference data
+    error:
+        removing: The reference data could not be deleted
     export.csv.entity_name:
         label: Reference data name
         help: The reference data name you want to import
