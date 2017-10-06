@@ -22,11 +22,22 @@ For more information, please see http://docs.akeneo.com/
 | v1.2.*               | v1.1.*                       |
 | v1.1.*               | v1.1.*                       |
 
+## Disclaimer
+
+The 2.0.0 custom entity bundle is in bêta state because of missing features:
+- mass edit
+- quick export
+- mass delete
+- missing translations
+- outdated documentation
+
+Work is in progress and we will release a stable version very soon.
+
 ## Installation
 You can install this bundle with composer (see requirements section):
 
 ```bash
-    php composer.phar require akeneo-labs/custom-entity-bundle:1.10.*
+    php composer.phar require akeneo-labs/custom-entity-bundle:2.0.0@beta
 ```
 
 Then add the following lines **at the end** of your app/config/routing.yml :
