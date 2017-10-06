@@ -27,14 +27,4 @@ Acme\Bundle\CustomBundle\Entity\Color:
             type: integer
         blue:
             type: integer
-        hue:
-            type: integer
-        hslSaturation:
-            type: integer
-        light:
-            type: integer
-        hsvSaturation:
-            type: integer
-        value:
-            type: integer
     lifecycleCallbacks: {  }

@@ -1,38 +1,42 @@
 # Reference data
 ## Brand
-
-acme_enrich_brand_index:
+acme_custom_brand_index:
     type: action
-    label: pim_custom_entity.reference_data.brand.index
+    label: acme_custom.acl.brand.index
     group_name: pim_custom_entity.acl_group.reference_data
 
-acme_enrich_brand_create:
+acme_custom_brand_create:
     type: action
-    label: pim_custom_entity.reference_data.brand.create
+    label: acme_custom.acl.brand.create
     group_name: pim_custom_entity.acl_group.reference_data
 
-acme_enrich_brand_edit:
+acme_custom_brand_edit:
     type: action
-    label: pim_custom_entity.reference_data.brand.edit
+    label: acme_custom.acl.brand.edit
     group_name: pim_custom_entity.acl_group.reference_data
 
-acme_enrich_brand_delete:
+acme_custom_brand_delete:
     type: action
-    label: pim_custom_entity.reference_data.brand.delete
+    label: acme_custom.acl.brand.delete
     group_name: pim_custom_entity.acl_group.reference_data
 
 ## Color
-acme_enrich_color_index:
+acme_custom_color_index:
     type: action
-    label: pim_custom_entity.reference_data.color.index
+    label: acme_custom.acl.color.index
     group_name: pim_custom_entity.acl_group.reference_data
 
-acme_enrich_color_create:
+acme_custom_color_create:
     type: action
-    label: pim_custom_entity.reference_data.color.create
+    label: acme_custom.acl.color.create
     group_name: pim_custom_entity.acl_group.reference_data
 
-acme_enrich_color_edit:
+acme_custom_color_edit:
     type: action
-    label: pim_custom_entity.reference_data.color.edit
+    label: acme_custom.acl.color.edit
+    group_name: pim_custom_entity.acl_group.reference_data
+
+acme_custom_color_delete:
+    type: action
+    label: acme_custom.acl.color.edit
     group_name: pim_custom_entity.acl_group.reference_data

@@ -25,9 +25,13 @@ class ColorNormalizer implements NormalizerInterface
     public function normalize($entity, $format = null, array $context = [])
     {
         return [
-            'id'   => $entity->getId(),
-            'code' => $entity->getCode(),
-            'name' => $entity->getName(),
+            'id'    => $entity->getId(),
+            'code'  => $entity->getCode(),
+            'name'  => $entity->getName(),
+            'hex'   => $entity->getHex(),
+            'red'   => $entity->getRed(),
+            'green' => $entity->getGreen(),
+            'blue'  => $entity->getBlue(),
         ];
     }
 

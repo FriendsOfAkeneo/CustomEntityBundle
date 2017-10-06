@@ -18,10 +18,6 @@ acme_custom:
             label.red: Red value
             label.green: Green value
             label.blue: Blue value
-            label.hue: Hue value
-            label.hsl: HSL value
-            label.light: Light value
-            label.value: Value
 
     fabric:
         index_title: "] -Inf, 1] {{ count }} Fabric|] 1, Inf [{{ count }} Fabrics"

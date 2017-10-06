@@ -28,21 +28,6 @@ class Color extends AbstractCustomEntity
     /** @var int */
     protected $blue;
 
-    /** @var int */
-    protected $hue;
-
-    /** @var int */
-    protected $hslSaturation;
-
-    /** @var int */
-    protected $light;
-
-    /** @var int */
-    protected $hsvSaturation;
-
-    /** @var int */
-    protected $value;
-
     /**
      * @return string
      */
@@ -121,86 +106,6 @@ class Color extends AbstractCustomEntity
     public function setBlue($blue)
     {
         $this->blue = $blue;
-    }
-
-    /**
-     * @return int
-     */
-    public function getHue()
-    {
-        return $this->hue;
-    }
-
-    /**
-     * @param int $hue
-     */
-    public function setHue($hue)
-    {
-        $this->hue = $hue;
-    }
-
-    /**
-     * @return int
-     */
-    public function getHslSaturation()
-    {
-        return $this->hslSaturation;
-    }
-
-    /**
-     * @param int $hslSaturation
-     */
-    public function setHslSaturation($hslSaturation)
-    {
-        $this->hslSaturation = $hslSaturation;
-    }
-
-    /**
-     * @return int
-     */
-    public function getLight()
-    {
-        return $this->light;
-    }
-
-    /**
-     * @param int $light
-     */
-    public function setLight($light)
-    {
-        $this->light = $light;
-    }
-
-    /**
-     * @return int
-     */
-    public function getHsvSaturation()
-    {
-        return $this->hsvSaturation;
-    }
-
-    /**
-     * @param int $hsvSaturation
-     */
-    public function setHsvSaturation($hsvSaturation)
-    {
-        $this->hsvSaturation = $hsvSaturation;
-    }
-
-    /**
-     * @return int
-     */
-    public function getValue()
-    {
-        return $this->value;
-    }
-
-    /**
-     * @param int $value
-     */
-    public function setValue($value)
-    {
-        $this->value = $value;
     }
 
     /**
