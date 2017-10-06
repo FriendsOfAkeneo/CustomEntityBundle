@@ -76,7 +76,7 @@ extensions:
             url: pim_customentity_rest_edit
             route_params:
                 customEntityName: brand
-            redirectAfter: pim_customentity_edit
+            redirectAfter: pim_customentity_rest_get
             excludedProperties: []
 
     pim-brand-edit-form-properties-tab:

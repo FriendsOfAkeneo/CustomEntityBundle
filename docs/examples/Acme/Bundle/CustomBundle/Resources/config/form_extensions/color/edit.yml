@@ -1,6 +1,7 @@
 extensions:
     pim-color-edit-form:
         module: pim/form/common/edit-form
+        aclResourceId: acme_custom_color_edit
 
     pim-color-edit-form-breadcrumbs:
         module: pim/common/breadcrumbs
@@ -75,7 +76,7 @@ extensions:
             url: pim_customentity_rest_edit
             route_params:
                 customEntityName: color
-            redirectAfter: pim_customentity_rest_edit
+            redirectAfter: pim_customentity_rest_get
             excludedProperties: []
 
     pim-color-edit-form-properties-tab:

@@ -15,16 +15,9 @@ datagrid:
                 class: AcmeCustomBundle:Brand
         properties:
             id: ~
-            show_link:
-                type: url
-                route: pim_customentity_show
-                params:
-                    - id
-                    - customEntityName
             edit_link:
                 type: url
-                route: pim_customentity_rest_edit
-                acl_resource: acme_enrich_brand_edit
+                route: pim_customentity_rest_get
                 params:
                     - id
                     - customEntityName
@@ -35,20 +28,16 @@ datagrid:
                     - id
                     - customEntityName
         actions:
-            show:
-                type:      navigate
-                label:     brand.this.show
-                icon:      eye-open
-                link:      show_link
             edit:
                 type:      navigate
+                acl_resource: acme_custom_brand_edit
                 label:     brand.this.edit
-                acl_resource: acme_enrich_brand_edit
                 icon:      edit
                 link:      edit_link
                 rowAction: true
             delete:
                 type:  delete
+                acl_resource: acme_custom_brand_delete
                 label: brand.this.delete
                 icon:  trash
                 link:  delete_link

@@ -3,6 +3,7 @@ custom_entities:
         entity_class: Acme\Bundle\CustomBundle\Entity\Color
         options:
             edit_fom_extension: pim-color-edit-form
+            acl: acme_custom_color_edit
 
     fabric:
         entity_class: Acme\Bundle\CustomBundle\Entity\Fabric

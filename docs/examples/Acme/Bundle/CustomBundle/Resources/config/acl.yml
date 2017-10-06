@@ -40,3 +40,43 @@ acme_custom_color_delete:
     type: action
     label: acme_custom.acl.color.edit
     group_name: pim_custom_entity.acl_group.reference_data
+
+acme_custom_fabric_index:
+    type: action
+    label: acme_custom.acl.fabric.index
+    group_name: pim_custom_entity.acl_group.reference_data
+
+acme_custom_fabric_create:
+    type: action
+    label: acme_custom.acl.fabric.create
+    group_name: pim_custom_entity.acl_group.reference_data
+
+acme_custom_fabric_edit:
+    type: action
+    label: acme_custom.acl.fabric.edit
+    group_name: pim_custom_entity.acl_group.reference_data
+
+acme_custom_fabric_delete:
+    type: action
+    label: acme_custom.acl.fabric.edit
+    group_name: pim_custom_entity.acl_group.reference_data
+
+acme_custom_pictogram_index:
+    type: action
+    label: acme_custom.acl.pictogram.index
+    group_name: pim_custom_entity.acl_group.reference_data
+
+acme_custom_pictogram_create:
+    type: action
+    label: acme_custom.acl.pictogram.create
+    group_name: pim_custom_entity.acl_group.reference_data
+
+acme_custom_pictogram_edit:
+    type: action
+    label: acme_custom.acl.pictogram.edit
+    group_name: pim_custom_entity.acl_group.reference_data
+
+acme_custom_pictogram_delete:
+    type: action
+    label: acme_custom.acl.pictogram.edit
+    group_name: pim_custom_entity.acl_group.reference_data
