@@ -187,24 +187,6 @@ abstract class AbstractRestAction implements ActionInterface
     }
 
     /**
-     * @return string
-     */
-    public function getRoute(): string
-    {
-        return '';
-    }
-
-    /**
-     * @param mixed
-     *
-     * @return array
-     */
-    public function getRouteParameters($object = null)
-    {
-        return [];
-    }
-
-    /**
      * Executes the action
      *
      * @param Request $request

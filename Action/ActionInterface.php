@@ -41,18 +41,6 @@ interface ActionInterface
     /**
      * @return string
      */
-    public function getRoute(): string;
-
-    /**
-     * @param mixed
-     *
-     * @return array
-     */
-    public function getRouteParameters($object = null);
-
-    /**
-     * @return string
-     */
     public function getType(): string;
 
     /**
