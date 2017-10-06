@@ -38,3 +38,25 @@ acme_custom:
         brand: Brand
         fabric: Fabric
         pictogram: Pictogram
+
+    acl:
+        brand:
+            index: List Brand
+            create: Create Brand
+            edit: Edit Brand
+            delete: Delete Brand
+        color:
+            index: List Color
+            create: Create Color
+            edit: Edit Color
+            delete: Delete Color
+        fabric:
+            index: List Fabric
+            create: Create Fabric
+            edit: Edit Fabric
+            delete: Delete Fabric
+        pictogram:
+            index: List Pictogram
+            create: Create Pictogram
+            edit: Edit Pictogram
+            delete: Delete Pictogram

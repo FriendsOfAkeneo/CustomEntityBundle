@@ -38,7 +38,7 @@ acme_custom_color_edit:
 
 acme_custom_color_delete:
     type: action
-    label: acme_custom.acl.color.edit
+    label: acme_custom.acl.color.delete
     group_name: pim_custom_entity.acl_group.reference_data
 
 acme_custom_fabric_index:
@@ -58,7 +58,7 @@ acme_custom_fabric_edit:
 
 acme_custom_fabric_delete:
     type: action
-    label: acme_custom.acl.fabric.edit
+    label: acme_custom.acl.fabric.delete
     group_name: pim_custom_entity.acl_group.reference_data
 
 acme_custom_pictogram_index:
@@ -78,5 +78,5 @@ acme_custom_pictogram_edit:
 
 acme_custom_pictogram_delete:
     type: action
-    label: acme_custom.acl.pictogram.edit
+    label: acme_custom.acl.pictogram.delete
     group_name: pim_custom_entity.acl_group.reference_data

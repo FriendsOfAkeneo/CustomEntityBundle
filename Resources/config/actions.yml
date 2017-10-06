@@ -1,7 +1,5 @@
 parameters:
     pim_custom_entity.action.factory.class:      Pim\Bundle\CustomEntityBundle\Action\ActionFactory
-    pim_custom_entity.action.history.class:      Pim\Bundle\CustomEntityBundle\Action\HistoryAction
-    pim_custom_entity.action.mass_edit.class:    Pim\Bundle\CustomEntityBundle\Action\MassEditAction
     pim_custom_entity.action.quick_export.class: Pim\Bundle\CustomEntityBundle\Action\QuickExportAction
 
     pim_custom_entity.action.rest.create.class: Pim\Bundle\CustomEntityBundle\Action\Rest\CreateAction
@@ -31,23 +29,11 @@ services:
         arguments:
             - '@templating'
 
-    pim_custom_entity.action.history:
-        class: '%pim_custom_entity.action.history.class%'
-        parent: pim_custom_entity.action.viewable
-
     pim_custom_entity.action.form:
         abstract: true
         parent: pim_custom_entity.action.viewable
         arguments:
             - '@form.factory'
-
-    pim_custom_entity.action.mass_edit:
-        class: '%pim_custom_entity.action.mass_edit.class%'
-        parent: pim_custom_entity.action.form
-        shared: false
-        arguments:
-            - '@pim_datagrid.extension.mass_action.dispatcher'
-            - '@pim_custom_entity.mass_action.mass_updater'
 
     pim_custom_entity.action.quick_export:
         class: '%pim_custom_entity.action.quick_export.class%'

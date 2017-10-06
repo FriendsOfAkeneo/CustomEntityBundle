@@ -39,12 +39,14 @@ datagrid:
         actions:
             edit:
                 type:      navigate
+                acl_resource: acme_custom_pictogram_edit
                 label:     Edit the reference data
                 icon:      edit
                 link:      edit_link
                 rowAction: true
             delete:
                 type:  delete
+                acl_resource: acme_custom_pictogram_delete
                 label: Delete the reference data
                 icon:  trash
                 link:  delete_link

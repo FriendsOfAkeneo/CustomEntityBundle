@@ -94,22 +94,6 @@ class SecurityListener implements EventSubscriberInterface
                 return $acl;
             }
         );
-        $customEntityName = $event->getAction()->getConfiguration()->getName();
-        $normalizeActions = function ($options, $actionTypes) use ($customEntityName) {
-            return array_filter(
-                $actionTypes,
-                function ($actionType) use ($customEntityName) {
-                    $action = $this->actionFactory->getAction($customEntityName, $actionType);
-                    $options = $action->getOptions();
-
-                    return (!isset($options['acl']) || $this->securityFacade->isGranted($options['acl']));
-                }
-            );
-        };
-        if ('index' === $event->getAction()->getType()) {
-            $resolver->setNormalizer('row_actions', $normalizeActions);
-            $resolver->setNormalizer('mass_actions', $normalizeActions);
-        }
     }
 
     /**
