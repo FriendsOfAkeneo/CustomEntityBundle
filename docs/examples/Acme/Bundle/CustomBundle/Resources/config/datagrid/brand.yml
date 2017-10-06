@@ -23,7 +23,7 @@ datagrid:
                     - customEntityName
             edit_link:
                 type: url
-                route: pim_customentity_edit
+                route: pim_customentity_rest_edit
                 acl_resource: acme_enrich_brand_edit
                 params:
                     - id

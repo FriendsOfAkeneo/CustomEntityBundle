@@ -16,7 +16,7 @@ datagrid:
             id: ~
             edit_link:
                 type: url
-                route: pim_customentity_edit
+                route: pim_customentity_rest_edit
                 params:
                     - id
                     - customEntityName

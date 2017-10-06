@@ -138,7 +138,7 @@ By default, the edit action uses the ``pim_custom_entity.action.edit`` service w
             actions:
                 edit:
                     service: pim_custom_entity.action.edit
-                    route: pim_customentity_edit
+                    route: pim_customentity_rest_edit
                     template: PimCustomEntityBundle:CustomEntity:form.html.twig
                     form_type: ~
                     form_options: {}

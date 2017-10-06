@@ -18,14 +18,6 @@ abstract class AbstractCustomEntity extends AbstractReferenceData
     protected $updated;
 
     /**
-     * {@inheritdoc}
-     */
-    public function getReference(): string
-    {
-        return $this->code;
-    }
-
-    /**
      * @return \DateTime
      */
     public function getCreated(): \DateTime

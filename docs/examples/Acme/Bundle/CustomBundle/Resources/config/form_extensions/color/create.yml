@@ -6,7 +6,7 @@ extensions:
                title: pim_custom_entity.create_popin.title
                subTitle: acme_custom.menu.item.reference_data.color
             successMessage: pim_custom_entity.message.created
-            editRoute: pim_customentity_edit
+            editRoute: pim_customentity_rest_edit
             routerKey: code
             postUrl:
                 route: pim_customentity_rest_create

@@ -25,5 +25,5 @@ config:
             controllers:
                 pim_customentity_index:
                     module: custom_entity/controller/list
-                pim_customentity_edit:
+                pim_customentity_rest_edit:
                     module: custom_entity/controller/edit
