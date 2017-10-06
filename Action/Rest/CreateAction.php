@@ -4,10 +4,10 @@ namespace Pim\Bundle\CustomEntityBundle\Action\Rest;
 
 use Pim\Bundle\CustomEntityBundle\Action\ActionFactory;
 use Pim\Bundle\CustomEntityBundle\Event\ActionEventManager;
+use Pim\Bundle\CustomEntityBundle\Manager\Registry as ManagerRegistry;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Pim\Bundle\CustomEntityBundle\Manager\Registry as ManagerRegistry;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
