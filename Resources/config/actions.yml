@@ -1,14 +1,13 @@
 parameters:
     pim_custom_entity.action.factory.class:      Pim\Bundle\CustomEntityBundle\Action\ActionFactory
-    pim_custom_entity.action.index.class:        Pim\Bundle\CustomEntityBundle\Action\IndexAction
-    pim_custom_entity.action.delete.class:       Pim\Bundle\CustomEntityBundle\Action\DeleteAction
-    pim_custom_entity.action.create.class:       Pim\Bundle\CustomEntityBundle\Action\CreateAction
-    pim_custom_entity.action.quick_create.class: Pim\Bundle\CustomEntityBundle\Action\QuickCreateAction
-    pim_custom_entity.action.edit.class:         Pim\Bundle\CustomEntityBundle\Action\EditAction
-    pim_custom_entity.action.show.class:         Pim\Bundle\CustomEntityBundle\Action\ShowAction
     pim_custom_entity.action.history.class:      Pim\Bundle\CustomEntityBundle\Action\HistoryAction
     pim_custom_entity.action.mass_edit.class:    Pim\Bundle\CustomEntityBundle\Action\MassEditAction
     pim_custom_entity.action.quick_export.class: Pim\Bundle\CustomEntityBundle\Action\QuickExportAction
+
+    pim_custom_entity.action.rest.create.class: Pim\Bundle\CustomEntityBundle\Action\Rest\CreateAction
+    pim_custom_entity.action.rest.delete.class: Pim\Bundle\CustomEntityBundle\Action\Rest\DeleteAction
+    pim_custom_entity.action.rest.get.class:    Pim\Bundle\CustomEntityBundle\Action\Rest\GetAction
+    pim_custom_entity.action.rest.update.class: Pim\Bundle\CustomEntityBundle\Action\Rest\UpdateAction
 
 services:
     pim_custom_entity.action.factory:
@@ -32,34 +31,15 @@ services:
         arguments:
             - '@templating'
 
-    pim_custom_entity.action.show:
-        class: '%pim_custom_entity.action.show.class%'
-        parent: pim_custom_entity.action.viewable
-
     pim_custom_entity.action.history:
         class: '%pim_custom_entity.action.history.class%'
         parent: pim_custom_entity.action.viewable
-
-    pim_custom_entity.action.index:
-        class: '%pim_custom_entity.action.index.class%'
-        parent: pim_custom_entity.action.viewable
-        shared: false
-
-    pim_custom_entity.action.delete:
-        class: '%pim_custom_entity.action.delete.class%'
-        parent: pim_custom_entity.action
-        shared: false
 
     pim_custom_entity.action.form:
         abstract: true
         parent: pim_custom_entity.action.viewable
         arguments:
             - '@form.factory'
-
-    pim_custom_entity.action.edit:
-        class: '%pim_custom_entity.action.edit.class%'
-        parent: pim_custom_entity.action.form
-        shared: false
 
     pim_custom_entity.action.mass_edit:
         class: '%pim_custom_entity.action.mass_edit.class%'
@@ -81,12 +61,37 @@ services:
             - '@oro_datagrid.mass_action.parameters_parser'
             - '@pim_datagrid.adapter.oro_to_pim_grid_filter'
 
-    pim_custom_entity.action.create:
-        class: '%pim_custom_entity.action.create.class%'
-        parent: pim_custom_entity.action.form
-        shared: false
 
-    pim_custom_entity.action.quick_create:
-        class: '%pim_custom_entity.action.quick_create.class%'
-        parent: pim_custom_entity.action.form
+    pim_custom_entity.action.rest.get:
+        class: '%pim_custom_entity.action.rest.get.class%'
         shared: false
+        arguments:
+            - '@pim_custom_entity.action.factory'
+            - '@pim_custom_entity.action_event_manager'
+            - '@pim_custom_entity.manager.registry'
+
+    pim_custom_entity.action.rest.delete:
+        class: '%pim_custom_entity.action.rest.delete.class%'
+        shared: false
+        arguments:
+            - '@pim_custom_entity.action.factory'
+            - '@pim_custom_entity.action_event_manager'
+            - '@pim_custom_entity.manager.registry'
+
+    pim_custom_entity.action.rest.create:
+        class: '%pim_custom_entity.action.rest.create.class%'
+        shared: false
+        arguments:
+            - '@pim_custom_entity.action.factory'
+            - '@pim_custom_entity.action_event_manager'
+            - '@pim_custom_entity.manager.registry'
+            - '@validator'
+
+    pim_custom_entity.action.rest.update:
+        class: '%pim_custom_entity.action.rest.update.class%'
+        shared: false
+        arguments:
+            - '@pim_custom_entity.action.factory'
+            - '@pim_custom_entity.action_event_manager'
+            - '@pim_custom_entity.manager.registry'
+            - '@validator'

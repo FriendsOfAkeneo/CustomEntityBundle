@@ -15,13 +15,6 @@ custom_entities:
             edit_fom_extension: pim-pictogram-edit-form
 
     brand:
-        extends: quick_create
         entity_class: Acme\Bundle\CustomBundle\Entity\Brand
         options:
             edit_fom_extension: pim-brand-edit-form
-        actions:
-            mass_edit:
-                form_type: acme_enrich_brand_mass_edit
-                service: pim_custom_entity.action.mass_edit
-            quick_export:
-                service: pim_custom_entity.action.quick_export

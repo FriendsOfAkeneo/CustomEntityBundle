@@ -8,7 +8,7 @@ extensions:
             successMessage: pim_custom_entity.message.created
             editRoute: pim_customentity_edit
             postUrl:
-                route: pim_customentity_create
+                route: pim_customentity_rest_create
                 parameters:
                     customEntityName: brand
 

@@ -18,8 +18,8 @@ config:
                     module: custom_entity/fetcher
                     options:
                         urls:
-                            list: pim_customentity_list
-                            get: pim_customentity_get
+                            list: pim_customentity_rest_list
+                            get: pim_customentity_rest_get
 
         pim/controller-registry:
             controllers:

@@ -72,11 +72,11 @@ class QuickExportAction extends AbstractAction
         parent::__construct($actionFactory, $eventManager, $managerRegistry, $router, $translator);
 
         $this->massActionDispatcher = $massActionDispatcher;
-        $this->jobInstanceRepo      = $jobInstanceRepo;
-        $this->jobLauncher          = $jobLauncher;
-        $this->tokenStorage         = $tokenStorage;
-        $this->parameterParser      = $parameterParser;
-        $this->gridFilterAdapter    = $gridFilterAdapter;
+        $this->jobInstanceRepo = $jobInstanceRepo;
+        $this->jobLauncher = $jobLauncher;
+        $this->tokenStorage = $tokenStorage;
+        $this->parameterParser = $parameterParser;
+        $this->gridFilterAdapter = $gridFilterAdapter;
     }
 
     /**
@@ -134,9 +134,9 @@ class QuickExportAction extends AbstractAction
         $resolver->setDefined(['limit']);
         $resolver->setDefaults(
             [
-                'route'               => 'pim_customentity_quickexport',
-                'job_profile'         => 'csv_reference_data_quick_export',
-                'serializer_context'  => [],
+                'route'              => 'pim_customentity_quickexport',
+                'job_profile'        => 'csv_reference_data_quick_export',
+                'serializer_context' => [],
             ]
         );
     }
@@ -144,7 +144,7 @@ class QuickExportAction extends AbstractAction
     /**
      * {@inheritdoc}
      */
-    public function getType()
+    public function getType(): string
     {
         return 'quick_export';
     }

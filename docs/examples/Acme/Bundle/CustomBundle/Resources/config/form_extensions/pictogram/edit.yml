@@ -40,7 +40,7 @@ extensions:
         aclResourceId: pim_enrich_group_remove
         position: 100
         config:
-            route: pim_customentity_delete
+            route: pim_customentity_rest_delete
             routeParams:
                 customEntityName: pictogram
             trans:

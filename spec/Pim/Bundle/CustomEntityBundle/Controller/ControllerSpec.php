@@ -8,6 +8,8 @@ use Pim\Bundle\CustomEntityBundle\Action\ActionInterface;
 use Pim\Bundle\CustomEntityBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ControllerSpec extends ObjectBehavior
 {
@@ -29,23 +31,24 @@ class ControllerSpec extends ObjectBehavior
 
     public function it_calls_actions(
         Request $request,
-        ActionInterface $action
+        ActionInterface $action,
+        Response $response
     ) {
-        $action->execute($request)->willReturn('success');
-        $this->executeAction('entity', 'action')->shouldReturn('success');
+        $action->execute($request)->willReturn($response);
+        $this->executeAction('entity', 'action')->shouldReturn($response);
     }
 
     public function it_throws_404_when_there_is_no_configuration_for_entity(ActionFactory $actionFactory)
     {
         $actionFactory->getAction('other_entity', 'action')->willReturn(false);
-        $this->shouldThrow('Symfony\Component\HttpKernel\Exception\NotFoundHttpException')
+        $this->shouldThrow(NotFoundHttpException::class)
             ->duringExecuteAction('other_entity', 'action');
     }
 
     public function it_throws_404_when_there_is_no_configuration_for_action(ActionFactory $actionFactory)
     {
         $actionFactory->getAction('entity', 'other_action')->willReturn(false);
-        $this->shouldThrow('Symfony\Component\HttpKernel\Exception\NotFoundHttpException')
+        $this->shouldThrow(NotFoundHttpException::class)
             ->duringExecuteAction('entity', 'other_action');
     }
 }

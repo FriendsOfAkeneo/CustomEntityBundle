@@ -102,7 +102,7 @@ By default, the create action uses the ``pim_custom_entity.action.create`` servi
             actions:
                 create:
                     service: pim_custom_entity.action.create
-                    route: pim_customentity_create
+                    route: pim_customentity_rest_create
                     template: PimCustomEntityBundle:CustomEntity:form.html.twig
                     form_type: ~
                     form_options: {}
@@ -169,7 +169,7 @@ By default, the delete action uses the ``pim_custom_entity.action.delete`` servi
             actions:
                 delete:
                     service: pim_custom_entity.action.delete
-                    route: pim_customentity_delete
+                    route: pim_customentity_rest_delete
 
 
 Show Action Options

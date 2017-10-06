@@ -32,7 +32,7 @@ datagrid:
                     - customEntityName
             delete_link:
                 type: url
-                route: pim_customentity_delete
+                route: pim_customentity_rest_delete
                 params:
                     - id
                     - customEntityName

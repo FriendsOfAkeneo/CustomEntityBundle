@@ -39,7 +39,7 @@ extensions:
         targetZone: secondary-actions
         position: 100
         config:
-            route: pim_customentity_delete
+            route: pim_customentity_rest_delete
             routeParams:
                 customEntityName: color
             trans:

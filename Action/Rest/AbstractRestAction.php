@@ -1,24 +1,26 @@
 <?php
 
-namespace Pim\Bundle\CustomEntityBundle\Action;
+namespace Pim\Bundle\CustomEntityBundle\Action\Rest;
 
+use Pim\Bundle\CustomEntityBundle\Action\ActionFactory;
+use Pim\Bundle\CustomEntityBundle\Action\ActionInterface;
 use Pim\Bundle\CustomEntityBundle\Configuration\ConfigurationInterface;
+use Pim\Bundle\CustomEntityBundle\Entity\AbstractCustomEntity;
 use Pim\Bundle\CustomEntityBundle\Event\ActionEventManager;
+use Pim\Bundle\CustomEntityBundle\Manager\ManagerInterface;
 use Pim\Bundle\CustomEntityBundle\Manager\Registry as ManagerRegistry;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Routing\Router;
-use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Translation\TranslatorInterface;
 
 /**
- * @author    Antoine Guigan <antoine@akeneo.com>
- * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
+ * @author    JM Leroux <jean-marie.leroux@akeneo.com>
+ * @copyright 2017 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-abstract class AbstractAction implements ActionInterface
+abstract class AbstractRestAction implements ActionInterface
 {
     /**
      * @var ActionFactory
@@ -36,16 +38,6 @@ abstract class AbstractAction implements ActionInterface
     protected $managerRegistry;
 
     /**
-     * @var RouterInterface
-     */
-    protected $router;
-
-    /**
-     * @var TranslatorInterface
-     */
-    protected $translator;
-
-    /**
      * @var ConfigurationInterface
      */
     protected $configuration;
@@ -56,24 +48,18 @@ abstract class AbstractAction implements ActionInterface
     protected $options;
 
     /**
-     * @param ActionFactory       $actionFactory
-     * @param ActionEventManager  $eventManager
-     * @param ManagerRegistry     $managerRegistry
-     * @param RouterInterface     $router
-     * @param TranslatorInterface $translator
+     * @param ActionFactory      $actionFactory
+     * @param ActionEventManager $eventManager
+     * @param ManagerRegistry    $managerRegistry
      */
     public function __construct(
         ActionFactory $actionFactory,
         ActionEventManager $eventManager,
-        ManagerRegistry $managerRegistry,
-        RouterInterface $router,
-        TranslatorInterface $translator
+        ManagerRegistry $managerRegistry
     ) {
         $this->actionFactory = $actionFactory;
         $this->eventManager = $eventManager;
         $this->managerRegistry = $managerRegistry;
-        $this->router = $router;
-        $this->translator = $translator;
     }
 
     /**
@@ -96,26 +82,6 @@ abstract class AbstractAction implements ActionInterface
         return $this->configuration;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getRoute(): string
-    {
-        return $this->options['route'];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getRouteParameters($object = null)
-    {
-        $parameters = ['customEntityName' => $this->configuration->getName()];
-        if ($object && $object->getId()) {
-            $parameters['id'] = $object->getId();
-        }
-
-        return $parameters;
-    }
 
     /**
      * {@inheritdoc}
@@ -154,52 +120,15 @@ abstract class AbstractAction implements ActionInterface
     }
 
     /**
-     * Set the default options
-     *
-     * @param OptionsResolver $resolver
-     */
-    protected function setDefaultOptions(OptionsResolver $resolver)
-    {
-        $resolver->setRequired(['route']);
-        $resolver->setDefaults(['find_options' => []]);
-    }
-
-    /**
-     * Returns the url for a specified action
-     *
-     * @param string $actionType
-     * @param object $object
-     * @param array  $parameters
-     * @param mixed  $referenceType
-     *
-     * @return string
-     */
-    protected function getActionUrl(
-        $actionType,
-        $object = null,
-        $parameters = [],
-        $referenceType = Router::ABSOLUTE_PATH
-    ) {
-        $action = ($actionType === $this->getType())
-            ? $this
-            : $this->actionFactory->getAction($this->configuration->getName(), $actionType);
-
-        return $this->router->generate(
-            $action->getRoute(),
-            $parameters + $action->getRouteParameters($object),
-            $referenceType
-        );
-    }
-
-    /**
      * Returns the entity of the request
      *
      * @param Request $request
      *
+     * @return AbstractCustomEntity
+     *
      * @throws NotFoundHttpException
-     * @return object
      */
-    protected function findEntity(Request $request)
+    protected function findEntity(Request $request): AbstractCustomEntity
     {
         $entity = $this->getManager()->find(
             $this->configuration->getEntityClass(),
@@ -215,27 +144,64 @@ abstract class AbstractAction implements ActionInterface
     }
 
     /**
-     * Adds a flash message
+     * Normalizes an entity into the internal array format
      *
-     * @param Request $request
-     * @param string  $type
-     * @param string  $message
-     * @param array   $messageParameters
+     * @param AbstractCustomEntity $entity
+     *
+     * @return array
      */
-    protected function addFlash(Request $request, $type, $message, array $messageParameters = [])
+    protected function normalize(AbstractCustomEntity $entity): array
     {
-        $request->getSession()->getFlashBag()
-            ->add($type, $this->translator->trans($message, $messageParameters));
+        $manager = $this->getManager();
+        $entityName = $this->configuration->getName();
+        $editFormExtension = $this->configuration->getOptions()['edit_fom_extension'];
+        $context = [
+            'customEntityName' => $entityName,
+            'form'             => $editFormExtension,
+        ];
+
+        $normalized = $manager->normalize($entity, 'internal_api', $context);
+
+        return $normalized;
     }
 
     /**
      * Returns the custom entity manager
      *
-     * @return \Pim\Bundle\CustomEntityBundle\Manager\ManagerInterface
+     * @return ManagerInterface
      */
-    protected function getManager()
+    protected function getManager(): ManagerInterface
     {
         return $this->managerRegistry->getFromConfiguration($this->configuration);
+    }
+
+
+    /**
+     * Set the default options
+     *
+     * @param OptionsResolver $resolver
+     */
+    protected function setDefaultOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults(['find_options' => []]);
+    }
+
+    /**
+     * @return string
+     */
+    public function getRoute(): string
+    {
+        return '';
+    }
+
+    /**
+     * @param mixed
+     *
+     * @return array
+     */
+    public function getRouteParameters($object = null)
+    {
+        return [];
     }
 
     /**
@@ -243,7 +209,7 @@ abstract class AbstractAction implements ActionInterface
      *
      * @param Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return JsonResponse
      */
-    abstract public function doExecute(Request $request);
+    abstract protected function doExecute(Request $request): JsonResponse;
 }

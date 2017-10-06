@@ -28,11 +28,8 @@ pim_custom_entity:
 
 page_title:
     pim_customentity_index: 'Reference data - Overview'
-    pim_customentity_create: 'Reference data - Create'
+    pim_customentity_rest_create: 'Reference data - Create'
     pim_customentity_massedit: 'Reference data'
     pim_customentity_quickexport: 'Reference data'
-    pim_customentity_edit: 'Reference data'
-    pim_customentity_show: 'Reference data'
-    pim_customentity_history: 'Reference data'
-    pim_customentity_delete: 'Reference data'
-    pim_customentity_list: 'Reference data'
+    pim_customentity_rest_delete: 'Reference data'
+    pim_customentity_rest_list: 'Reference data'
