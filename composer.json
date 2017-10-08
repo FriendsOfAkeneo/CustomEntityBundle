@@ -29,6 +29,9 @@
     "autoload": {
         "psr-0": {
             "Pim\\Bundle\\CustomEntityBundle\\": ""
+        },
+        "psr-4": {
+            "Acme\\Bundle\\CustomBundle\\": "docs/examples/CustomBundle"
         }
     },
     "target-dir": "Pim/Bundle/CustomEntityBundle"
