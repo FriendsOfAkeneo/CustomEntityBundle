@@ -11,19 +11,6 @@ CUSTOM_BUNDLE_PATH=$(pwd)
 echo $CUSTOM_BUNDLE_PATH
 cd $MY_PATH/../../../../../../../../../app
 APP_PATH=$(pwd)
-cd $MY_PATH/../../../../../../../../../src
-SRC_PATH=$(pwd)
-
-# Create a symbolic link to the example CustomBundle
-
-if [ -z "$SRC_PATH/Acme/Bundle/CustomBundle" ] ; then
-    cd $SRC_PATH
-    mkdir -p Acme/Bundle
-    cd Acme/Bundle
-    ln -s $CUSTOM_BUNDLE_PATH CustomBundle
-else
-    echo "CustomBundle already exists"
-fi
 
 # Configure routing
 if grep -q PimCustomEntityBundle $APP_PATH/config/routing.yml
