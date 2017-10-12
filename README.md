@@ -52,7 +52,8 @@ and enable the bundle in the `app/AppKernel.php` file in the `registerBundles()`
     ]
 ```
 
-If you want to use the quick export and/or the mass edit features, you have to load the job fixture defined in  [Resources/fixtures/jobs.yml](Resources/fixtures/jobs.yml) file and to copy/paste its content to your installer.
+If you want to use the quick export and/or the mass edit features, you have to load the job fixture defined in
+[Resources/fixtures/jobs.yml](Resources/fixtures/jobs.yml) file and to copy/paste its content to your installer.
 
 If your installation is already set up, you have to run the following command:
 
@@ -62,15 +63,18 @@ If your installation is already set up, you have to run the following command:
 
 ## Documentation
 
-Some example usages for this bundle can be found in the [PIM documentation](http://docs.akeneo.com/master/cookbook/custom_entity/index.html) but it's only available for Akeneo PIM 1.3 (and previous versions). For newer versions, you have to use reference datas in Akeneo PIM (http://docs.akeneo.com/latest/cookbook/catalog_structure/creating_a_reference_data.html).
+The reference data documentation can befound in the 
+[PIM documentation](https://docs.akeneo.com/2.0/manipulate_pim_data/catalog_structure/creating_a_reference_data.html#how-to-create-a-reference-data).
+For newer versions, you have to use reference datas in Akeneo PIM (http://docs.akeneo.com/latest/cookbook/catalog_structure/creating_a_reference_data.html).
 
 The custom entity bundle provides the following tools to help managing custom entities inside the Akeneo PIM.
 
-* [Abstract entities and repositories](Resources/doc/abstract_entities_and_repositories.rst)
-* [CRUD interface](Resources/doc/crud_interface.rst)
-* [CRUD managers](Resources/doc/crud_managers.rst)
+* [Abstract entities and repositories](docs/abstract_entities_and_repositories.rst)
+* [CRUD interface](docs/crud_interface.rst)
+* [CRUD managers](docs/crud_managers.rst)
 
-A demo project has been created [here](https://github.com/akeneo-labs/custom-entity-demo) to give more examples about what we can do.
+A demo project has been created [here](docs/examples/Acme) to give more examples about what we can do.
+It can easily installed using [this setup script](docs/examples/bin/setup_example.bash).
 
 ## Contributing
 

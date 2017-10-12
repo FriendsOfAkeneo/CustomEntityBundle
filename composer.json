@@ -27,9 +27,9 @@
         "friendsofphp/php-cs-fixer": "^2.6"
     },
     "autoload": {
-        "psr-0": {
-            "Pim\\Bundle\\CustomEntityBundle\\": ""
+        "psr-4": {
+            "Pim\\Bundle\\CustomEntityBundle\\": "",
+            "Acme\\Bundle\\CustomBundle\\": "docs/examples/CustomBundle"
         }
-    },
-    "target-dir": "Pim/Bundle/CustomEntityBundle"
+    }
 }
