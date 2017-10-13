@@ -115,7 +115,7 @@ extensions:
                 dropZone: content
 
     pim-pictogram-edit-form-properties-code:
-        module: pim/attribute-edit-form/properties/text
+        module: pim/form/common/fields/text
         parent: pim-pictogram-edit-form-properties-common
         targetZone: content
         position: 90
