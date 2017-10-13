@@ -122,7 +122,7 @@ extensions:
                 dropZone: content
 
     pim-fabric-edit-form-properties-code:
-        module: pim/attribute-edit-form/properties/text
+        module: pim/form/common/fields/text
         parent: pim-fabric-edit-form-properties-common
         targetZone: content
         position: 90
@@ -132,7 +132,7 @@ extensions:
             readOnly: true
 
     pim-fabric-edit-form-properties-name:
-        module: pim/attribute-edit-form/properties/text
+        module: pim/form/common/fields/text
         parent: pim-fabric-edit-form-properties-common
         targetZone: content
         position: 91
@@ -141,7 +141,7 @@ extensions:
             required: true
 
     pim-fabric-edit-form-properties-alternative_name:
-        module: pim/attribute-edit-form/properties/text
+        module: pim/form/common/fields/text
         parent: pim-fabric-edit-form-properties-common
         targetZone: content
         position: 92

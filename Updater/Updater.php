@@ -2,13 +2,16 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Updater;
 
-use Akeneo\Component\Localization\Model\TranslatableInterface;
+use Akeneo\Component\FileStorage\File\FileStorerInterface;
+use Akeneo\Component\FileStorage\Model\FileInfoInterface;
+use Akeneo\Component\StorageUtils\Exception\InvalidPropertyException;
 use Akeneo\Component\StorageUtils\Updater\ObjectUpdaterInterface;
 use Doctrine\Common\Util\ClassUtils;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Pim\Bundle\CustomEntityBundle\Entity\AbstractTranslatableCustomEntity;
+use Pim\Component\Catalog\FileStorage;
 use Pim\Component\Catalog\Repository\LocaleRepositoryInterface;
 use Pim\Component\ReferenceData\Model\ReferenceDataInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
@@ -34,19 +37,31 @@ class Updater implements ObjectUpdaterInterface
     /** @var ClassMetadataInfo */
     protected $classMetadata;
 
+    /** @var FileStorerInterface */
+    protected $storer;
+
+    /** @var string */
+    protected $tmpStorageDir;
+
     /**
      * @param PropertyAccessorInterface $propertyAccessor
      * @param LocaleRepositoryInterface $localeRepository
      * @param EntityManagerInterface    $em
+     * @param FileStorerInterface       $storer
+     * @param string                    $tmpStorageDir
      */
     public function __construct(
         PropertyAccessorInterface $propertyAccessor,
         LocaleRepositoryInterface $localeRepository,
-        EntityManagerInterface $em
+        EntityManagerInterface $em,
+        FileStorerInterface $storer,
+        $tmpStorageDir
     ) {
         $this->propertyAccessor = $propertyAccessor;
         $this->localeRepository = $localeRepository;
         $this->em = $em;
+        $this->storer = $storer;
+        $this->tmpStorageDir = $tmpStorageDir;
     }
 
     /**
@@ -114,7 +129,35 @@ class Updater implements ObjectUpdaterInterface
     {
         $associationMapping = $this->getAssociationMapping($referenceData, $propertyPath);
         $associationRepo = $this->em->getRepository($associationMapping['targetEntity']);
-        $associatedEntity = $associationRepo->findOneBy(['code' => $value]);
+
+        if (is_subclass_of(
+            $associationMapping['targetEntity'],
+            'Akeneo\Component\FileStorage\Model\FileInfoInterface'
+        )) {
+            if (empty($value['filePath'])) {
+                $this->propertyAccessor->setValue($referenceData, $propertyPath, null);
+                return;
+            }
+
+            $associatedEntity = $associationRepo->findOneBy(['key' => str_replace($this->tmpStorageDir, '', $value['filePath'])]);
+
+            if (null === $associatedEntity) {
+                $rawFile = new \SplFileInfo($value['filePath']);
+
+                if (!$rawFile->isFile()) {
+                    throw InvalidPropertyException::validPathExpected(
+                        'media',
+                        static::class,
+                        $value['filePath']
+                    );
+                }
+
+                $associatedEntity = $this->storer->store($rawFile, FileStorage::CATALOG_STORAGE_ALIAS);
+            }
+        } else {
+            $associatedEntity = $associationRepo->findOneBy(['code' => $value]);
+        }
+
         if (null === $associatedEntity) {
             throw new EntityNotFoundException(
                 sprintf('Associated entity "%s" with code "%" not found', $associatedEntity['targetEntity'], $value)
