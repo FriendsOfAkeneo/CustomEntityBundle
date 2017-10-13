@@ -154,7 +154,6 @@ class Updater implements ObjectUpdaterInterface
 
                 $associatedEntity = $this->storer->store($rawFile, FileStorage::CATALOG_STORAGE_ALIAS);
             }
-
         } else {
             $associatedEntity = $associationRepo->findOneBy(['code' => $value]);
         }

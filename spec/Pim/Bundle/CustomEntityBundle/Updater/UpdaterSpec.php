@@ -2,6 +2,7 @@
 
 namespace spec\Pim\Bundle\CustomEntityBundle\Updater;
 
+use Akeneo\Component\FileStorage\File\FileStorerInterface;
 use Akeneo\Component\StorageUtils\Updater\ObjectUpdaterInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
@@ -14,9 +15,10 @@ class UpdaterSpec extends ObjectBehavior
     public function let(
         PropertyAccessorInterface $propertyAccessor,
         LocaleRepositoryInterface $localeRepository,
-        EntityManagerInterface $em
+        EntityManagerInterface $em,
+        FileStorerInterface $storer
     ) {
-        $this->beConstructedWith($propertyAccessor, $localeRepository, $em);
+        $this->beConstructedWith($propertyAccessor, $localeRepository, $em, $storer, '/tmp');
     }
 
     public function it_is_initializable()
