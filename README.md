@@ -69,11 +69,11 @@ For newer versions, you have to use reference datas in Akeneo PIM (http://docs.a
 
 The custom entity bundle provides the following tools to help managing custom entities inside the Akeneo PIM.
 
-* [Abstract entities and repositories](docs/abstract_entities_and_repositories.rst)
-* [CRUD interface](docs/crud_interface.rst)
-* [CRUD managers](docs/crud_managers.rst)
+* [Abstract entities and repositories](docs/abstract_entities_and_repositories.md)
+* [CRUD interface](docs/crud_interface.md)
+* [CRUD managers](docs/crud_managers.md)
 
-A demo project has been created [here](docs/examples/Acme) to give more examples about what we can do.
+A demo project has been created [here](docs/examples/CustomBundle) to give more examples about what we can do.
 It can easily installed using [this setup script](docs/examples/bin/setup_example.bash).
 
 ## Contributing
