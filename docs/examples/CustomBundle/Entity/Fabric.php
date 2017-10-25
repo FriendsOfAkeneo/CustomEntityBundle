@@ -36,19 +36,19 @@ class Fabric extends AbstractCustomEntity
     }
 
     /**
-     * Set year
+     * Set alternativeName
      *
-     * @param int $year
+     * @param string $alternativeName
      */
-    public function setAlternativeName($year)
+    public function setAlternativeName($alternativeName)
     {
-        $this->alternativeName = $year;
+        $this->alternativeName = $alternativeName;
     }
 
     /**
-     * Get year
+     * Get alternativeName
      *
-     * @return int
+     * @return string
      */
     public function getAlternativeName()
     {
