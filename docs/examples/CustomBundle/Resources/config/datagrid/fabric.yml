@@ -11,7 +11,7 @@ datagrid:
             code:
                 label: Code
             name:
-                label: name
+                label: Name
         properties:
             id: ~
             edit_link:
