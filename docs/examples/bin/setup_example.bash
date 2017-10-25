@@ -6,10 +6,10 @@ MY_PATH=$( cd $MY_PATH && pwd )  # absolutized and normalized
 if [ -z "$MY_PATH" ] ; then
   exit 1
 fi
-cd $MY_PATH/../Acme/Bundle/CustomBundle
+cd $MY_PATH/../CustomBundle
 CUSTOM_BUNDLE_PATH=$(pwd)
 echo $CUSTOM_BUNDLE_PATH
-cd $MY_PATH/../../../../../../../../../app
+cd $MY_PATH/../../../../../../app
 APP_PATH=$(pwd)
 
 # Configure routing
