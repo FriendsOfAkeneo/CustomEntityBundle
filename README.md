@@ -63,9 +63,8 @@ If your installation is already set up, you have to run the following command:
 
 ## Documentation
 
-The reference data documentation can befound in the 
-[PIM documentation](https://docs.akeneo.com/2.0/manipulate_pim_data/catalog_structure/creating_a_reference_data.html#how-to-create-a-reference-data).
-For newer versions, you have to use reference datas in Akeneo PIM (http://docs.akeneo.com/latest/cookbook/catalog_structure/creating_a_reference_data.html).
+The reference data documentation can be found in the 
+[PIM documentation](https://docs.akeneo.com/2.0/manipulate_pim_data/catalog_structure/creating_a_reference_data.html).
 
 The custom entity bundle provides the following tools to help managing custom entities inside the Akeneo PIM.
 
