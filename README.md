@@ -17,17 +17,6 @@ For more information, please see http://docs.akeneo.com/
 | v1.8.*               | v1.6.*                       |
 | v1.7.*               | v1.5.*                       |
 
-## Disclaimer
-
-The 2.0.0 custom entity bundle is in bêta state because of missing features:
-- mass edit
-- quick export
-- mass delete
-- missing translations
-- outdated documentation
-
-Work is in progress and we will release a stable version very soon.
-
 ## Installation
 You can install this bundle with composer (see requirements section):
 
@@ -51,9 +40,6 @@ and enable the bundle in the `app/AppKernel.php` file in the `registerBundles()`
         new Pim\Bundle\CustomEntityBundle\PimCustomEntityBundle(),
     ]
 ```
-
-If you want to use the quick export and/or the mass edit features, you have to load the job fixture defined in
-[Resources/fixtures/jobs.yml](Resources/fixtures/jobs.yml) file and to copy/paste its content to your installer.
 
 If your installation is already set up, you have to run the following command:
 
