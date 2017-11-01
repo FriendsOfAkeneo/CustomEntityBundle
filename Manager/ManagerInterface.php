@@ -35,6 +35,17 @@ interface ManagerInterface
      */
     public function find($entityClass, $id, array $options = []);
 
+
+    /**
+     * Find all entities, returns empty array if none are found
+     *
+     * @param string $entityClass
+     *
+     * @return array
+     */
+    public function findAll($entityClass);
+
+
     /**
      * Saves the entity
      *

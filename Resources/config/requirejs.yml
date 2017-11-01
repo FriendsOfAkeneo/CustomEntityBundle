@@ -1,6 +1,7 @@
 config:
     paths:
         custom_entity/field/select2: pimcustomentity/js/field/select2
+        custom_entity/field/custom-entity-select: pimcustomentity/js/field/custom-entity-select
         custom_entity/form/creation/modal: pimcustomentity/js/form/creation/modal
         custom_entity/form/common/entity-saver: pimcustomentity/js/form/common/entity-saver
         custom_entity/form/common/save-form: pimcustomentity/js/form/common/save-form
@@ -20,6 +21,7 @@ config:
                         urls:
                             list: pim_customentity_rest_list
                             get: pim_customentity_rest_get
+                            getall: pim_customentity_rest_get
 
         pim/controller-registry:
             controllers:

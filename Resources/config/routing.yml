@@ -30,6 +30,13 @@ pim_customentity_rest_get:
         actionType: rest_get
     methods: [GET]
 
+pim_customentity_rest_getall:
+    path: /rest/{customEntityName}
+    defaults:
+        _controller: pim_custom_entity.controller:executeAction
+        actionType: rest_getall
+    methods: [GET]
+
 pim_customentity_rest_edit:
     path: /rest/{customEntityName}/{id}/edit
     defaults:

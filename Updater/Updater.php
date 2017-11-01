@@ -129,7 +129,10 @@ class Updater implements ObjectUpdaterInterface
     {
         $associationMapping = $this->getAssociationMapping($referenceData, $propertyPath);
         $associationRepo = $this->em->getRepository($associationMapping['targetEntity']);
+        $classMetadata = $this->getClassMetadata($referenceData);
+        
 
+        // \Doctrine\Common\Util\Debug::dump($propertyPath.": " . $classMetadata->isCollectionValuedAssociation($propertyPath) . "\n");
         if (is_subclass_of(
             $associationMapping['targetEntity'],
             'Akeneo\Component\FileStorage\Model\FileInfoInterface'
@@ -153,6 +156,11 @@ class Updater implements ObjectUpdaterInterface
                 }
 
                 $associatedEntity = $this->storer->store($rawFile, FileStorage::CATALOG_STORAGE_ALIAS);
+            }
+        } elseif ($classMetadata->isCollectionValuedAssociation($propertyPath)) {
+            $associatedEntity = [];
+            foreach($value as $entityCode) {
+                $associatedEntity[] = $associationRepo->findOneBy(['code' => $entityCode]);
             }
         } else {
             $associatedEntity = $associationRepo->findOneBy(['code' => $value]);

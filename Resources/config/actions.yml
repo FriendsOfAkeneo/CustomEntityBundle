@@ -2,10 +2,11 @@ parameters:
     pim_custom_entity.action.factory.class:      Pim\Bundle\CustomEntityBundle\Action\ActionFactory
     pim_custom_entity.action.quick_export.class: Pim\Bundle\CustomEntityBundle\Action\QuickExportAction
 
-    pim_custom_entity.action.rest.create.class: Pim\Bundle\CustomEntityBundle\Action\Rest\CreateAction
-    pim_custom_entity.action.rest.delete.class: Pim\Bundle\CustomEntityBundle\Action\Rest\DeleteAction
-    pim_custom_entity.action.rest.get.class:    Pim\Bundle\CustomEntityBundle\Action\Rest\GetAction
-    pim_custom_entity.action.rest.update.class: Pim\Bundle\CustomEntityBundle\Action\Rest\UpdateAction
+    pim_custom_entity.action.rest.create.class:  Pim\Bundle\CustomEntityBundle\Action\Rest\CreateAction
+    pim_custom_entity.action.rest.delete.class:  Pim\Bundle\CustomEntityBundle\Action\Rest\DeleteAction
+    pim_custom_entity.action.rest.get.class:     Pim\Bundle\CustomEntityBundle\Action\Rest\GetAction
+    pim_custom_entity.action.rest.getall.class:    Pim\Bundle\CustomEntityBundle\Action\Rest\GetAllAction
+    pim_custom_entity.action.rest.update.class:  Pim\Bundle\CustomEntityBundle\Action\Rest\UpdateAction
 
 services:
     pim_custom_entity.action.factory:
@@ -50,6 +51,14 @@ services:
 
     pim_custom_entity.action.rest.get:
         class: '%pim_custom_entity.action.rest.get.class%'
+        shared: false
+        arguments:
+            - '@pim_custom_entity.action.factory'
+            - '@pim_custom_entity.action_event_manager'
+            - '@pim_custom_entity.manager.registry'
+
+    pim_custom_entity.action.rest.getall:
+        class: '%pim_custom_entity.action.rest.getall.class%'
         shared: false
         arguments:
             - '@pim_custom_entity.action.factory'
