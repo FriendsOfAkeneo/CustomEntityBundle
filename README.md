@@ -61,6 +61,8 @@ The custom entity bundle provides the following tools to help managing custom en
 A demo project has been created [here](docs/examples/CustomBundle) to give more examples about what we can do.
 It can easily installed using [this setup script](docs/examples/bin/setup_example.bash).
 
+More info about configuration can be found in the [bundle documentation](docs/index.md).
+
 ## Contributing
 
 If you want to contribute to this open-source project,
