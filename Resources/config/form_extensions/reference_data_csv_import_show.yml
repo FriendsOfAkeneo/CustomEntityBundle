@@ -2,149 +2,108 @@ extensions:
     reference-data-job-instance-csv-import-show:
         module: pim/form/common/edit-form
 
-    pim-job-instance-xlsx-base-import-show-main-image:
+    reference-data-job-instance-csv-import-show-main-image:
         module: pim/form/common/main-image
-        parent: pim-job-instance-xlsx-base-import-show
+        parent: reference-data-job-instance-csv-import-show
         targetZone: main-image
         config:
             path: bundles/pimui/images/illustration-import-xlsx.svg
 
-    pim-job-instance-xlsx-base-import-show-breadcrumbs:
+    reference-data-job-instance-csv-import-show-user-navigation:
+        module: pim/menu/user-navigation
+        parent: reference-data-job-instance-csv-import-show
+        targetZone: user-menu
+        config:
+            userAccount: pim_menu.user.user_account
+            logout: pim_menu.user.logout
+
+    reference-data-job-instance-csv-import-show-breadcrumbs:
         module: pim/common/breadcrumbs
-        parent: pim-job-instance-xlsx-base-import-show
+        parent: reference-data-job-instance-csv-import-show
         targetZone: breadcrumbs
         config:
             tab: pim-menu-imports
 
-    reference-data-job-instance-csv-import-show-tabs:
-        module: pim/form/common/form-tabs
+    reference-data-job-instance-csv-import-show-switcher:
+        module: pim/job-instance/import/switcher
+        parent: reference-data-job-instance-csv-import-show
+        position: 0
+        targetZone: meta
+
+    reference-data-job-instance-csv-import-show-launch-switcher-item:
+        module: pim/job-instance/import/switcher-item
         parent: reference-data-job-instance-csv-import-show
         targetZone: content
-        position: 100
+        aclResourceId: pim_importexport_import_profile_launch
+        position: 40
+        config:
+            label: pim_enrich.form.job_instance.button.import.launch
+
+    reference-data-job-instance-csv-import-show-file-path:
+        module: pim/job/common/file-path
+        parent: reference-data-job-instance-csv-import-show-launch-switcher-item
+        config:
+            label: pim_enrich.form.job_instance.file_path
+
+    reference-data-job-instance-csv-import-show-import-button:
+        module: pim/job/common/edit/launch
+        parent: reference-data-job-instance-csv-import-show-file-path
+        targetZone: buttons
+        config:
+            label: pim_enrich.form.job_instance.button.import.launch
+            route: pim_enrich_job_instance_rest_import_launch
+            identifier:
+                path: code
+                name: code
+
+    reference-data-job-instance-csv-import-show-upload-switcher-item:
+        module: pim/job-instance/import/switcher-item
+        parent: reference-data-job-instance-csv-import-show
+        targetZone: content
+        aclResourceId: pim_importexport_import_profile_launch
+        position: 50
+        config:
+            label: pim_enrich.form.job_instance.button.import.upload_file
 
     reference-data-job-instance-csv-import-show-upload:
         module: pim/job/common/edit/upload
+        parent: reference-data-job-instance-csv-import-show-upload-switcher-item
+        position: 50
+        config:
+            type: csv
+
+    reference-data-job-instance-csv-import-show-upload-button:
+        module: pim/job/common/edit/upload-launch
+        parent: reference-data-job-instance-csv-import-show-upload-switcher-item
+        position: 60
+        config:
+            label: pim_enrich.form.job_instance.button.import.upload
+            route: pim_enrich_job_instance_rest_import_launch
+            identifier:
+                path: code
+                name: code
+
+    reference-data-job-instance-csv-import-show-subsection:
+        module: pim/form/common/subsection
         parent: reference-data-job-instance-csv-import-show
-        aclResourceId: pim_importexport_import_profile_launch
         targetZone: content
-        position: 90
-
-    reference-data-job-instance-csv-import-show-properties:
-        module: pim/job/common/edit/properties
-        parent: reference-data-job-instance-csv-import-show-tabs
-        targetZone: container
-        position: 100
         config:
-            tabTitle: pim_enrich.form.job_instance.tab.properties.title
-            tabCode: pim-job-instance-properties
+            title: pim_enrich.form.job_instance.subsection.last_executions
 
-    reference-data-job-instance-csv-import-show-history:
-        module: pim/common/tab/history
-        parent: reference-data-job-instance-csv-import-show-tabs
-        targetZone: container
-        aclResourceId: pim_importexport_import_profile_history
-        position: 120
+    reference-data-job-instance-csv-import-show-grid:
+        module: pim/job/common/grid
+        parent: reference-data-job-instance-csv-import-show-subsection
+        position: 1000
+        targetZone: content
         config:
-            class: Akeneo\Component\Batch\Model\JobInstance
-            title: pim_enrich.form.job_instance.tab.history.title
-            tabCode: pim-job-instance-history
-
-    reference-data-job-instance-csv-import-show-properties-code:
-        module: pim/job/common/edit/field/text
-        parent: reference-data-job-instance-csv-import-show-properties
-        position: 100
-        targetZone: properties
-        config:
-            fieldCode: code
-            label: pim_enrich.form.job_instance.tab.properties.code.title
-            readOnly: true
-
-    reference-data-job-instance-csv-import-show-properties-label:
-        module: pim/job/common/edit/field/text
-        parent: reference-data-job-instance-csv-import-show-properties
-        position: 110
-        targetZone: properties
-        config:
-            fieldCode: label
-            label: pim_enrich.form.job_instance.tab.properties.label.title
-            readOnly: true
-
-    reference-data-job-instance-csv-import-show-properties-file-path:
-        module: pim/job/common/edit/field/text
-        parent: reference-data-job-instance-csv-import-show-properties
-        position: 120
-        targetZone: properties
-        config:
-            fieldCode: configuration.filePath
-            readOnly: true
-            label: pim_enrich.form.job_instance.tab.properties.file_path.title
-            tooltip: pim_enrich.form.job_instance.tab.properties.file_path.help
-
-    reference-data-job-instance-csv-import-show-properties-escape:
-        module: pim/job/common/edit/field/text
-        parent: reference-data-job-instance-csv-import-show-properties
-        position: 130
-        targetZone: properties
-        config:
-            fieldCode: configuration.escape
-            readOnly: true
-            label: pim_enrich.form.job_instance.tab.properties.escape.title
-            tooltip: pim_enrich.form.job_instance.tab.properties.escape.help
-
-    reference-data-job-instance-csv-import-show-properties-delimiter:
-        module: pim/job/common/edit/field/text
-        parent: reference-data-job-instance-csv-import-show-properties
-        position: 140
-        targetZone: properties
-        config:
-            fieldCode: configuration.delimiter
-            readOnly: true
-            label: pim_enrich.form.job_instance.tab.properties.delimiter.title
-            tooltip: pim_enrich.form.job_instance.tab.properties.delimiter.help
-
-    reference-data-job-instance-csv-import-show-properties-enclosure:
-        module: pim/job/common/edit/field/text
-        parent: reference-data-job-instance-csv-import-show-properties
-        position: 150
-        targetZone: properties
-        config:
-            fieldCode: configuration.enclosure
-            readOnly: true
-            label: pim_enrich.form.job_instance.tab.properties.enclosure.title
-            tooltip: pim_enrich.form.job_instance.tab.properties.enclosure.help
-
-    reference-data-job-instance-csv-import-show-properties-reference-data-names:
-        module: custom_entity/field/select2
-        parent: reference-data-job-instance-csv-import-show-properties
-        position: 155
-        targetZone: properties
-        config:
-            fieldCode: configuration.reference_data_name
-            readOnly: false
-            label: pim_custom_entity.import.csv.entity_name.label
-            tooltip: pim_custom_entity.import.csv.entity_name.help
-
-    reference-data-job-instance-csv-import-show-properties-file-upload:
-        module: pim/job/common/edit/field/switch
-        parent: reference-data-job-instance-csv-import-show-properties
-        position: 160
-        targetZone: properties
-        config:
-            fieldCode: configuration.uploadAllowed
-            readOnly: true
-            label: pim_enrich.form.job_instance.tab.properties.upload_allowed.title
-            tooltip: pim_enrich.form.job_instance.tab.properties.upload_allowed.help
+            alias: last-import-executions-grid
+            metadata:
+                jobType: import
 
     reference-data-job-instance-csv-import-show-label:
         module: pim/job/common/edit/label
         parent: reference-data-job-instance-csv-import-show
         targetZone: title
-        position: 100
-
-    reference-data-job-instance-csv-import-show-meta:
-        module: pim/job/common/edit/meta
-        parent: reference-data-job-instance-csv-import-show
-        targetZone: meta
         position: 100
 
     reference-data-job-instance-csv-import-show-edit:
@@ -156,20 +115,6 @@ extensions:
             label: pim_enrich.form.job_instance.button.edit.title
             route: pim_importexport_import_profile_edit
             buttonClass: AknButton AknButton--action
-            identifier:
-                path: code
-                name: code
-
-    reference-data-job-instance-csv-import-show-launch:
-        module: pim/job/common/edit/upload-launch
-        parent: reference-data-job-instance-csv-import-show
-        aclResourceId: pim_importexport_import_profile_launch
-        targetZone: buttons
-        position: 110
-        config:
-            launch: pim_enrich.form.job_instance.button.import.launch
-            upload: pim_enrich.form.job_instance.button.import.upload
-            route: pim_enrich_job_instance_rest_import_launch
             identifier:
                 path: code
                 name: code

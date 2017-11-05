@@ -21,7 +21,7 @@ For more information, please see http://docs.akeneo.com/
 You can install this bundle with composer (see requirements section):
 
 ```bash
-    php composer.phar require akeneo-labs/custom-entity-bundle:2.0.0@beta
+    php composer.phar require akeneo-labs/custom-entity-bundle:2.0.*
 ```
 
 Then add the following lines **at the end** of your app/config/routing.yml :
@@ -61,6 +61,9 @@ The custom entity bundle provides the following tools to help managing custom en
 A demo project has been created [here](docs/examples/CustomBundle) to give more examples about what we can do.
 It can easily installed using [this setup script](docs/examples/bin/setup_example.bash).
 
+More info about configuration can be found in the [bundle documentation](docs/index.md).
+
 ## Contributing
 
-If you want to contribute to this open-source project, thank you to read and sign the following [contributor agreement](http://www.akeneo.com/contributor-license-agreement/)
+If you want to contribute to this open-source project,
+thank you to read and sign the following [contributor agreement](http://www.akeneo.com/contributor-license-agreement/)
