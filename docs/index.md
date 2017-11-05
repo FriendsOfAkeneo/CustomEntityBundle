@@ -23,7 +23,11 @@ You will find corresponding examples in the
 [Custom Bundle](examples/CustomBundle/Resources/config/form_extensions/color).
 
 * `index.yml`: defines the custom entity grid.
+The grid must also be configured as all other PIM grids.
+Here is the example for the [Color entity](examples/CustomBundle/Resources/config/datagrid/color.yml).
+
 * `create.yml`: defines the creation form. In this form you will declare all the entity fields.
+
 * `edit.yml`: defines the edition form.
 
 The delete modal window does not need to be defined because it's part of the core PIM.
@@ -45,4 +49,3 @@ This custom normalizer is used in the internal [CustomEntity normalizer](../Norm
 Entity validation is configured with a YAML file in the standard Symfony way.
 
 Example: [Color validation](examples/CustomBundle/Resources/config/validation.yml).
-
