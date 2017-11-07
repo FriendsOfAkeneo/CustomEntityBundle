@@ -8,7 +8,7 @@ extensions:
         targetZone: breadcrumbs
         config:
             tab: pim-menu-reference_data
-            item: pim-menu-reference_data-brand
+            item: acme_custom-menu-reference_data-item-brand
 
     pim-brand-edit-form-cache-invalidator:
         module: pim/cache-invalidator

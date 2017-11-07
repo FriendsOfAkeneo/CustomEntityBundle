@@ -9,7 +9,7 @@ extensions:
         targetZone: breadcrumbs
         config:
             tab: pim-menu-reference_data
-            item: pim-menu-reference_data-foo
+            item: acme_custom-menu-reference_data-item-color
 
     pim-color-edit-form-cache-invalidator:
         module: pim/cache-invalidator
