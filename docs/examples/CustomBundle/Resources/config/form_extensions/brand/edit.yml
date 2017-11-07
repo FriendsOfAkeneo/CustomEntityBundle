@@ -136,5 +136,6 @@ extensions:
         position: 90
         config:
             fieldName: code
+            label: acme_custom.brand.field.label.code
             required: true
             readOnly: true

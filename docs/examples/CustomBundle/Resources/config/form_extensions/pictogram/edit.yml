@@ -121,6 +121,7 @@ extensions:
         position: 90
         config:
             fieldName: code
+            label: acme_custom.pictogram.field.label.code
             required: true
             readOnly: true
 

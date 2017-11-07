@@ -128,6 +128,7 @@ extensions:
         position: 90
         config:
             fieldName: code
+            label: acme_custom.fabric.field.label.code
             required: true
             readOnly: true
 
@@ -135,18 +136,18 @@ extensions:
         module: pim/form/common/fields/text
         parent: pim-fabric-edit-form-properties-common
         targetZone: content
-        position: 91
+        position: 100
         config:
             fieldName: name
-            required: true
             label: acme_custom.fabric.field.label.name
+            required: true
 
     pim-fabric-edit-form-properties-alternative_name:
         module: pim/form/common/fields/text
         parent: pim-fabric-edit-form-properties-common
         targetZone: content
-        position: 92
+        position: 110
         config:
             fieldName: alternativeName
-            required: true
             label: acme_custom.fabric.field.label.alternative_name
+            required: true
