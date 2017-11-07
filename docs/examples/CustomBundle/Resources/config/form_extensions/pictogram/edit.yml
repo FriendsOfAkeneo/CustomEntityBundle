@@ -133,7 +133,7 @@ extensions:
         config:
             template: pim/template/form/tab/section
             templateParams:
-                sectionTitle: pim_custom_entity.form.group.tab.properties.label_translations
+                sectionTitle: pim_custom_entity.form.tab.properties.section.label_translations
                 dropZone: content
 
     pim-pictogram-edit-form-properties-translation:
