@@ -8,7 +8,7 @@ extensions:
         targetZone: breadcrumbs
         config:
             tab: pim-menu-reference_data
-            item: pim-menu-reference_data-pictogram
+            item: acme_custom-menu-reference_data-item-pictogram
 
     pim-pictogram-edit-form-cache-invalidator:
         module: pim/cache-invalidator
@@ -121,6 +121,7 @@ extensions:
         position: 90
         config:
             fieldName: code
+            label: acme_custom.pictogram.field.label.code
             required: true
             readOnly: true
 
@@ -132,7 +133,7 @@ extensions:
         config:
             template: pim/template/form/tab/section
             templateParams:
-                sectionTitle: pim_custom_entity.form.group.tab.properties.label_translations
+                sectionTitle: pim_custom_entity.form.tab.properties.section.label_translations
                 dropZone: content
 
     pim-pictogram-edit-form-properties-translation:

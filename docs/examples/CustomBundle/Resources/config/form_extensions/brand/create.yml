@@ -5,6 +5,7 @@ extensions:
             labels:
                title: pim_custom_entity.create_popin.title
                subTitle: acme_custom.menu.item.reference_data.brand
+            picture: illustrations/User.svg
             successMessage: pim_custom_entity.message.created
             editRoute: pim_customentity_rest_get
             postUrl:

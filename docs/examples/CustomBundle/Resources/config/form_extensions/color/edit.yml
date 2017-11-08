@@ -9,7 +9,7 @@ extensions:
         targetZone: breadcrumbs
         config:
             tab: pim-menu-reference_data
-            item: pim-menu-reference_data-foo
+            item: acme_custom-menu-reference_data-item-color
 
     pim-color-edit-form-cache-invalidator:
         module: pim/cache-invalidator
@@ -136,6 +136,7 @@ extensions:
         position: 90
         config:
             fieldName: code
+            label: acme_custom.color.field.label.code
             required: true
             readOnly: true
 
@@ -146,5 +147,6 @@ extensions:
         position: 95
         config:
             fieldName: name
+            label: acme_custom.color.field.label.name
             required: true
             readOnly: false

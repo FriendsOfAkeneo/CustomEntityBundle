@@ -12,7 +12,9 @@ pim_custom_entity:
             history.title: History
             properties:
                 title: Properties
-                section.common: Common
+                section:
+                    common: Common
+                    label_translations: Labels
     button:
         create: Create
     message:
