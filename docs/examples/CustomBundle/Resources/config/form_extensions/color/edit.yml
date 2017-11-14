@@ -151,7 +151,7 @@ extensions:
             required: true
             readOnly: false
 
-    pim-color-create-hex:
+    pim-color-edit-hex:
         module: pim/form/common/fields/text
         parent: pim-color-edit-form-properties-common
         targetZone: content
@@ -160,7 +160,7 @@ extensions:
             fieldName: hex
             label: acme_custom.color.field.label.hex
 
-    pim-color-create-red:
+    pim-color-edit-red:
         module: pim/form/common/fields/text
         parent: pim-color-edit-form-properties-common
         targetZone: content
@@ -169,7 +169,7 @@ extensions:
             fieldName: red
             label: acme_custom.color.field.label.red
 
-    pim-color-create-green:
+    pim-color-edit-green:
         module: pim/form/common/fields/text
         parent: pim-color-edit-form-properties-common
         targetZone: content
@@ -178,7 +178,7 @@ extensions:
             fieldName: green
             label: acme_custom.color.field.label.green
 
-    pim-color-create-blue:
+    pim-color-edit-blue:
         module: pim/form/common/fields/text
         parent: pim-color-edit-form-properties-common
         targetZone: content
