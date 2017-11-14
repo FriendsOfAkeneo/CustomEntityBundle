@@ -1,17 +1,15 @@
 parameters:
     pim_custom_entity.connector_name.csv: 'Reference data CSV Connector'
-    pim_custom_entity.connector_name.xlsx: 'Reference data XLSX Connector'
 
     pim_custom_entity.job_name.csv_reference_data_import: 'csv_reference_data_import'
-    pim_custom_entity.job_name.xlsx_reference_data_import: 'xlsx_reference_data_import'
     pim_custom_entity.job_name.csv_reference_data_export: 'csv_reference_data_export'
-    pim_custom_entity.job_name.xlsx_reference_data_export: 'xlsx_reference_data_export'
 
     pim_custom_entity.job_name.csv_reference_data_quick_export: 'csv_reference_data_quick_export'
-    pim_custom_entity.job_name.xlsx_reference_data_quick_export: 'xlsx_reference_data_quick_export'
 
 services:
+    #-----------------------------------------------------------------------------------------------------------------
     # Jobs
+    #-----------------------------------------------------------------------------------------------------------------
     pim_custom_entity.job.csv_reference_data_quick_export:
         class: '%pim_connector.job.simple_job.class%'
         arguments:
@@ -21,7 +19,24 @@ services:
             -
                 - '@pim_custom_entity.step.csv_reference_data_quick_export'
         tags:
-            - { name: akeneo_batch.job, connector: '%pim_custom_entity.connector_name.csv%', type: '%pim_enrich.job.quick_export_type%' }
+            -
+                name: akeneo_batch.job
+                connector: '%pim_custom_entity.connector_name.csv%'
+                type: '%pim_enrich.job.quick_export_type%'
+
+    pim_custom_entity.job.csv_reference_data_quick_export_grid_context:
+        class: '%pim_connector.job.simple_job.class%'
+        arguments:
+            - 'csv_reference_data_quick_export_grid_context'
+            - '@event_dispatcher'
+            - '@akeneo_batch.job_repository'
+            -
+                - '@pim_custom_entity.step.csv_reference_data_quick_export'
+        tags:
+            -
+                name: akeneo_batch.job
+                connector: '%pim_connector.connector_name.csv%'
+                type: '%pim_enrich.job.quick_export_type%'
 
     pim_custom_entity.job.csv_reference_data_import:
         class: '%pim_connector.job.simple_job.class%'
@@ -33,7 +48,10 @@ services:
                 - '@pim_connector.step.charset_validator'
                 - '@pim_custom_entity.step.csv_reference_data_import'
         tags:
-            - { name: akeneo_batch.job, connector: '%pim_custom_entity.connector_name.csv%', type: '%pim_connector.job.import_type%' }
+            -
+                name: akeneo_batch.job
+                connector: '%pim_custom_entity.connector_name.csv%'
+                type: '%pim_connector.job.import_type%'
 
     pim_custom_entity.job.csv_reference_data_export:
         class: '%pim_connector.job.simple_job.class%'
@@ -44,8 +62,14 @@ services:
             -
                 - '@pim_custom_entity.step.csv_reference_data_export'
         tags:
-            - { name: akeneo_batch.job, connector: '%pim_custom_entity.connector_name.csv%', type: '%pim_connector.job.export_type%' }
+            -
+                name: akeneo_batch.job
+                connector: '%pim_custom_entity.connector_name.csv%'
+                type: '%pim_connector.job.export_type%'
+
+    #-----------------------------------------------------------------------------------------------------------------
     # Steps
+    #-----------------------------------------------------------------------------------------------------------------
     pim_custom_entity.step.csv_reference_data_import:
         class: '%pim_connector.step.item_step.class%'
         arguments:
