@@ -4,6 +4,7 @@ namespace Pim\Bundle\CustomEntityBundle\Action;
 
 use Akeneo\Bundle\BatchBundle\Job\JobInstanceRepository;
 use Akeneo\Bundle\BatchBundle\Launcher\JobLauncherInterface;
+use Akeneo\Component\Batch\Model\JobInstance;
 use Oro\Bundle\DataGridBundle\Extension\MassAction\MassActionParametersParser;
 use Pim\Bundle\CustomEntityBundle\Event\ActionEventManager;
 use Pim\Bundle\CustomEntityBundle\Manager\Registry as ManagerRegistry;
@@ -19,7 +20,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
- * TODO jml: rework all this action before stable release
  * @author    Antoine Guigan <antoine@akeneo.com>
  * @copyright 2014 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
@@ -86,7 +86,7 @@ class QuickExportAction extends AbstractAction
     public function doExecute(Request $request)
     {
         $jobInstance = $this->jobInstanceRepo->findOneBy(['code' => $this->getOption('job_profile')]);
-        if (null === $jobInstance) {
+        if (null === $jobInstance || !$jobInstance instanceof JobInstance) {
             throw new \LogicException(
                 sprintf(
                     'The job instance "%s" does not exist. Please contact your administrator',
@@ -100,7 +100,6 @@ class QuickExportAction extends AbstractAction
         $rawParameters = $jobInstance->getRawParameters();
         $rawParameters['reference_data'] = $this->configuration->getEntityClass();
         $rawParameters['ids'] = $parameters['values'];
-        //$rawConfiguration['ids'] = $this->massActionDispatcher->dispatch($request);
 
         $configuration = array_merge($rawParameters, $rawParameters);
         $this->jobLauncher->launch($jobInstance, $this->getUser(), $configuration);

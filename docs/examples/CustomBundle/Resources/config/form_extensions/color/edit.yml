@@ -150,3 +150,39 @@ extensions:
             label: acme_custom.color.field.label.name
             required: true
             readOnly: false
+
+    pim-color-edit-hex:
+        module: pim/form/common/fields/text
+        parent: pim-color-edit-form-properties-common
+        targetZone: content
+        position: 100
+        config:
+            fieldName: hex
+            label: acme_custom.color.field.label.hex
+
+    pim-color-edit-red:
+        module: pim/form/common/fields/text
+        parent: pim-color-edit-form-properties-common
+        targetZone: content
+        position: 101
+        config:
+            fieldName: red
+            label: acme_custom.color.field.label.red
+
+    pim-color-edit-green:
+        module: pim/form/common/fields/text
+        parent: pim-color-edit-form-properties-common
+        targetZone: content
+        position: 102
+        config:
+            fieldName: green
+            label: acme_custom.color.field.label.green
+
+    pim-color-edit-blue:
+        module: pim/form/common/fields/text
+        parent: pim-color-edit-form-properties-common
+        targetZone: content
+        position: 103
+        config:
+            fieldName: blue
+            label: acme_custom.color.field.label.blue
