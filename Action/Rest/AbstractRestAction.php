@@ -154,7 +154,7 @@ abstract class AbstractRestAction implements ActionInterface
     {
         $manager = $this->getManager();
         $entityName = $this->configuration->getName();
-        $editFormExtension = $this->configuration->getOptions()['edit_fom_extension'];
+        $editFormExtension = $this->configuration->getOptions()['edit_form_extension'];
         $context = [
             'customEntityName' => $entityName,
             'form'             => $editFormExtension,
