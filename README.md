@@ -37,12 +37,14 @@ and enable the bundle in the `app/AppKernel.php` file in the `registerBundles()`
 ```php
     $bundles = [
         // ...
-        new Pim\Bundle\CustomEntityBundle\PimCustomEntityBundle(),
+        new \Pim\Bundle\CustomEntityBundle\PimCustomEntityBundle(),
     ]
 ```
 
-If your installation is already set up, you have to run the following command:
+If your installation is already set up, you have to run the following commands:
 
+* First one to add the mass edit job:
+ 
 ```bash
     php bin/console akeneo:batch:create-job "Akeneo Mass Edit Connector" "csv_reference_data_quick_export" "quick_export" "csv_reference_data_quick_export" '{"delimiter": ";", "enclosure": "\"", "withHeader": true, "filePath": "/tmp/reference_data_quick_export.csv"}'
 ```
@@ -52,16 +54,7 @@ If your installation is already set up, you have to run the following command:
 The reference data documentation can be found in the 
 [PIM documentation](https://docs.akeneo.com/2.0/manipulate_pim_data/catalog_structure/creating_a_reference_data.html).
 
-The custom entity bundle provides the following tools to help managing custom entities inside the Akeneo PIM.
-
-* [Abstract entities and repositories](docs/abstract_entities_and_repositories.md)
-* [CRUD interface](docs/crud_interface.md)
-* [CRUD managers](docs/crud_managers.md)
-
-A demo project has been created [here](docs/examples/CustomBundle) to give more examples about what we can do.
-It can easily installed using [this setup script](docs/examples/bin/setup_example.bash).
-
-More info about configuration can be found in the [bundle documentation](docs/index.md).
+Detailled information can be found in the [bundle documentation](docs/index.md).
 
 ## Contributing
 

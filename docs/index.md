@@ -49,3 +49,28 @@ This custom normalizer is used in the internal [CustomEntity normalizer](../Norm
 Entity validation is configured with a YAML file in the standard Symfony way.
 
 Example: [Color validation](examples/CustomBundle/Resources/config/validation.yml).
+
+## AcmeCustomBundle
+
+This extension comes with an extended example bundle that you can use to see Custom Entities in action.
+
+### Installation
+
+Register the bundle in AppKernel:
+
+```php
+    $bundles = [
+        // ...
+        new \Pim\Bundle\CustomEntityBundle\PimCustomEntityBundle(),
+        new \Acme\Bundle\CustomBundle\AcmeCustomBundle(),
+    ]
+```
+
+Update your Doctrine schema:
+
+```bash
+    php ./bin/console doctrine:schema:update --dump-sql
+    php ./bin/console doctrine:schema:update --force
+```
+
+Do not forget to clear your cache before using the application.
