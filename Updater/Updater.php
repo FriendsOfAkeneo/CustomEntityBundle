@@ -132,7 +132,6 @@ class Updater implements ObjectUpdaterInterface
         $classMetadata = $this->getClassMetadata($referenceData);
         
 
-        // \Doctrine\Common\Util\Debug::dump($propertyPath.": " . $classMetadata->isCollectionValuedAssociation($propertyPath) . "\n");
         if (is_subclass_of(
             $associationMapping['targetEntity'],
             'Akeneo\Component\FileStorage\Model\FileInfoInterface'
