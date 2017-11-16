@@ -20,19 +20,19 @@ define(
                         return createForm.call(
                             this,
                             this.$el,
-                            normalizedEntity.data,
+                            normalizedEntity,
                             normalizedEntity.meta.form
                         );
                     });
 
-                function createForm(domElement, entity, formExtension) {
+                function createForm(domElement, normalizedEntity, formExtension) {
                     return FormBuilder.build(formExtension)
                         .then((form) => {
                             this.on('pim:controller:can-leave', function (event) {
                                 form.trigger('pim_enrich:form:can-leave', event);
                             });
-                            form.setData(entity);
-                            form.trigger('pim_enrich:form:entity:post_fetch', entity);
+                            form.setData(normalizedEntity.data);
+                            form.trigger('pim_enrich:form:entity:post_fetch', normalizedEntity);
                             form.setElement(domElement).render();
 
                             return form;
