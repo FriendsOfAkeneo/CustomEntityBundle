@@ -43,7 +43,7 @@ interface ManagerInterface
      *
      * @return array
      */
-    public function findAll($entityClass);
+    public function findAll($entityClass) : array;
 
 
     /**
