@@ -65,7 +65,7 @@ abstract class AbstractCustomEntity extends AbstractReferenceData
      */
     public function getCustomEntityName(): string
     {
-        return strtolower(join('', array_slice(explode('\\', __CLASS__), -1)));
+        return strtolower(join('', array_slice(explode('\\', get_class($this)), -1)));
     }
 
     /**
