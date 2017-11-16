@@ -120,7 +120,7 @@ class Configuration implements ConfigurationInterface
     {
         $resolver->setDefaults([
             'manager'            => 'default',
-            'edit_fom_extension' => null,
+            'edit_form_extension' => null,
         ]);
         $event = new ConfigurationEvent($this, $resolver);
         $this->eventDispatcher->dispatch(ConfigurationEvents::CONFIGURE, $event);
