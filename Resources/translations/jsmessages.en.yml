@@ -12,7 +12,9 @@ pim_custom_entity:
             history.title: History
             properties:
                 title: Properties
-                section.common: Common
+                section:
+                    common: Common
+                    label_translations: Labels
     button:
         create: Create
     message:
@@ -28,6 +30,10 @@ pim_custom_entity:
         label: Reference data name
         help: The reference data name you want to import
         no_reference_data: No reference data availables
+
+pim_enrich:
+    form.attribute.tab.properties.label:
+        name: Name
 
 page_title:
     pim_customentity_index: 'Reference data - Overview'

@@ -38,9 +38,13 @@ services:
 
     pim_custom_entity.action.quick_export:
         class: '%pim_custom_entity.action.quick_export.class%'
-        parent: pim_custom_entity.action
         shared: false
         arguments:
+            - '@pim_custom_entity.action.factory'
+            - '@pim_custom_entity.action_event_manager'
+            - '@pim_custom_entity.manager.registry'
+            - '@router'
+            - '@translator'
             - '@pim_datagrid.extension.mass_action.dispatcher'
             - '@akeneo_batch.job.job_instance_repository'
             - '@akeneo_batch.launcher.simple_job_launcher'

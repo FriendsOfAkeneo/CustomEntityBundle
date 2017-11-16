@@ -59,4 +59,4 @@ The following options are common for all actions:
 
 The bundle will automatically add your configured actions to your oro datagrids if your datagrid extends the `custom_entity` model.
 An example for a translatable option entity is available in the 
-[example bundle](examples/Acme/Bundle/CustomBundle/Resources/config/datagrid/pictogram.yml).
+[example bundle](examples/CustomBundle).

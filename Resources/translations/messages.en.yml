@@ -26,3 +26,7 @@ batch_jobs:
     csv_reference_data_export:
         export.label: Export reference data
         label: Reference data export in CSV
+
+    csv_reference_data_quick_export:
+        quick_export.label: Reference data CSV quick export
+        label: Reference data CSV quick export
