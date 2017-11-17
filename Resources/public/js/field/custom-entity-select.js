@@ -14,27 +14,17 @@ define(
         'pim/fetcher-registry',
         'pim/form/common/fields/select'
     ],
-    function (
-        $,
-        _,
-        __,
-        FetcherRegistry,
-        SelectField,
-    ) {
+    function ($, _, __, FetcherRegistry, SelectField ) {
         return SelectField.extend({
             /**
              * {@inherit}
              */
-            configure: function () {
+            configure() {
                 let fetcher = null;
-                if(this.config.isCustomEntity) {
-                    fetcher = FetcherRegistry
-                                .getFetcher('custom_entity')
-                                .fetchAllByType(this.config.entityName);
+                if (this.config.isCustomEntity) {
+                    fetcher = FetcherRegistry.getFetcher('custom_entity').fetchAllByType(this.config.entityName);
                 } else {
-                    fetcher = FetcherRegistry
-                                .getFetcher(this.config.entityName)
-                                .fetchAll();
+                    fetcher = FetcherRegistry.getFetcher(this.config.entityName).fetchAll();
                 }
                 return $.when(
                     fetcher,
@@ -50,7 +40,7 @@ define(
                         let choices = {};
                         let nameProp = this.config.choiceNameField;
                         let valueProp = this.config.choiceValueField;
-                        items.forEach(function(item) {
+                        items.forEach(function (item) {
                             let entity = config.isCustomEntity ? item.data : item;
                             choices[entity[nameProp]] = entity[valueProp];
                         });
