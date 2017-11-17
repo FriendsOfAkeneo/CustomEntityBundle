@@ -32,6 +32,65 @@ Here is the example for the [Color entity](examples/CustomBundle/Resources/confi
 
 The delete modal window does not need to be defined because it's part of the core PIM.
 
+### Custom components
+
+#### Custom Entity dropdown list for single and multi select
+
+You can use a form component to link one custom entity to another one.
+One example is available in the provided AcmeCustomBundle.
+
+Custom entity that supports single select:
+
+```yaml
+acme_custom-edit-form-properties-association:
+    module: custom_entity/field/custom-entity-select
+    parent: acme_custom-edit-form-properties-common
+    targetZone: content
+    position: 270
+    config:
+        fieldName: fabric
+        choiceNameField: code
+        choiceValueField: name
+        isCustomEntity: true
+        entityName: fabric
+        required: false
+```
+
+Custom entity that supports multi select:
+
+```yaml
+acme_custom-edit-form-properties-association:
+    module: custom_entity/field/custom-entity-select
+    parent: acme_custom-edit-form-properties-common
+    targetZone: content
+    position: 270
+    config:
+        fieldName: fabric
+        choiceNameField: code
+        choiceValueField: name
+        isCustomEntity: true
+        entityName: fabric
+        required: false
+        isMultiple: true
+```
+
+Field on a custom entity that refers to a built in akeneo type (special usecase for us)
+
+```yaml
+pim-entity-edit-form-properties-attribute:
+    module: custom_entity/field/custom-entity-select
+    parent: pim-entity-edit-form-properties-common
+    targetZone: content
+    position: 270
+    config:
+        fieldName: attribute
+        choiceNameField: code
+        choiceValueField: name
+        isCustomEntity: false
+        entityName: attribute
+        required: false
+```
+
 ## Internals
 
 ### Normalizers
