@@ -21,7 +21,7 @@ config:
                         urls:
                             list: pim_customentity_rest_list
                             get: pim_customentity_rest_get
-                            getall: pim_customentity_rest_get
+                            getall: pim_customentity_rest_getall
 
         pim/controller-registry:
             controllers:
