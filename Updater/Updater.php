@@ -3,7 +3,6 @@
 namespace Pim\Bundle\CustomEntityBundle\Updater;
 
 use Akeneo\Component\FileStorage\File\FileStorerInterface;
-use Akeneo\Component\FileStorage\Model\FileInfoInterface;
 use Akeneo\Component\StorageUtils\Exception\InvalidPropertyException;
 use Akeneo\Component\StorageUtils\Updater\ObjectUpdaterInterface;
 use Doctrine\Common\Util\ClassUtils;
@@ -129,6 +128,7 @@ class Updater implements ObjectUpdaterInterface
     {
         $associationMapping = $this->getAssociationMapping($referenceData, $propertyPath);
         $associationRepo = $this->em->getRepository($associationMapping['targetEntity']);
+        $classMetadata = $this->getClassMetadata($referenceData);
 
         if (is_subclass_of(
             $associationMapping['targetEntity'],
@@ -136,10 +136,13 @@ class Updater implements ObjectUpdaterInterface
         )) {
             if (empty($value['filePath'])) {
                 $this->propertyAccessor->setValue($referenceData, $propertyPath, null);
+
                 return;
             }
 
-            $associatedEntity = $associationRepo->findOneBy(['key' => str_replace($this->tmpStorageDir, '', $value['filePath'])]);
+            $associatedEntity = $associationRepo->findOneBy([
+                'key' => str_replace($this->tmpStorageDir, '', $value['filePath']),
+            ]);
 
             if (null === $associatedEntity) {
                 $rawFile = new \SplFileInfo($value['filePath']);
@@ -153,6 +156,11 @@ class Updater implements ObjectUpdaterInterface
                 }
 
                 $associatedEntity = $this->storer->store($rawFile, FileStorage::CATALOG_STORAGE_ALIAS);
+            }
+        } elseif ($classMetadata->isCollectionValuedAssociation($propertyPath)) {
+            $associatedEntity = [];
+            foreach ($value as $entityCode) {
+                $associatedEntity[] = $associationRepo->findOneBy(['code' => $entityCode]);
             }
         } else {
             $associatedEntity = $associationRepo->findOneBy(['code' => $value]);

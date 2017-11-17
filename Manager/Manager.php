@@ -74,6 +74,14 @@ class Manager implements ManagerInterface
     /**
      * {@inheritdoc}
      */
+    public function findAll($entityClass) : array
+    {
+        return $this->em->getRepository($entityClass)->findAll();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function update($entity, array $normalizedData): void
     {
         $this->updater->update($entity, $normalizedData);

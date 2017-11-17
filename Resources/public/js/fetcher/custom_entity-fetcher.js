@@ -51,6 +51,33 @@ define(
                 }
 
                 return this.entityPromises[identifier];
+            },
+
+            /**
+             * Fetch all elements
+             *
+             * @param {string} customEntityName
+             * @param {Object} options
+             *
+             * @return {Promise}
+             */
+            fetchAllByType: function (customEntityName) {
+                let deferred = $.Deferred();
+                $.getJSON(
+                    Routing.generate(
+                        this.options.urls.getall,
+                        _.extend({
+                            customEntityName: customEntityName
+                        })
+                    )
+                ).then(_.identity).done(function (entities) {
+                    deferred.resolve(entities);
+                }).fail(function (promise, status, error) {
+                    console.error('Error fetching: ', error);
+                    return deferred.reject(promise);
+                });
+
+                return deferred.promise();
             }
         });
     });

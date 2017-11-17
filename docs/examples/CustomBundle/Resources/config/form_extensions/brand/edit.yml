@@ -139,3 +139,16 @@ extensions:
             label: acme_custom.brand.field.label.code
             required: true
             readOnly: true
+
+    pim-brand-edit-form-properties-fabric:
+        module: custom_entity/field/custom-entity-select
+        parent: pim-brand-edit-form-properties-common
+        targetZone: content
+        position: 100
+        config:
+            fieldName: fabric
+            choiceNameField: code
+            choiceValueField: name
+            isCustomEntity: true
+            entityName: fabric
+            required: false

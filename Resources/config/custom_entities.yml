@@ -7,6 +7,9 @@ custom_entities:
             rest_get:
                 service: pim_custom_entity.action.rest.get
                 enabled: true
+            rest_getall:
+                service: pim_custom_entity.action.rest.getall
+                enabled: true
             rest_delete:
                 service: pim_custom_entity.action.rest.delete
                 enabled: true
