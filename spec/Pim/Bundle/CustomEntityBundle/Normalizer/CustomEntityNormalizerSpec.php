@@ -50,9 +50,10 @@ class CustomEntityNormalizerSpec extends ObjectBehavior
         $expected = [
             'data' => $normalizedEntity,
             'meta' => [
-                'id'               => 666,
-                'customEntityName' => 'fooEntity',
-                'form'             => 'foo_form_extension',
+                'structure_version' => '2',
+                'id'                => 666,
+                'customEntityName'  => 'fooEntity',
+                'form'              => 'foo_form_extension',
             ],
         ];
 

@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Get list of custom entities
- * 
+ *
  * @author    Kevin Rademan <kevin@versa.co.za>
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
@@ -23,7 +23,7 @@ class GetAllAction extends AbstractRestAction
         );
 
         $normalizedEntities = [];
-        foreach($entities as $entity) {
+        foreach ($entities as $entity) {
             $normalizedEntities[] = $this->normalize($entity);
         }
 
