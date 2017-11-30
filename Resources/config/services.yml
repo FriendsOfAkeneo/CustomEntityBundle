@@ -5,6 +5,7 @@ parameters:
     pim_custom_entity.manager.class:                Pim\Bundle\CustomEntityBundle\Manager\Manager
     pim_custom_entity.manager.registry.class:       Pim\Bundle\CustomEntityBundle\Manager\Registry
     pim_custom_entity.action_event_manager.class:   Pim\Bundle\CustomEntityBundle\Event\ActionEventManager
+    pim_custom_entity.datasource.result_record.hydrator.object_id.class: Pim\Bundle\DataGridBundle\Datasource\ResultRecord\Orm\ObjectIdHydrator
 
 services:
     pim_custom_entity.configuration.registry:
@@ -16,3 +17,15 @@ services:
         class: %pim_custom_entity.action_event_manager.class%
         arguments:
             - '@event_dispatcher'
+
+    pim_custom_entity.datasource.result_record.hydrator.object_id:
+        class: '%pim_custom_entity.datasource.result_record.hydrator.object_id.class%'
+
+    pim_custom_entity.extension.mass_action.handler.delete:
+        class: '%pim_datagrid.extension.mass_action.handler.delete.class%'
+        arguments:
+            - '@pim_custom_entity.datasource.result_record.hydrator.object_id'
+            - '@translator'
+            - '@event_dispatcher'
+        tags:
+            - { name: pim_datagrid.extension.mass_action.handler, alias: custom_entity_mass_delete }
