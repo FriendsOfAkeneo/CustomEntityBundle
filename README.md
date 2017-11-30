@@ -11,6 +11,8 @@ For more information, please see http://docs.akeneo.com/
 
 | CustomEntityBundle   | Akeneo PIM Community Edition |
 |:--------------------:|:----------------------------:|
+| v1.10.*              | v1.7.*                       |
+| v1.9.*               | v1.6.*                       |
 | v1.8.*               | v1.6.*                       |
 | v1.7.*               | v1.5.*                       |
 | v1.6.*               | v1.4.*                       |
@@ -24,7 +26,7 @@ For more information, please see http://docs.akeneo.com/
 You can install this bundle with composer (see requirements section):
 
 ```bash
-    php composer.phar require akeneo-labs/custom-entity-bundle:1.8.*
+    php composer.phar require akeneo-labs/custom-entity-bundle:1.10.*
 ```
 
 Then add the following lines **at the end** of your app/config/routing.yml :
@@ -49,7 +51,7 @@ If you want to use the quick export and/or the mass edit features, you have to l
 If your installation is already set up, you have to run the following command:
 
 ```bash
-    php app/console akeneo:batch:create-job "Akeneo Mass Edit Connector" "reference_data_quick_export" "quick_export" "csv_reference_data_quick_export" '{"delimiter": ";", "enclosure": "\"", "withHeader": true, "filePath": "/tmp/reference_data_quick_export.csv"}'
+    php app/console akeneo:batch:create-job "Akeneo Mass Edit Connector" "csv_reference_data_quick_export" "quick_export" "csv_reference_data_quick_export" '{"delimiter": ";", "enclosure": "\"", "withHeader": true, "filePath": "/tmp/reference_data_quick_export.csv"}'
 ```
 
 ## Documentation

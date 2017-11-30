@@ -11,3 +11,4 @@ oro_titles:
     pim_customentity_index: %%title%%
     pim_customentity_edit: %%title%%
     pim_customentity_create: %%title%%
+    pim_customentity_massedit: %%title%%
