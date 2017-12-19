@@ -33,8 +33,8 @@ class CustomEntityRemover extends BaseRemover
     {
         parent::validateObject($entity);
 
-        if (!$this->productLinkChecker->isLinkedToProduct($entity)) {
-            throw new \InvalidArgumentException('Cannot remove this entity because it used in one or more product.');
+        if ($this->productLinkChecker->isLinkedToProduct($entity)) {
+            throw new NonRemovableEntityException('Cannot remove this entity because it used in one or more product.');
         }
     }
 }

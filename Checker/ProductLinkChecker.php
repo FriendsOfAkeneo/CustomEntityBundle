@@ -3,7 +3,6 @@
 namespace Pim\Bundle\CustomEntityBundle\Checker;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Pim\Bundle\CatalogBundle\Entity\Attribute;
 use Pim\Bundle\CustomEntityBundle\Repository\AttributeRepository;
 use Pim\Component\Catalog\Query\Filter\Operators;
 use Pim\Component\Catalog\Query\ProductQueryBuilderFactoryInterface;
@@ -17,16 +16,22 @@ class ProductLinkChecker implements ProductLinkCheckerInterface
     /** @var ProductQueryBuilderFactoryInterface */
     protected $productQueryBuilderFactory;
 
+    /** @var AttributeRepository */
+    protected $attributeRepository;
+
     /**
      * @param EntityManagerInterface              $em
      * @param ProductQueryBuilderFactoryInterface $productQueryBuilderFactory
+     * @param AttributeRepository                 $attributeRepository
      */
     public function __construct(
         EntityManagerInterface $em,
-        ProductQueryBuilderFactoryInterface $productQueryBuilderFactory
+        ProductQueryBuilderFactoryInterface $productQueryBuilderFactory,
+        AttributeRepository $attributeRepository
     ) {
         $this->em = $em;
         $this->productQueryBuilderFactory = $productQueryBuilderFactory;
+        $this->attributeRepository = $attributeRepository;
     }
 
     /**
@@ -38,10 +43,7 @@ class ProductLinkChecker implements ProductLinkCheckerInterface
      */
     public function isLinkedToProduct(ReferenceDataInterface $entity)
     {
-        $metadata = $this->em->getClassMetadata(Attribute::class);
-        $repository = new AttributeRepository($this->em, $metadata);
-        $attributesCodes = $repository
-            ->findReferenceDataAttributeCodesByEntityName($entity->getCode());
+        $attributesCodes = $this->attributeRepository->findReferenceDataAttributeCodesByEntityName($entity->getCode());
 
         foreach ($attributesCodes as $attributeCode) {
             $pqb = $this->productQueryBuilderFactory->create();
