@@ -13,6 +13,5 @@ services:
             - '@pim_custom_entity.updater.custom_entity'
             - '@pim_custom_entity.saver.custom_entity'
             - '@pim_custom_entity.remover.custom_entity'
-            - '@pim_catalog.query.product_query_builder_factory'
         tags:
             - { name: pim_custom_entity.manager, alias: default }
