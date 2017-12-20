@@ -24,5 +24,4 @@ class ProductLinkCheckerSpec extends ObjectBehavior
         $this->shouldHaveType(ProductLinkChecker::class);
         $this->shouldImplement(ProductLinkCheckerInterface::class);
     }
-
 }
