@@ -28,6 +28,7 @@ class Manager implements ManagerInterface
 
     /** @var RemoverInterface */
     protected $remover;
+
     /** @var NormalizerInterface */
     private $normalizer;
 
