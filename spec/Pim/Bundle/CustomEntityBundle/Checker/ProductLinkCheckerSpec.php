@@ -11,7 +11,7 @@ use Pim\Component\Catalog\Query\ProductQueryBuilderFactoryInterface;
 
 class ProductLinkCheckerSpec extends ObjectBehavior
 {
-    public function let(
+    function let(
         EntityManagerInterface $em,
         ProductQueryBuilderFactoryInterface $productQueryBuilderFactory,
         AttributeRepository $attributeRepository
@@ -19,7 +19,7 @@ class ProductLinkCheckerSpec extends ObjectBehavior
         $this->beConstructedWith($em, $productQueryBuilderFactory, $attributeRepository);
     }
 
-    public function it_is_initializable()
+    function it_is_initializable()
     {
         $this->shouldHaveType(ProductLinkChecker::class);
         $this->shouldImplement(ProductLinkCheckerInterface::class);
