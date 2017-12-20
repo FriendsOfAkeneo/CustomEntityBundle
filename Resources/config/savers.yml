@@ -1,5 +1,7 @@
 parameters:
     pim_custom_entity.updater.custom_entity.class: Pim\Bundle\CustomEntityBundle\Updater\Updater
+    pim_custom_entity.remover.custom_entity.class: Pim\Bundle\CustomEntityBundle\Remover\CustomEntityRemover
+    pim_custom_entity.checker.product_link.class: Pim\Bundle\CustomEntityBundle\Checker\ProductLinkChecker
 
 services:
     pim_custom_entity.saver.custom_entity:
@@ -10,11 +12,12 @@ services:
             - '%pim_reference_data.model.reference_data.interface%'
 
     pim_custom_entity.remover.custom_entity:
-        class: '%pim_catalog.remover.base.class%'
+        class: '%pim_custom_entity.remover.custom_entity.class%'
         arguments:
             - '@doctrine.orm.entity_manager'
             - '@event_dispatcher'
             - '%pim_reference_data.model.reference_data.interface%'
+            - '@pim_custom_entity.checker.product_link'
 
     pim_custom_entity.updater.custom_entity:
         class: '%pim_custom_entity.updater.custom_entity.class%'
@@ -22,3 +25,10 @@ services:
             - '@property_accessor'
             - '@pim_catalog.repository.locale'
             - '@doctrine.orm.entity_manager'
+
+    pim_custom_entity.checker.product_link:
+        class: '%pim_custom_entity.checker.product_link.class%'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@pim_catalog.query.product_query_builder_factory'
+            - '@pim_custom_entity.repository.attribute'

@@ -6,6 +6,7 @@ parameters:
     pim_custom_entity.manager.registry.class:       Pim\Bundle\CustomEntityBundle\Manager\Registry
     pim_custom_entity.action_event_manager.class:   Pim\Bundle\CustomEntityBundle\Event\ActionEventManager
     pim_custom_entity.datasource.result_record.hydrator.object_id.class: Pim\Bundle\DataGridBundle\Datasource\ResultRecord\Orm\ObjectIdHydrator
+    pim_custom_entity.repository.attribute.class: Pim\Bundle\CustomEntityBundle\Repository\AttributeRepository
 
 services:
     pim_custom_entity.configuration.registry:
@@ -29,3 +30,8 @@ services:
             - '@event_dispatcher'
         tags:
             - { name: pim_datagrid.extension.mass_action.handler, alias: custom_entity_mass_delete }
+
+    pim_custom_entity.repository.attribute:
+        class: '%pim_custom_entity.repository.attribute.class%'
+        arguments:
+            - '@doctrine.orm.default_entity_manager'

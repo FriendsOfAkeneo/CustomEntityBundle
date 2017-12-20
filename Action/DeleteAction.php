@@ -2,6 +2,7 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Action;
 
+use Pim\Bundle\CustomEntityBundle\Remover\NonRemovableEntityException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -19,7 +20,11 @@ class DeleteAction extends AbstractAction
     public function doExecute(Request $request)
     {
         $object = $this->findEntity($request);
-        $this->getManager()->remove($object);
+        try {
+            $this->getManager()->remove($object);
+        } catch (NonRemovableEntityException $e) {
+            return new Response($e->getMessage(), 412);
+        }
 
         return new Response('', 204);
     }

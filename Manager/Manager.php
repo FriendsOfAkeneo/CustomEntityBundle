@@ -40,16 +40,16 @@ class Manager implements ManagerInterface
         SaverInterface $saver,
         RemoverInterface $remover
     ) {
-        $this->em      = $em;
+        $this->em = $em;
         $this->updater = $updater;
-        $this->saver   = $saver;
+        $this->saver = $saver;
         $this->remover = $remover;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function create($entityClass, array $defaultValues = array(), array $options = array())
+    public function create($entityClass, array $defaultValues = [], array $options = [])
     {
         $referenceData = new $entityClass();
         $this->updater->update($referenceData, $defaultValues);
@@ -60,7 +60,7 @@ class Manager implements ManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function find($entityClass, $id, array $options = array())
+    public function find($entityClass, $id, array $options = [])
     {
         return $this->em->getRepository($entityClass)->find($id);
     }
@@ -68,7 +68,7 @@ class Manager implements ManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function save($entity, array $options = array())
+    public function save($entity, array $options = [])
     {
         $this->saver->save($entity, $options);
     }
