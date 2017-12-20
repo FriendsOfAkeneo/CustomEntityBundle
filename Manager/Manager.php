@@ -6,7 +6,6 @@ use Akeneo\Component\StorageUtils\Remover\RemoverInterface;
 use Akeneo\Component\StorageUtils\Saver\SaverInterface;
 use Akeneo\Component\StorageUtils\Updater\ObjectUpdaterInterface;
 use Doctrine\ORM\EntityManagerInterface;
-use Pim\Component\ReferenceData\Model\ReferenceDataInterface;
 
 /**
  * Base implementation for ORM managers
@@ -75,7 +74,7 @@ class Manager implements ManagerInterface
     }
 
     /**
-     * @param ReferenceDataInterface $entity
+     * {@inheritdoc}
      */
     public function remove($entity)
     {

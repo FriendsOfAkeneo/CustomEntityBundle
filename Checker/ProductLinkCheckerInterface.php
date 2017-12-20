@@ -5,7 +5,7 @@ namespace Pim\Bundle\CustomEntityBundle\Checker;
 use Pim\Component\ReferenceData\Model\ReferenceDataInterface;
 
 /**
- * Base implementation for ORM managers
+ * Checks if an entity is linked to one or more products
  *
  * @author    JM Leroux <jean-marie.leroux@akeneo.com>
  * @copyright 2017 Akeneo SAS (http://www.akeneo.com)
@@ -14,7 +14,7 @@ use Pim\Component\ReferenceData\Model\ReferenceDataInterface;
 interface ProductLinkCheckerInterface
 {
     /**
-     * Check if the entity is linked to one or more products
+     * Find number of products linked to an entity
      *
      * @param ReferenceDataInterface $entity
      *

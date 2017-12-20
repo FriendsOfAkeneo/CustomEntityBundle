@@ -8,6 +8,11 @@ use Pim\Component\Catalog\Query\Filter\Operators;
 use Pim\Component\Catalog\Query\ProductQueryBuilderFactoryInterface;
 use Pim\Component\ReferenceData\Model\ReferenceDataInterface;
 
+/**
+ * @author    JM Leroux <jean-marie.leroux@akeneo.com>
+ * @copyright 2017 Akeneo SAS (http://www.akeneo.com)
+ * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
 class ProductLinkChecker implements ProductLinkCheckerInterface
 {
     /** @var EntityManagerInterface */
@@ -35,15 +40,11 @@ class ProductLinkChecker implements ProductLinkCheckerInterface
     }
 
     /**
-     * Check if the entity is linked to one or more products
-     *
-     * @param ReferenceDataInterface $entity
-     *
-     * @return bool
+     * {@inheritdoc}
      */
     public function isLinkedToProduct(ReferenceDataInterface $entity)
     {
-        $attributesCodes = $this->attributeRepository->findReferenceDataAttributeCodesByEntityName($entity->getCode());
+        $attributesCodes = $this->attributeRepository->findReferenceDataAttributeCodes();
 
         foreach ($attributesCodes as $attributeCode) {
             $pqb = $this->productQueryBuilderFactory->create();

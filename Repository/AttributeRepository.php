@@ -2,7 +2,9 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Repository;
 
-use Pim\Bundle\CatalogBundle\Doctrine\ORM\Repository\AttributeRepository as BaseRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
+use Pim\Bundle\CatalogBundle\Entity\Attribute;
 use Pim\Component\Catalog\AttributeTypes;
 
 /**
@@ -12,16 +14,23 @@ use Pim\Component\Catalog\AttributeTypes;
  * @copyright 2017 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class AttributeRepository extends BaseRepository
+class AttributeRepository extends EntityRepository
 {
+    /**
+     * @param EntityManagerInterface $em
+     */
+    public function __construct(EntityManagerInterface $em)
+    {
+        $metadataClass = $em->getClassMetadata(Attribute::class);
+        parent::__construct($em, $metadataClass);
+    }
+
     /**
      * Find attributes codes linked to custom entity
      *
-     * @param string $entityName
-     *
      * @return array
      */
-    public function findReferenceDataAttributeCodesByEntityName($entityName)
+    public function findReferenceDataAttributeCodes()
     {
         $codes = $this
             ->createQueryBuilder('a')
