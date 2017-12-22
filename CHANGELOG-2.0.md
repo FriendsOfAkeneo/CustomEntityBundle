@@ -1,3 +1,8 @@
+# 2.0.7
+
+## Improvements
+- CEB-53: Do not remove entity linked to one or more products                           
+
 # 2.0.6
 
 ## Improvements
