@@ -49,8 +49,7 @@ class ProductLinkChecker implements ProductLinkCheckerInterface
         foreach ($attributesCodes as $attributeCode) {
             $pqb = $this->productQueryBuilderFactory->create();
             $pqb->addFilter($attributeCode, Operators::IN_LIST, [$entity->getCode()]);
-            $qb = $pqb->getQueryBuilder();
-            $result = count($qb->getQuery()->execute());
+            $result = $pqb->execute()->count();
             if ($result > 0) {
                 return true;
             }
