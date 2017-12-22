@@ -63,6 +63,8 @@ extensions:
         module: oro/datagrid/pagination-input
         parent: pim-pictogram-index-grid-container
         targetZone: toolbar
+        config:
+            gridName: pictogram
 
     pim-pictogram-index-grid:
         module: pim/form/common/index/grid

@@ -63,6 +63,8 @@ extensions:
         module: oro/datagrid/pagination-input
         parent: pim-brand-index-grid-container
         targetZone: toolbar
+        config:
+            gridName: brand
 
     pim-brand-index-grid:
         module: pim/form/common/index/grid
