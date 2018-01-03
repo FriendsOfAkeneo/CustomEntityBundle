@@ -1,11 +1,10 @@
 {% extends baseTemplate %}
 {% import 'PimDataGridBundle::macros.html.twig' as dataGrid %}
 
+{% set title = (customEntityName ~ ".overview")|trans %}
+{% oro_title_set({params:{'%title%': title}}) %}
+
 {% block content %}
-
-    {% set title = (customEntityName ~ ".overview")|trans %}
-    {% oro_title_set({params:{'%title%': title}}) %}
-
     {% set buttons %}
         {% if createUrl|default(false) %}
             {{ elements.createBtn(
@@ -21,5 +20,4 @@
     {{ elements.page_header(title, buttons) }}
 
     {{ dataGrid.renderGrid(customEntityName, { localeCode: locale_code() }) }}
-
 {% endblock %}
