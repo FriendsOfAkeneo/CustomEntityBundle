@@ -43,7 +43,7 @@ abstract class AbstractTranslatableCustomEntity extends AbstractCustomEntity imp
     /**
      * {@inheritdoc}
      */
-    public function getTranslation(?string $locale = null): AbstractTranslation
+    public function getTranslation(?string $locale = null): ?AbstractTranslation
     {
         $locale = ($locale) ? $locale : $this->locale;
         if (!$locale) {
