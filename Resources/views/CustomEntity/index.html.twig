@@ -1,10 +1,10 @@
 {% extends baseTemplate %}
 {% import 'PimDataGridBundle::macros.html.twig' as dataGrid %}
 
-{% block content %}
+{% set title = (customEntityName ~ ".overview")|trans %}
+{% oro_title_set({params:{'%title%': title}}) %}
 
-    {% set title = (customEntityName ~ ".overview")|trans %}
-    {% oro_title_set({params:{'%title%': title}}) %}
+{% block content %}
 
     {% set buttons %}
         {% if createUrl|default(false) %}

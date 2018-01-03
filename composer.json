@@ -14,8 +14,7 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/akeneo/pim-community-dev.git",
-            "branch": "master"
+            "url": "git@github.com:akeneo/pim-community-dev.git"
         }
     ],
     "minimum-stability": "stable",
@@ -23,7 +22,8 @@
         "akeneo/pim-community-dev": "1.7.*"
     },
     "require-dev": {
-        "phpspec/phpspec": "3.0.0",
+        "phpspec/phpspec": "~3.4.2",
+        "squizlabs/php_codesniffer": "2.*",
         "friendsofphp/php-cs-fixer": "@stable"
     },
     "config": {
@@ -34,5 +34,11 @@
             "Pim\\Bundle\\CustomEntityBundle\\": ""
         }
     },
-    "target-dir": "Pim/Bundle/CustomEntityBundle"
+    "target-dir": "Pim/Bundle/CustomEntityBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-1.10": "1.10.x-dev",
+            "dev-1.9": "1.9.x-dev"
+        }
+    }
 }
