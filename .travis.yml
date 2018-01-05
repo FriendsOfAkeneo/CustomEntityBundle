@@ -10,7 +10,6 @@ cache:
 before_script:
     - phpenv config-add travis.php.ini
     - phpenv config-rm xdebug.ini || echo "xdebug not available for PHP $TRAVIS_PHP_VERSION"
-    - echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
     - composer install --no-interaction --no-scripts
 
 script:
