@@ -1,7 +1,8 @@
 # 2.0.8
 
 ## Improvements
-- GITHUB-135: Fix ReferableNormalizer normalizer for versioning                           
+- GITHUB-135: Fix ReferableNormalizer normalizer for versioning
+- GITHUB-136: Enable deleting entities with multiple reference data types
 
 # 2.0.7
 
