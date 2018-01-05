@@ -27,12 +27,14 @@ class ReferableNormalizer implements NormalizerInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @param AbstractCustomEntity $object
      */
     public function normalize($object, $format = null, array $context = []): array
     {
         if (array_key_exists('field_name', $context)) {
             return [
-                $context['field_name'] => $object->getReference(),
+                $context['field_name'] => $object->getCode(),
             ];
         } else {
             throw new \LogicException(sprintf('No normalizer found for object of class "%s"', get_class($object)));

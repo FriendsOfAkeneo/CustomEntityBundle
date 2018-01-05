@@ -2,6 +2,7 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Checker;
 
+use Akeneo\Component\StorageUtils\Exception\InvalidPropertyException;
 use Doctrine\ORM\EntityManagerInterface;
 use Pim\Bundle\CustomEntityBundle\Repository\AttributeRepository;
 use Pim\Component\Catalog\Query\Filter\Operators;
@@ -48,10 +49,16 @@ class ProductLinkChecker implements ProductLinkCheckerInterface
 
         foreach ($attributesCodes as $attributeCode) {
             $pqb = $this->productQueryBuilderFactory->create();
-            $pqb->addFilter($attributeCode, Operators::IN_LIST, [$entity->getCode()]);
-            $result = $pqb->execute()->count();
-            if ($result > 0) {
-                return true;
+            try {
+                $pqb->addFilter($attributeCode, Operators::IN_LIST, [$entity->getCode()]);
+                $result = $pqb->execute()->count();
+                if ($result > 0) {
+                    return true;
+                }
+            } catch (InvalidPropertyException $e) {
+                if ($e->getCode() !== InvalidPropertyException::VALID_ENTITY_CODE_EXPECTED_CODE) {
+                    throw $e;
+                }
             }
         }
 
