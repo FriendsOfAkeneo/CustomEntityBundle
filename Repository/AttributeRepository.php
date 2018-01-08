@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Pim\Bundle\CatalogBundle\Entity\Attribute;
 use Pim\Component\Catalog\AttributeTypes;
+use Pim\Component\Catalog\Model\AttributeInterface;
 
 /**
  * Repository for attribute entity
@@ -50,6 +51,33 @@ class AttributeRepository extends EntityRepository
                 return $data['code'];
             },
             $codes
+        );
+    }
+
+    /**
+     * Find reference data attributes
+     *
+     * @return array
+     */
+    public function findReferenceDataAttribute(string $referenceDataCode)
+    {
+        $attributes = $this
+            ->createQueryBuilder('a')
+            ->andWhere('a.type IN (:reference_data_simple_select, :reference_data_multi_select)')
+            ->setParameters(
+                [
+                    ':reference_data_simple_select' => AttributeTypes::REFERENCE_DATA_SIMPLE_SELECT,
+                    ':reference_data_multi_select'  => AttributeTypes::REFERENCE_DATA_MULTI_SELECT,
+                ]
+            )
+            ->getQuery()
+            ->execute();
+
+        return array_filter(
+            $attributes,
+            function (AttributeInterface $attribute) use ($referenceDataCode) {
+                return $referenceDataCode === $attribute->getProperty('reference_data_name');
+            }
         );
     }
 }

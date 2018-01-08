@@ -45,7 +45,7 @@ class ProductLinkChecker implements ProductLinkCheckerInterface
      */
     public function isLinkedToProduct(ReferenceDataInterface $entity)
     {
-        $attributesCodes = $this->attributeRepository->findReferenceDataAttributeCodes();
+        $attributesCodes = $this->attributeRepository->findReferenceDataAttribute($entity->getCode());
 
         foreach ($attributesCodes as $attributeCode) {
             $pqb = $this->productQueryBuilderFactory->create();
