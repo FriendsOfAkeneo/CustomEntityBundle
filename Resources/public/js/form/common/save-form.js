@@ -46,10 +46,10 @@ define(
                     .setUrl(this.config.url)
                     .setRouteParams(this.config.route_params)
                     .save(entity.id, entity, this.config.method || 'POST')
-                    .then(function (data) {
+                    .then(function (response) {
                         this.postSave();
-                        this.setData(data);
-                        this.getRoot().trigger('pim_enrich:form:entity:post_fetch', data);
+                        this.setData(response.data);
+                        this.getRoot().trigger('pim_enrich:form:entity:post_fetch', response);
 
                         if (this.config.redirectAfter) {
                             const params = Object.assign(
