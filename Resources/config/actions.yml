@@ -85,6 +85,7 @@ services:
             - '@pim_custom_entity.action_event_manager'
             - '@pim_custom_entity.manager.registry'
             - '@validator'
+            - '@pim_enrich.normalizer.violation'
 
     pim_custom_entity.action.rest.update:
         class: '%pim_custom_entity.action.rest.update.class%'
@@ -94,3 +95,4 @@ services:
             - '@pim_custom_entity.action_event_manager'
             - '@pim_custom_entity.manager.registry'
             - '@validator'
+            - '@pim_enrich.normalizer.violation'
