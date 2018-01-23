@@ -20,17 +20,19 @@ class PimCustomEntityExtension extends Extension
     public function load(array $configs, ContainerBuilder $container)
     {
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services.yml');
-        $loader->load('serializer.yml');
-        $loader->load('event_listeners.yml');
+
         $loader->load('actions.yml');
-        $loader->load('mass_actions.yml');
-        $loader->load('managers.yml');
-        $loader->load('update_guessers.yml');
+        $loader->load('connectors.yml');
         $loader->load('controllers.yml');
+        $loader->load('event_listeners.yml');
         $loader->load('jobs.yml');
         $loader->load('job_parameters.yml');
-        $loader->load('connectors.yml');
+        $loader->load('managers.yml');
+        $loader->load('mass_actions.yml');
+        $loader->load('metadata.yml');
         $loader->load('savers.yml');
+        $loader->load('serializer.yml');
+        $loader->load('services.yml');
+        $loader->load('update_guessers.yml');
     }
 }

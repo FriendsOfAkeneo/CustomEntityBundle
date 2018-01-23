@@ -1,17 +1,11 @@
 parameters:
-    pim_custom_entity.normalizer.referable.class: Pim\Bundle\CustomEntityBundle\Normalizer\ReferableNormalizer
+    pim_custom_entity.normalizer.flat.reference_data.class: Pim\Bundle\CustomEntityBundle\Normalizer\Flat\ReferenceDataNormalizer
+    pim_custom_entity.normalizer.flat.translation.class: Pim\Bundle\CustomEntityBundle\Normalizer\Flat\TranslationNormalizer
+
     pim_custom_entity.normalizer.custom_entity.class: Pim\Bundle\CustomEntityBundle\Normalizer\CustomEntityNormalizer
     pim_custom_entity.normalizer.standard.minimal.class: Pim\Bundle\CustomEntityBundle\Normalizer\Standard\MinimalStandardNormalizer
 
 services:
-    pim_custom_entity.normalizer.referable:
-        class: '%pim_custom_entity.normalizer.referable.class%'
-        arguments:
-            - ['csv', 'flat']
-        tags:
-            - { name: pim_versioning.serializer.normalizer, priority: 100 }
-            - { name: pim_serializer.normalizer, priority: 100 }
-
     pim_custom_entity.normalizer.internal_api.custom_entity:
         class: '%pim_custom_entity.normalizer.custom_entity.class%'
         arguments:
@@ -22,3 +16,23 @@ services:
         class: '%pim_custom_entity.normalizer.standard.minimal.class%'
         tags:
             - { name: pim_serializer.normalizer, priority: 150 }
+
+    pim_custom_entity.normalizer.flat.reference_data:
+        public: false
+        class: '%pim_custom_entity.normalizer.flat.reference_data.class%'
+        arguments:
+            - '@pim_custom_entity.metadata.target_entity_resolver'
+            - '@pim_custom_entity.metadata.class_metadata_registry'
+            - '@property_accessor'
+            - '@pim_custom_entity.normalizer.flat.translation'
+        calls:
+            - ['setSkippedFields', [ ['id', 'created', 'updated', 'locale'] ] ]
+
+    pim_custom_entity.normalizer.flat.translation:
+        public: false
+        class: '%pim_custom_entity.normalizer.flat.translation.class%'
+        arguments:
+            - '@pim_custom_entity.metadata.class_metadata_registry'
+            - '@property_accessor'
+        calls:
+            - ['setSkippedFields', [ ['id', 'locale', 'foreignKey'] ] ]

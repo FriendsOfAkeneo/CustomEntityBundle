@@ -16,23 +16,15 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
  */
 class ReferenceDataProcessor implements ItemProcessorInterface
 {
-    /** @var PropertyAccessorInterface */
-    protected $propertyAccessor;
-
     /** @var NormalizerInterface */
     protected $normalizer;
 
-    /** @var string[] */
-    protected $skippedFields = ['id', 'created', 'updated'];
-
     /**
-     * @param PropertyAccessorInterface $propertyAccessor
      * @param NormalizerInterface $normalizer
      */
-    public function __construct(PropertyAccessorInterface $propertyAccessor, NormalizerInterface $normalizer)
+    public function __construct(NormalizerInterface $normalizer)
     {
-        $this->propertyAccessor = $propertyAccessor;
-        $this->normalizer       = $normalizer;
+        $this->normalizer = $normalizer;
     }
 
     /**
@@ -40,26 +32,6 @@ class ReferenceDataProcessor implements ItemProcessorInterface
      */
     public function process($item)
     {
-        $normalizedData = [];
-
-        $refItem = new \ReflectionClass($item);
-        foreach ($refItem->getProperties() as $property) {
-            if (in_array($property->getName(), $this->skippedFields)) {
-                continue;
-            }
-
-            $value = $this->propertyAccessor->getValue($item, $property->getName());
-            $normalizedData[$property->getName()] = $this->normalizer->normalize($value, 'flat');
-        }
-
-        return $normalizedData;
-    }
-
-    /**
-     * @param array $skippedFields
-     */
-    public function setSkippedFields(array $skippedFields)
-    {
-        $this->skippedFields = $skippedFields;
+        return $this->normalizer->normalize($item, 'csv');
     }
 }
