@@ -7,7 +7,9 @@ use Pim\Bundle\CustomEntityBundle\Event\ActionEventManager;
 use Pim\Bundle\CustomEntityBundle\Manager\Registry as ManagerRegistry;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
@@ -20,22 +22,28 @@ class CreateAction extends AbstractRestAction
     /** @var ValidatorInterface */
     protected $validator;
 
+    /** @var NormalizerInterface */
+    protected $violationNormalizer;
+
     /**
      * CreateAction constructor.
      *
-     * @param ActionFactory      $actionFactory
-     * @param ActionEventManager $eventManager
-     * @param ManagerRegistry    $managerRegistry
-     * @param ValidatorInterface $validator
+     * @param ActionFactory       $actionFactory
+     * @param ActionEventManager  $eventManager
+     * @param ManagerRegistry     $managerRegistry
+     * @param ValidatorInterface  $validator
+     * @param NormalizerInterface $violationNormalizer
      */
     public function __construct(
         ActionFactory $actionFactory,
         ActionEventManager $eventManager,
         ManagerRegistry $managerRegistry,
-        ValidatorInterface $validator
+        ValidatorInterface $validator,
+        NormalizerInterface $violationNormalizer
     ) {
         parent::__construct($actionFactory, $eventManager, $managerRegistry);
         $this->validator = $validator;
+        $this->violationNormalizer = $violationNormalizer;
     }
 
     /**
@@ -50,7 +58,15 @@ class CreateAction extends AbstractRestAction
 
         $errors = $this->validator->validate($entity);
         if (count($errors) > 0) {
-            throw new BadRequestHttpException('Invalid data');
+            $normalizedViolations = [];
+            foreach ($errors as $error) {
+                $normalizedViolations[] = $this->violationNormalizer->normalize(
+                    $error,
+                    'internal_api'
+                );
+            }
+
+            return new JsonResponse(['values' => $normalizedViolations], Response::HTTP_BAD_REQUEST);
         }
 
         $this->getManager()->save($entity);
