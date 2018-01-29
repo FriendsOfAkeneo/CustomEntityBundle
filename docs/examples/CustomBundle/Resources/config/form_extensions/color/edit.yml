@@ -1,6 +1,6 @@
 extensions:
     pim-color-edit-form:
-        module: pim/form/common/edit-form
+        module: custom_entity/form/common/edit-form
         aclResourceId: acme_custom_color_edit
 
     pim-color-edit-form-breadcrumbs:

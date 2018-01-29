@@ -1,6 +1,6 @@
 extensions:
     pim-brand-edit-form:
-        module: pim/form/common/edit-form
+        module: custom_entity/form/common/edit-form
 
     pim-brand-edit-form-breadcrumbs:
         module: pim/common/breadcrumbs

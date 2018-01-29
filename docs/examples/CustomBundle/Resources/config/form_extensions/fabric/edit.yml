@@ -1,6 +1,6 @@
 extensions:
     pim-fabric-edit-form:
-        module: pim/form/common/edit-form
+        module: custom_entity/form/common/edit-form
 
     pim-fabric-edit-form-breadcrumbs:
         module: pim/common/breadcrumbs
@@ -92,7 +92,7 @@ extensions:
         targetZone: container
         position: 110
         config:
-            class: 'group'
+            class: 'fabric'
             title: 'pim_custom_entity.form.tab.history.title'
 
     pim-fabric-edit-form-state:
@@ -150,4 +150,4 @@ extensions:
         config:
             fieldName: alternativeName
             label: acme_custom.fabric.field.label.alternative_name
-            required: true
+            required: false

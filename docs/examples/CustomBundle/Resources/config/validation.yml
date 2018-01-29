@@ -1,6 +1,40 @@
+Acme\Bundle\CustomBundle\Entity\Brand:
+    properties:
+        code:
+            - NotBlank: ~
+
 Acme\Bundle\CustomBundle\Entity\Color:
     properties:
         code:
             - NotBlank: ~
         name:
+            - NotBlank: ~
+        hex:
+            - NotBlank: ~
+        red:
+            - NotBlank: ~
+            - Range:
+                min: 0
+                max: 255
+        green:
+            - NotBlank: ~
+            - Range:
+                min: 0
+                max: 255
+        blue:
+            - NotBlank: ~
+            - Range:
+                min: 0
+                max: 255
+
+Acme\Bundle\CustomBundle\Entity\Fabric:
+    properties:
+        code:
+            - NotBlank: ~
+        name:
+            - NotBlank: ~
+
+Acme\Bundle\CustomBundle\Entity\Pictogram:
+    properties:
+        code:
             - NotBlank: ~
