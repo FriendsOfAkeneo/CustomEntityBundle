@@ -42,3 +42,14 @@ page_title:
     pim_customentity_quickexport: 'Reference data'
     pim_customentity_rest_delete: 'Reference data'
     pim_customentity_rest_list: 'Reference data'
+    pim_customentity_rest_get: 'Reference data | Edit'
+
+batch_jobs:
+    csv_reference_data_import:
+        label: Reference data import in CSV
+
+    csv_reference_data_export:
+        label: Reference data export in CSV
+
+    csv_reference_data_quick_export:
+        label: Reference data CSV quick export
