@@ -41,8 +41,7 @@ define(
                         let nameProp = this.config.choiceNameField;
                         let valueProp = this.config.choiceValueField;
                         items.forEach(function (item) {
-                            let entity = config.isCustomEntity ? item.data : item;
-                            choices[entity[nameProp]] = entity[valueProp];
+                            choices[item[nameProp]] = item[valueProp];
                         });
                         this.config.choices = choices;
                     }
