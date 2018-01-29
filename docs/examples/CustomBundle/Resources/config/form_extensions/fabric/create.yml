@@ -30,12 +30,3 @@ extensions:
         config:
             identifier: name
             label: acme_custom.fabric.field.label.name
-
-    pim-fabric-create-alternative-name:
-        module: pim/form/common/creation/field
-        parent: pim-fabric-create-modal
-        targetZone: fields
-        position: 30
-        config:
-            identifier: alternativeName
-            label: acme_custom.fabric.field.label.alternative_name
