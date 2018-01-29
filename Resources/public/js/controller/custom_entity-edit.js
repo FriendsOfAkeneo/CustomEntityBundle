@@ -24,7 +24,7 @@ define(
                                 this.on('pim:controller:can-leave', function (event) {
                                     form.trigger('pim_enrich:form:can-leave', event);
                                 });
-                                form.setData(normalizedEntity.data);
+                                form.setData(normalizedEntity);
                                 form.trigger('pim_enrich:form:entity:post_fetch', normalizedEntity);
                                 form.setElement(this.$el).render();
 

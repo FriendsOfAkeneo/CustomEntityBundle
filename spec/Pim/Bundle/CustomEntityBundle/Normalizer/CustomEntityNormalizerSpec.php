@@ -47,15 +47,17 @@ class CustomEntityNormalizerSpec extends ObjectBehavior
         $pimSerializer->normalize($entity, 'standard', $context)
             ->willReturn($normalizedEntity);
 
-        $expected = [
-            'data' => $normalizedEntity,
-            'meta' => [
-                'structure_version' => '2',
-                'id'                => 666,
-                'customEntityName'  => 'fooEntity',
-                'form'              => 'foo_form_extension',
-            ],
-        ];
+        $expected = array_merge(
+            $normalizedEntity,
+            [
+                'meta' => [
+                    'structure_version' => null,
+                    'id'                => 666,
+                    'customEntityName'  => 'fooEntity',
+                    'form'              => 'foo_form_extension',
+                ],
+            ]
+        );
 
         $this->normalize($entity, 'standard', $context)->shouldReturn($expected);
     }
