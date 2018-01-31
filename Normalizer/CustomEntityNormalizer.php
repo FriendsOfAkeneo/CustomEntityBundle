@@ -43,21 +43,16 @@ class CustomEntityNormalizer implements NormalizerInterface
     {
         $normalizedEntity = $this->pimSerializer->normalize($entity, 'standard', $context);
 
-        $meta = [
-            // Seems the upstream pim introduced some versioning for the javascript assets.
-            // Not sure how to implement this correct and dont have the time to investigate this now.
-            // Hardcoding the version for now
+        $normalizedEntity['meta'] = [
+            // Hardcoding the structure_version for now
             // TODO: remove hardcoding
-            'structure_version' => '2',
+            'structure_version' => null,
             'id'                => $entity->getId(),
             'customEntityName'  => $context['customEntityName'],
             'form'              => $context['form'],
         ];
 
-        return [
-            'data' => $normalizedEntity,
-            'meta' => $meta,
-        ];
+        return $normalizedEntity;
     }
 
     /**
