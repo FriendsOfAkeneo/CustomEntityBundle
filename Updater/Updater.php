@@ -192,8 +192,12 @@ class Updater implements ObjectUpdaterInterface
                     sprintf('Locale "%s" is not activated', $locale)
                 );
             }
+
             $translation = $referenceData->getTranslation($locale);
-            $translation->setLabel($value);
+
+            if ($this->propertyAccessor->isWritable($translation, $propertyPath)) {
+                $this->propertyAccessor->setValue($translation, $propertyPath, $value);
+            }
         }
     }
 

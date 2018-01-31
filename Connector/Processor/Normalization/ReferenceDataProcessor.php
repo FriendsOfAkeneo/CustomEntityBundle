@@ -23,16 +23,15 @@ class ReferenceDataProcessor implements ItemProcessorInterface
     protected $normalizer;
 
     /** @var string[] */
-    protected $skippedFields = ['id', 'created', 'updated'];
+    protected $skippedFields = ['id', 'created', 'updated', 'locale'];
 
     /**
      * @param PropertyAccessorInterface $propertyAccessor
      * @param NormalizerInterface $normalizer
      */
-    public function __construct(PropertyAccessorInterface $propertyAccessor, NormalizerInterface $normalizer)
-    {
+    public function __construct(PropertyAccessorInterface $propertyAccessor, NormalizerInterface $normalizer) {
         $this->propertyAccessor = $propertyAccessor;
-        $this->normalizer       = $normalizer;
+        $this->normalizer = $normalizer;
     }
 
     /**
@@ -48,11 +47,36 @@ class ReferenceDataProcessor implements ItemProcessorInterface
                 continue;
             }
 
-            $value = $this->propertyAccessor->getValue($item, $property->getName());
-            $normalizedData[$property->getName()] = $this->normalizer->normalize($value, 'flat');
+            $value = $this->normalizer
+                ->normalize($this->propertyAccessor->getValue($item, $property->getName()), 'flat');
+
+            if (is_array($value)) {
+                $normalizedData = array_merge($normalizedData, $this->normalizeArray($value));
+            } else {
+                $normalizedData[$property->getName()] = $value;
+            }
         }
 
         return $normalizedData;
+    }
+
+    /**
+     * @param array $values
+     * @return array
+     */
+    protected function normalizeArray(array $values): array
+    {
+        $returnValue = [];
+
+        foreach ($values as $key => $value) {
+            if (is_array($value)) {
+                $returnValue = array_merge($returnValue, $this->normalizeArray($value));
+            } else {
+                $returnValue[$key] = $value;
+            }
+        }
+
+        return $returnValue;
     }
 
     /**

@@ -28,6 +28,7 @@ services:
             - '@pim_custom_entity.updater.custom_entity'
             - '@validator'
             - '@akeneo_storage_utils.doctrine.object_detacher'
+            - '@pim_catalog.repository.locale'
 
     pim_custom_entity.processor.normalization.reference_data:
         class: '%pim_custom_entity.processor.normalization.reference_data.class%'

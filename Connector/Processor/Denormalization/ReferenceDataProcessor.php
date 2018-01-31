@@ -10,6 +10,7 @@ use Akeneo\Component\Batch\Step\StepExecutionAwareInterface;
 use Akeneo\Component\StorageUtils\Detacher\ObjectDetacherInterface;
 use Akeneo\Component\StorageUtils\Updater\ObjectUpdaterInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Pim\Bundle\CatalogBundle\Doctrine\ORM\Repository\LocaleRepository;
 use Pim\Bundle\CustomEntityBundle\Configuration\Registry;
 use Pim\Bundle\CustomEntityBundle\Entity\Repository\CustomEntityRepository;
 use Pim\Component\Connector\Exception\InvalidItemFromViolationsException;
@@ -44,25 +45,32 @@ class ReferenceDataProcessor implements ItemProcessorInterface, StepExecutionAwa
     /** @var StepExecution */
     protected $stepExecution;
 
+    /** @var LocaleRepository */
+    protected $localeRepository;
+
     /**
+     * ReferenceDataProcessor constructor.
      * @param Registry $confRegistry
      * @param EntityManagerInterface $em
      * @param ObjectUpdaterInterface $updater
      * @param ValidatorInterface $validator
      * @param ObjectDetacherInterface $detacher
+     * @param LocaleRepository $localeRepository
      */
     public function __construct(
         Registry $confRegistry,
         EntityManagerInterface $em,
         ObjectUpdaterInterface $updater,
         ValidatorInterface $validator,
-        ObjectDetacherInterface $detacher
+        ObjectDetacherInterface $detacher,
+        LocaleRepository $localeRepository
     ) {
-        $this->confRegistry = $confRegistry;
-        $this->em           = $em;
-        $this->updater      = $updater;
-        $this->validator    = $validator;
-        $this->detacher     = $detacher;
+        $this->confRegistry     = $confRegistry;
+        $this->em               = $em;
+        $this->updater          = $updater;
+        $this->validator        = $validator;
+        $this->detacher         = $detacher;
+        $this->localeRepository = $localeRepository;
     }
 
     /**
@@ -75,6 +83,11 @@ class ReferenceDataProcessor implements ItemProcessorInterface, StepExecutionAwa
         }
 
         $entity = $this->findOrCreateObject($item);
+
+        if ($entity instanceof \Pim\Bundle\CustomEntityBundle\Entity\AbstractTranslatableCustomEntity) {
+            $item = $this->denormalizeTranslations($item);
+        }
+
         try {
             $this->updater->update($entity, $item);
         } catch (\Exception $e) {
@@ -88,6 +101,33 @@ class ReferenceDataProcessor implements ItemProcessorInterface, StepExecutionAwa
         }
 
         return $entity;
+    }
+
+    /**
+     * @param array $item
+     * @return array
+     */
+    protected function denormalizeTranslations(array $item):array
+    {
+        $activatedLocales = $this->localeRepository->getActivatedLocaleCodes();
+
+        foreach ($item as $key => $value) {
+            foreach ($activatedLocales as $localeCode) {
+                if (preg_match('/.*-(' . preg_quote($localeCode) . ')$/', $key, $match) === 1) {
+                    $attributeCode = str_replace('-' . $localeCode, '', $key);
+
+                    $item[$attributeCode] = $item[$attributeCode] ?? [];
+
+                    if (!empty($value)) {
+                        $item[$attributeCode][$localeCode] = $value;
+                    }
+
+                    unset($item[$key]);
+                }
+            }
+        }
+
+        return $item;
     }
 
     /**
