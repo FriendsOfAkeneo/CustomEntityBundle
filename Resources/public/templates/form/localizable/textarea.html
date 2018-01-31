@@ -1,0 +1,40 @@
+<% _.each(locales, function (locale) { %>
+    <% if (currentLocaleCode === locale.code) { %>
+        <div class="AknFieldContainer">
+            <div class="AknFieldContainer-header">
+                <label class="AknFieldContainer-label" for="<%- fieldName %><%- locale.code %>">
+                    <%= label %>
+                </label>
+                <% var langCode = locale.code.split('_')[1].toLowerCase() %>
+                <span class="AknFieldContainer-fieldInfo field-info">
+                    <span class="field-context">
+                        <span>
+                            <span class="flag-language">
+                                <i class="flag flag-<%- langCode %>"></i>
+                                <span class="language"><%- langCode %></span>
+                            </span>
+                        </span>
+                    </span>
+                </span>
+            </div>
+            <div class="AknFieldContainer-inputContainer field-input">
+                <div class="AknTextareaField-layer AknTextareaField-layer--first"></div>
+                <div class="AknTextareaField-layer AknTextareaField-layer--second"></div>
+                <textarea id="<%- fieldName %><%- locale.code %>"
+                       class="AknTextareaField AknTextareaField--localizable label-field"
+                       type="text"
+                       data-locale="<%- locale.code %>"
+                       <%- isReadOnly ? 'readonly disabled' : '' %>
+                ><%- model[fieldName][locale.code] %></textarea>
+            </div>
+            <% if (errors[locale.code]) { %>
+                <div class="AknFieldContainer-footer">
+                    <span class="validation-error">
+                        <i class="icon-warning-sign"></i>
+                        <span class="error-message"><%- errors[locale.code].message %></span>
+                    </span>
+                </div>
+            <% } %>
+        </div>
+    <% } %>
+<% }) %>
