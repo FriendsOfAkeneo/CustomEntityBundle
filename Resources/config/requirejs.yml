@@ -14,7 +14,6 @@ config:
         custom_entity/form/localizable/switcher: pimcustomentity/js/form/localizable/switcher
         custom_entity/form/localizable/text: pimcustomentity/js/form/localizable/text
         custom_entity/form/localizable/textarea: pimcustomentity/js/form/localizable/textarea
-        custom_entity/template/localizable/switcher: pimcustomentity/templates/form/localizable/switcher.html
         custom_entity/template/localizable/text: pimcustomentity/templates/form/localizable/text.html
         custom_entity/template/localizable/textarea: pimcustomentity/templates/form/localizable/textarea.html
 
