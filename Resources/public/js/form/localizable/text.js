@@ -5,7 +5,8 @@ define([
     'underscore',
     'jquery',
     'pim/user-context',
-], function (Translation, template, BaseForm, _, $, UserContext) {
+    'oro/translator',
+], function (Translation, template, BaseForm, _, $, UserContext, __) {
     "use strict";
 
     return Translation.extend({
@@ -59,7 +60,7 @@ define([
                 locales: this.locales,
                 currentLocaleCode: this.localeCode,
                 errors: this.validationErrors,
-                label: this.config.label,
+                label: __(this.config.label),
                 fieldName: this.config.fieldName,
                 isReadOnly: this.isReadOnly()
             }));
