@@ -12,6 +12,11 @@ config:
         custom_entity/controller/edit: pimcustomentity/js/controller/custom_entity-edit
         custom_entity/fetcher: pimcustomentity/js/fetcher/custom_entity-fetcher
         custom_entity/remover/reference-data: pimcustomentity/js/remover/reference-data-remover
+        custom_entity/form/localizable/switcher: pimcustomentity/js/form/localizable/switcher
+        custom_entity/form/localizable/text: pimcustomentity/js/form/localizable/text
+        custom_entity/form/localizable/textarea: pimcustomentity/js/form/localizable/textarea
+        custom_entity/template/localizable/text: pimcustomentity/templates/form/localizable/text.html
+        custom_entity/template/localizable/textarea: pimcustomentity/templates/form/localizable/textarea.html
 
     config:
         pim/fetcher-registry:
