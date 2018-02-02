@@ -81,7 +81,7 @@ services:
             - '@pim_custom_entity.writer.database.custom_entity'
 
     pim_custom_entity.step.csv_reference_data_export:
-        class: '%pim_connector.Step.item_step.class%'
+        class: '%pim_connector.step.item_step.class%'
         arguments:
             - '%pim_connector.job.export_type%'
             - '@event_dispatcher'

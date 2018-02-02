@@ -32,8 +32,7 @@ services:
     pim_custom_entity.processor.normalization.reference_data:
         class: '%pim_custom_entity.processor.normalization.reference_data.class%'
         arguments:
-            - '@property_accessor'
-            - '@pim_serializer'
+            - '@pim_custom_entity.normalizer.flat.reference_data'
 
     # Writers
     pim_custom_entity.writer.database.custom_entity:

@@ -1,0 +1,14 @@
+parameters:
+    pim_custom_entity.metadata.class_metadata_registry.class: Pim\Bundle\CustomEntityBundle\Metadata\ClassMetadataRegistry
+    pim_custom_entity.metadata.target_entity_resolver.class: Pim\Bundle\CustomEntityBundle\Metadata\TargetEntityResolver
+
+services:
+    pim_custom_entity.metadata.class_metadata_registry:
+        class: '%pim_custom_entity.metadata.class_metadata_registry.class%'
+        arguments:
+            - '@property_accessor'
+
+    pim_custom_entity.metadata.target_entity_resolver:
+        class: '%pim_custom_entity.metadata.target_entity_resolver.class%'
+        arguments:
+            - '@doctrine.orm.entity_manager'
