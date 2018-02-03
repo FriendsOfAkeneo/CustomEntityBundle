@@ -1,6 +1,7 @@
 parameters:
     pim_custom_entity.event_listener.action.security.class:           Pim\Bundle\CustomEntityBundle\EventListener\Action\SecurityListener
     pim_custom_entity.event_listener.action.form_configuration.class: Pim\Bundle\CustomEntityBundle\EventListener\Action\FormConfigurationListener
+    pim_custom_entity.event_subscriber.check_reference_data_on_removal.class: Pim\Bundle\CustomEntityBundle\Event\Subscriber\CheckReferenceDataOnRemoval
 
 services:
     pim_custom_entity.event_listener.action.security:
@@ -13,5 +14,13 @@ services:
 
     pim_custom_entity.event_listener.action.form_configuration:
         class: '%pim_custom_entity.event_listener.action.form_configuration.class%'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    pim_custom_entity.event_subscriber.check_reference_data_on_removal:
+        class: '%pim_custom_entity.event_subscriber.check_reference_data_on_removal.class%'
+        arguments:
+            - '@pim_catalog.query.product_query_builder_factory'
+            - '@pim_custom_entity.repository.attribute'
         tags:
             - { name: kernel.event_subscriber }

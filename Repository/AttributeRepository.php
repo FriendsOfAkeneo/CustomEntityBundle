@@ -5,7 +5,9 @@ namespace Pim\Bundle\CustomEntityBundle\Repository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Pim\Bundle\CatalogBundle\Entity\Attribute;
+use Pim\Bundle\CustomEntityBundle\Entity\AbstractCustomEntity;
 use Pim\Component\Catalog\AttributeTypes;
+use Pim\Component\ReferenceData\Model\ReferenceDataInterface;
 
 /**
  * Repository for attribute entity
@@ -18,38 +20,41 @@ class AttributeRepository extends EntityRepository
 {
     /**
      * @param EntityManagerInterface $em
+     * @param string $attributeClass
      */
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em, $attributeClass)
     {
-        $metadataClass = $em->getClassMetadata(Attribute::class);
+        $metadataClass = $em->getClassMetadata($attributeClass);
+
         parent::__construct($em, $metadataClass);
     }
 
     /**
-     * Find attributes codes linked to custom entity
+     * Finds attributes codes linked to a reference data class
      *
      * @return array
+     *
+     * We cannot filter on reference data name as it is stored in an array.
      */
-    public function findReferenceDataAttributeCodes()
+    public function findByReferenceData(AbstractCustomEntity $referenceData)
     {
-        $codes = $this
-            ->createQueryBuilder('a')
-            ->select('a.code')
-            ->andWhere('a.type IN (:reference_data_simple_select, :reference_data_multi_select)')
-            ->setParameters(
-                [
-                    ':reference_data_simple_select' => AttributeTypes::REFERENCE_DATA_SIMPLE_SELECT,
-                    ':reference_data_multi_select'  => AttributeTypes::REFERENCE_DATA_MULTI_SELECT,
-                ]
-            )
-            ->getQuery()
-            ->getArrayResult();
+        $refDataName = $referenceData->getCustomEntityName();
 
-        return array_map(
-            function ($data) {
-                return $data['code'];
-            },
-            $codes
-        );
+        $qb = $this->createQueryBuilder('a');
+        $qb
+            ->andWhere($qb->expr()->in('a.type', ':attribute_types'))
+            ->setParameter(
+                'attribute_types',
+                [AttributeTypes::REFERENCE_DATA_SIMPLE_SELECT, AttributeTypes::REFERENCE_DATA_MULTI_SELECT]
+            );
+        $attributes = $qb->getQuery()->execute();
+
+        foreach ($attributes as $key => $attribute) {
+            if ($refDataName !== $attribute->getReferenceDataName()) {
+                unset($attributes[$key]);
+            }
+        }
+
+        return $attributes;
     }
 }
