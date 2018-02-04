@@ -1,7 +1,7 @@
 parameters:
     pim_custom_entity.event_listener.action.security.class:           Pim\Bundle\CustomEntityBundle\EventListener\Action\SecurityListener
     pim_custom_entity.event_listener.action.form_configuration.class: Pim\Bundle\CustomEntityBundle\EventListener\Action\FormConfigurationListener
-    pim_custom_entity.event_subscriber.check_reference_data_on_removal.class: Pim\Bundle\CustomEntityBundle\Event\Subscriber\CheckReferenceDataOnRemoval
+    pim_custom_entity.event_subscriber.check_reference_data_on_removal.class: Pim\Bundle\CustomEntityBundle\Event\Subscriber\CheckReferenceDataOnRemovalSubscriber
 
 services:
     pim_custom_entity.event_listener.action.security:

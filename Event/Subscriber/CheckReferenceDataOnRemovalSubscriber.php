@@ -11,11 +11,12 @@ use Pim\Component\Catalog\Query\ProductQueryBuilderFactoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
+ * Checks if a reference data could be remove or not
  *
  * @author    Romain Monceau <romain@akeneo.com>
  * @copyright 2018 Akeneo SAS (http://www.akeneo.com)
  */
-class CheckReferenceDataOnRemoval implements EventSubscriberInterface
+class CheckReferenceDataOnRemovalSubscriber implements EventSubscriberInterface
 {
     /** @var AttributeRepository */
     protected $attributeRepository;

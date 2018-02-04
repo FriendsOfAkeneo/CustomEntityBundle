@@ -1,7 +1,5 @@
 parameters:
     pim_custom_entity.updater.custom_entity.class: Pim\Bundle\CustomEntityBundle\Updater\Updater
-    pim_custom_entity.remover.custom_entity.class: Pim\Bundle\CustomEntityBundle\Remover\CustomEntityRemover
-    pim_custom_entity.checker.product_link.class: Pim\Bundle\CustomEntityBundle\Checker\ProductLinkChecker
 
 services:
     pim_custom_entity.saver.custom_entity:
@@ -26,10 +24,3 @@ services:
             - '@doctrine.orm.entity_manager'
             - '@akeneo_file_storage.file_storage.file.file_storer'
             - '%tmp_storage_dir%'
-
-    pim_custom_entity.checker.product_link:
-        class: '%pim_custom_entity.checker.product_link.class%'
-        arguments:
-            - '@doctrine.orm.entity_manager'
-            - '@pim_catalog.query.product_query_builder_factory'
-            - '@pim_custom_entity.repository.attribute'
