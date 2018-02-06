@@ -4,14 +4,20 @@ namespace Pim\Bundle\CustomEntityBundle\Event\Subscriber;
 
 use Akeneo\Component\StorageUtils\Event\RemoveEvent;
 use Akeneo\Component\StorageUtils\StorageEvents;
+use Doctrine\ORM\EntityManagerInterface;
+use Pim\Bundle\CustomEntityBundle\Configuration\Registry;
+use Pim\Bundle\CustomEntityBundle\Entity\AbstractCustomEntity;
+use Pim\Bundle\CustomEntityBundle\Entity\Repository\AttributeRepository;
 use Pim\Bundle\CustomEntityBundle\Remover\NonRemovableEntityException;
-use Pim\Bundle\CustomEntityBundle\Repository\AttributeRepository;
+use Pim\Bundle\DataGridBundle\Datasource\ResultRecord\Orm\ObjectIdHydrator;
+use Pim\Bundle\DataGridBundle\Extension\MassAction\Event\MassActionEvent;
+use Pim\Bundle\DataGridBundle\Extension\MassAction\Event\MassActionEvents;
 use Pim\Component\Catalog\Query\Filter\Operators;
 use Pim\Component\Catalog\Query\ProductQueryBuilderFactoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * Checks if a reference data could be remove or not
+ * Checks if a reference data can be removed or not
  *
  * @author    Romain Monceau <romain@akeneo.com>
  * @copyright 2018 Akeneo SAS (http://www.akeneo.com)
@@ -24,16 +30,28 @@ class CheckReferenceDataOnRemovalSubscriber implements EventSubscriberInterface
     /** @var ProductQueryBuilderFactoryInterface */
     protected $pqbFactory;
 
+    /** @var Registry */
+    protected $configRegistry;
+
+    /** @var EntityManagerInterface */
+    protected $em;
+
     /**
      * @param AttributeRepository $attributeRepository
      * @param ProductQueryBuilderFactoryInterface $pqbFactory
+     * @param Registry $configRegistry
+     * @param EntityManagerInterface $em
      */
     public function __construct(
         AttributeRepository $attributeRepository,
-        ProductQueryBuilderFactoryInterface $pqbFactory
+        ProductQueryBuilderFactoryInterface $pqbFactory,
+        Registry $configRegistry,
+        EntityManagerInterface $em
     ) {
         $this->attributeRepository = $attributeRepository;
         $this->pqbFactory = $pqbFactory;
+        $this->configRegistry = $configRegistry;
+        $this->em = $em;
     }
 
     /**
@@ -41,24 +59,80 @@ class CheckReferenceDataOnRemovalSubscriber implements EventSubscriberInterface
      */
     public static function getSubscribedEvents()
     {
-        return [StorageEvents::PRE_REMOVE => 'checkReferenceDataUsage'];
+        return [
+            StorageEvents::PRE_REMOVE => 'checkReferenceDataUsage',
+            MassActionEvents::MASS_DELETE_PRE_HANDLER => 'checkReferenceDataIdsUsage'
+        ];
+    }
+
+    /**
+     * Checks if the reference data ids are used in a product
+     *
+     * @param MassActionEvent $event
+     *
+     * @return null
+     */
+    public function checkReferenceDataIdsUsage(MassActionEvent $event)
+    {
+        $referenceDataName = $event->getDatagrid()->getName();
+        if (!$this->configRegistry->has($referenceDataName)) {
+            return;
+        }
+        $entityClass = $this->configRegistry->get($referenceDataName)->getEntityClass();
+
+        $datasource = $event->getDatagrid()->getDatasource();
+        $datasource->setHydrator(new ObjectIdHydrator());
+        $referenceDataIds = $datasource->getResults();
+
+        $attributes = $this->attributeRepository->getAttributesByReferenceDataName($referenceDataName);
+
+        $referenceDataCodes = $this->em->getRepository($entityClass)->findReferenceDataCodesFromIds($referenceDataIds);
+        foreach ($referenceDataCodes as $referenceDataCode) {
+            $this->checkProductLink($attributes, $referenceDataCode);
+        }
     }
 
     /**
      * Checks if the reference data is used in a product
      *
      * @param RemoveEvent $event
+     *
+     * @return null
      */
     public function checkReferenceDataUsage(RemoveEvent $event)
     {
         $referenceData = $event->getSubject();
+        if (!$referenceData instanceof AbstractCustomEntity) {
+            return;
+        }
 
-        $attributes = $this->attributeRepository->findByReferenceData($referenceData);
+        $attributes = $this->attributeRepository->getAttributesByReferenceDataName($referenceData->getCustomEntityName());
+        $this->checkProductLink($attributes, $referenceData->getCode());
+    }
+
+    /**
+     * Checks if a reference data is linked to a product
+     *
+     * @param array $attributes
+     * @param string $referenceDataCode
+     *
+     * @throws NonRemovableEntityException
+     */
+    protected function checkProductLink($attributes, $referenceDataCode)
+    {
         foreach ($attributes as $attribute) {
             $pqb = $this->pqbFactory->create();
-            $pqb->addFilter($attribute->getCode(), Operators::IN_LIST, [$referenceData->getCode()]);
+            $pqb->addFilter($attribute->getCode(), Operators::IN_LIST, [$referenceDataCode]);
+
             if (0 !== $pqb->execute()->count()) {
-                throw new NonRemovableEntityException('Reference data "%s" is linked to at least one product');
+                throw new NonRemovableEntityException(
+                    sprintf(
+                        'Reference data "%s" cannot be removed. It is linked to %s product(s) with the attribute "%s"',
+                        $referenceDataCode,
+                        $pqb->execute()->count(),
+                        $attribute->getCode()
+                    )
+                );
             }
         }
     }

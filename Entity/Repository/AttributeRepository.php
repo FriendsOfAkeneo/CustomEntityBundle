@@ -1,6 +1,6 @@
 <?php
 
-namespace Pim\Bundle\CustomEntityBundle\Repository;
+namespace Pim\Bundle\CustomEntityBundle\Entity\Repository;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
@@ -31,15 +31,14 @@ class AttributeRepository extends EntityRepository
 
     /**
      * Finds attributes codes linked to a reference data class
+     * We cannot filter on reference data name as it is stored in an array.
+     *
+     * @param string $referenceDataName
      *
      * @return array
-     *
-     * We cannot filter on reference data name as it is stored in an array.
      */
-    public function findByReferenceData(AbstractCustomEntity $referenceData)
+    public function getAttributesByReferenceDataName($referenceDataName)
     {
-        $refDataName = $referenceData->getCustomEntityName();
-
         $qb = $this->createQueryBuilder('a');
         $qb
             ->andWhere($qb->expr()->in('a.type', ':attribute_types'))
@@ -50,7 +49,7 @@ class AttributeRepository extends EntityRepository
         $attributes = $qb->getQuery()->execute();
 
         foreach ($attributes as $key => $attribute) {
-            if ($refDataName !== $attribute->getReferenceDataName()) {
+            if ($referenceDataName !== $attribute->getReferenceDataName()) {
                 unset($attributes[$key]);
             }
         }
