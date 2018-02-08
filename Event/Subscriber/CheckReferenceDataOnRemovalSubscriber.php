@@ -85,11 +85,9 @@ class CheckReferenceDataOnRemovalSubscriber implements EventSubscriberInterface
         $referenceDataIds = $datasource->getResults();
 
         $attributes = $this->attributeRepository->getAttributesByReferenceDataName($referenceDataName);
-
         $referenceDataCodes = $this->em->getRepository($entityClass)->findReferenceDataCodesFromIds($referenceDataIds);
-        foreach ($referenceDataCodes as $referenceDataCode) {
-            $this->checkProductLink($attributes, $referenceDataCode);
-        }
+
+        $this->checkProductLink($attributes, $referenceDataCodes);
     }
 
     /**
@@ -106,30 +104,31 @@ class CheckReferenceDataOnRemovalSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $attributes = $this->attributeRepository->getAttributesByReferenceDataName($referenceData->getCustomEntityName());
-        $this->checkProductLink($attributes, $referenceData->getCode());
+        $referenceDataName = $referenceData->getCustomEntityName();
+        $attributes = $this->attributeRepository->getAttributesByReferenceDataName($referenceDataName);
+        $this->checkProductLink($attributes, [$referenceData->getCode()]);
     }
 
     /**
      * Checks if a reference data is linked to a product
      *
      * @param array $attributes
-     * @param string $referenceDataCode
+     * @param string[] $referenceDataCode
      *
      * @throws NonRemovableEntityException
      */
-    protected function checkProductLink($attributes, $referenceDataCode)
+    protected function checkProductLink($attributes, array $referenceDataCode)
     {
         foreach ($attributes as $attribute) {
             $pqb = $this->pqbFactory->create();
-            $pqb->addFilter($attribute->getCode(), Operators::IN_LIST, [$referenceDataCode]);
+            $pqb->addFilter($attribute->getCode(), Operators::IN_LIST, $referenceDataCode);
+            $count = $pqb->execute()->count();
 
-            if (0 !== $pqb->execute()->count()) {
+            if (0 !== $count) {
                 throw new NonRemovableEntityException(
                     sprintf(
-                        'Reference data "%s" cannot be removed. It is linked to %s product(s) with the attribute "%s"',
-                        $referenceDataCode,
-                        $pqb->execute()->count(),
+                        'Reference data cannot be removed. It is linked to %s product(s) with the attribute "%s"',
+                        $count,
                         $attribute->getCode()
                     )
                 );
