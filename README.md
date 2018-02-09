@@ -11,6 +11,7 @@ For more information, please see http://docs.akeneo.com/
 
 | CustomEntityBundle   | Akeneo PIM Community Edition |
 |:--------------------:|:----------------------------:|
+| v2.2.*               | v2.1.*                       |
 | v2.1.*               | v2.1.*                       |
 | v2.0.*               | v2.0.*                       |
 | v1.10.*              | v1.7.*                       |
@@ -22,7 +23,7 @@ For more information, please see http://docs.akeneo.com/
 You can install this bundle with composer (see requirements section):
 
 ```bash
-    php composer.phar require "akeneo-labs/custom-entity-bundle":"2.1.*"
+    php composer.phar require "akeneo-labs/custom-entity-bundle":"2.2.*"
 ```
 
 Then add the following lines **at the end** of your app/config/routing.yml :
