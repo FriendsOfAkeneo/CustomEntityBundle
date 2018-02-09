@@ -209,6 +209,24 @@ class CustomEntityRepository extends ReferenceDataRepository implements Pageable
     }
 
     /**
+     * @param array $referenceDataIds
+     *
+     * @return array
+     */
+    public function findReferenceDataCodesFromIds(array $referenceDataIds)
+    {
+        $qb = $this->createQueryBuilder('rd');
+        $qb
+            ->select('rd.code')
+            ->andWhere($qb->expr()->in('rd', ':ids'))
+            ->setParameter('ids', $referenceDataIds);
+
+        return array_map(function ($result) {
+            return $result['code'];
+        }, $qb->getQuery()->getArrayResult());
+    }
+
+    /**
      * Adds select in the findBySearch method
      * Used in products datagrid filtering and product edit form
      * This method is used by findBySearch method and it's not recommended to call it from elsewhere
