@@ -1,3 +1,8 @@
+# 1.10.7
+
+## Bug fixes
+Fix mass deletion reference data
+
 # 1.10.5
 
 ## Bug fixes
