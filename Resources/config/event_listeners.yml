@@ -21,7 +21,7 @@ services:
         class: '%pim_custom_entity.event_subscriber.check_reference_data_on_removal.class%'
         arguments:
             - '@pim_custom_entity.repository.attribute'
-            - '@pim_enrich.query.product_and_product_model_query_builder_factory'
+            - '@pim_catalog.query.product_and_product_model_query_builder_factory'
             - '@pim_custom_entity.configuration.registry'
             - '@doctrine.orm.entity_manager'
         tags:
