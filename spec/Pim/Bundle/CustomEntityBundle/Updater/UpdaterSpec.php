@@ -54,7 +54,7 @@ class UpdaterSpec extends ObjectBehavior
             ],
             'bar' => [
                 'targetEntity' => 'Foo\Bar\Baz',
-            ]
+            ],
         ]);
         $classMetadata->isCollectionValuedAssociation('foo')->willReturn(false);
         $classMetadata->isCollectionValuedAssociation('bar')->willReturn(true);
@@ -68,7 +68,7 @@ class UpdaterSpec extends ObjectBehavior
 
         $this->update($referenceData, [
             'foo' => 'bar',
-            'bar' => ['bar', 'baz']
+            'bar' => ['bar', 'baz'],
         ]);
     }
 
@@ -76,8 +76,7 @@ class UpdaterSpec extends ObjectBehavior
         $propertyAccessor,
         $em,
         ReferenceDataInterface $referenceData,
-        ClassMetadata $classMetadata,
-        EntityRepository $associationRepository
+        ClassMetadata $classMetadata
     ) {
         $em->getClassMetadata(Argument::any())->willReturn($classMetadata);
         $classMetadata->getAssociationMappings()->willReturn(
@@ -88,10 +87,6 @@ class UpdaterSpec extends ObjectBehavior
             ]
         );
         $classMetadata->isCollectionValuedAssociation('foo')->willReturn(false);
-
-        $em->getRepository('Foo\Bar\Baz')->willReturn($associationRepository);
-        $associationRepository->findOneBy(['code' => null])->willReturn(null);
-
         $propertyAccessor->setValue($referenceData, 'foo', null)->shouldBeCalled();
 
         $this->shouldNotThrow(\Exception::class)->during(
