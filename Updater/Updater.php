@@ -166,7 +166,7 @@ class Updater implements ObjectUpdaterInterface
             $associatedEntity = $associationRepo->findOneBy(['code' => $value]);
         }
 
-        if (null === $associatedEntity) {
+        if (null === $associatedEntity && null !== $value) {
             throw new EntityNotFoundException(
                 sprintf('Associated entity "%s" with code "%" not found', $associatedEntity['targetEntity'], $value)
             );
