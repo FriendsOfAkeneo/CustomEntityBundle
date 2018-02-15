@@ -1,0 +1,4 @@
+suites:
+    CustomEntityBundle:
+        namespace: Pim\Bundle\CustomEntityBundle
+        src_path: .
