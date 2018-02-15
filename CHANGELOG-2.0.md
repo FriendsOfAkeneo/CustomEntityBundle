@@ -1,3 +1,8 @@
+# 2.0.9
+
+## Improvements
+- GITHUB-138: NoSuchPropertyException when saving a form the 2nd time
+
 # 2.0.8
 
 ## Improvements

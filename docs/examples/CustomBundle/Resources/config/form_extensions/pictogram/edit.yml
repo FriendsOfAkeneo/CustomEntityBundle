@@ -1,6 +1,6 @@
 extensions:
     pim-pictogram-edit-form:
-        module: pim/form/common/edit-form
+        module: custom_entity/form/common/edit-form
 
     pim-pictogram-edit-form-breadcrumbs:
         module: pim/common/breadcrumbs
@@ -62,9 +62,9 @@ extensions:
         targetZone: buttons
         position: 0
         config:
-            updateSuccessMessage: pim_enrich.entity.attribute.info.update_successful
-            updateFailureMessage: pim_enrich.entity.attribute.info.update_failed
-            notReadyMessage: pim_enrich.entity.attribute.info.field_not_ready
+            updateSuccessMessage: acme_custom.pictogram.info.update_successful
+            updateFailureMessage: acme_custom.pictogram.info.update_failed
+            notReadyMessage: acme_custom.pictogram.info.field_not_ready
             url: pim_customentity_rest_edit
             route_params:
                 customEntityName: pictogram
