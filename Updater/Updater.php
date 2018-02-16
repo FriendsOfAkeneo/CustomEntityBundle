@@ -126,6 +126,12 @@ class Updater implements ObjectUpdaterInterface
      */
     protected function updateAssociatedEntity(ReferenceDataInterface $referenceData, $propertyPath, $value): void
     {
+        if (null === $value) {
+            $this->propertyAccessor->setValue($referenceData, $propertyPath, null);
+
+            return;
+        }
+
         $associationMapping = $this->getAssociationMapping($referenceData, $propertyPath);
         $associationRepo = $this->em->getRepository($associationMapping['targetEntity']);
         $classMetadata = $this->getClassMetadata($referenceData);

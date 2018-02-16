@@ -2,6 +2,7 @@
 
 ## Improvements
 - GITHUB-138: NoSuchPropertyException when saving a form the 2nd time
+- GITHUB-158: Allow removing an association between two custom entities
 
 # 2.0.8
 
