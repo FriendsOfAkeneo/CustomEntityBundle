@@ -29,8 +29,8 @@ class Updater implements ObjectUpdaterInterface
     /** @var EntityManagerInterface */
     protected $em;
 
-    /** @var ClassMetadataInfo */
-    protected $classMetadata;
+    /** @var ClassMetadataInfo[] */
+    protected $classMetadata = [];
 
     /**
      * @param PropertyAccessorInterface $propertyAccessor
@@ -145,11 +145,12 @@ class Updater implements ObjectUpdaterInterface
      */
     protected function getClassMetadata(ReferenceDataInterface $referenceData)
     {
-        if (null === $this->classMetadata) {
-            $this->classMetadata = $this->em->getClassMetadata(ClassUtils::getClass($referenceData));
+        $entityName = ClassUtils::getClass($referenceData);
+        if (!isset($this->classMetadata[$entityName]) || null === $this->classMetadata[$entityName]) {
+            $this->classMetadata[$entityName] = $this->em->getClassMetadata($entityName);
         }
 
-        return $this->classMetadata;
+        return $this->classMetadata[$entityName];
     }
 
     /**
