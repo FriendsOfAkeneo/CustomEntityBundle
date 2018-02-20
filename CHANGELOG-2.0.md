@@ -3,6 +3,7 @@
 ## Improvements
 - GITHUB-138: NoSuchPropertyException when saving a form the 2nd time
 - GITHUB-158: Allow removing an association between two custom entities
+- GITHUB-126: Fix Updater when a CustomEntity has translations and is linked to another custom entity
 
 # 2.0.8
 
