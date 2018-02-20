@@ -146,7 +146,7 @@ class Updater implements ObjectUpdaterInterface
     protected function getClassMetadata(ReferenceDataInterface $referenceData)
     {
         $entityName = ClassUtils::getClass($referenceData);
-        if (!isset($this->classMetadata[$entityName]) || null === $this->classMetadata[$entityName]) {
+        if (!isset($this->classMetadata[$entityName])) {
             $this->classMetadata[$entityName] = $this->em->getClassMetadata($entityName);
         }
 
