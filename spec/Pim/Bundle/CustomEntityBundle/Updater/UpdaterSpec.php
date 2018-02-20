@@ -3,11 +3,13 @@
 namespace spec\Pim\Bundle\CustomEntityBundle\Updater;
 
 use Akeneo\Component\FileStorage\File\FileStorerInterface;
+use Akeneo\Component\Localization\Model\AbstractTranslation;
 use Akeneo\Component\StorageUtils\Updater\ObjectUpdaterInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use PhpSpec\ObjectBehavior;
+use Pim\Bundle\CustomEntityBundle\Entity\AbstractTranslatableCustomEntity;
 use Pim\Bundle\CustomEntityBundle\Updater\Updater;
 use Pim\Component\Catalog\Repository\LocaleRepositoryInterface;
 use Pim\Component\ReferenceData\Model\ReferenceDataInterface;
@@ -97,4 +99,58 @@ class UpdaterSpec extends ObjectBehavior
             ]
         );
     }
+
+    function it_updates_translations_and_associated_entities_at_the_same_time(
+        $propertyAccessor,
+        $em,
+        $localeRepository,
+        AbstractTranslatableCustomEntity $referenceData,
+        LabelTranslation $translationEn,
+        LabelTranslation $translationFr,
+        ClassMetadata $classMetadata,
+        EntityRepository $associationRepository,
+        \stdClass $associatedEntity
+    ) {
+        $data = [
+            'foo'    => 'related_entity_code',
+            'labels' => [
+                'en_US' => 'English label',
+                'fr_FR' => 'label français',
+            ],
+        ];
+
+        $localeRepository->getActivatedLocaleCodes()->willReturn(['en_US', 'fr_FR']);
+        $em->getClassMetadata(Argument::any())->willReturn($classMetadata);
+        $classMetadata->getAssociationMappings()->willReturn(
+            [
+                'foo'          => [
+                    'targetEntity' => 'Another\Custom\Entity',
+                ],
+                'translations' => [
+                    'targetEntity' => 'Foo\Bar\BazTranslation',
+                ],
+            ]
+        );
+        $classMetadata->isCollectionValuedAssociation('foo')->willReturn(false);
+
+        $em->getRepository('Another\Custom\Entity')->willReturn($associationRepository);
+        $associationRepository->findOneBy(['code' => 'related_entity_code'])->willReturn($associatedEntity);
+
+        $referenceData->getTranslation('en_US')->willReturn($translationEn);
+        $referenceData->getTranslation('fr_FR')->willReturn($translationFr);
+
+        $translationEn->setLabel('English label')->shouldBeCalled();
+        $translationFr->setLabel('label français')->shouldBeCalled();
+
+        $propertyAccessor->setValue($referenceData, 'foo', $associatedEntity)->shouldBeCalled();
+
+        $this->update($referenceData, $data);
+    }
+}
+
+abstract class Labeltranslation extends AbstractTranslation
+{
+    abstract public function getLabel();
+
+    abstract public function setLabel($label);
 }
