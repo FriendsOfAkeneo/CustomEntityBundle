@@ -102,8 +102,8 @@ class Updater implements ObjectUpdaterInterface
             return;
         }
 
-        if ($this->isAssociation($referenceData, 'translations')
-            || $this->isAssociation($referenceData, 'labels')) {
+        if (($this->isAssociation($referenceData, 'translations') || $this->isAssociation($referenceData, 'labels'))
+            && in_array($propertyPath, ['labels', 'translations'])) {
             $this->updateTranslations($referenceData, $propertyPath, $value);
 
             return;
