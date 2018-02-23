@@ -2,10 +2,7 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Tests\Jobs;
 
-use Acme\Bundle\CustomBundle\Entity\Fabric;
-use Acme\Bundle\CustomBundle\Entity\Brand;
 use Acme\Bundle\CustomBundle\Entity\Color;
-use Acme\Bundle\CustomBundle\Entity\Pictogram;
 use Akeneo\Bundle\BatchBundle\Command\BatchCommand;
 
 /**
