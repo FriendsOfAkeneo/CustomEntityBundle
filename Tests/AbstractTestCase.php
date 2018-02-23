@@ -5,6 +5,7 @@ namespace Pim\Bundle\CustomEntityBundle\Tests;
 use Akeneo\Bundle\BatchBundle\Command\BatchCommand;
 use Akeneo\Test\IntegrationTestsBundle\Configuration\CatalogInterface;
 use Akeneo\Test\IntegrationTestsBundle\Security\SystemUserAuthenticator;
+use Pim\Bundle\CustomEntityBundle\Manager\ManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -26,6 +27,9 @@ abstract class AbstractTestCase extends KernelTestCase
 
     /** @var EntityManagerInterface */
     protected $em;
+
+    /** @var ManagerInterface */
+    protected $manager;
 
     public function setUp()
     {
@@ -52,6 +56,7 @@ abstract class AbstractTestCase extends KernelTestCase
         $fixturesLoader->load();
 
         $this->em = $this->get('doctrine.orm.entity_manager');
+        $this->manager = $this->get('pim_custom_entity.manager');
     }
 
     /**
@@ -93,5 +98,38 @@ abstract class AbstractTestCase extends KernelTestCase
         $batch = $application->find('akeneo:batch:job');
 
         return $batch->run(new ArrayInput($input), new NullOutput());
+    }
+
+    /**
+     * @param string $refDataName Reference Data FQCN
+     * @param array $data
+     *
+     * @return object
+     */
+    protected function createReferenceData($refDataName, $data)
+    {
+        $refData = $this->manager->create($refDataName, $data);
+        $this->assertInstanceOf($refDataName, $refData);
+
+        $this->manager->save($refData);
+        $this->em->clear();
+
+        return $refData;
+    }
+
+    protected function activateLocales()
+    {
+        // activate locales fr_FR and de_DE
+        /** @var ChannelRepositoryInterface $channelRepo */
+        $channelRepo = $this->get('pim_catalog.repository.channel');
+        /** @var ChannelInterface $defaultScope */
+        $defaultScope = $channelRepo->findOneByIdentifier('ecommerce');
+        $locales = $defaultScope->getLocaleCodes();
+        foreach (func_get_args() as $localeName) {
+            $locales[] = $localeName;
+        }
+
+        $this->get('pim_catalog.updater.channel')->update($defaultScope, ['locales' => array_unique($locales)]);
+        $this->get('pim_catalog.saver.channel')->save($defaultScope);
     }
 }

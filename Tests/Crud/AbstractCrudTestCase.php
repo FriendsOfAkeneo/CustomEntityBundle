@@ -8,7 +8,11 @@ use Acme\Bundle\CustomBundle\Entity\Fabric;
 use Acme\Bundle\CustomBundle\Entity\Pictogram;
 use Pim\Bundle\CustomEntityBundle\Manager\ManagerInterface;
 use Pim\Bundle\CustomEntityBundle\Tests\AbstractTestCase;
+use Pim\Component\Catalog\AttributeTypes;
+use Pim\Component\Catalog\Builder\ProductBuilderInterface;
+use Pim\Component\Catalog\Model\AttributeInterface;
 use Pim\Component\Catalog\Model\ChannelInterface;
+use Pim\Component\Catalog\Model\ProductInterface;
 
 /**
  * @author    Mathias METAYER <mathias.metayer@akeneo.com>
@@ -17,70 +21,52 @@ use Pim\Component\Catalog\Model\ChannelInterface;
  */
 abstract class AbstractCrudTestCase extends AbstractTestCase
 {
-    /** @var ManagerInterface */
-    protected $manager;
+    /**
+     * @param string $code
+     * @param string $refDataName
+     * @param string $type
+     *
+     * @return AttributeInterface
+     */
+    protected function createRefDataAttribute(
+        $code,
+        $refDataName,
+        $type = AttributeTypes::REFERENCE_DATA_SIMPLE_SELECT
+    ): AttributeInterface {
+        $attribute = $this->get('pim_catalog.factory.attribute')->create();
 
-    public function setUp()
-    {
-        parent::setUp();
-        $this->manager = $this->get('pim_custom_entity.manager');
+        $data = [
+            'code' => $code,
+            'type' => $type,
+            'reference_data_name' => $refDataName,
+        ];
+        $this->get('pim_catalog.updater.attribute')->update($attribute, $data);
+        $this->get('pim_catalog.saver.attribute')->save($attribute);
+
+        return $attribute;
     }
 
     /**
-     * @param string $refDataName Reference Data FQCN
+     * @param string $identifier
+     * @param AttributeInterface[] $attributes
      * @param array $data
-     *
-     * @return object
      */
-    protected function createReferenceData($refDataName, $data)
+    protected function createProduct($identifier, $data): ProductInterface
     {
-        $refData = $this->manager->create($refDataName, $data);
-        $this->assertInstanceOf($refDataName, $refData);
+        /** @var ProductBuilderInterface $builder */
+        $builder = $this->get('pim_catalog.builder.product');
+        $attrRepo = $this->get('pim_catalog.repository.attribute');
 
-        $this->manager->save($refData);
-        $this->em->clear();
+        $product = $builder->createProduct($identifier);
 
-        return $refData;
-    }
-
-    protected function loadData()
-    {
-        $this->createReferenceData(Color::class, [
-            'code' => 'my_blue',
-            'name' => 'My blue',
-            'hex' => '#0007FF',
-            'red' => 0,
-            'green' => 7,
-            'blue' => 255,
-        ]);
-
-        $this->createReferenceData(Pictogram::class, [
-            'code' => 'my_picto',
-        ]);
-
-        $this->createReferenceData(Fabric::class, [
-            'code' => 'my_fabric',
-            'name' => 'My fabric',
-        ]);
-
-        $this->createReferenceData(Brand::class, [
-            'code' => 'my_brand',
-        ]);
-    }
-
-    protected function activateLocales()
-    {
-        // activate locales fr_FR and de_DE
-        /** @var ChannelRepositoryInterface $channelRepo */
-        $channelRepo = $this->get('pim_catalog.repository.channel');
-        /** @var ChannelInterface $defaultScope */
-        $defaultScope = $channelRepo->findOneByIdentifier('ecommerce');
-        $locales = $defaultScope->getLocaleCodes();
-        foreach (func_get_args() as $localeName) {
-            $locales[] = $localeName;
+        foreach ($data as $attrCode => $values) {
+            $attribute = $attrRepo->findOneByIdentifier($attrCode);
+            $builder->addAttribute($product, $attribute);
+            $builder->addOrReplaceValue($product, $attribute, null, null, $values);
         }
 
-        $this->get('pim_catalog.updater.channel')->update($defaultScope, ['locales' => array_unique($locales)]);
-        $this->get('pim_catalog.saver.channel')->save($defaultScope);
+        $this->get('pim_catalog.saver.product')->save($product);
+
+        return $product;
     }
 }

@@ -110,11 +110,12 @@ class UpdateTest extends AbstractCrudTestCase
         $myBrand = $this->em->getRepository($entityName)->findOneBy(['code' => 'my_brand']);
 
         $this->assertInstanceOf($entityName, $myBrand);
-        $this->assertNull($myBrand->getFabric());
+        $this->assertInstanceOf(Fabric::class, $myBrand->getFabric());
+        $this->assertEquals('my_fabric', $myBrand->getFabric()->getCode());
 
         $data = [
             'id'     => $myBrand->getId(),
-            'fabric' => 'my_fabric',
+            'fabric' => null,
         ];
 
         $this->manager->update($myBrand, $data);
@@ -123,22 +124,69 @@ class UpdateTest extends AbstractCrudTestCase
         $this->em->clear();
 
         $dbBrand = $this->manager->find($entityName, $myBrand->getId());
-        $this->assertInstanceOf(Fabric::class, $dbBrand->getFabric());
-
-        $this->assertEquals('my_fabric', $dbBrand->getFabric()->getCode());
-        $this->assertEquals('My fabric', $dbBrand->getFabric()->getName());
+        $this->assertNull($dbBrand->getFabric());
 
         $data = [
-            'id'     => $dbBrand->getId(),
-            'fabric' => null,
+            'id'     => $myBrand->getId(),
+            'fabric' => 'my_other_fabric',
         ];
 
         $this->manager->update($dbBrand, $data);
         $this->manager->save($dbBrand);
+        unset($dbBrand);
 
         $this->em->clear();
 
         $dbBrand = $this->manager->find($entityName, $myBrand->getId());
-        $this->assertNull($dbBrand->getFabric());
+        $this->assertInstanceOf(Fabric::class, $dbBrand->getFabric());
+
+        $this->assertEquals('my_other_fabric', $dbBrand->getFabric()->getCode());
+        $this->assertEquals('Another fabric', $dbBrand->getFabric()->getName());
+    }
+
+    protected function loadData()
+    {
+        $this->createReferenceData(
+            Color::class,
+            [
+                'code'  => 'my_blue',
+                'name'  => 'My blue',
+                'hex'   => '#0007FF',
+                'red'   => 0,
+                'green' => 7,
+                'blue'  => 255,
+            ]
+        );
+
+        $this->createReferenceData(
+            Pictogram::class,
+            [
+                'code' => 'my_picto',
+            ]
+        );
+
+        $this->createReferenceData(
+            Fabric::class,
+            [
+                'code' => 'my_fabric',
+                'name' => 'My fabric',
+            ]
+        );
+
+        $this->createReferenceData(
+            Fabric::class,
+            [
+                'code' => 'my_other_fabric',
+                'name' => 'Another fabric',
+            ]
+        );
+
+        $this->createReferenceData(
+            Brand::class,
+            [
+                'code'   => 'my_brand',
+                'fabric' => 'my_fabric',
+            ]
+        );
     }
 }
