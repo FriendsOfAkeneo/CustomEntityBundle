@@ -43,9 +43,7 @@ and enable the bundle in the `app/AppKernel.php` file in the `registerBundles()`
     ]
 ```
 
-If your installation is already set up, you have to run the following commands:
-
-* First one to add the mass edit job:
+If your installation is already set up, you have to run the following command in order to add the quick export job:
  
 ```bash
     php bin/console akeneo:batch:create-job "Akeneo Mass Edit Connector" "csv_reference_data_quick_export" "quick_export" "csv_reference_data_quick_export" '{"delimiter": ";", "enclosure": "\"", "withHeader": true, "filePath": "/tmp/reference_data_quick_export.csv"}'
@@ -57,6 +55,36 @@ The reference data documentation can be found in the
 [PIM documentation](https://docs.akeneo.com/2.0/manipulate_pim_data/catalog_structure/creating_a_reference_data.html).
 
 Detailled information can be found in the [bundle documentation](docs/index.md).
+
+## Run the Tests
+
+### Unit tests
+
+```bash
+    $ composer install
+    $ vendor/bin/phpspec run
+```
+
+### Code style
+
+```bash
+    $ composer install
+    $ vendor/bin/php-cs-fixer fix -v --diff --config .php_cs.php
+```
+
+### PHPUnit
+
+* Install an Akeneo PIM with the CustomEntityBundle
+* Copy `Tests/Resources/phpunit.xml` into your base `app` directory
+* Copy `Tests/Resources/parameters_test.yml` or `Tests/Resources/parameters_test_ee.yml` (depending on your PIM version) to `app/config/parameters_test.yml`, and edit accordingly to your config
+
+Then:
+
+```bash
+    $ php bin/console cache:clear --no-warmup --env=test
+    $ php bin/console pim:installer:db --env=test
+    $ vendor/bin/phpunit -c app/phpunit.xml
+```
 
 ## Contributing
 
