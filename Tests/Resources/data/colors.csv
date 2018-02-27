@@ -1,0 +1,4 @@
+code;blue;green;hex;name;red;sortOrder
+blue;255;0;#0000FF;Blue;0;1
+red;0;0;#FF0000;Red;255;1
+green;0;255;#00FF00;Green;0;1
