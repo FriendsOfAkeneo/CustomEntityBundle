@@ -3,7 +3,6 @@
 namespace Pim\Bundle\CustomEntityBundle\Connector\Processor\Normalization;
 
 use Akeneo\Component\Batch\Item\ItemProcessorInterface;
-use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**

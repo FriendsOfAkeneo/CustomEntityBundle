@@ -1,3 +1,9 @@
+#1.10.8
+
+## Improvements
+
+Allow `Pim\Bundle\CustomEntityBundle\Updater\Updater` to cache several class metadata at the same time
+
 # 1.10.7
 
 ## Bug fixes

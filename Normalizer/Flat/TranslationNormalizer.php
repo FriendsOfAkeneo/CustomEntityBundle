@@ -2,7 +2,6 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Normalizer\Flat;
 
-use Akeneo\Component\Localization\Model\TranslationInterface;
 use Pim\Bundle\CustomEntityBundle\Metadata\ClassMetadataRegistry;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
