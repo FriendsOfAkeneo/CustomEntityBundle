@@ -8,6 +8,7 @@ services:
         class: Acme\Bundle\CustomBundle\Normalizer\Standard\ColorNormalizer
         tags:
             - { name: pim_serializer.normalizer, priority: 200 }
+            - { name: pim_versioning.serializer.normalizer, priority: 200 }
 
     pim_custom_entity.normalizer.standard.fabric:
         public: false
