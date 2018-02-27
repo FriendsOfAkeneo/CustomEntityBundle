@@ -33,8 +33,8 @@ class Updater implements ObjectUpdaterInterface
     /** @var EntityManagerInterface */
     protected $em;
 
-    /** @var ClassMetadataInfo */
-    protected $classMetadata;
+    /** @var ClassMetadataInfo[] */
+    protected $classMetadata = [];
 
     /** @var FileStorerInterface */
     protected $storer;
@@ -102,8 +102,8 @@ class Updater implements ObjectUpdaterInterface
             return;
         }
 
-        if ($this->isAssociation($referenceData, 'translations')
-            || $this->isAssociation($referenceData, 'labels')) {
+        if (($this->isAssociation($referenceData, 'translations') || $this->isAssociation($referenceData, 'labels'))
+            && in_array($propertyPath, ['labels', 'translations'])) {
             $this->updateTranslations($referenceData, $propertyPath, $value);
 
             return;
@@ -126,6 +126,12 @@ class Updater implements ObjectUpdaterInterface
      */
     protected function updateAssociatedEntity(ReferenceDataInterface $referenceData, $propertyPath, $value): void
     {
+        if (null === $value) {
+            $this->propertyAccessor->setValue($referenceData, $propertyPath, null);
+
+            return;
+        }
+
         $associationMapping = $this->getAssociationMapping($referenceData, $propertyPath);
         $associationRepo = $this->em->getRepository($associationMapping['targetEntity']);
         $classMetadata = $this->getClassMetadata($referenceData);
@@ -204,11 +210,12 @@ class Updater implements ObjectUpdaterInterface
      */
     protected function getClassMetadata(ReferenceDataInterface $referenceData): ClassMetadataInfo
     {
-        if (null === $this->classMetadata) {
-            $this->classMetadata = $this->em->getClassMetadata(ClassUtils::getClass($referenceData));
+        $entityName = ClassUtils::getClass($referenceData);
+        if (!isset($this->classMetadata[$entityName])) {
+            $this->classMetadata[$entityName] = $this->em->getClassMetadata($entityName);
         }
 
-        return $this->classMetadata;
+        return $this->classMetadata[$entityName];
     }
 
     /**

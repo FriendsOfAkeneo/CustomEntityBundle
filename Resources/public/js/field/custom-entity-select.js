@@ -30,7 +30,6 @@ define(
                     fetcher,
                     SelectField.prototype.configure.apply(this, arguments)
                 ).then(function (items) {
-                    let config = this.config;
                     if (_.isEmpty(items)) {
                         this.config.readOnly = true;
                         this.config.choices = {
@@ -38,14 +37,23 @@ define(
                         };
                     } else {
                         let choices = {};
-                        let nameProp = this.config.choiceNameField;
-                        let valueProp = this.config.choiceValueField;
+                        const nameProp = this.config.choiceNameField;
+                        const valueProp = this.config.choiceValueField;
                         items.forEach(function (item) {
                             choices[item[nameProp]] = item[valueProp];
                         });
                         this.config.choices = choices;
                     }
                 }.bind(this));
+            },
+
+            /**
+             * {@inheritdoc}
+             */
+            getFieldValue: function (field) {
+                const value = $(field).val() || null;
+
+                return this.config.isMultiple && null === value ? [] : value;
             }
         });
     });

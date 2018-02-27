@@ -1,0 +1,10 @@
+suites:
+    CustomEntityBundle:
+        namespace: Pim\Bundle\CustomEntityBundle
+        src_path: .
+
+    AcmeCustomBundle:
+        namespace: Acme\Bundle\CustomBundle
+        psr4_prefix: Acme\Bundle\CustomBundle
+        src_path: docs/examples/CustomBundle
+        spec_path: docs/examples/CustomBundle

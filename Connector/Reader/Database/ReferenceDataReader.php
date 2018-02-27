@@ -2,7 +2,6 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Connector\Reader\Database;
 
-use Akeneo\Component\Batch\Model\StepExecution;
 use Doctrine\ORM\EntityManagerInterface;
 use Pim\Bundle\CustomEntityBundle\Configuration\Registry;
 use Pim\Component\Connector\Reader\Database\AbstractReader;
