@@ -5,9 +5,7 @@ namespace Pim\Bundle\CustomEntityBundle\Entity\Repository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Pim\Bundle\CatalogBundle\Entity\Attribute;
-use Pim\Bundle\CustomEntityBundle\Entity\AbstractCustomEntity;
 use Pim\Component\Catalog\AttributeTypes;
-use Pim\Component\ReferenceData\Model\ReferenceDataInterface;
 
 /**
  * Repository for attribute entity

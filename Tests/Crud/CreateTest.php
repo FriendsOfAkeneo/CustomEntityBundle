@@ -6,10 +6,6 @@ use Acme\Bundle\CustomBundle\Entity\Brand;
 use Acme\Bundle\CustomBundle\Entity\Color;
 use Acme\Bundle\CustomBundle\Entity\Fabric;
 use Acme\Bundle\CustomBundle\Entity\Pictogram;
-use Pim\Bundle\CustomEntityBundle\Manager\ManagerInterface;
-use Pim\Bundle\CustomEntityBundle\Tests\AbstractTestCase;
-use Pim\Component\Catalog\Repository\ChannelRepositoryInterface;
-use Pim\Component\Catalog\Repository\LocaleRepositoryInterface;
 
 /**
  * @author    Mathias METAYER <mathias.metayer@akeneo.com>

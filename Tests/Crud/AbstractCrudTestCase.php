@@ -2,16 +2,10 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Tests\Crud;
 
-use Acme\Bundle\CustomBundle\Entity\Brand;
-use Acme\Bundle\CustomBundle\Entity\Color;
-use Acme\Bundle\CustomBundle\Entity\Fabric;
-use Acme\Bundle\CustomBundle\Entity\Pictogram;
-use Pim\Bundle\CustomEntityBundle\Manager\ManagerInterface;
 use Pim\Bundle\CustomEntityBundle\Tests\AbstractTestCase;
 use Pim\Component\Catalog\AttributeTypes;
 use Pim\Component\Catalog\Builder\ProductBuilderInterface;
 use Pim\Component\Catalog\Model\AttributeInterface;
-use Pim\Component\Catalog\Model\ChannelInterface;
 use Pim\Component\Catalog\Model\ProductInterface;
 
 /**
