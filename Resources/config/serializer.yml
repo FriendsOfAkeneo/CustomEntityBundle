@@ -10,6 +10,9 @@ services:
         class: '%pim_custom_entity.normalizer.custom_entity.class%'
         arguments:
             - '@pim_serializer'
+            - '@pim_versioning.manager.version'
+            - '@pim_enrich.normalizer.version'
+            - '@pim_custom_entity.provider.structure_version'
 
     pim_custom_entity.normalizer.standard.minimal:
         public: false
