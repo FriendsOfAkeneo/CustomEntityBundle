@@ -2,7 +2,10 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Tests\Jobs;
 
+use Acme\Bundle\CustomBundle\Entity\Brand;
 use Acme\Bundle\CustomBundle\Entity\Color;
+use Acme\Bundle\CustomBundle\Entity\Fabric;
+use Acme\Bundle\CustomBundle\Entity\Pictogram;
 use Akeneo\Bundle\BatchBundle\Command\BatchCommand;
 
 /**
@@ -56,5 +59,92 @@ class CustomEntityExportTest extends AbstractJobTestCase
         $this->assertEquals(BatchCommand::EXIT_SUCCESS_CODE, $status);
         $this->assertFileExists(static::EXPORT_PATH . 'export_colors.csv');
         $this->assertFileEquals(static::DATA_FILE_PATH . 'colors.csv', static::EXPORT_PATH . 'export_colors.csv');
+    }
+
+    public function testExportTranslatableReferenceData()
+    {
+        $this->activateLocales('fr_FR', 'de_DE');
+
+        $data = [
+            [
+                'code'   => 'picto_1',
+                'labels' => [
+                    'en_US' => 'label 1 en',
+                    'fr_FR' => 'label 1 fr',
+                    'de_DE' => 'label 1 de',
+                ],
+            ],
+            [
+                'code'   => 'picto_2',
+                'labels' => [
+                    'en_US' => 'label 2 en',
+                    'fr_FR' => 'label 2 fr',
+                ],
+            ],
+        ];
+        foreach ($data as $picto) {
+            $this->createReferenceData(Pictogram::class, $picto);
+        }
+
+        $this->createJobInstance(
+            'csv_reference_data_export',
+            'export',
+            'pictogram',
+            static::EXPORT_PATH . 'export_pictos.csv'
+        );
+
+        $status = $this->launch('csv_reference_data_export');
+
+        $this->assertEquals(BatchCommand::EXIT_SUCCESS_CODE, $status);
+        $this->assertFileExists(static::EXPORT_PATH . 'export_colors.csv');
+        $this->assertFileEquals(static::DATA_FILE_PATH . 'pictos.csv', static::EXPORT_PATH . 'export_pictos.csv');
+    }
+
+    public function testExportLinkedReferenceData()
+    {
+        $fabrics = [
+            [
+                'code'             => 'first_fabric',
+                'name'             => 'First fabric',
+                'alternative_name' => 'Super fabric',
+            ],
+            [
+                'code' => 'second_fabric',
+                'name' => 'Another fabric',
+            ],
+        ];
+        foreach ($fabrics as $fabric) {
+            $this->createReferenceData(Fabric::class, $fabric);
+        }
+
+        $data = [
+            [
+                'code'   => 'super_brand',
+                'fabric' => 'second_fabric',
+            ],
+            [
+                'code' => 'another_brand',
+            ],
+            [
+                'code'   => 'third_brand',
+                'fabric' => 'first_fabric',
+            ],
+        ];
+        foreach ($data as $brand) {
+            $this->createReferenceData(Brand::class, $brand);
+        }
+
+        $this->createJobInstance(
+            'csv_reference_data_export',
+            'export',
+            'brand',
+            static::EXPORT_PATH . 'export_brands.csv'
+        );
+
+        $status = $this->launch('csv_reference_data_export');
+
+        $this->assertEquals(BatchCommand::EXIT_SUCCESS_CODE, $status);
+        $this->assertFileExists(static::EXPORT_PATH . 'export_brands.csv');
+        $this->assertFileEquals(static::DATA_FILE_PATH . 'brands.csv', static::EXPORT_PATH . 'export_brands.csv');
     }
 }

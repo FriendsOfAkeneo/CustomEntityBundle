@@ -5,6 +5,7 @@ namespace Pim\Bundle\CustomEntityBundle\Tests\Jobs\Import;
 use Acme\Bundle\CustomBundle\Entity\Brand;
 use Acme\Bundle\CustomBundle\Entity\Color;
 use Acme\Bundle\CustomBundle\Entity\Fabric;
+use Acme\Bundle\CustomBundle\Entity\Pictogram;
 use Akeneo\Bundle\BatchBundle\Command\BatchCommand;
 use Pim\Bundle\CustomEntityBundle\Tests\Jobs\AbstractJobTestCase;
 
@@ -71,6 +72,7 @@ class CustomEntityImportTest extends AbstractJobTestCase
         );
         $batchStatus = $this->launch('csv_fabrics_import');
         $this->assertEquals(BatchCommand::EXIT_SUCCESS_CODE, $batchStatus);
+        $fabrics = $this->manager->findAll(Fabric::class);
 
         $this->createJobInstance(
             'csv_brands_import',
@@ -86,5 +88,41 @@ class CustomEntityImportTest extends AbstractJobTestCase
         $this->assertCount(3, $brands);
         $this->assertInstanceOf(Fabric::class, $superBrand->getFabric());
         $this->assertEquals('Another fabric', $superBrand->getFabric()->getName());
+    }
+
+    public function testImportTranslatableCustomEntity()
+    {
+        $this->activateLocales('fr_FR', 'de_DE');
+
+        $this->createReferenceData(Pictogram::class, [
+            'code' => 'picto_1',
+            'labels' => [
+                'en_US' => 'an English label',
+            ],
+        ]);
+
+        $pictos = $this->manager->findAll(Pictogram::class);
+        $this->assertCount(1, $pictos);
+        $picto1 = $pictos[0];
+        $this->assertCount(1, $picto1->getTranslations());
+        $this->assertEquals('an English label', $picto1->getTranslation('en_US')->getLabel());
+
+        $this->createJobInstance(
+            'csv_pictos_import',
+            'import',
+            'pictogram',
+            static::DATA_FILE_PATH . 'pictos.csv'
+        );
+        $batchStatus = $this->launch('csv_pictos_import');
+        $this->assertEquals(BatchCommand::EXIT_SUCCESS_CODE, $batchStatus);
+
+        $pictos = $this->manager->findAll(Pictogram::class);
+
+        $this->assertCount(2, $pictos);
+        $picto1 = $pictos[0];
+        $this->assertCount(3, $picto1->getTranslations());
+        $this->assertEquals('label 1 en', $picto1->getTranslation('en_US')->getLabel());
+        $this->assertEquals('label 1 fr', $picto1->getTranslation('fr_FR')->getLabel());
+        $this->assertEquals('label 1 de', $picto1->getTranslation('de_DE')->getLabel());
     }
 }
