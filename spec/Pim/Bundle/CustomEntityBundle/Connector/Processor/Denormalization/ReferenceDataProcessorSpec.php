@@ -121,7 +121,7 @@ class ReferenceDataProcessorSpec extends ObjectBehavior
         $updater->update($entity, $item)->willThrow($exception);
 
         $stepExecution->incrementSummaryInfo('skip')->shouldBeCalled();
-        $stepExecution->getSummaryInfo('read_lines')->shouldBeCalled();
+        $stepExecution->getSummaryInfo('item_position')->shouldBeCalled();
 
         $this->shouldThrow(InvalidItemException::class)->during('process', [$item]);
     }
@@ -149,7 +149,7 @@ class ReferenceDataProcessorSpec extends ObjectBehavior
 
         $detacher->detach($entity)->shouldBeCalled();
         $stepExecution->incrementSummaryInfo('skip')->shouldBeCalled();
-        $stepExecution->getSummaryInfo('read_lines')->shouldBeCalled();
+        $stepExecution->getSummaryInfo('item_position')->shouldBeCalled();
 
         $this->shouldThrow(InvalidItemFromViolationsException::class)->during('process', [$item]);
     }

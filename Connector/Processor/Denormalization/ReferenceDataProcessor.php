@@ -149,6 +149,8 @@ class ReferenceDataProcessor implements ItemProcessorInterface, StepExecutionAwa
     }
 
     /**
+     * Sets an item as skipped and throws an invalid item exception.
+     *
      * @param array $item
      * @param ConstraintViolationListInterface $violations
      *
@@ -158,11 +160,15 @@ class ReferenceDataProcessor implements ItemProcessorInterface, StepExecutionAwa
         array $item,
         ConstraintViolationListInterface $violations
     ) {
-        $this->stepExecution->incrementSummaryInfo('skip');
+        if ($this->stepExecution) {
+            $this->stepExecution->incrementSummaryInfo('skip');
+        }
+
+        $itemPosition = null !== $this->stepExecution ? $this->stepExecution->getSummaryInfo('item_position') : 0;
 
         throw new InvalidItemFromViolationsException(
             $violations,
-            new FileInvalidItem($item, ($this->stepExecution->getSummaryInfo('read_lines') + 1))
+            new FileInvalidItem($item, $itemPosition)
         );
     }
 
@@ -181,10 +187,9 @@ class ReferenceDataProcessor implements ItemProcessorInterface, StepExecutionAwa
             $this->stepExecution->incrementSummaryInfo('skip');
         }
 
-        $invalidItem = new FileInvalidItem(
-            $item,
-            ($this->stepExecution->getSummaryInfo('read_lines') + 1)
-        );
+        $itemPosition = null !== $this->stepExecution ? $this->stepExecution->getSummaryInfo('item_position') : 0;
+
+        $invalidItem = new FileInvalidItem($item, $itemPosition);
 
         throw new InvalidItemException($message, $invalidItem, [], 0, $previousException);
     }
