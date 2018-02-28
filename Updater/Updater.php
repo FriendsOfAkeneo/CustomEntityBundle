@@ -126,7 +126,7 @@ class Updater implements ObjectUpdaterInterface
      */
     protected function updateAssociatedEntity(ReferenceDataInterface $referenceData, $propertyPath, $value): void
     {
-        if (null === $value) {
+        if (null === $value || '' === $value) {
             $this->propertyAccessor->setValue($referenceData, $propertyPath, null);
 
             return;
