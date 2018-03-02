@@ -126,7 +126,7 @@ class Updater implements ObjectUpdaterInterface
      */
     protected function updateAssociatedEntity(ReferenceDataInterface $referenceData, $propertyPath, $value): void
     {
-        if (null === $value || '' === $value) {
+        if (null === $value) {
             $this->propertyAccessor->setValue($referenceData, $propertyPath, null);
 
             return;
@@ -165,16 +165,23 @@ class Updater implements ObjectUpdaterInterface
             }
         } elseif ($classMetadata->isCollectionValuedAssociation($propertyPath)) {
             $associatedEntity = [];
+            if (is_string($value)) {
+                $value = array_filter(explode(',', $value));
+            }
             foreach ($value as $entityCode) {
                 $associatedEntity[] = $associationRepo->findOneBy(['code' => $entityCode]);
             }
+        } elseif ('' === $value) {
+            $this->propertyAccessor->setValue($referenceData, $propertyPath, null);
+
+            return;
         } else {
             $associatedEntity = $associationRepo->findOneBy(['code' => $value]);
         }
 
         if (null === $associatedEntity) {
             throw new EntityNotFoundException(
-                sprintf('Associated entity "%s" with code "%" not found', $associatedEntity['targetEntity'], $value)
+                sprintf('Associated entity "%s" with code "%" not found', $associationMapping['targetEntity'], $value)
             );
         }
 

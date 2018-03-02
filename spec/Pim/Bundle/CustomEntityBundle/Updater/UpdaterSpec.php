@@ -78,9 +78,12 @@ class UpdaterSpec extends ObjectBehavior
         $propertyAccessor,
         $em,
         ReferenceDataInterface $referenceData,
+        EntityRepository $repository,
         ClassMetadata $classMetadata
     ) {
         $em->getClassMetadata(Argument::any())->willReturn($classMetadata);
+        $em->getRepository(Argument::any())->willReturn($repository);
+        $repository->findOneBy(Argument::any())->shouldNotBeCalled();
         $classMetadata->getAssociationMappings()->willReturn(
             [
                 'foo' => [
