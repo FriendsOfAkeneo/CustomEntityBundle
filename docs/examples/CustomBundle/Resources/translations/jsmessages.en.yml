@@ -34,6 +34,7 @@ acme_custom:
             code: Code
             name: Name
             alternative_name: Alternative name
+            colors: Colors
         info:
             update_successful: Fabric successfully updated
             update_failed: The fabric could not be updated

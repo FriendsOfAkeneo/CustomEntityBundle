@@ -4,7 +4,9 @@ namespace spec\Acme\Bundle\CustomBundle\Normalizer\Standard;
 
 use Acme\Bundle\CustomBundle\Entity\Fabric;
 use Acme\Bundle\CustomBundle\Normalizer\Standard\FabricNormalizer;
+use Doctrine\Common\Collections\Collection;
 use PhpSpec\ObjectBehavior;
+use Pim\Component\ReferenceData\Model\ReferenceDataInterface;
 use Prophecy\Argument;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
@@ -34,12 +36,22 @@ class FabricNormalizerSpec extends ObjectBehavior
         $this->supportsNormalization($fabric, 'foo')->shouldReturn(false);
     }
 
-    function it_normalizes_a_fabric(Fabric $fabric)
-    {
+    function it_normalizes_a_fabric(
+        Fabric $fabric,
+        Collection $colors,
+        ReferenceDataInterface $red,
+        ReferenceDataInterface $blue
+    ) {
         $fabric->getId()->willReturn(999);
         $fabric->getCode()->willReturn('my_fabric');
         $fabric->getName()->willReturn('My fabric');
         $fabric->getAlternativeName()->willReturn('My fabric\'s alternative name');
+
+        $red->getCode()->willReturn('red');
+        $blue->getCode()->willReturn('blue');
+        $iterator = new \ArrayIterator([$red->getWrappedObject(), $blue->getWrappedObject()]);
+        $colors->getIterator()->willReturn($iterator);
+        $fabric->getColors()->willReturn($colors);
 
         $this->normalize($fabric, 'standard')->shouldReturn(
             [
@@ -47,6 +59,10 @@ class FabricNormalizerSpec extends ObjectBehavior
                 'code'            => 'my_fabric',
                 'name'            => 'My fabric',
                 'alternativeName' => 'My fabric\'s alternative name',
+                'colors'          => [
+                    'red',
+                    'blue',
+                ],
             ]
         );
     }
