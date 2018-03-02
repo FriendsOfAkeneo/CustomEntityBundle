@@ -15,9 +15,80 @@ use Akeneo\Bundle\BatchBundle\Command\BatchCommand;
  */
 class CustomEntityExportTest extends AbstractJobTestCase
 {
+    public function setUp()
+    {
+        parent::setUp();
+        $this->loadData();
+    }
+
     public function testExportSimpleReferenceData()
     {
-        $data = [
+        $this->createJobInstance(
+            'csv_reference_data_export',
+            'export',
+            'color',
+            static::EXPORT_PATH . 'export_colors.csv'
+        );
+
+        $status = $this->launch('csv_reference_data_export');
+
+        $this->assertEquals(BatchCommand::EXIT_SUCCESS_CODE, $status);
+        $this->assertFileExists(static::EXPORT_PATH . 'export_colors.csv');
+        $this->assertFileEquals(static::DATA_FILE_PATH . 'colors.csv', static::EXPORT_PATH . 'export_colors.csv');
+    }
+
+    public function testExportTranslatableReferenceData()
+    {
+        $this->createJobInstance(
+            'csv_reference_data_export',
+            'export',
+            'pictogram',
+            static::EXPORT_PATH . 'export_pictos.csv'
+        );
+
+        $status = $this->launch('csv_reference_data_export');
+
+        $this->assertEquals(BatchCommand::EXIT_SUCCESS_CODE, $status);
+        $this->assertFileExists(static::EXPORT_PATH . 'export_colors.csv');
+        $this->assertFileEquals(static::DATA_FILE_PATH . 'pictos.csv', static::EXPORT_PATH . 'export_pictos.csv');
+    }
+
+    public function testExportLinkedReferenceData()
+    {
+        $this->createJobInstance(
+            'csv_reference_data_export',
+            'export',
+            'brand',
+            static::EXPORT_PATH . 'export_brands.csv'
+        );
+
+        $status = $this->launch('csv_reference_data_export');
+
+        $this->assertEquals(BatchCommand::EXIT_SUCCESS_CODE, $status);
+        $this->assertFileExists(static::EXPORT_PATH . 'export_brands.csv');
+        $this->assertFileEquals(static::DATA_FILE_PATH . 'brands.csv', static::EXPORT_PATH . 'export_brands.csv');
+    }
+
+    public function testExportCollectionLinkedReferenceData()
+    {
+        $this->createJobInstance(
+            'csv_reference_data_export',
+            'export',
+            'fabric',
+            static::EXPORT_PATH . 'export_fabrics.csv'
+        );
+
+        $status = $this->launch('csv_reference_data_export');
+
+        $this->assertEquals(BatchCommand::EXIT_SUCCESS_CODE, $status);
+        $this->assertFileExists(static::EXPORT_PATH . 'export_fabrics.csv');
+        $this->assertFileEquals(static::DATA_FILE_PATH . 'fabrics.csv', static::EXPORT_PATH . 'export_fabrics.csv');
+    }
+
+    private function loadData()
+    {
+        $this->activateLocales('fr_FR', 'de_DE');
+        $colors = [
             [
                 'code'  => 'blue',
                 'name'  => 'Blue',
@@ -43,29 +114,11 @@ class CustomEntityExportTest extends AbstractJobTestCase
                 'blue'  => 0,
             ],
         ];
-        foreach ($data as $color) {
+        foreach ($colors as $color) {
             $this->createReferenceData(Color::class, $color);
         }
 
-        $this->createJobInstance(
-            'csv_reference_data_export',
-            'export',
-            'color',
-            static::EXPORT_PATH . 'export_colors.csv'
-        );
-
-        $status = $this->launch('csv_reference_data_export');
-
-        $this->assertEquals(BatchCommand::EXIT_SUCCESS_CODE, $status);
-        $this->assertFileExists(static::EXPORT_PATH . 'export_colors.csv');
-        $this->assertFileEquals(static::DATA_FILE_PATH . 'colors.csv', static::EXPORT_PATH . 'export_colors.csv');
-    }
-
-    public function testExportTranslatableReferenceData()
-    {
-        $this->activateLocales('fr_FR', 'de_DE');
-
-        $data = [
+        $pictos = [
             [
                 'code'   => 'picto_1',
                 'labels' => [
@@ -82,42 +135,28 @@ class CustomEntityExportTest extends AbstractJobTestCase
                 ],
             ],
         ];
-        foreach ($data as $picto) {
+        foreach ($pictos as $picto) {
             $this->createReferenceData(Pictogram::class, $picto);
         }
 
-        $this->createJobInstance(
-            'csv_reference_data_export',
-            'export',
-            'pictogram',
-            static::EXPORT_PATH . 'export_pictos.csv'
-        );
-
-        $status = $this->launch('csv_reference_data_export');
-
-        $this->assertEquals(BatchCommand::EXIT_SUCCESS_CODE, $status);
-        $this->assertFileExists(static::EXPORT_PATH . 'export_colors.csv');
-        $this->assertFileEquals(static::DATA_FILE_PATH . 'pictos.csv', static::EXPORT_PATH . 'export_pictos.csv');
-    }
-
-    public function testExportLinkedReferenceData()
-    {
         $fabrics = [
             [
                 'code'             => 'first_fabric',
                 'name'             => 'First fabric',
                 'alternative_name' => 'Super fabric',
+                'colors'           => ['green'],
             ],
             [
-                'code' => 'second_fabric',
-                'name' => 'Another fabric',
+                'code'   => 'second_fabric',
+                'name'   => 'Another fabric',
+                'colors' => ['red', 'blue'],
             ],
         ];
         foreach ($fabrics as $fabric) {
             $this->createReferenceData(Fabric::class, $fabric);
         }
 
-        $data = [
+        $brands = [
             [
                 'code'   => 'super_brand',
                 'fabric' => 'second_fabric',
@@ -130,21 +169,8 @@ class CustomEntityExportTest extends AbstractJobTestCase
                 'fabric' => 'first_fabric',
             ],
         ];
-        foreach ($data as $brand) {
+        foreach ($brands as $brand) {
             $this->createReferenceData(Brand::class, $brand);
         }
-
-        $this->createJobInstance(
-            'csv_reference_data_export',
-            'export',
-            'brand',
-            static::EXPORT_PATH . 'export_brands.csv'
-        );
-
-        $status = $this->launch('csv_reference_data_export');
-
-        $this->assertEquals(BatchCommand::EXIT_SUCCESS_CODE, $status);
-        $this->assertFileExists(static::EXPORT_PATH . 'export_brands.csv');
-        $this->assertFileEquals(static::DATA_FILE_PATH . 'brands.csv', static::EXPORT_PATH . 'export_brands.csv');
     }
 }

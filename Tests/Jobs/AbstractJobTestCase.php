@@ -18,7 +18,7 @@ use Symfony\Component\Finder\Finder;
 class AbstractJobTestCase extends AbstractTestCase
 {
     const DATA_FILE_PATH = __DIR__ . '/../Resources/data/';
-    const EXPORT_PATH = '/tmp/test/export';
+    const EXPORT_PATH = '/tmp/test/export/';
 
     public function setUp()
     {
