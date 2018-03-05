@@ -15,15 +15,15 @@ class UpdateGuesserSpec extends ObjectBehavior
         $this->shouldHaveType(UpdateGuesser::class);
     }
 
-    function it_is_un_update_guesser()
+    function it_is_an_update_guesser()
     {
         $this->shouldImplement(UpdateGuesserInterface::class);
     }
 
-    function it_only_supports_update_an_delete_actions()
+    function it_only_supports_update_actions()
     {
-        $this->supportAction(UpdateGuesserInterface::ACTION_DELETE)->shouldReturn(true);
         $this->supportAction(UpdateGuesserInterface::ACTION_UPDATE_ENTITY)->shouldReturn(true);
+        $this->supportAction(UpdateGuesserInterface::ACTION_DELETE)->shouldReturn(false);
         $this->supportAction(UpdateGuesserInterface::ACTION_UPDATE_COLLECTION)->shouldReturn(false);
         $this->supportAction('any_other_action')->shouldReturn(false);
     }

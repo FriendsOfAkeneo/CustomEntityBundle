@@ -13,7 +13,7 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 class ColorNormalizer implements NormalizerInterface
 {
     /** @var string[] */
-    protected $supportedFormats = ['standard'];
+    protected $supportedFormats = ['standard', 'flat'];
 
     /**
      * @param Color $entity

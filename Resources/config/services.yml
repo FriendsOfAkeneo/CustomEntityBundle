@@ -6,6 +6,7 @@ parameters:
     pim_custom_entity.manager.registry.class:       Pim\Bundle\CustomEntityBundle\Manager\Registry
     pim_custom_entity.action_event_manager.class:   Pim\Bundle\CustomEntityBundle\Event\ActionEventManager
     pim_custom_entity.repository.attribute.class:   Pim\Bundle\CustomEntityBundle\Entity\Repository\AttributeRepository
+    pim_catalog.resolver.fqcn.class:                Pim\Bundle\CustomEntityBundle\Resolver\FQCNResolver
 
 services:
     pim_custom_entity.configuration.registry:
@@ -28,3 +29,8 @@ services:
         arguments:
             - '@doctrine.orm.default_entity_manager'
             - '%pim_catalog.entity.attribute.class%'
+
+    pim_custom_entity.provider.structure_version.custom_entity:
+        class: '%pim_enrich.provider.structure_version.class%'
+        arguments:
+            - '@pim_versioning.repository.version'

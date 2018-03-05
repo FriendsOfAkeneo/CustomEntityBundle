@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Pim\Bundle\VersioningBundle\UpdateGuesser\UpdateGuesserInterface;
 
 /**
- * Attribute option update guesser
+ * Custom entity update guesser
  *
  * @author    Nicolas Dupont <nicolas@akeneo.com>
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
@@ -21,7 +21,7 @@ class UpdateGuesser implements UpdateGuesserInterface
     {
         return in_array(
             $action,
-            array(UpdateGuesserInterface::ACTION_UPDATE_ENTITY, UpdateGuesserInterface::ACTION_DELETE)
+            [UpdateGuesserInterface::ACTION_UPDATE_ENTITY]
         );
     }
 
@@ -30,7 +30,7 @@ class UpdateGuesser implements UpdateGuesserInterface
      */
     public function guessUpdates(EntityManager $em, $entity, $action)
     {
-        $pendings = array();
+        $pendings = [];
         if ($entity instanceof VersionableInterface) {
             $pendings[] = $entity;
         }

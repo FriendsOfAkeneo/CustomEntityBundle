@@ -3,6 +3,7 @@
 namespace Acme\Bundle\CustomBundle\Entity;
 
 use Pim\Bundle\CustomEntityBundle\Entity\AbstractCustomEntity;
+use Pim\Bundle\CustomEntityBundle\Versioning\VersionableInterface;
 
 /**
  * Acme Color entity (used as simple reference data)
@@ -11,7 +12,7 @@ use Pim\Bundle\CustomEntityBundle\Entity\AbstractCustomEntity;
  * @copyright 2015 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class Color extends AbstractCustomEntity
+class Color extends AbstractCustomEntity implements VersionableInterface
 {
     /** @var string */
     protected $name;
