@@ -1,4 +1,4 @@
-code;fabric
-super_brand;second_fabric
-another_brand;first_fabric
-a_third_brand;first_fabric
+code;fabric;sortOrder
+super_brand;second_fabric;1
+another_brand;;1
+third_brand;first_fabric;1

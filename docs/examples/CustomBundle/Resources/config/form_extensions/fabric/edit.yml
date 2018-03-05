@@ -151,3 +151,18 @@ extensions:
             fieldName: alternativeName
             label: acme_custom.fabric.field.label.alternative_name
             required: false
+
+    pim-fabric-edit-form-properties-colors:
+        module: custom_entity/field/custom-entity-select
+        parent: pim-fabric-edit-form-properties-common
+        targetZone: content
+        position: 120
+        config:
+            fieldName: colors
+            label: acme_custom.fabric.field.label.colors
+            choiceNameField: code
+            choiceValueField: name
+            isCustomEntity: true
+            entityName: color
+            required: false
+            isMultiple: true

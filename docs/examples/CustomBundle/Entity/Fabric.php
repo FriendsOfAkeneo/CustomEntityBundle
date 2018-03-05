@@ -2,6 +2,8 @@
 
 namespace Acme\Bundle\CustomBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Pim\Bundle\CustomEntityBundle\Entity\AbstractCustomEntity;
 
 /**
@@ -18,6 +20,14 @@ class Fabric extends AbstractCustomEntity
 
     /** @var int */
     protected $alternativeName;
+
+    /** @var Collection of Color */
+    protected $colors;
+
+    public function __construct()
+    {
+        $this->colors = new ArrayCollection();
+    }
 
     /**
      * @return string
@@ -53,6 +63,50 @@ class Fabric extends AbstractCustomEntity
     public function getAlternativeName()
     {
         return $this->alternativeName;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getColors(): ?Collection
+    {
+        return $this->colors;
+    }
+
+    /**
+     * @param Collection $colors
+     *
+     * @return $this
+     */
+    public function setColors(Collection $colors)
+    {
+        $this->colors = $colors;
+
+        return $this;
+    }
+
+    /**
+     * @param Color $color
+     *
+     * @return $this
+     */
+    public function addColor(Color $color)
+    {
+        $this->colors->add($color);
+
+        return $this;
+    }
+
+    /**
+     * @param Color $color
+     *
+     * @return $this
+     */
+    public function removeColor(Color $color)
+    {
+        $this->colors->removeElement($color);
+
+        return $this;
     }
 
     /**

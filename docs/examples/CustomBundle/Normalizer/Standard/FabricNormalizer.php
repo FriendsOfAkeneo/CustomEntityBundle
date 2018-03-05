@@ -29,6 +29,7 @@ class FabricNormalizer implements NormalizerInterface
             'code'            => $entity->getCode(),
             'name'            => $entity->getName(),
             'alternativeName' => $entity->getAlternativeName(),
+            'colors'          => $this->normalizeColors($entity),
         ];
     }
 
@@ -41,5 +42,20 @@ class FabricNormalizer implements NormalizerInterface
     public function supportsNormalization($data, $format = null)
     {
         return $data instanceof Fabric && in_array($format, $this->supportedFormats);
+    }
+
+    /**
+     * @param Fabric $fabric
+     *
+     * @return array
+     */
+    protected function normalizeColors(Fabric $fabric): array
+    {
+        $colors = [];
+        foreach ($fabric->getColors() as $color) {
+            $colors[] = $color->getCode();
+        }
+
+        return $colors;
     }
 }

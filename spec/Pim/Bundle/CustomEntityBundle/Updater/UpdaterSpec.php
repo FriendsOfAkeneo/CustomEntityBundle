@@ -78,24 +78,36 @@ class UpdaterSpec extends ObjectBehavior
         $propertyAccessor,
         $em,
         ReferenceDataInterface $referenceData,
+        EntityRepository $repository,
         ClassMetadata $classMetadata
     ) {
         $em->getClassMetadata(Argument::any())->willReturn($classMetadata);
+        $em->getRepository(Argument::any())->willReturn($repository);
+        $repository->findOneBy(Argument::any())->shouldNotBeCalled();
         $classMetadata->getAssociationMappings()->willReturn(
             [
                 'foo' => [
                     'targetEntity' => 'Foo\Bar\Baz',
+                ],
+                'bar' => [
+                    'targetEntity' => 'Foo\Bar\Other',
                 ],
             ]
         );
         $classMetadata->isCollectionValuedAssociation('foo')->willReturn(false);
         $propertyAccessor->setValue($referenceData, 'foo', null)->shouldBeCalled();
 
+        $classMetadata->isCollectionValuedAssociation('bar')->willReturn(false);
+        $propertyAccessor->setValue($referenceData, 'bar', null)->shouldBeCalled();
+
         $this->shouldNotThrow(\Exception::class)->during(
             'update',
             [
                 $referenceData,
-                ['foo' => null],
+                [
+                    'foo' => null,
+                    'bar' => '',
+                ],
             ]
         );
     }

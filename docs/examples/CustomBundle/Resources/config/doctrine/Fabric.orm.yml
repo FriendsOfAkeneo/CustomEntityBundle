@@ -22,4 +22,11 @@ Acme\Bundle\CustomBundle\Entity\Fabric:
             type: string
             length: 255
             nullable: true
+    manyToMany:
+        colors:
+            targetEntity: Acme\Bundle\CustomBundle\Entity\Color
+            joinTable:
+                name: acme_custom_fabric_color
+
+
     lifecycleCallbacks: {  }
