@@ -49,7 +49,7 @@ class CustomEntityExportTest extends AbstractJobTestCase
         $status = $this->launch('csv_reference_data_export');
 
         $this->assertEquals(BatchCommand::EXIT_SUCCESS_CODE, $status);
-        $this->assertFileExists(static::EXPORT_PATH . 'export_colors.csv');
+        $this->assertFileExists(static::EXPORT_PATH . 'export_pictos.csv');
         $this->assertFileEquals(static::DATA_FILE_PATH . 'pictos.csv', static::EXPORT_PATH . 'export_pictos.csv');
     }
 
