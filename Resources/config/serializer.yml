@@ -23,7 +23,6 @@ services:
         tags:
             - { name: pim_serializer.normalizer, priority: 150 }
 
-
     pim_custom_entity.array_converter.flat_to_standard.reference_data:
        class: Pim\Bundle\CustomEntityBundle\ArrayConverter\FlatToStandard\ReferenceData
        arguments:
