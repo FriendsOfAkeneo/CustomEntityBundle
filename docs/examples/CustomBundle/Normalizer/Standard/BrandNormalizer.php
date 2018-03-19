@@ -37,8 +37,9 @@ class BrandNormalizer implements NormalizerInterface
     public function normalize($entity, $format = null, array $context = [])
     {
         $normalizedBrand = [
-            'id'   => $entity->getId(),
-            'code' => $entity->getCode(),
+            'id'     => $entity->getId(),
+            'code'   => $entity->getCode(),
+            'visual' => $entity->getVisual(),
         ];
 
         $fabric = $entity->getFabric();

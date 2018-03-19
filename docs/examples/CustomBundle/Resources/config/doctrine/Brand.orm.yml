@@ -13,6 +13,9 @@ Acme\Bundle\CustomBundle\Entity\Brand:
             type: string
             length: 255
             unique: true
+        visual:
+            type: text
+            nullable: true
         sortOrder:
             type: integer
     manyToOne:

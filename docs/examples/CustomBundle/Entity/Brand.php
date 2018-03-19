@@ -10,9 +10,34 @@ use Pim\Bundle\CustomEntityBundle\Entity\AbstractCustomEntity;
 class Brand extends AbstractCustomEntity
 {
     /**
+     * @var string
+     */
+    protected $visual;
+
+    /**
      * @var Fabric
      */
     protected $fabric;
+
+    /**
+     * @return string
+     */
+    public function getVisual()
+    {
+        return $this->visual;
+    }
+
+    /**
+     * @param string $visual
+     *
+     * @return Brand
+     */
+    public function setVisual($visual)
+    {
+        $this->visual = $visual;
+
+        return $this;
+    }
 
     /**
      * @param Fabric|null $fabric

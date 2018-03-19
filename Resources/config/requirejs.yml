@@ -8,10 +8,12 @@ config:
         custom_entity/form/common/save-form: pimcustomentity/js/form/common/save-form
         custom_entity/form/common/delete: pimcustomentity/js/form/common/delete
         custom_entity/form/common/label: pimcustomentity/js/form/common/label
+        custom_entity/form/common/fields/media: pimcustomentity/js/form/common/fields/media
         custom_entity/controller/list: pimcustomentity/js/controller/custom_entity-list
         custom_entity/controller/edit: pimcustomentity/js/controller/custom_entity-edit
         custom_entity/fetcher: pimcustomentity/js/fetcher/custom_entity-fetcher
         custom_entity/remover/reference-data: pimcustomentity/js/remover/reference-data-remover
+        custom_entity/template/form/common/fields/media: pimcustomentity/templates/form/common/fields/media.html
 
     config:
         pim/fetcher-registry:

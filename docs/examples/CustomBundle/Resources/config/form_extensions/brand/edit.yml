@@ -140,11 +140,20 @@ extensions:
             required: true
             readOnly: true
 
+    pim-brand-edit-form-properties-visual:
+        module: custom_entity/form/common/fields/media
+        parent: pim-brand-edit-form-properties-common
+        targetZone: content
+        position: 100
+        config:
+            fieldName: visual
+            label: acme_custom.brand.field.label.visual
+
     pim-brand-edit-form-properties-fabric:
         module: custom_entity/field/custom-entity-select
         parent: pim-brand-edit-form-properties-common
         targetZone: content
-        position: 100
+        position: 110
         config:
             fieldName: fabric
             choiceNameField: code

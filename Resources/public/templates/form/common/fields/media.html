@@ -1,0 +1,22 @@
+<div class="AknMediaField <%- filePath ? 'has-file' : '' %>" >
+    <% if (!filePath) { %>
+    <input class="AknMediaField-fileUploaderInput" id="upload_field_<%- fieldId %>" type="file"/>
+    <div class="AknMediaField-emptyContainer">
+        <span title="upload icon" class="AknMediaField-uploadIcon"/>
+        <span><%- _.__('pim_enrich.entity.product.media.upload')%></span>
+    </div>
+    <% } else { %>
+    <div class="AknMediaField-preview preview">
+        <% mediaThumbnailUrl = mediaUrlGenerator.getMediaShowUrl(filePath, 'thumbnail_small') %>
+        <% mediaDownloadUrl  = mediaUrlGenerator.getMediaDownloadUrl(shortFilePath) %>
+        <div class="AknMediaField-thumb file"><img src="<%- mediaThumbnailUrl %>" class="AknMediaField-image"/></div>
+        <div class="AknMediaField-info info">
+            <div class="filename" title="<%- originalFilename %>"><%- originalFilename %></div>
+            <div class="AknButtonList AknButtonList--centered actions">
+                <a href="<%- mediaDownloadUrl %>" class="AknButtonList-item AknIconButton AknIconButton--grey download-file" download><i class="icon icon-cloud-download"></i></a>
+                <span class="AknButtonList-item AknIconButton AknIconButton--grey clear-field"><i class="icon icon-trash"></i></span>
+            </div>
+        </div>
+    </div>
+    <% } %>
+</div>
