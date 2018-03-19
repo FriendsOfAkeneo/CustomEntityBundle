@@ -22,6 +22,14 @@ class AppKernelTest extends \AppKernel
     }
 
     /**
+     * {inheritdoc}
+     */
+    public function getProjectDir()
+    {
+        return $this->getRootDir() . '/..';
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getName(): string
