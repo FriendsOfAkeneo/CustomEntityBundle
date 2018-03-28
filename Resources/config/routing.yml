@@ -69,5 +69,5 @@ pim_customentity_history:
 
 pim_customentity_media_rest_post:
     path: '/rest/customentity_media'
-    defaults: { _controller: pim_custom_entity.media_rest_controller.class:postAction }
+    defaults: { _controller: pim_custom_entity.media_rest_controller:postAction }
     methods: [POST]
