@@ -20,7 +20,12 @@ class AjaxOptionController extends BaseAjaxOptionController
     public function listAction(Request $request)
     {
         $query = $request->query;
-        $repository = $this->doctrine->getRepository($query->get('class'));
+        $referenceDataName = $query->get('referenceDataName');
+        $class = $query->get('class');
+        if (null !== $referenceDataName) {
+            $class = $this->registry->get($referenceDataName)->getClass();
+        }
+        $repository = $this->doctrine->getRepository($class);
 
         if ($repository instanceof ReferenceDataRepositoryInterface) {
             $options = $query->get('options', []) + ['dataLocale' => $query->get('dataLocale')];
