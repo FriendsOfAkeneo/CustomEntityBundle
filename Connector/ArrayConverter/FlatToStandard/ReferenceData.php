@@ -44,14 +44,9 @@ class ReferenceData implements ArrayConverterInterface
             $this->checker->checkFieldsFilling($item, $this->fieldsFilling);
         }
 
-        $convertedItem = ['labels' => []];
-
+        $convertedItem = [];
         foreach ($item as $field => $data) {
             $convertedItem = $this->convertField($convertedItem, $field, $data);
-        }
-
-        if (empty($convertedItem['labels'])) {
-            unset($convertedItem['labels']);
         }
 
         return $convertedItem;
