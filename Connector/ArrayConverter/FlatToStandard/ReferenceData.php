@@ -1,6 +1,6 @@
 <?php
 
-namespace Pim\Bundle\CustomEntityBundle\ArrayConverter\FlatToStandard;
+namespace Pim\Bundle\CustomEntityBundle\Connector\ArrayConverter\FlatToStandard;
 
 use Pim\Component\Connector\ArrayConverter\ArrayConverterInterface;
 use Pim\Component\Connector\ArrayConverter\FieldsRequirementChecker;
@@ -44,7 +44,7 @@ class ReferenceData implements ArrayConverterInterface
             $this->checker->checkFieldsFilling($item, $this->fieldsFilling);
         }
 
-        $convertedItem = ['labels' => [], 'attribute_requirements' => []];
+        $convertedItem = ['labels' => []];
 
         foreach ($item as $field => $data) {
             $convertedItem = $this->convertField($convertedItem, $field, $data);
@@ -71,7 +71,7 @@ class ReferenceData implements ArrayConverterInterface
             $labelLocale = $labelTokens[1];
             $convertedItem['labels'][$labelLocale] = $data;
         } else {
-            $convertedItem[$field] = (string) $data;
+            $convertedItem[$field] = $data;
         }
 
         return $convertedItem;
