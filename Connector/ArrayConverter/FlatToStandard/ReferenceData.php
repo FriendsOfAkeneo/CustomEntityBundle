@@ -5,6 +5,11 @@ namespace Pim\Bundle\CustomEntityBundle\Connector\ArrayConverter\FlatToStandard;
 use Pim\Component\Connector\ArrayConverter\ArrayConverterInterface;
 use Pim\Component\Connector\ArrayConverter\FieldsRequirementChecker;
 
+/**
+ * @author    Marie Minasyan <marie.minasyan@akeneo.com>
+ * @copyright 2018 Akeneo SAS (http://www.akeneo.com)
+ * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
 class ReferenceData implements ArrayConverterInterface
 {
     /** @var FieldsRequirementChecker */
