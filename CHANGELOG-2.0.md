@@ -1,3 +1,9 @@
+# 2.0.10
+
+## Improvements
+- GITHUB-169: Error 500 when trying to use a refdata attribute as a filter in the Export Builder
+- GITHUB-170: Fix reference data import with translations
+
 # 2.0.9
 
 ## Improvements

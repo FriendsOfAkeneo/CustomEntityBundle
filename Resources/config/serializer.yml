@@ -22,3 +22,4 @@ services:
         class: '%pim_custom_entity.normalizer.standard.minimal.class%'
         tags:
             - { name: pim_serializer.normalizer, priority: 150 }
+

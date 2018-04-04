@@ -5,13 +5,15 @@ parameters:
     pim_custom_entity.processor.denormalization.reference_data.class: Pim\Bundle\CustomEntityBundle\Connector\Processor\Denormalization\ReferenceDataProcessor
     pim_custom_entity.processor.normalization.reference_data.class: Pim\Bundle\CustomEntityBundle\Connector\Processor\Normalization\ReferenceDataProcessor
 
+    pim_custom_entity.array_converter.flat_to_standard.reference_data.class: Pim\Bundle\CustomEntityBundle\Connector\ArrayConverter\FlatToStandard\ReferenceData
+
 services:
     # Readers
     pim_custom_entity.reader.file.csv:
         class: '%pim_connector.reader.file.csv.class%'
         arguments:
             - '@pim_connector.reader.file.csv_iterator_factory'
-            - '@pim_connector.array_converter.dummy'
+            - '@pim_custom_entity.array_converter.flat_to_standard.reference_data'
 
     pim_custom_entity.reader.database.reference_data:
         class: '%pim_custom_entity.reader.database.reference_data.class%'
@@ -55,3 +57,11 @@ services:
         arguments:
             - '@doctrine.orm.entity_manager'
             - '@pim_reference_data.registry'
+
+    # Array converters
+    pim_custom_entity.array_converter.flat_to_standard.reference_data:
+       class: '%pim_custom_entity.array_converter.flat_to_standard.reference_data.class%'
+       arguments:
+           - '@pim_connector.array_convertor.checker.fields_requirement'
+           - ['code']
+           - ['code']
