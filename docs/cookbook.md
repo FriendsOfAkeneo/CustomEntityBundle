@@ -349,3 +349,64 @@ At this point, the datagrid configuration is fully functionnal, and you should b
 
 ## Internationalization
 
+You have to create 2 translation files. Here is an example for english language :
+```yaml
+#acme/Bundle/SupplierBundle/Resources/translations/messages.en.yml
+
+acme.menu.item.reference_data.supplier: Supplier
+acme:
+    supplier:
+        field:
+            name: Name
+            code: Code
+        index_title: Supplier overview
+        section:
+            code: Identifier
+            other: General information
+        messages:
+            created.success: The supplier has been successfully created
+            remove:
+                confirm: Are you sure you want to remove this supplier?
+                success: The supplier has been successfully removed
+                fail: The supplier has not been removed
+            edit:
+                success: The supplier has been successfully updated
+                fail: The supplier has not been updated
+        this:
+            edit: Edit this supplier
+            show: Show this supplier
+            delete: Delete this supplier
+
+flash.supplier.removed: The supplier has been successfully removed
+```
+
+```yaml
+#acme/Bundle/SupplierBundle/Resources/translations/jsmessages.en.yml
+
+acme.menu.item.reference_data.supplier: Supplier
+acme:
+    supplier:
+        field:
+            name: Name
+            code: Code
+        index_title: Supplier overview
+        section:
+            code: Identifier
+            other: General information
+        messages:
+            created.success: The supplier has been successfully created
+            remove:
+                confirm: Are you sure you want to remove this supplier?
+                success: The supplier has been successfully removed
+                fail: The supplier has not been removed
+            edit:
+                success: The supplier has been successfully updated
+                fail: The supplier has not been updated
+        this:
+            edit: Edit this supplier
+            show: Show this supplier
+            delete: Delete this supplier
+
+flash.supplier.removed: The supplier has been successfully removed
+confirmation.remove.supplier: Are you sure you want to remove this supplier?
+```
