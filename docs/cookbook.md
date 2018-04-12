@@ -1,8 +1,10 @@
 # Custom Entity Bundle
 
+Please know that you will have to clear the Symfony cache (`bin/console --env=prod cache:clear`) each time you update a configuration file. You have to rebuild front assets (`yarn run webpack-dev`) and web browser cache too each time you update a routing file, a translation file or any other front related file. 
+
 ## Create the reference data
 
-To create your entity, you have to create a class that extends AbstractCustomEntity. In this cookbook, we will create an entity called Supplier with only one property `name`.
+In order to create your entity, you have to create a class that extends AbstractCustomEntity. In this cookbook, we will create an entity called Supplier with only one property `name`.
 
 AbstractCustomEntity already declares 2 mandatory properties: `code` and `id`, so you just have to add your entity specific properties.
 
@@ -29,7 +31,7 @@ class Supplier extends AbstractCustomEntity
 }
 ```
 
-Then, create the doctrine configuration for this entity to declare the entity fields and table name where the entity will be persisted.
+Then, create the doctrine mapping for this entity to declare the entity fields and table name where the entity will be persisted.
 
 ```yaml
 #Acme\Bundle\SupplierBundle\Resources\config\doctrine\Supplier.orm.yml
@@ -61,7 +63,7 @@ Each new reference data is persisted in a dedicated table. You can see what will
 ```bash
 bin/console doctrine:schema:update --dump-sql
 ```
-If the SQL command answer to your modification, You can run the command by replacing the --dump-sql option by --force to create the table in the database.
+If you're fine with the SQL query, you can run it by replacing the `--dump-sql` option by `--force` to create the table in the database.
 
 You can check that the table is correctly created in your database.
  
@@ -88,7 +90,7 @@ extensions:
             routeParams:
                 customEntityName: supplier
 ```
-At this point the item menu should be visible at the end of the menu. You may have to clear your cache (including the front end cache) to see it.
+At this point the item menu should be visible at the end of the menu.
 
 ### Datagrid configuration
 
@@ -122,19 +124,19 @@ custom_entities:
 
 #### Form extension
 
-Declare the reference data index page form extension. Exemple of working configuration: https://github.com/akeneo-labs/CustomEntityBundle/blob/master/docs/examples/CustomBundle/Resources/config/form_extensions/brand/index.yml. You should comment the create button part, we'll add it later in this cookbook.
+Declare the reference data index page form extension. You can find an exemple of working configuration [here](https://github.com/akeneo-labs/CustomEntityBundle/blob/master/docs/examples/CustomBundle/Resources/config/form_extensions/brand/index.yml). You should comment the create button part, we'll add it later in this cookbook.
 
-At this point, you should have a basic empty list of reference data, with no possibility to create a new reference data or filter the list for now.
+At this point, you should have a basic empty list of reference data, with no possibility to add a new supplier or filter the list for now.
 
 #### Add the creation form
 
-The list page is now ready to display some content. Let's add the creation form to be able to create new reference data. You can find a working example here: https://github.com/akeneo-labs/CustomEntityBundle/blob/master/docs/examples/CustomBundle/Resources/config/form_extensions/brand/create.yml. 
+The list page is now ready to display some content. Let's add the creation form to be able to create new reference data. You can find a working example [here](https://github.com/akeneo-labs/CustomEntityBundle/blob/master/docs/examples/CustomBundle/Resources/config/form_extensions/brand/create.yml). 
 
 Declare the create button in your index.yml form extension file to be able to display the create form.
 
 Once the configuration file is complete, try to create a new reference data. You should have an error, because once the creation is done, you are redirected to the edit form which do not exists yet. But if you go back to the list, your new reference data should be here.
 
-Try to create 2 or 3 reference data, it will be usefull for the next part.
+Try to create 2 or 3 reference data, it will be useful for the next part.
 
 #### Add filters on the list:
 
@@ -182,7 +184,7 @@ The column headers should now be clickable to sort the results.
 
 #### Add the edition form
 
-You can find a working example here: https://github.com/akeneo-labs/CustomEntityBundle/blob/master/docs/examples/CustomBundle/Resources/config/form_extensions/brand/edit.yml
+You can find a working example [here](https://github.com/akeneo-labs/CustomEntityBundle/blob/master/docs/examples/CustomBundle/Resources/config/form_extensions/brand/edit.yml).
 
 If you try to click on a reference data to edit it, you'll see it doesn't work. It's because the edit link is not configured for the datagrid. Add the following configuration to declare the route and the edit button:
 
@@ -217,7 +219,7 @@ custom_entities:
             edit_form_extension: acme-supplier-edit-form
 ```
 
-At this point, you should be able to dislay the edition form. But you should also see that all the fields are empty except the code. It’s because the entity has no normalizer, so we need to write one:
+At this point, you should be able to display the edition form. But you should also see that all the fields are empty except the code. It’s because the entity has no normalizer, so we need to write one:
 
 ```php
 <?php
@@ -243,7 +245,6 @@ class SupplierNormalizer implements NormalizerInterface
     {
         return $data instanceof Supplier;
     }
-
 }
 ```
 
@@ -260,8 +261,7 @@ services:
             - {name: pim_serializer.normalizer, priority: 200}
 ```
 
-The service must be tagged as “pim_serializer.normalizer” to be identified as a serializer. You now have to load the 
-services.yml file via the dependency injection.
+The service must be tagged as “pim_serializer.normalizer” to be registered in the serializer. You now have to load the services.yml file via the dependency injection.
 
 At this point, you should be able to see all the fields of your reference data. If you click on the save button, the reference data should be saved and the list should also display the updated informations.
 
