@@ -300,7 +300,8 @@ At this point, the datagrid configuration is fully working, and you should be ab
 
 ## Internationalization
 
-You have to create 2 translation files. Here is an example for english:
+You have to create 2 translation files. The file `messages.en.yml` is used by the symfony translator in the backend, while the `jsmesages.en.yml` is for all the front translations. Here is an example for english:
+
 ```yaml
 #acme/Bundle/SupplierBundle/Resources/translations/messages.en.yml
 
@@ -309,8 +310,9 @@ acme:
         field:
             name: Name
             code: Code
-```yaml
+```
 
+```yaml
 #acme/Bundle/SupplierBundle/Resources/translations/jsmessages.en.yml
 
 acme.menu.item.reference_data.supplier: Supplier
