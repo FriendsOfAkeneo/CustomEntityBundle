@@ -94,12 +94,3 @@ datagrid:
                     withHeader: true
                 messages:
                     empty_selection: pim_datagrid.mass_action.delete.empty_selection
-
-            mass_edit:
-                type: redirect
-                label: Mass Edit
-                className: 'AknButton AknButton--action AknButtonList-item'
-                handler: custom_mass_edit
-                route: pim_customentity_massedit
-                route_parameters:
-                    customEntityName: brand
