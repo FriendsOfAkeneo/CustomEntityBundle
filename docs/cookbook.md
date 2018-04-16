@@ -159,7 +159,7 @@ datagrid:
                     data_name: rd.name
 ```
 
-You should now see a new text field to filter the list, try it to ensure the filtering is working.
+Clear Symfony cache and rebuild your assets and uou should now see a new text field to filter the list, try it to ensure the filtering is working.
 
 #### Make the list sortable:
 
