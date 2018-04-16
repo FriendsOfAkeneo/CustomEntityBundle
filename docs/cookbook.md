@@ -310,6 +310,7 @@ acme:
             name: Name
             code: Code
 ```yaml
+
 #acme/Bundle/SupplierBundle/Resources/translations/jsmessages.en.yml
 
 acme.menu.item.reference_data.supplier: Supplier
