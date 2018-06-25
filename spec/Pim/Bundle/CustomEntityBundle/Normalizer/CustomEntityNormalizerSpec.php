@@ -8,7 +8,7 @@ use PhpSpec\ObjectBehavior;
 use Pim\Bundle\CustomEntityBundle\Entity\AbstractCustomEntity;
 use Pim\Bundle\CustomEntityBundle\Normalizer\CustomEntityNormalizer;
 use Pim\Bundle\CustomEntityBundle\Versioning\VersionableInterface;
-use Pim\Bundle\EnrichBundle\Provider\StructureVersion\StructureVersionProvider;
+use Pim\Bundle\EnrichBundle\StructureVersion\Provider\StructureVersion;
 use Pim\Bundle\VersioningBundle\Manager\VersionManager;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
@@ -18,7 +18,7 @@ class CustomEntityNormalizerSpec extends ObjectBehavior
         NormalizerInterface $pimSerializer,
         VersionManager $versionManager,
         NormalizerInterface $versionNormalizer,
-        StructureVersionProvider $structureVersionProvider
+        StructureVersion $structureVersionProvider
     ) {
         $this->beConstructedWith($pimSerializer, $versionManager, $versionNormalizer, $structureVersionProvider);
     }
