@@ -33,4 +33,4 @@ services:
     pim_custom_entity.provider.structure_version.custom_entity:
         class: '%pim_enrich.provider.structure_version.class%'
         arguments:
-            - '@pim_versioning.repository.version'
+            - '@doctrine'
