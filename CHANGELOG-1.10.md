@@ -1,4 +1,15 @@
-#1.10.8
+# 1.10.9
+
+## Bug fixes
+
+- Remove deprecated frontend form validation; ensure compatibility with PIM ~1.7.26
+
+## Beware
+
+As of PIM v1.7.26, `JsFormValidationBundle` is no longer used in the PIM. If you still want to use front-end validation for your Custom Entity forms,
+you can do so by requiring [fp/jsformvalidator-bundle](https://github.com/formapro/JsFormValidatorBundle) in your composer.json
+
+# 1.10.8
 
 ## Improvements
 
