@@ -4,7 +4,6 @@
 {% oro_title_set({ params: { ('%title%'): title } }) %}
 
 {% block content %}
-    {{ JSFV(form) }}
     {{ form_start(form, {
         'action': formAction,
         'attr': {
