@@ -33,7 +33,7 @@ Then add the following lines **at the end** of your app/config/routing.yml :
         resource: "@PimCustomEntityBundle/Resources/config/routing.yml"
 ```
 
-and enable the bundle in the `app/AppKernel.php` file in the `registerBundles()` method:
+and enable the bundle in the `app/AppKernel.php` file in the `registerProjectBundles()` method:
 
 ```php
     $bundles = [
