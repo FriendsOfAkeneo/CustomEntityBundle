@@ -133,4 +133,12 @@ Update your Doctrine schema:
     php ./bin/console doctrine:schema:update --force
 ```
 
-Do not forget to clear your cache before using the application.
+Do not forget to clear your cache and regenerate assets before using the application.
+
+```bash
+rm -rf ./var/cache ./web/js ./web/css;
+bin/console --env=prod pim:installer:assets --symlink --clean; 
+yarn run webpack-dev; 
+yarn run webpack-test
+```
+
