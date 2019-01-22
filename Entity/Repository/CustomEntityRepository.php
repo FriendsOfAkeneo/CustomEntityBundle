@@ -2,10 +2,10 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Entity\Repository;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\QueryBuilder;
 use Akeneo\Pim\Enrichment\Bundle\Doctrine\ORM\Repository\ReferenceDataRepository;
 use Akeneo\Tool\Component\Api\Repository\PageableRepositoryInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * Repository for the custom entity

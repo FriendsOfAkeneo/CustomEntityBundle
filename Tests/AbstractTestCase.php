@@ -2,13 +2,13 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Tests;
 
-use Akeneo\Tool\Bundle\BatchBundle\Command\BatchCommand;
-use Akeneo\Test\IntegrationTestsBundle\Configuration\CatalogInterface;
-use Akeneo\Test\IntegrationTestsBundle\Security\SystemUserAuthenticator;
-use Doctrine\ORM\EntityManagerInterface;
-use Pim\Bundle\CustomEntityBundle\Manager\ManagerInterface;
 use Akeneo\Channel\Component\Model\ChannelInterface;
 use Akeneo\Channel\Component\Repository\ChannelRepositoryInterface;
+use Akeneo\Test\IntegrationTestsBundle\Configuration\CatalogInterface;
+use Akeneo\Test\IntegrationTestsBundle\Security\SystemUserAuthenticator;
+use Akeneo\Tool\Bundle\BatchBundle\Command\BatchCommand;
+use Doctrine\ORM\EntityManagerInterface;
+use Pim\Bundle\CustomEntityBundle\Manager\ManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;

@@ -2,12 +2,12 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Normalizer;
 
+use Akeneo\Platform\Bundle\UIBundle\Provider\StructureVersion\StructureVersionProviderInterface;
+use Akeneo\Tool\Bundle\VersioningBundle\Manager\VersionManager;
 use Doctrine\Common\Util\ClassUtils;
 use Pim\Bundle\CustomEntityBundle\Entity\AbstractCustomEntity;
 use Pim\Bundle\CustomEntityBundle\Entity\AbstractTranslatableCustomEntity;
 use Pim\Bundle\CustomEntityBundle\Versioning\VersionableInterface;
-use Akeneo\Platform\Bundle\UIBundle\Provider\StructureVersion\StructureVersionProviderInterface;
-use Akeneo\Tool\Bundle\VersioningBundle\Manager\VersionManager;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**

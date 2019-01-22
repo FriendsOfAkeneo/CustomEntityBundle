@@ -2,18 +2,18 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Event\Subscriber;
 
+use Akeneo\Pim\Enrichment\Component\Product\Query\Filter\Operators;
+use Akeneo\Pim\Enrichment\Component\Product\Query\ProductQueryBuilderFactoryInterface;
 use Akeneo\Tool\Component\StorageUtils\Event\RemoveEvent;
 use Akeneo\Tool\Component\StorageUtils\StorageEvents;
 use Doctrine\ORM\EntityManagerInterface;
+use Oro\Bundle\PimDataGridBundle\Datasource\ResultRecord\Orm\ObjectIdHydrator;
+use Oro\Bundle\PimDataGridBundle\Extension\MassAction\Event\MassActionEvent;
+use Oro\Bundle\PimDataGridBundle\Extension\MassAction\Event\MassActionEvents;
 use Pim\Bundle\CustomEntityBundle\Configuration\Registry;
 use Pim\Bundle\CustomEntityBundle\Entity\AbstractCustomEntity;
 use Pim\Bundle\CustomEntityBundle\Entity\Repository\AttributeRepository;
 use Pim\Bundle\CustomEntityBundle\Remover\NonRemovableEntityException;
-use Oro\Bundle\PimDataGridBundle\Datasource\ResultRecord\Orm\ObjectIdHydrator;
-use Oro\Bundle\PimDataGridBundle\Extension\MassAction\Event\MassActionEvent;
-use Oro\Bundle\PimDataGridBundle\Extension\MassAction\Event\MassActionEvents;
-use Akeneo\Pim\Enrichment\Component\Product\Query\Filter\Operators;
-use Akeneo\Pim\Enrichment\Component\Product\Query\ProductQueryBuilderFactoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
