@@ -6,7 +6,7 @@ use Acme\Bundle\CustomBundle\Repository\ChoicesRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use PhpSpec\ObjectBehavior;
-use Pim\Component\ReferenceData\Model\ReferenceDataInterface;
+use Akeneo\Pim\Enrichment\Component\Product\Model\ReferenceDataInterface;
 
 class ChoicesRepositorySpec extends ObjectBehavior
 {

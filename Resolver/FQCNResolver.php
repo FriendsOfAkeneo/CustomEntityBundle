@@ -2,7 +2,7 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Resolver;
 
-use Pim\Bundle\CatalogBundle\Resolver\FQCNResolver as BaseResolver;
+use Akeneo\Pim\Enrichment\Bundle\Resolver\FQCNResolver as BaseResolver;
 use Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
 
 /**

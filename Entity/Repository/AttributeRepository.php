@@ -4,8 +4,8 @@ namespace Pim\Bundle\CustomEntityBundle\Entity\Repository;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
-use Pim\Bundle\CatalogBundle\Entity\Attribute;
-use Pim\Component\Catalog\AttributeTypes;
+use Akeneo\Pim\Structure\Component\Model\Attribute;
+use Akeneo\Pim\Structure\Component\AttributeTypes;
 
 /**
  * Repository for attribute entity

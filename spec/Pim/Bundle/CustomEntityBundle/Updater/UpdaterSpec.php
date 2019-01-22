@@ -2,17 +2,17 @@
 
 namespace spec\Pim\Bundle\CustomEntityBundle\Updater;
 
-use Akeneo\Component\FileStorage\File\FileStorerInterface;
-use Akeneo\Component\Localization\Model\AbstractTranslation;
-use Akeneo\Component\StorageUtils\Updater\ObjectUpdaterInterface;
+use Akeneo\Tool\Component\FileStorage\File\FileStorerInterface;
+use Akeneo\Tool\Component\Localization\Model\AbstractTranslation;
+use Akeneo\Tool\Component\StorageUtils\Updater\ObjectUpdaterInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use PhpSpec\ObjectBehavior;
 use Pim\Bundle\CustomEntityBundle\Entity\AbstractTranslatableCustomEntity;
 use Pim\Bundle\CustomEntityBundle\Updater\Updater;
-use Pim\Component\Catalog\Repository\LocaleRepositoryInterface;
-use Pim\Component\ReferenceData\Model\ReferenceDataInterface;
+use Akeneo\Channel\Component\Repository\LocaleRepositoryInterface;
+use Akeneo\Pim\Enrichment\Component\Product\Model\ReferenceDataInterface;
 use Prophecy\Argument;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 

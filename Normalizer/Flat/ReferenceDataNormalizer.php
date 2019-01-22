@@ -2,11 +2,11 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Normalizer\Flat;
 
-use Akeneo\Component\Localization\Model\TranslationInterface;
+use Akeneo\Tool\Component\Localization\Model\TranslationInterface;
 use Doctrine\Common\Collections\Collection;
 use Pim\Bundle\CustomEntityBundle\Metadata\ClassMetadataRegistry;
 use Pim\Bundle\CustomEntityBundle\Metadata\TargetEntityResolver;
-use Pim\Component\ReferenceData\Model\ReferenceDataInterface;
+use Akeneo\Pim\Enrichment\Component\Product\Model\ReferenceDataInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 

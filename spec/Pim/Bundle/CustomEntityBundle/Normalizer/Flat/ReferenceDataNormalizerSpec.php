@@ -9,7 +9,7 @@ use PhpSpec\ObjectBehavior;
 use Pim\Bundle\CustomEntityBundle\Metadata\ClassMetadataRegistry;
 use Pim\Bundle\CustomEntityBundle\Metadata\TargetEntityResolver;
 use Pim\Bundle\CustomEntityBundle\Normalizer\Flat\ReferenceDataNormalizer;
-use Pim\Component\ReferenceData\Model\ReferenceDataInterface;
+use Akeneo\Pim\Enrichment\Component\Product\Model\ReferenceDataInterface;
 use Prophecy\Argument;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;

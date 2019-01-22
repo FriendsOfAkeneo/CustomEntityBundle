@@ -4,7 +4,7 @@ namespace Pim\Bundle\CustomEntityBundle\Tests\Versioning;
 
 use Acme\Bundle\CustomBundle\Entity\Color;
 use Pim\Bundle\CustomEntityBundle\Tests\AbstractTestCase;
-use Pim\Bundle\VersioningBundle\Repository\VersionRepositoryInterface;
+use Akeneo\Tool\Bundle\VersioningBundle\Repository\VersionRepositoryInterface;
 
 /**
  * @author    Mathias METAYER <mathias.metayer@akeneo.com>

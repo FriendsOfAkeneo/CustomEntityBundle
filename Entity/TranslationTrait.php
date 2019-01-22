@@ -5,7 +5,7 @@ namespace Pim\Bundle\CustomEntityBundle\Entity;
 /**
  * Trait for translation entities
  *
- * @see       Akeneo\Component\Localization\Model\TranslationInterface
+ * @see       Akeneo\Tool\Component\Localization\Model\TranslationInterface
  *
  * @author    Romain Monceau <romain@akeneo.com>
  * @copyright 2017 Akeneo SAS (http://www.akeneo.com)

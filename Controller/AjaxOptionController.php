@@ -2,7 +2,7 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Controller;
 
-use Pim\Bundle\UIBundle\Controller\AjaxOptionController as BaseAjaxOptionController;
+use Akeneo\Platform\Bundle\UIBundle\Controller\AjaxOptionController as BaseAjaxOptionController;
 use Pim\Component\ReferenceData\Repository\ReferenceDataRepositoryInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

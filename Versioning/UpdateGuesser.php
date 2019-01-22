@@ -3,7 +3,7 @@
 namespace Pim\Bundle\CustomEntityBundle\Versioning;
 
 use Doctrine\ORM\EntityManager;
-use Pim\Bundle\VersioningBundle\UpdateGuesser\UpdateGuesserInterface;
+use Akeneo\Tool\Bundle\VersioningBundle\UpdateGuesser\UpdateGuesserInterface;
 
 /**
  * Custom entity update guesser

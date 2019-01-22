@@ -4,7 +4,7 @@ namespace spec\Pim\Bundle\CustomEntityBundle\Connector\ArrayConverter\FlatToStan
 
 use PhpSpec\ObjectBehavior;
 use Pim\Bundle\CustomEntityBundle\Connector\ArrayConverter\FlatToStandard\ReferenceData;
-use Pim\Component\Connector\ArrayConverter\ArrayConverterInterface;
+use Akeneo\Tool\Component\Connector\ArrayConverter\ArrayConverterInterface;
 
 class ReferenceDataSpec extends ObjectBehavior
 {

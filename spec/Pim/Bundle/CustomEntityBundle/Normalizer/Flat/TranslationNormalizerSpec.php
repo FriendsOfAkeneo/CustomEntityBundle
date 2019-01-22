@@ -3,7 +3,7 @@
 namespace spec\Pim\Bundle\CustomEntityBundle\Normalizer\Flat;
 
 use Acme\Bundle\CustomBundle\Entity\PictogramTranslation;
-use Akeneo\Component\Localization\Model\TranslationInterface;
+use Akeneo\Tool\Component\Localization\Model\TranslationInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use PhpSpec\ObjectBehavior;
 use Pim\Bundle\CustomEntityBundle\Metadata\ClassMetadataRegistry;

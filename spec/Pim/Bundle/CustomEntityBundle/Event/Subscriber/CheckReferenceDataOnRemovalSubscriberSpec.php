@@ -2,8 +2,8 @@
 
 namespace spec\Pim\Bundle\CustomEntityBundle\Event\Subscriber;
 
-use Akeneo\Component\StorageUtils\Event\RemoveEvent;
-use Akeneo\Component\StorageUtils\StorageEvents;
+use Akeneo\Tool\Component\StorageUtils\Event\RemoveEvent;
+use Akeneo\Tool\Component\StorageUtils\StorageEvents;
 use Doctrine\ORM\EntityManagerInterface;
 use Oro\Bundle\DataGridBundle\Datagrid\DatagridInterface;
 use PhpSpec\ObjectBehavior;
@@ -14,14 +14,14 @@ use Pim\Bundle\CustomEntityBundle\Entity\Repository\AttributeRepository;
 use Pim\Bundle\CustomEntityBundle\Entity\Repository\CustomEntityRepository;
 use Pim\Bundle\CustomEntityBundle\Event\Subscriber\CheckReferenceDataOnRemovalSubscriber;
 use Pim\Bundle\CustomEntityBundle\Remover\NonRemovableEntityException;
-use Pim\Bundle\DataGridBundle\Datasource\DatasourceInterface;
-use Pim\Bundle\DataGridBundle\Datasource\ResultRecord\Orm\ObjectIdHydrator;
-use Pim\Bundle\DataGridBundle\Extension\MassAction\Event\MassActionEvent;
-use Pim\Bundle\DataGridBundle\Extension\MassAction\Event\MassActionEvents;
-use Pim\Component\Catalog\Model\AttributeInterface;
-use Pim\Component\Catalog\Query\Filter\Operators;
-use Pim\Component\Catalog\Query\ProductQueryBuilderFactoryInterface;
-use Pim\Component\Catalog\Query\ProductQueryBuilderInterface;
+use Oro\Bundle\PimDataGridBundle\Datasource\DatasourceInterface;
+use Oro\Bundle\PimDataGridBundle\Datasource\ResultRecord\Orm\ObjectIdHydrator;
+use Oro\Bundle\PimDataGridBundle\Extension\MassAction\Event\MassActionEvent;
+use Oro\Bundle\PimDataGridBundle\Extension\MassAction\Event\MassActionEvents;
+use Akeneo\Pim\Structure\Component\Model\AttributeInterface;
+use Akeneo\Pim\Enrichment\Component\Product\Query\Filter\Operators;
+use Akeneo\Pim\Enrichment\Component\Product\Query\ProductQueryBuilderFactoryInterface;
+use Akeneo\Pim\Enrichment\Component\Product\Query\ProductQueryBuilderInterface;
 use Prophecy\Argument;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 

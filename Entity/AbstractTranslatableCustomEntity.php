@@ -2,9 +2,9 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Entity;
 
-use Akeneo\Component\Localization\Model\AbstractTranslation;
-use Akeneo\Component\Localization\Model\TranslatableInterface;
-use Akeneo\Component\Localization\Model\TranslationInterface;
+use Akeneo\Tool\Component\Localization\Model\AbstractTranslation;
+use Akeneo\Tool\Component\Localization\Model\TranslatableInterface;
+use Akeneo\Tool\Component\Localization\Model\TranslationInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**

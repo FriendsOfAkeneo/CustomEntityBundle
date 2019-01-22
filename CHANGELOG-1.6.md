@@ -28,7 +28,7 @@
 - Remove `PimCustomEntityBundle::layout.html.twig`. The default configuration uses `PimEnrichBundle::layout.html.twig` now
 - Remove `Pim\Bundle\CustomEntityBundle\Action\GridActionInterface`
 - Remove `Pim\Bundle\CustomEntityBundle\Action\MassDeleteAction` to use the PIM one
-- Remove `Pim\Bundle\CustomEntityBundle\MassAction\DataGridQueryGenerator` class and use `Pim\Bundle\DataGridBundle\Extension\MassAction\MassActionDispatcher` instead
+- Remove `Pim\Bundle\CustomEntityBundle\MassAction\DataGridQueryGenerator` class and use `Oro\Bundle\PimDataGridBundle\Extension\MassAction\MassActionDispatcher` instead
 - Remove `Pim\Bundle\CustomEntityBundle\AttributeType\CustomOptionSimpleSelectType` and `Pim\Bundle\CustomEntityBundle\AttributeType\CustomOptionMultiSelectType` classes
 - Remove `Pim\Bundle\CustomEntityBundle\Datasource\CustomEntityDatasource`
 - Remove `Pim\Bundle\CustomEntityBundle\Doctrine\ORM\Sorter\CodeOptionSorter`, `Pim\Bundle\CustomEntityBundle\Doctrine\ORM\Sorter\LabelOptionSorter` and `Pim\Bundle\CustomEntityBundle\Doctrine\ORM\Sorter\TranslatableOptionSorter` classes
@@ -40,9 +40,9 @@
 - Remove `Pim\Bundle\CustomEntityBundle\Form\Extension\ClearMissingExtension`, `Pim\Bundle\CustomEntityBundle\Form\Subscriber\ClearMissingSubscriber` and `Pim\Bundle\CustomEntityBundle\Form\Subscriber\NullValue`
 - Remove `Pim\Bundle\CustomEntityBundle\Normalizer\MongoDBReferableNormalizer`
 
-- Inject `Pim\Bundle\DataGridBundle\Extension\MassAction\MassActionDispatcher` in `Pim\Bundle\CustomEntityBundle\Action\MassEditAction` instead of `Pim\Bundle\CustomEntityBundle\MassAction\DataGridQueryGenerator`
-- Inject `Pim\Bundle\DataGridBundle\Extension\MassAction\MassActionDispatcher`, `Pim\Bundle\ImportExportBundle\Entity\Repository\JobInstanceRepository`, `Akeneo\Bundle\BatchBundle\Launcher\JobLauncherInterface` and `Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface` in `Pim\Bundle\CustomEntityBundle\Action\QuickExportAction` of `Symfony\Bridge\Doctrine\RegistryInterface`, `Pim\Bundle\CustomEntityBundle\MassAction\DataGridQueryGenerator` and `Symfony\Component\Serializer\Serializer`
-- Repositories don't extend `Pim\Bundle\CatalogBundle\Doctrine\ReferableEntityRepository` or implement `Pim\Bundle\UIBundle\Entity\Repository\OptionRepositoryInterface` anymore.
+- Inject `Oro\Bundle\PimDataGridBundle\Extension\MassAction\MassActionDispatcher` in `Pim\Bundle\CustomEntityBundle\Action\MassEditAction` instead of `Pim\Bundle\CustomEntityBundle\MassAction\DataGridQueryGenerator`
+- Inject `Oro\Bundle\PimDataGridBundle\Extension\MassAction\MassActionDispatcher`, `Akeneo\Platform\Bundle\ImportExportBundle\Entity\Repository\JobInstanceRepository`, `Akeneo\Tool\Bundle\BatchBundle\Launcher\JobLauncherInterface` and `Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface` in `Pim\Bundle\CustomEntityBundle\Action\QuickExportAction` of `Symfony\Bridge\Doctrine\RegistryInterface`, `Pim\Bundle\CustomEntityBundle\MassAction\DataGridQueryGenerator` and `Symfony\Component\Serializer\Serializer`
+- Repositories don't extend `Akeneo\Pim\Enrichment\Bundle\Doctrine\ORM\QueryBuilderUtilityDoctrine\ReferableEntityRepository` or implement `Akeneo\Platform\Bundle\UIBundle\Entity\Repository\OptionRepositoryInterface` anymore.
 - Methods `getOption`, `getOptionId`, `getOptionLabel` and `getOptions` have been removed from repositories
 - `Pim\Bundle\CustomEntityBundle\Entity\Repository\TranslatableCustomEntityRepository` implements neither `Pim\Bundle\CustomEntityBundle\Entity\Repository\DatagridAwareRepositoryInterface` nor `Pim\Bundle\CustomEntityBundle\Entity\Repository\LocaleAwareRepositoryInterface`
 - Methods `createDatagridQueryBuilder` and `setLocale` and instance variable `locale` have been removed from `Pim\Bundle\CustomEntityBundle\Entity\Repository\TranslatableCustomEntityRepository`

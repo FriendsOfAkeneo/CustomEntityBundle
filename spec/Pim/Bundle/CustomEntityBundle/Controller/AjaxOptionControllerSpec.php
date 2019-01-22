@@ -4,7 +4,7 @@ namespace spec\Pim\Bundle\CustomEntityBundle\Controller;
 
 use PhpSpec\ObjectBehavior;
 use Pim\Bundle\CustomEntityBundle\Controller\AjaxOptionController;
-use Pim\Component\ReferenceData\ConfigurationRegistryInterface;
+use Akeneo\Pim\Structure\Component\ReferenceData\ConfigurationRegistryInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 class AjaxOptionControllerSpec extends ObjectBehavior
@@ -17,6 +17,6 @@ class AjaxOptionControllerSpec extends ObjectBehavior
     function it_is_initializable()
     {
         $this->shouldHaveType(AjaxOptionController::class);
-        $this->shouldBeAnInstanceOf('Pim\Bundle\UIBundle\Controller\AjaxOptionController');
+        $this->shouldBeAnInstanceOf('Akeneo\Platform\Bundle\UIBundle\Controller\AjaxOptionController');
     }
 }

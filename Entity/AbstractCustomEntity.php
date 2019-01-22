@@ -2,7 +2,7 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Entity;
 
-use Pim\Component\ReferenceData\Model\AbstractReferenceData;
+use Akeneo\Pim\Enrichment\Component\Product\Model\AbstractReferenceData;
 
 /**
  * @author    Antoine Guigan <antoine@akeneo.com>
