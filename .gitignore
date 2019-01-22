@@ -2,7 +2,4 @@
 bin
 vendor
 composer.phar
-composer.lock
-docker-compose.yml
 .php_cs.cache
-

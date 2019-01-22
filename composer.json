@@ -14,8 +14,7 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/akeneo/pim-community-dev.git",
-            "no-api": true
+            "url": "https://github.com/akeneo/pim-community-dev.git"
         }
     ],
     "minimum-stability": "stable",
