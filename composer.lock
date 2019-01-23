@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "feca816224b9b41eec6be3f12abda52e",
+    "content-hash": "143bbea2906e6119c3100ba09bee14d2",
     "packages": [
         {
             "name": "akeneo/pim-community-dev",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/akeneo/pim-community-dev.git",
-                "reference": "c01a2d759716a6c3ab73e5167207c7cae2088886"
+                "reference": "0382137ac8a6d6c7d215118f4b8b8ccb27ac84c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/akeneo/pim-community-dev/zipball/c01a2d759716a6c3ab73e5167207c7cae2088886",
-                "reference": "c01a2d759716a6c3ab73e5167207c7cae2088886",
+                "url": "https://api.github.com/repos/akeneo/pim-community-dev/zipball/0382137ac8a6d6c7d215118f4b8b8ccb27ac84c7",
+                "reference": "0382137ac8a6d6c7d215118f4b8b8ccb27ac84c7",
                 "shasum": ""
             },
             "require": {
@@ -207,7 +207,7 @@
                 "source": "https://github.com/akeneo/pim-community-dev/tree/master",
                 "issues": "https://github.com/akeneo/pim-community-dev/issues"
             },
-            "time": "2019-01-22T13:32:56+00:00"
+            "time": "2019-01-22T19:48:50+00:00"
         },
         {
             "name": "ass/xmlsecurity",
