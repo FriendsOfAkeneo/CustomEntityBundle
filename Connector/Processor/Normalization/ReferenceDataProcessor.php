@@ -2,7 +2,7 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Connector\Processor\Normalization;
 
-use Akeneo\Component\Batch\Item\ItemProcessorInterface;
+use Akeneo\Tool\Component\Batch\Item\ItemProcessorInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**

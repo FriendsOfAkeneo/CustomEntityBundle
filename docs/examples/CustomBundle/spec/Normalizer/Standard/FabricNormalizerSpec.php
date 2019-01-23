@@ -6,7 +6,7 @@ use Acme\Bundle\CustomBundle\Entity\Fabric;
 use Acme\Bundle\CustomBundle\Normalizer\Standard\FabricNormalizer;
 use Doctrine\Common\Collections\Collection;
 use PhpSpec\ObjectBehavior;
-use Pim\Component\ReferenceData\Model\ReferenceDataInterface;
+use Akeneo\Pim\Enrichment\Component\Product\Model\ReferenceDataInterface;
 use Prophecy\Argument;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 

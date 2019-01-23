@@ -2,17 +2,17 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Updater;
 
-use Akeneo\Component\FileStorage\File\FileStorerInterface;
-use Akeneo\Component\StorageUtils\Exception\InvalidPropertyException;
-use Akeneo\Component\StorageUtils\Updater\ObjectUpdaterInterface;
+use Akeneo\Channel\Component\Repository\LocaleRepositoryInterface;
+use Akeneo\Pim\Enrichment\Component\FileStorage;
+use Akeneo\Pim\Enrichment\Component\Product\Model\ReferenceDataInterface;
+use Akeneo\Tool\Component\FileStorage\File\FileStorerInterface;
+use Akeneo\Tool\Component\StorageUtils\Exception\InvalidPropertyException;
+use Akeneo\Tool\Component\StorageUtils\Updater\ObjectUpdaterInterface;
 use Doctrine\Common\Util\ClassUtils;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Pim\Bundle\CustomEntityBundle\Entity\AbstractTranslatableCustomEntity;
-use Pim\Component\Catalog\FileStorage;
-use Pim\Component\Catalog\Repository\LocaleRepositoryInterface;
-use Pim\Component\ReferenceData\Model\ReferenceDataInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
 /**
@@ -72,7 +72,7 @@ class Updater implements ObjectUpdaterInterface
             throw new \InvalidArgumentException(
                 sprintf(
                     'Expects a "%s", "%s" provided',
-                    'Pim\Component\ReferenceData\Model\ReferenceDataInterface',
+                    'Akeneo\Pim\Enrichment\Component\Product\Model\ReferenceDataInterface',
                     ClassUtils::getClass($referenceData)
                 )
             );
@@ -138,7 +138,7 @@ class Updater implements ObjectUpdaterInterface
 
         if (is_subclass_of(
             $associationMapping['targetEntity'],
-            'Akeneo\Component\FileStorage\Model\FileInfoInterface'
+            'Akeneo\Tool\Component\FileStorage\Model\FileInfoInterface'
         )) {
             if (empty($value['filePath'])) {
                 $this->propertyAccessor->setValue($referenceData, $propertyPath, null);

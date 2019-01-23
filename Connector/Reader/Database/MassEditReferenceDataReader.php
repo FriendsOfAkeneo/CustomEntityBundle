@@ -2,13 +2,13 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Connector\Reader\Database;
 
-use Akeneo\Component\Batch\Item\ItemReaderInterface;
-use Akeneo\Component\Batch\Model\StepExecution;
-use Akeneo\Component\Batch\Step\StepExecutionAwareInterface;
+use Akeneo\Pim\Structure\Component\ReferenceData\ConfigurationRegistry;
+use Akeneo\Tool\Component\Batch\Item\ItemReaderInterface;
+use Akeneo\Tool\Component\Batch\Model\StepExecution;
+use Akeneo\Tool\Component\Batch\Step\StepExecutionAwareInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Pim\Bundle\CustomEntityBundle\Entity\Repository\CustomEntityRepository;
-use Pim\Component\ReferenceData\ConfigurationRegistry;
 
 /**
  * Reference data reader for quick export mass action

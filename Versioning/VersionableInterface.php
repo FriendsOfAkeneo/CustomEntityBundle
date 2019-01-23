@@ -2,7 +2,7 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Versioning;
 
-use Akeneo\Component\Versioning\Model\VersionableInterface as PimVersionableInterface;
+use Akeneo\Tool\Component\Versioning\Model\VersionableInterface as PimVersionableInterface;
 
 /**
  * Implement this interface for versionable custom entities

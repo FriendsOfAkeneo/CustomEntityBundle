@@ -2,8 +2,8 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Tests\Jobs;
 
-use Akeneo\Bundle\BatchBundle\Command\BatchCommand;
-use Akeneo\Component\Batch\Model\JobInstance;
+use Akeneo\Tool\Bundle\BatchBundle\Command\BatchCommand;
+use Akeneo\Tool\Component\Batch\Model\JobInstance;
 use Pim\Bundle\CustomEntityBundle\Tests\AbstractTestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;

@@ -2,14 +2,14 @@
 
 namespace spec\Pim\Bundle\CustomEntityBundle\Normalizer;
 
-use Akeneo\Component\Versioning\Model\VersionInterface;
+use Akeneo\Tool\Component\Versioning\Model\VersionInterface;
 use Doctrine\Common\Util\ClassUtils;
 use PhpSpec\ObjectBehavior;
 use Pim\Bundle\CustomEntityBundle\Entity\AbstractCustomEntity;
 use Pim\Bundle\CustomEntityBundle\Normalizer\CustomEntityNormalizer;
 use Pim\Bundle\CustomEntityBundle\Versioning\VersionableInterface;
-use Pim\Bundle\EnrichBundle\StructureVersion\Provider\StructureVersion;
-use Pim\Bundle\VersioningBundle\Manager\VersionManager;
+use Akeneo\Pim\Enrichment\Bundle\StructureVersion\Provider\StructureVersion;
+use Akeneo\Tool\Bundle\VersioningBundle\Manager\VersionManager;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class CustomEntityNormalizerSpec extends ObjectBehavior

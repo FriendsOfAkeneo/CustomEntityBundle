@@ -2,15 +2,15 @@
 
 namespace spec\Pim\Bundle\CustomEntityBundle\Connector\Reader\Database;
 
-use Akeneo\Component\Batch\Job\JobParameters;
-use Akeneo\Component\Batch\Model\StepExecution;
+use Akeneo\Tool\Component\Batch\Job\JobParameters;
+use Akeneo\Tool\Component\Batch\Model\StepExecution;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use PhpSpec\ObjectBehavior;
 use Pim\Bundle\CustomEntityBundle\Configuration\ConfigurationInterface;
 use Pim\Bundle\CustomEntityBundle\Configuration\Registry;
 use Pim\Bundle\CustomEntityBundle\Connector\Reader\Database\ReferenceDataReader;
-use Pim\Component\Connector\Reader\Database\AbstractReader;
+use Akeneo\Tool\Component\Connector\Reader\Database\AbstractReader;
 
 class ReferenceDataReaderSpec extends ObjectBehavior
 {

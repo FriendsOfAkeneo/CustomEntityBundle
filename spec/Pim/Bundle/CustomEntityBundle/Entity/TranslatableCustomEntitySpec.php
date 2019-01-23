@@ -33,7 +33,7 @@ class TranslatableCustomEntitySpec extends ObjectBehavior
 
     function it_is_translatable()
     {
-        $this->shouldImplement('Akeneo\Component\Localization\Model\TranslatableInterface');
+        $this->shouldImplement('Akeneo\Tool\Component\Localization\Model\TranslatableInterface');
     }
 
     function it_gets_a_translation()

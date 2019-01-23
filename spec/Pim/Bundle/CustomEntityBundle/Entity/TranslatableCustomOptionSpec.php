@@ -2,7 +2,7 @@
 
 namespace spec\Pim\Bundle\CustomEntityBundle\Entity;
 
-use Akeneo\Component\Localization\Model\TranslatableInterface;
+use Akeneo\Tool\Component\Localization\Model\TranslatableInterface;
 use PhpSpec\ObjectBehavior;
 use Pim\Bundle\CustomEntityBundle\Entity\AbstractCustomEntity;
 use Pim\Bundle\CustomEntityBundle\Entity\AbstractTranslatableCustomEntity;

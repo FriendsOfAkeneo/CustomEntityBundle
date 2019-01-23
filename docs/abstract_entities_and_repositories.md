@@ -15,7 +15,7 @@ The repositories for this type of entity should extend
 This entity extends the AbstractCustomEntity, and provides a link to a translation entity.
 This is used to provide a different label for each activated locale.
 
-The entity containing the translations should implement `Akeneo\Component\Localization\Model\TranslatableInterface`.
+The entity containing the translations should implement `Akeneo\Tool\Component\Localization\Model\TranslatableInterface`.
 
 The repositories for this type of entity should extend
 `Pim\Bundle\CustomEntityBundle\Entity\Repository\TranslatableCustomEntityRepository`.

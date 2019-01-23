@@ -2,13 +2,13 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Entity;
 
-use Akeneo\Component\Localization\Model\TranslationInterface;
+use Akeneo\Tool\Component\Localization\Model\TranslationInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Trait for translatable entity
  *
- * @see       Akeneo\Component\Localization\Model\TranslatableInterface
+ * @see       Akeneo\Tool\Component\Localization\Model\TranslatableInterface
  *
  * @author    Romain Monceau <romain@akeneo.com>
  * @copyright 2017 Akeneo SAS (http://www.akeneo.com)

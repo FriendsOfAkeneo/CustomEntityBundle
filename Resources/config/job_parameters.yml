@@ -10,7 +10,7 @@ services:
     pim_custom_entity.job.job_parameters.constraint_collection_provider.reference_data_csv_import:
         class: '%pim_custom_entity.job.job_parameters.constraint_collection_provider.reference_data.class%'
         arguments:
-            - '@pim_connector.job.job_parameters.constraint_collection_provider.simple_csv_import'
+            - '@akeneo_pim_enrichment.job.job_parameters.constraint_collection_provider.simple_csv_import'
             - '@pim_custom_entity.configuration.registry'
             -
                 - '%pim_custom_entity.job_name.csv_reference_data_import%'
@@ -20,7 +20,7 @@ services:
     pim_custom_entity.job.job_parameters.constraint_collection_provider.reference_data_csv_export:
         class: '%pim_custom_entity.job.job_parameters.constraint_collection_provider.reference_data.class%'
         arguments:
-            - '@pim_connector.job.job_parameters.constraint_collection_provider.simple_csv_export'
+            - '@akeneo_pim_enrichment.job.job_parameters.constraint_collection_provider.simple_csv_export'
             - '@pim_custom_entity.configuration.registry'
             -
                 - '%pim_custom_entity.job_name.csv_reference_data_export%'
@@ -30,7 +30,7 @@ services:
     pim_custom_entity.job.job_parameters.constraint_collection_provider.reference_data_quick_export:
         class: '%pim_custom_entity.job.job_parameters.constraint_collection_provider.quick_csv_export.class%'
         arguments:
-            - '@pim_connector.job.job_parameters.constraint_collection_provider.simple_csv_export'
+            - '@akeneo_pim_enrichment.job.job_parameters.constraint_collection_provider.simple_csv_export'
             -
                 - '%pim_custom_entity.job_name.csv_reference_data_quick_export%'
         tags:
@@ -40,7 +40,7 @@ services:
     pim_custom_entity.job.job_parameters.default_values_provider.reference_data_csv_import:
         class: '%pim_custom_entity.job.job_parameters.default_values_provider.reference_data.class%'
         arguments:
-            - '@pim_connector.job.job_parameters.default_values_provider.simple_csv_import'
+            - '@akeneo_pim_enrichment.job.job_parameters.default_values_provider.simple_csv_import'
             -
                 - '%pim_custom_entity.job_name.csv_reference_data_import%'
         tags:
@@ -49,7 +49,7 @@ services:
     pim_custom_entity.job.job_parameters.default_values_provider.reference_data_csv_export:
         class: '%pim_custom_entity.job.job_parameters.default_values_provider.reference_data.class%'
         arguments:
-            - '@pim_connector.job.job_parameters.default_values_provider.simple_csv_export'
+            - '@akeneo_pim_enrichment.job.job_parameters.default_values_provider.simple_csv_export'
             -
                 - '%pim_custom_entity.job_name.csv_reference_data_export%'
         tags:
@@ -58,7 +58,7 @@ services:
     pim_custom_entity.job.job_parameters.default_values_provider.reference_data_quick_export:
         class: '%pim_custom_entity.job.job_parameters.default_values_provider.quick_csv_export.class%'
         arguments:
-            - '@pim_connector.job.job_parameters.default_values_provider.simple_csv_export'
+            - '@akeneo_pim_enrichment.job.job_parameters.default_values_provider.simple_csv_export'
             -
                 - '%pim_custom_entity.job_name.csv_reference_data_quick_export%'
         tags:
@@ -66,7 +66,7 @@ services:
 
     # Job Instances configuration
     pim_custom_entity.job.job_instance_configuration.reference_data_csv_import:
-        class: '%pim_enrich.provider.form.job_instance.class%'
+        class: 'Akeneo\Platform\Bundle\ImportExportBundle\Provider\Form\JobInstanceFormProvider'
         arguments:
             -
                 csv_reference_data_import: reference-data-job-instance-csv-import
@@ -74,7 +74,7 @@ services:
             - { name: pim_enrich.provider.form, priority: 90 }
 
     pim_custom_entity.job.job_instance_configuration.reference_data_csv_export:
-        class: '%pim_enrich.provider.form.job_instance.class%'
+        class: 'Akeneo\Platform\Bundle\ImportExportBundle\Provider\Form\JobInstanceFormProvider'
         arguments:
             -
                 csv_reference_data_export: reference-data-job-instance-csv-export

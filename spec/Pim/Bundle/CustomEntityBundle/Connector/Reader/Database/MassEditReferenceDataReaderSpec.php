@@ -2,16 +2,16 @@
 
 namespace spec\Pim\Bundle\CustomEntityBundle\Connector\Reader\Database;
 
-use Akeneo\Component\Batch\Item\ItemReaderInterface;
-use Akeneo\Component\Batch\Job\JobParameters;
-use Akeneo\Component\Batch\Model\JobExecution;
-use Akeneo\Component\Batch\Model\StepExecution;
-use Akeneo\Component\Batch\Step\StepExecutionAwareInterface;
+use Akeneo\Tool\Component\Batch\Item\ItemReaderInterface;
+use Akeneo\Tool\Component\Batch\Job\JobParameters;
+use Akeneo\Tool\Component\Batch\Model\JobExecution;
+use Akeneo\Tool\Component\Batch\Model\StepExecution;
+use Akeneo\Tool\Component\Batch\Step\StepExecutionAwareInterface;
 use Doctrine\ORM\EntityManager;
 use Pim\Bundle\CustomEntityBundle\Connector\Reader\Database\MassEditReferenceDataReader;
 use PhpSpec\ObjectBehavior;
 use Pim\Bundle\CustomEntityBundle\Entity\Repository\CustomEntityRepository;
-use Pim\Component\ReferenceData\ConfigurationRegistry;
+use Akeneo\Pim\Structure\Component\ReferenceData\ConfigurationRegistry;
 
 class MassEditReferenceDataReaderSpec extends ObjectBehavior
 {

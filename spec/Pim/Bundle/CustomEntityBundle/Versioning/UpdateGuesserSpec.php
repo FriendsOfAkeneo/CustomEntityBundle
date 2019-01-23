@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityManager;
 use PhpSpec\ObjectBehavior;
 use Pim\Bundle\CustomEntityBundle\Versioning\UpdateGuesser;
 use Pim\Bundle\CustomEntityBundle\Versioning\VersionableInterface;
-use Pim\Bundle\VersioningBundle\UpdateGuesser\UpdateGuesserInterface;
+use Akeneo\Tool\Bundle\VersioningBundle\UpdateGuesser\UpdateGuesserInterface;
 
 class UpdateGuesserSpec extends ObjectBehavior
 {

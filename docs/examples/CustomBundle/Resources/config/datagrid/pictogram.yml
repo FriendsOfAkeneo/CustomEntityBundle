@@ -16,11 +16,11 @@ datagrid:
                 label: Label
             created:
                 label: Created
-                type: product_value_datetime
+                type: datetime_with_user_timezone
                 frontend_type: datetime
             updated:
                 label: Updated
-                type: product_value_datetime
+                type: datetime_with_user_timezone
                 frontend_type: datetime
         properties:
             id: ~

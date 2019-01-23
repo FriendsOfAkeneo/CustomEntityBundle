@@ -2,9 +2,9 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Connector\Reader\Database;
 
+use Akeneo\Tool\Component\Connector\Reader\Database\AbstractReader;
 use Doctrine\ORM\EntityManagerInterface;
 use Pim\Bundle\CustomEntityBundle\Configuration\Registry;
-use Pim\Component\Connector\Reader\Database\AbstractReader;
 
 /**
  * Reference data database reader

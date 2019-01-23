@@ -2,11 +2,11 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Tests\Crud;
 
+use Akeneo\Pim\Enrichment\Component\Product\Builder\ProductBuilderInterface;
+use Akeneo\Pim\Enrichment\Component\Product\Model\ProductInterface;
+use Akeneo\Pim\Structure\Component\AttributeTypes;
+use Akeneo\Pim\Structure\Component\Model\AttributeInterface;
 use Pim\Bundle\CustomEntityBundle\Tests\AbstractTestCase;
-use Pim\Component\Catalog\AttributeTypes;
-use Pim\Component\Catalog\Builder\ProductBuilderInterface;
-use Pim\Component\Catalog\Model\AttributeInterface;
-use Pim\Component\Catalog\Model\ProductInterface;
 
 /**
  * @author    Mathias METAYER <mathias.metayer@akeneo.com>

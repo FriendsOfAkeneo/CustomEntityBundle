@@ -2,17 +2,17 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Connector\Processor\Denormalization;
 
-use Akeneo\Component\Batch\Item\FileInvalidItem;
-use Akeneo\Component\Batch\Item\InvalidItemException;
-use Akeneo\Component\Batch\Item\ItemProcessorInterface;
-use Akeneo\Component\Batch\Model\StepExecution;
-use Akeneo\Component\Batch\Step\StepExecutionAwareInterface;
-use Akeneo\Component\StorageUtils\Detacher\ObjectDetacherInterface;
-use Akeneo\Component\StorageUtils\Updater\ObjectUpdaterInterface;
+use Akeneo\Tool\Component\Batch\Item\FileInvalidItem;
+use Akeneo\Tool\Component\Batch\Item\InvalidItemException;
+use Akeneo\Tool\Component\Batch\Item\ItemProcessorInterface;
+use Akeneo\Tool\Component\Batch\Model\StepExecution;
+use Akeneo\Tool\Component\Batch\Step\StepExecutionAwareInterface;
+use Akeneo\Tool\Component\Connector\Exception\InvalidItemFromViolationsException;
+use Akeneo\Tool\Component\StorageUtils\Detacher\ObjectDetacherInterface;
+use Akeneo\Tool\Component\StorageUtils\Updater\ObjectUpdaterInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Pim\Bundle\CustomEntityBundle\Configuration\Registry;
 use Pim\Bundle\CustomEntityBundle\Entity\Repository\CustomEntityRepository;
-use Pim\Component\Connector\Exception\InvalidItemFromViolationsException;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
