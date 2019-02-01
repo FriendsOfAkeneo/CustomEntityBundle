@@ -13,7 +13,7 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "akeneo/pim-community-dev": "dev-master"
+        "akeneo/pim-community-dev": "3.0.x-dev@dev"
     },
     "require-dev": {
         "phpspec/phpspec": "^3.0",
