@@ -23,7 +23,7 @@ For more information, please see http://docs.akeneo.com/
 You can install this bundle with composer (see requirements section):
 
 ```bash
-    php composer.phar require "akeneo-labs/custom-entity-bundle":"3.1.x-dev"
+    php composer.phar require "akeneo-labs/custom-entity-bundle":"3.0.*"
 ```
 
 Then add the following lines **at the end** of your app/config/routing.yml :
