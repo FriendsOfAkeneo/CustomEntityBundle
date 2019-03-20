@@ -66,3 +66,8 @@ pim_customentity_history:
         actionType: history
     requirements:
         id: \d+
+
+pim_customentity_media_rest_post:
+    path: '/rest/customentity_media'
+    defaults: { _controller: pim_custom_entity.media_rest_controller:postAction }
+    methods: [POST]

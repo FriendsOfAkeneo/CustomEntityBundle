@@ -1,7 +1,8 @@
 parameters:
-    pim_ui.controller.ajax_option.class:     Pim\Bundle\CustomEntityBundle\Controller\AjaxOptionController
-    pimee_ui.controller.ajax_option.class:   Pim\Bundle\CustomEntityBundle\Controller\EnterpriseAjaxOptionController
-    pim_custom_entity.rest_controller.class: Pim\Bundle\CustomEntityBundle\Controller\RestController
+    pim_ui.controller.ajax_option.class:           Pim\Bundle\CustomEntityBundle\Controller\AjaxOptionController
+    pimee_ui.controller.ajax_option.class:         Pim\Bundle\CustomEntityBundle\Controller\EnterpriseAjaxOptionController
+    pim_custom_entity.rest_controller.class:       Pim\Bundle\CustomEntityBundle\Controller\RestController
+    pim_custom_entity.media_rest_controller.class: Pim\Bundle\CustomEntityBundle\Controller\MediaRestController
 
 services:
     pim_custom_entity.controller:
@@ -16,3 +17,10 @@ services:
         scope: request
         arguments:
             - '@pim_custom_entity.configuration.registry'
+
+    pim_custom_entity.media_rest_controller:
+        class: '%pim_custom_entity.media_rest_controller.class%'
+        arguments:
+            - '@validator'
+            - '@akeneo_file_storage.file_storage.path_generator'
+            - '%catalog_storage_dir%'
