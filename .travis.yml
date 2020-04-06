@@ -10,7 +10,7 @@ cache:
 before_script:
     - phpenv config-add travis.php.ini
     - phpenv config-rm xdebug.ini || echo "xdebug not available for PHP $TRAVIS_PHP_VERSION"
-    - composer install --no-interaction --no-scripts
+    - composer install --no-interaction --no-scripts --ignore-platform-reqs
 
 script:
     - ./vendor/bin/phpspec run
