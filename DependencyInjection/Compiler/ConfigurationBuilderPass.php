@@ -66,6 +66,7 @@ class ConfigurationBuilderPass implements CompilerPassInterface
                 $configuration['options']
             ]
         );
+        $definition->setPublic(true);
         foreach ($configuration['actions'] as $type => $options) {
             if (null === $options || !$options['enabled']) {
                 continue;
@@ -77,6 +78,7 @@ class ConfigurationBuilderPass implements CompilerPassInterface
         $serviceName = sprintf('pim_custom_entity.configuration.%s', $name);
         $container->addDefinitions([$serviceName => $definition]);
         $container->getDefinition('pim_custom_entity.configuration.registry')
+            ->setPublic(true)
             ->addMethodCall('add', [$name, $serviceName]);
     }
 

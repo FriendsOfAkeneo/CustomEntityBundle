@@ -14,7 +14,7 @@ use Acme\Bundle\CustomBundle\Entity\Pictogram;
  */
 class UpdateTest extends AbstractCrudTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->loadData();
@@ -24,7 +24,7 @@ class UpdateTest extends AbstractCrudTestCase
     {
         $entityName = Color::class;
 
-        $myBlue = $this->em->getRepository($entityName)->findOneBy(['code' => 'my_blue']);
+        $myBlue = $this->get('doctrine.orm.entity_manager')->getRepository($entityName)->findOneBy(['code' => 'my_blue']);
         $this->assertInstanceOf($entityName, $myBlue);
 
         $data = [
@@ -37,11 +37,11 @@ class UpdateTest extends AbstractCrudTestCase
             'blue' => 254,
         ];
 
-        $this->manager->update($myBlue, $data);
-        $this->manager->save($myBlue);
-        $this->em->clear();
+        $this->get('pim_custom_entity.manager')->update($myBlue, $data);
+        $this->get('pim_custom_entity.manager')->save($myBlue);
+        $this->get('doctrine.orm.entity_manager')->clear();
 
-        $dbColor = $this->manager->find($entityName, $myBlue->getId());
+        $dbColor = $this->get('pim_custom_entity.manager')->find($entityName, $myBlue->getId());
 
         $this->assertEquals($data['code'], $dbColor->getCode());
         $this->assertEquals($data['name'], $dbColor->getName());
@@ -54,7 +54,7 @@ class UpdateTest extends AbstractCrudTestCase
     public function testUpdateTranslatableReferenceData()
     {
         $entityName = Pictogram::class;
-        $myPicto = $this->em->getRepository($entityName)->findOneBy(['code' => 'my_picto']);
+        $myPicto = $this->get('doctrine.orm.entity_manager')->getRepository($entityName)->findOneBy(['code' => 'my_picto']);
 
         $this->assertInstanceOf($entityName, $myPicto);
         $this->assertCount(0, $myPicto->getTranslations());
@@ -69,8 +69,8 @@ class UpdateTest extends AbstractCrudTestCase
             ],
         ];
 
-        $this->manager->update($myPicto, $data);
-        $this->manager->save($myPicto);
+        $this->get('pim_custom_entity.manager')->update($myPicto, $data);
+        $this->get('pim_custom_entity.manager')->save($myPicto);
 
         $this->em->clear();
 

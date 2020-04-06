@@ -39,28 +39,22 @@ class Updater implements ObjectUpdaterInterface
     /** @var FileStorerInterface */
     protected $storer;
 
-    /** @var string */
-    protected $tmpStorageDir;
-
     /**
      * @param PropertyAccessorInterface $propertyAccessor
      * @param LocaleRepositoryInterface $localeRepository
      * @param EntityManagerInterface    $em
      * @param FileStorerInterface       $storer
-     * @param string                    $tmpStorageDir
      */
     public function __construct(
         PropertyAccessorInterface $propertyAccessor,
         LocaleRepositoryInterface $localeRepository,
         EntityManagerInterface $em,
-        FileStorerInterface $storer,
-        $tmpStorageDir
+        FileStorerInterface $storer
     ) {
         $this->propertyAccessor = $propertyAccessor;
         $this->localeRepository = $localeRepository;
         $this->em = $em;
         $this->storer = $storer;
-        $this->tmpStorageDir = $tmpStorageDir;
     }
 
     /**
@@ -147,7 +141,7 @@ class Updater implements ObjectUpdaterInterface
             }
 
             $associatedEntity = $associationRepo->findOneBy([
-                'key' => str_replace($this->tmpStorageDir, '', $value['filePath']),
+                'key' => str_replace(sys_get_temp_dir(), '', $value['filePath']),
             ]);
 
             if (null === $associatedEntity) {

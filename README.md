@@ -11,6 +11,7 @@ For more information, please see http://docs.akeneo.com/
 
 | CustomEntityBundle   | Akeneo PIM Community Edition |
 |:--------------------:|:----------------------------:|
+| v4.0.*               | v4.0.*                       |
 | v3.0.*               | v3.0.*                       |
 | v2.4.*               | v2.3.*                       |
 | v2.3.*               | v2.2.*                       |
@@ -23,10 +24,10 @@ For more information, please see http://docs.akeneo.com/
 You can install this bundle with composer (see requirements section):
 
 ```bash
-    php composer.phar require "akeneo-labs/custom-entity-bundle":"3.0.*"
+    php composer.phar require "akeneo-labs/custom-entity-bundle":"4.0.*"
 ```
 
-Then add the following lines **at the end** of your app/config/routing.yml :
+Then add the following lines **at the end** of your config/routes/routes.yml :
 
 ```yaml
     pim_customentity:
@@ -34,13 +35,13 @@ Then add the following lines **at the end** of your app/config/routing.yml :
         resource: "@PimCustomEntityBundle/Resources/config/routing.yml"
 ```
 
-and enable the bundle in the `app/AppKernel.php` file in the `registerProjectBundles()` method:
+and enable the bundle in the `config/bundles.php` file:
 
 ```php
-    $bundles = [
+    return [
         // ...
-        new \Pim\Bundle\CustomEntityBundle\PimCustomEntityBundle(),
-    ]
+        Pim\Bundle\CustomEntityBundle\PimCustomEntityBundle::class => ['all' => true]
+    ];
 ```
 
 If your installation is already set up, you have to run the following command in order to add the quick export job:
@@ -52,7 +53,7 @@ If your installation is already set up, you have to run the following command in
 ## Documentation
 
 The reference data documentation can be found in the 
-[PIM documentation](https://docs.akeneo.com/2.2/manipulate_pim_data/catalog_structure/creating_a_reference_data.html).
+[PIM documentation](https://docs.akeneo.com/4.0/manipulate_pim_data/catalog_structure/creating_a_reference_data.html).
 
 Detailled information can be found in the [bundle documentation](docs/index.md).
 
@@ -75,15 +76,21 @@ Detailled information can be found in the [bundle documentation](docs/index.md).
 ### PHPUnit
 
 * Install an Akeneo PIM with the CustomEntityBundle
-* Copy `Tests/Resources/phpunit.xml` into your base `app` directory
-* Copy `Tests/Resources/parameters_test.yml` or `Tests/Resources/parameters_test_ee.yml` (depending on your PIM version) to `app/config/parameters_test.yml`, and edit accordingly to your config
+* Copy `Tests/Resources/phpunit.xml` to project root
+* Copy `Tests/Resources/.env.test` to project root, and edit accordingly to your config
+* Copy `Tests/Resources/bundles.php` or `Tests/Resources/bundles_ee.php` (depending on your PIM version) content in the `config/bundles.php` file
 
 Then:
 
 ```bash
-    $ php bin/console cache:clear --no-warmup --env=test
-    $ php bin/console pim:installer:db --env=test
-    $ vendor/bin/phpunit -c app/phpunit.xml
+    $ php bin/console cache:warmup --env=test
+
+    If you're on EE Edition :
+    $ php bin/console pim:installer:db --env=test --catalog vendor/akeneo/pim-enterprise-dev/src/Akeneo/Platform/Bundle/InstallerBundle/Resources/fixtures/minimal
+    Else :
+    $ php bin/console pim:installer:db --env=test --catalog vendor/akeneo/pim-community-dev/src/Akeneo/Platform/Bundle/InstallerBundle/Resources/fixtures/minimal
+
+    $ vendor/bin/phpunit
 ```
 
 ## Contributing

@@ -32,13 +32,13 @@ tools:
                 - vendor/*
     php_loc:
         excluded_dirs:
-            - app/
+            - config/
             - bin/
             - vendor/
-            - web/
+            - public/
     php_pdepend:
         excluded_dirs:
-            - app/
+            - config/
             - bin/
             - vendor/
-            - web/
+            - public/

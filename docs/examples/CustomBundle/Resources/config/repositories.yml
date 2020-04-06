@@ -4,6 +4,7 @@ parameters:
 services:
     acme_custom.repository.choice.fabric:
             class: "%acme_custom.repository.choice.class%"
+            public: true
             arguments:
                 - "@doctrine.orm.entity_manager"
                 - "%pim_custom_entity.entity.brand.class%"

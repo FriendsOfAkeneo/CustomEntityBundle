@@ -19,11 +19,6 @@ services:
         arguments:
             - '@event_dispatcher'
 
-    pim_custom_entity.factory.custom_entity:
-        class: Pim\Bundle\CustomEntityBundle\Entity\CustomEntityFactory
-        arguments:
-            - '@pim_custom_entity.configuration.registry'
-
     pim_custom_entity.repository.attribute:
         class: '%pim_custom_entity.repository.attribute.class%'
         arguments:

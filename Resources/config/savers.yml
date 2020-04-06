@@ -23,4 +23,3 @@ services:
             - '@pim_catalog.repository.locale'
             - '@doctrine.orm.entity_manager'
             - '@akeneo_file_storage.file_storage.file.file_storer'
-            - '%tmp_storage_dir%'

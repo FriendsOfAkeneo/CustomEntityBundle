@@ -6,7 +6,6 @@ use Acme\Bundle\CustomBundle\Entity\Brand;
 use Acme\Bundle\CustomBundle\Entity\Color;
 use Acme\Bundle\CustomBundle\Entity\Fabric;
 use Acme\Bundle\CustomBundle\Entity\Pictogram;
-use Akeneo\Tool\Bundle\BatchBundle\Command\BatchCommand;
 
 /**
  * @author    Mathias METAYER <mathias.metayer@akeneo.com>
@@ -15,7 +14,7 @@ use Akeneo\Tool\Bundle\BatchBundle\Command\BatchCommand;
  */
 class CustomEntityExportTest extends AbstractJobTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->loadData();
@@ -30,11 +29,9 @@ class CustomEntityExportTest extends AbstractJobTestCase
             static::EXPORT_PATH . 'export_colors.csv'
         );
 
-        $status = $this->launch('csv_reference_data_export');
+        $content = $this->launchExport('csv_reference_data_export');
 
-        $this->assertEquals(BatchCommand::EXIT_SUCCESS_CODE, $status);
-        $this->assertFileExists(static::EXPORT_PATH . 'export_colors.csv');
-        $this->assertFileEquals(static::DATA_FILE_PATH . 'colors.csv', static::EXPORT_PATH . 'export_colors.csv');
+        $this->assertEquals(file_get_contents(static::DATA_FILE_PATH . 'colors.csv'), $content);
     }
 
     public function testExportTranslatableReferenceData()
@@ -46,11 +43,9 @@ class CustomEntityExportTest extends AbstractJobTestCase
             static::EXPORT_PATH . 'export_pictos.csv'
         );
 
-        $status = $this->launch('csv_reference_data_export');
+        $content = $this->launchExport('csv_reference_data_export');
 
-        $this->assertEquals(BatchCommand::EXIT_SUCCESS_CODE, $status);
-        $this->assertFileExists(static::EXPORT_PATH . 'export_pictos.csv');
-        $this->assertFileEquals(static::DATA_FILE_PATH . 'pictos.csv', static::EXPORT_PATH . 'export_pictos.csv');
+        $this->assertEquals(file_get_contents(static::DATA_FILE_PATH . 'pictos.csv'), $content);
     }
 
     public function testExportLinkedReferenceData()
@@ -62,11 +57,10 @@ class CustomEntityExportTest extends AbstractJobTestCase
             static::EXPORT_PATH . 'export_brands.csv'
         );
 
-        $status = $this->launch('csv_reference_data_export');
 
-        $this->assertEquals(BatchCommand::EXIT_SUCCESS_CODE, $status);
-        $this->assertFileExists(static::EXPORT_PATH . 'export_brands.csv');
-        $this->assertFileEquals(static::DATA_FILE_PATH . 'brands.csv', static::EXPORT_PATH . 'export_brands.csv');
+        $content = $this->launchExport('csv_reference_data_export');
+
+        $this->assertEquals(file_get_contents(static::DATA_FILE_PATH . 'brands.csv'), $content);
     }
 
     public function testExportCollectionLinkedReferenceData()
@@ -78,11 +72,9 @@ class CustomEntityExportTest extends AbstractJobTestCase
             static::EXPORT_PATH . 'export_fabrics.csv'
         );
 
-        $status = $this->launch('csv_reference_data_export');
+        $content = $this->launchExport('csv_reference_data_export');
 
-        $this->assertEquals(BatchCommand::EXIT_SUCCESS_CODE, $status);
-        $this->assertFileExists(static::EXPORT_PATH . 'export_fabrics.csv');
-        $this->assertFileEquals(static::DATA_FILE_PATH . 'fabrics.csv', static::EXPORT_PATH . 'export_fabrics.csv');
+        $this->assertEquals(file_get_contents(static::DATA_FILE_PATH . 'fabrics.csv'), $content);
     }
 
     private function loadData()

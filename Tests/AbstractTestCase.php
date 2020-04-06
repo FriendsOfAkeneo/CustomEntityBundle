@@ -4,103 +4,37 @@ namespace Pim\Bundle\CustomEntityBundle\Tests;
 
 use Akeneo\Channel\Component\Model\ChannelInterface;
 use Akeneo\Channel\Component\Repository\ChannelRepositoryInterface;
-use Akeneo\Test\IntegrationTestsBundle\Configuration\CatalogInterface;
-use Akeneo\Test\IntegrationTestsBundle\Security\SystemUserAuthenticator;
-use Akeneo\Tool\Bundle\BatchBundle\Command\BatchCommand;
+use Akeneo\Test\Integration\TestCase;
 use Doctrine\ORM\EntityManagerInterface;
 use Pim\Bundle\CustomEntityBundle\Manager\ManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Symfony\Component\Console\Application;
-use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\Console\Output\NullOutput;
-use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * @author    Mathias METAYER <mathias.metayer@akeneo.com>
  * @copyright 2017 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-abstract class AbstractTestCase extends KernelTestCase
+abstract class AbstractTestCase extends TestCase
 {
-    /** @var KernelInterface */
-    protected $testKernel;
-
-    /** @var CatalogInterface */
-    protected $catalog;
-
-    /** @var EntityManagerInterface */
+    /**
+     * @var EntityManagerInterface
+     */
     protected $em;
 
-    /** @var ManagerInterface */
+    /**
+     * @var ManagerInterface
+     */
     protected $manager;
 
-    public function setUp()
+    protected function setUp(): void
     {
-        static::bootKernel(['debug' => false]);
-
-        $container = static::$kernel->getContainer();
-        $authenticator = new SystemUserAuthenticator($container);
-        $authenticator->createSystemUser();
-
-        $kernelClass = class_exists(
-            'PimEnterprise\Bundle\WorkflowBundle\PimEnterpriseWorkflowBundle'
-        ) ? AppKernelTestEe::class : AppKernelTest::class;
-
-        $this->testKernel = new $kernelClass('test', false);
-        $this->testKernel->boot();
-
-        $this->catalog = $this->testKernel->getContainer()->get('akeneo_integration_tests.configuration.catalog');
-        $this->testKernel->getContainer()->set(
-            'akeneo_integration_tests.catalog.configuration',
-            $this->catalog->useMinimalCatalog()
-        );
-
-        $fixturesLoader = $this->testKernel->getContainer()->get('akeneo_integration_tests.loader.fixtures_loader');
-        $fixturesLoader->load();
-
+        parent::setUp();
         $this->em = $this->get('doctrine.orm.entity_manager');
         $this->manager = $this->get('pim_custom_entity.manager');
     }
 
-    /**
-     * @param $serviceName
-     *
-     * @return object
-     */
-    protected function get($serviceName)
+    protected function getConfiguration()
     {
-        return $this->testKernel->getContainer()->get($serviceName);
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return mixed
-     */
-    protected function getParameter($name)
-    {
-        return $this->testKernel->getContainer()->getParameter($name);
-    }
-
-    /**
-     * @param array $input
-     *
-     * @return int
-     */
-    protected function runBatchCommand(array $input = [])
-    {
-        $application = new Application($this->testKernel);
-        $batchCommand = new BatchCommand();
-        $batchCommand->setContainer($this->testKernel->getContainer());
-        $application->add($batchCommand);
-
-        if (!array_key_exists('--no-log', $input)) {
-            $input['--no-log'] = true;
-        }
-
-        $batch = $application->find('akeneo:batch:job');
-
-        return $batch->run(new ArrayInput($input), new NullOutput());
+        return $this->catalog->useMinimalCatalog();
     }
 
     /**

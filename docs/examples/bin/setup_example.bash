@@ -9,43 +9,31 @@ fi
 cd $MY_PATH/../CustomBundle
 CUSTOM_BUNDLE_PATH=$(pwd)
 echo $CUSTOM_BUNDLE_PATH
-cd $MY_PATH/../../../../../../app
-APP_PATH=$(pwd)
+cd $MY_PATH/../../../../../../config
+CONFIG_PATH=$(pwd)
 
 # Configure routing
-if grep -q PimCustomEntityBundle $APP_PATH/config/routing.yml
+if grep -q PimCustomEntityBundle $CONFIG_PATH/routes/routes.yml
 then
     echo "routing already exists"
 else
     echo "routing will be configured"
-    echo "" >> $APP_PATH/config/routing.yml
-    cat $MY_PATH/config/routing.yml >> $APP_PATH/config/routing.yml
+    echo "" >> $CONFIG_PATH/routes/routes.yml
+    cat $MY_PATH/config/routes.yml >> $CONFIG_PATH/routes/routes.yml
 fi
 
-# Configure Reference data
-if grep -q "pim_reference_data: ~" $APP_PATH/config/config.yml
+if test -f $CONFIG_PATH/packages/akeneo_pim_structure.yml
 then
-    echo "Reference data will be configured"
-    sed -i '/pim_reference_data: ~/d' $APP_PATH/config/config.yml
-    cat $MY_PATH/config/config-reference-data.yml >> $APP_PATH/config/config.yml
-fi
-
-if grep -q CustomBundle $APP_PATH/config/config.yml
-then
-    echo "Reference data already configured"
+  echo "reference data already configured"
 else
-    echo "Reference data will be configured"
-    echo "" >> $APP_PATH/config/config.yml
-    NEW_CONFIG=$(cat $MY_PATH/config/config-reference-data.yml)
-    NEW_CONFIG_ESCAPED=${NEW_CONFIG//$'\n'/\\$'\n'}
-    sed -i "s/pim_reference_data:/${NEW_CONFIG_ESCAPED}/g" $APP_PATH/config/config.yml
+  echo "reference data will be configured"
+  cp $MY_PATH/config/akeneo_pim_structure.yml $CONFIG_PATH/packages/akeneo_pim_structure.yml
 fi
 
-# Customize AppKernel
-if grep -q AcmeCustomBundle $APP_PATH/AppKernel.php
+# Customize Kernel
+if grep -q AcmeCustomBundle $CONFIG_PATH/bundles.php
 then
-    echo "AppKernel already configured"
+    echo "Kernel already configured"
 else
-    echo "AppKernel will be configured"
+    echo "Kernel will be configured"
 fi
-

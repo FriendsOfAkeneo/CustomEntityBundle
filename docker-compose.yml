@@ -2,10 +2,10 @@ version: '2'
 
 services:
   fpm:
-    image: akeneo/php:7.2
+    image: akeneo/pim-php-dev:4.0
     environment:
       COMPOSER_HOME: /home/docker/.composer
-    user: docker
+    user: www-data
     volumes:
       - ./:/srv/custom_entity
       - ~/.composer:/home/docker/.composer
@@ -14,4 +14,4 @@ services:
       - akeneo-ceb
 
 networks:
-  akeneo-ceb: ~
+  akeneo-ceb:
