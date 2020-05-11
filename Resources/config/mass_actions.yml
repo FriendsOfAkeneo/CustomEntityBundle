@@ -17,13 +17,3 @@ services:
                 name: pim_datagrid.extension.mass_action.handler
                 alias: custom_mass_edit
                 operation_group: mass-edit
-
-    pim_custom_entity.mass_action.mass_action.handler.quick_export:
-        class: '%pim_datagrid.extension.mass_action.handler.export.class%'
-        arguments:
-            - '@pim_datagrid.datasource.result_record.hydrator.object_id'
-            - '@event_dispatcher'
-        tags:
-            -
-                name: pim_datagrid.extension.mass_action.handler
-                alias: custom_quick_export

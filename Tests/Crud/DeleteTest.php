@@ -12,7 +12,7 @@ use Pim\Bundle\CustomEntityBundle\Remover\NonRemovableEntityException;
  */
 class DeleteTest extends AbstractCrudTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->createReferenceData(

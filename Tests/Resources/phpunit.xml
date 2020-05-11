@@ -10,12 +10,15 @@
         convertWarningsToExceptions="true"
         processIsolation="false"
         stopOnFailure="false"
-        syntaxCheck="false"
-        bootstrap="./autoload.php">
+        bootstrap="config/bootstrap.php">
+
+    <php>
+        <server name="KERNEL_CLASS" value="Kernel" force="true" />
+    </php>
 
     <testsuites>
         <testsuite name="Custom entity bundle tests">
-            <directory suffix="Test.php">../vendor/akeneo-labs/custom-entity-bundle/Tests</directory>
+            <directory suffix="Test.php">vendor/akeneo-labs/custom-entity-bundle/Tests</directory>
         </testsuite>
     </testsuites>
 

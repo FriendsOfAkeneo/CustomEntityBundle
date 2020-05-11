@@ -2,12 +2,8 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Tests\Jobs;
 
-use Akeneo\Tool\Bundle\BatchBundle\Command\BatchCommand;
 use Akeneo\Tool\Component\Batch\Model\JobInstance;
 use Pim\Bundle\CustomEntityBundle\Tests\AbstractTestCase;
-use Symfony\Component\Console\Application;
-use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Finder\Finder;
 
 /**
@@ -20,7 +16,7 @@ class AbstractJobTestCase extends AbstractTestCase
     const DATA_FILE_PATH = __DIR__ . '/../Resources/data/';
     const EXPORT_PATH = '/tmp/test/export/';
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         if (!file_exists(static::EXPORT_PATH)) {
@@ -28,7 +24,7 @@ class AbstractJobTestCase extends AbstractTestCase
         }
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $finder = new Finder();
         foreach ($finder->files()->in(static::EXPORT_PATH) as $file) {
@@ -64,24 +60,21 @@ class AbstractJobTestCase extends AbstractTestCase
     /**
      * @param string $jobCode
      *
-     * @return int
+     * @return string
      */
-    protected function launch(string $jobCode)
+    protected function launchExport(string $jobCode)
     {
-        $arrayInput = [
-            'command'  => 'akeneo:batch:job',
-            'code'     => $jobCode,
-            '--no-log' => true,
-            '-v'       => true,
-        ];
-        $input = new ArrayInput($arrayInput);
-        $output = new BufferedOutput();
-        $application = new Application($this->testKernel);
-        $batchCommand = new BatchCommand();
-        $application->add($batchCommand);
-        $application->setAutoExit(false);
-        $batchCommand->setContainer($this->testKernel->getContainer());
+        return $this->get('akeneo_integration_tests.launcher.job_launcher')->launchExport($jobCode);
+    }
 
-        return $application->run($input, $output);
+    /**
+     * @param string $jobCode
+     * @param string $content
+     *
+     * @return string
+     */
+    protected function launchImport(string $jobCode, string $content = '')
+    {
+        return $this->get('akeneo_integration_tests.launcher.job_launcher')->launchImport($jobCode, $content);
     }
 }

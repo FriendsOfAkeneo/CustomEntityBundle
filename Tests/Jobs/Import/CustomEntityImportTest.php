@@ -6,7 +6,6 @@ use Acme\Bundle\CustomBundle\Entity\Brand;
 use Acme\Bundle\CustomBundle\Entity\Color;
 use Acme\Bundle\CustomBundle\Entity\Fabric;
 use Acme\Bundle\CustomBundle\Entity\Pictogram;
-use Akeneo\Tool\Bundle\BatchBundle\Command\BatchCommand;
 use Pim\Bundle\CustomEntityBundle\Tests\Jobs\AbstractJobTestCase;
 
 /**
@@ -36,15 +35,14 @@ class CustomEntityImportTest extends AbstractJobTestCase
         $this->assertEquals('Some name', $blue->getName());
         $this->assertEquals(18, $blue->getRed());
 
+        $filePath = static::DATA_FILE_PATH . 'colors.csv';
         $this->createJobInstance(
             'csv_colors_import',
             'import',
             'color',
-            static::DATA_FILE_PATH . 'colors.csv'
+            $filePath
         );
-        $batchStatus = $this->launch('csv_colors_import');
-
-        $this->assertEquals(BatchCommand::EXIT_SUCCESS_CODE, $batchStatus);
+        $this->launchImport('csv_colors_import', file_get_contents($filePath));
 
         $colors = $this->manager->findAll(Color::class);
         $this->assertCount(3, $colors);
@@ -80,14 +78,14 @@ class CustomEntityImportTest extends AbstractJobTestCase
             $this->createReferenceData(Fabric::class, $fabric);
         }
 
+        $filePath = static::DATA_FILE_PATH . 'brands.csv';
         $this->createJobInstance(
             'csv_brands_import',
             'import',
             'brand',
-            static::DATA_FILE_PATH . 'brands.csv'
+            $filePath
         );
-        $batchStatus = $this->launch('csv_brands_import');
-        $this->assertEquals(BatchCommand::EXIT_SUCCESS_CODE, $batchStatus);
+        $this->launchImport('csv_brands_import', file_get_contents($filePath));
 
         $brands = $this->manager->findAll(Brand::class);
         $brand = $brands[0];
@@ -118,14 +116,14 @@ class CustomEntityImportTest extends AbstractJobTestCase
         $this->assertCount(1, $picto1->getTranslations());
         $this->assertEquals('an English label', $picto1->getTranslation('en_US')->getLabel());
 
+        $filePath = static::DATA_FILE_PATH . 'pictos.csv';
         $this->createJobInstance(
             'csv_pictos_import',
             'import',
             'pictogram',
-            static::DATA_FILE_PATH . 'pictos.csv'
+            $filePath
         );
-        $batchStatus = $this->launch('csv_pictos_import');
-        $this->assertEquals(BatchCommand::EXIT_SUCCESS_CODE, $batchStatus);
+        $this->launchImport('csv_pictos_import', file_get_contents($filePath));
 
         $pictos = $this->manager->findAll(Pictogram::class);
 
@@ -187,14 +185,14 @@ class CustomEntityImportTest extends AbstractJobTestCase
             $this->assertContains($color->getCode(), ['red', 'blue']);
         }
 
+        $filePath = static::DATA_FILE_PATH . 'fabrics.csv';
         $this->createJobInstance(
             'csv_fabrics_import',
             'import',
             'fabric',
-            static::DATA_FILE_PATH . 'fabrics.csv'
+            $filePath
         );
-        $batchStatus = $this->launch('csv_fabrics_import');
-        $this->assertEquals(BatchCommand::EXIT_SUCCESS_CODE, $batchStatus);
+        $this->launchImport('csv_fabrics_import', file_get_contents($filePath));
 
         $fabrics = $this->manager->findAll(Fabric::class);
         $this->assertCount(2, $fabrics);

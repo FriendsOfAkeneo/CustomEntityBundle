@@ -55,7 +55,6 @@ abstract class AbstractCrudTestCase extends AbstractTestCase
 
         foreach ($data as $attrCode => $values) {
             $attribute = $attrRepo->findOneByIdentifier($attrCode);
-            $builder->addAttribute($product, $attribute);
             $builder->addOrReplaceValue($product, $attribute, null, null, $values);
         }
 
