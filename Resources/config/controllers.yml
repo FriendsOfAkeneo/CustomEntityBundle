@@ -16,3 +16,5 @@ services:
         class: '%pim_custom_entity.rest_controller.class%'
         arguments:
             - '@pim_custom_entity.configuration.registry'
+        tags:
+            - { name: controller.service_arguments }
