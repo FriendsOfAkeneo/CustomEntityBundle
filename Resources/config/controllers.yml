@@ -5,6 +5,7 @@ parameters:
 
 services:
     pim_custom_entity.controller:
+        public: true
         class: '%pim_custom_entity.controller.class%'
         arguments:
             - '@pim_custom_entity.action.factory'
@@ -13,6 +14,7 @@ services:
             - { name: controller.service_arguments }
 
     pim_custom_entity.rest_controller:
+        public: true
         class: '%pim_custom_entity.rest_controller.class%'
         arguments:
             - '@pim_custom_entity.configuration.registry'
