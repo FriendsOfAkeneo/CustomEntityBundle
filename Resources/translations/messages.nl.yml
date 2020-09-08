@@ -1,0 +1,32 @@
+Properties: Eigenschappen
+# tabs and accordions
+pane.accordion:
+    general_properties: Algemene Eigenschappen
+
+pim_custom_entity:
+    export:
+        limit_exceeded: Selecteer alstublieft minder dan %limit% akten
+        csv.entity_name:
+            label: Verwijzings gegevens naam
+            help: De Verwijzings gegevens naam die u wilt importeren
+    import.csv.entity_name:
+        label: Verwijzings gegevens naam
+        help: Verwijzings gegevens naam die u wilt importeren
+    acl_group.reference_data: Verwijzings gegevens
+
+properties:
+    title: Eigenschappen
+
+batch_jobs:
+    csv_reference_data_import:
+        validation.label: Validatie
+        import.label: Importeren verwijzings gegevens
+        label: Importeren verwijzings gegevens in CSV
+
+    csv_reference_data_export:
+        export.label: Exporteren verwijzings gegevens
+        label: Exporteren verwijzings gegevens in CSV
+
+    csv_reference_data_quick_export:
+        quick_export.label: Verwijzings gegevens CSV snel exporteren
+        label: Verwijzings gegevens CSV snel exporteren
