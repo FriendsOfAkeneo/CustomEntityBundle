@@ -1,0 +1,55 @@
+pim_menu:
+    tab.reference_data: Verwijzings gegevens
+    item.reference_data: Verwijzings gegevens
+    navigation.reference_data: Verwijzings gegevens
+
+pim_custom_entity:
+    index_title: Overzicht
+    create_popin.title: Maken
+    form:
+        field.label.code: Code
+        tab:
+            history.title: Geschiedenis
+            properties:
+                title: Eigenschappen
+                section:
+                    common: Algemeen
+                    label_translations: Labels
+    button:
+        create: Maken
+    message:
+        created: Succesvol nieuwe Verwijzingsgegevens aangemaakt
+        removed: Verwijzingsgegevens met succes verwijderd
+    error:
+        removing: De referentiegegevens konden niet worden verwijderd.
+    export.csv.entity_name:
+        label: De Verwijzings gegevens naam
+        help: De Verwijzings gegevens naam die u wilt importeren
+        no_reference_data: Geen Verwijzings gegevens beschikbaar
+    import.csv.entity_name:
+        label: Verwijzings gegevens naam
+        help: De Verwijzings gegevens naam die u wilt importeren
+        no_reference_data: Geen Verwijzings gegevens beschikbaar
+
+pim_enrich:
+    form.attribute.tab.properties.label:
+        name: Naam
+
+page_title:
+    pim_customentity_index: 'Verwijzings gegevens - Overzicht'
+    pim_customentity_rest_create: 'Verwijzings gegevens - Maken'
+    pim_customentity_massedit: 'Verwijzings gegevens'
+    pim_customentity_quickexport: 'Verwijzings gegevens'
+    pim_customentity_rest_delete: 'Verwijzings gegevens'
+    pim_customentity_rest_list: 'Verwijzings gegevens'
+    pim_customentity_rest_get: 'Verwijzings gegevens | Wijzigen'
+
+batch_jobs:
+    csv_reference_data_import:
+        label: Verwijzings gegevens importeren in CSV
+
+    csv_reference_data_export:
+        label: Verwijzings gegevens exporteren in CSV
+
+    csv_reference_data_quick_export:
+        label: Verwijzings gegevens CSV snel exporteren
