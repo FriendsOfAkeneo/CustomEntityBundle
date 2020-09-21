@@ -31,6 +31,20 @@ class Supplier extends AbstractCustomEntity
 }
 ```
 
+**Note**: If your reference entity is made up of 2 words (eg. `SuperHero`), be sure to override this method in your file:
+```php
+/**
+ * Returns the custom entity name used in the configuration
+ * Used to map row actions on datagrid
+ *
+ * @return string
+ */
+public function getCustomEntityName(): string
+{
+    return 'superHero';
+}
+```
+
 Then, create the doctrine mapping for this entity to declare the entity fields and table name where the entity will be persisted.
 
 ```yaml
