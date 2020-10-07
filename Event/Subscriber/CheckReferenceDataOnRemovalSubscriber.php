@@ -2,10 +2,14 @@
 
 namespace Pim\Bundle\CustomEntityBundle\Event\Subscriber;
 
+use Akeneo\Channel\Component\Repository\ChannelRepositoryInterface;
+use Akeneo\Channel\Component\Repository\LocaleRepositoryInterface;
 use Akeneo\Pim\Enrichment\Component\Product\Query\Filter\Operators;
 use Akeneo\Pim\Enrichment\Component\Product\Query\ProductQueryBuilderFactoryInterface;
+use Akeneo\Pim\Structure\Component\Model\AttributeInterface;
 use Akeneo\Tool\Component\StorageUtils\Event\RemoveEvent;
 use Akeneo\Tool\Component\StorageUtils\StorageEvents;
+use Akeneo\UserManagement\Bundle\Context\UserContext;
 use Doctrine\ORM\EntityManagerInterface;
 use Oro\Bundle\PimDataGridBundle\Datasource\ResultRecord\Orm\ObjectIdHydrator;
 use Oro\Bundle\PimDataGridBundle\Extension\MassAction\Event\MassActionEvent;
@@ -36,6 +40,12 @@ class CheckReferenceDataOnRemovalSubscriber implements EventSubscriberInterface
     /** @var EntityManagerInterface */
     protected $em;
 
+    /** @var LocaleRepositoryInterface */
+    private $localeRepository;
+
+    /** @var ChannelRepositoryInterface */
+    private $channelRepository;
+
     /**
      * @param AttributeRepository $attributeRepository
      * @param ProductQueryBuilderFactoryInterface $pqbFactory
@@ -46,12 +56,16 @@ class CheckReferenceDataOnRemovalSubscriber implements EventSubscriberInterface
         AttributeRepository $attributeRepository,
         ProductQueryBuilderFactoryInterface $pqbFactory,
         Registry $configRegistry,
-        EntityManagerInterface $em
+        EntityManagerInterface $em,
+        LocaleRepositoryInterface $localeRepository,
+        ChannelRepositoryInterface $channelRepository
     ) {
         $this->attributeRepository = $attributeRepository;
         $this->pqbFactory = $pqbFactory;
         $this->configRegistry = $configRegistry;
         $this->em = $em;
+        $this->channelRepository = $channelRepository;
+        $this->localeRepository = $localeRepository;
     }
 
     /**
@@ -119,20 +133,65 @@ class CheckReferenceDataOnRemovalSubscriber implements EventSubscriberInterface
      */
     protected function checkProductLink($attributes, array $referenceDataCode)
     {
-        foreach ($attributes as $attribute) {
-            $pqb = $this->pqbFactory->create();
-            $pqb->addFilter($attribute->getCode(), Operators::IN_LIST, $referenceDataCode);
-            $count = $pqb->execute()->count();
 
-            if (0 !== $count) {
-                throw new NonRemovableEntityException(
-                    sprintf(
-                        'Reference data cannot be removed. It is linked to %s product(s) with the attribute "%s"',
-                        $count,
-                        $attribute->getCode()
-                    )
-                );
+        foreach ($attributes as $attribute) {
+            $channelCodes = $this->channelRepository->getChannelCodes();
+            $localeCodes = $this->localeRepository->getActivatedLocaleCodes();
+
+            if ($attribute->isScopable() && $attribute->isLocalizable()) {
+                //loop channels and locales
+                foreach ($channelCodes as $channelCode) {
+                    foreach ($localeCodes as $localeCode) {
+                        $context = [
+                            'scope' => $channelCode,
+                            'locale' => $localeCode,
+                        ];
+
+                        $this->executeQueryWithFilter($referenceDataCode, $attribute, $context);
+                    }
+                }
+
+                return;
             }
+
+            if ($attribute->isScopable() ) {
+                //loop channels
+                foreach ($channelCodes as $channelCode) {
+                    $context['scope'] = $channelCode;
+                    $this->executeQueryWithFilter($referenceDataCode, $attribute, $context);
+                }
+
+                return;
+            }
+
+            if ($attribute->isLocalizable()) {
+                //loop locales
+                foreach ($localeCodes as $localeCode) {
+                    $context['locale'] = $localeCode;
+                    $this->executeQueryWithFilter($referenceDataCode, $attribute, $context);
+                }
+
+                return;
+            }
+
+            $this->executeQueryWithFilter($referenceDataCode, $attribute);
+        }
+    }
+
+    private function executeQueryWithFilter($referenceDataCode, AttributeInterface $attribute, $context = [])
+    {
+        $pqb = $this->pqbFactory->create();
+        $pqb->addFilter($attribute->getCode(), Operators::IN_LIST, $referenceDataCode, $context);
+        $count = $pqb->execute()->count();
+
+        if (0 !== $count) {
+            throw new NonRemovableEntityException(
+                sprintf(
+                    'Reference data cannot be removed. It is linked to %s product(s) with the attribute "%s"',
+                    $count,
+                    $attribute->getCode()
+                )
+            );
         }
     }
 }

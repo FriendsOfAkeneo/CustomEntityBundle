@@ -24,5 +24,7 @@ services:
             - '@pim_catalog.query.product_and_product_model_query_builder_factory'
             - '@pim_custom_entity.configuration.registry'
             - '@doctrine.orm.entity_manager'
+            - '@pim_catalog.repository.locale'
+            - '@pim_catalog.repository.channel'
         tags:
             - { name: kernel.event_subscriber }
