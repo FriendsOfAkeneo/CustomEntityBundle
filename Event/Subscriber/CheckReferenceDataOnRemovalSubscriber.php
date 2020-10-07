@@ -9,7 +9,6 @@ use Akeneo\Pim\Enrichment\Component\Product\Query\ProductQueryBuilderFactoryInte
 use Akeneo\Pim\Structure\Component\Model\AttributeInterface;
 use Akeneo\Tool\Component\StorageUtils\Event\RemoveEvent;
 use Akeneo\Tool\Component\StorageUtils\StorageEvents;
-use Akeneo\UserManagement\Bundle\Context\UserContext;
 use Doctrine\ORM\EntityManagerInterface;
 use Oro\Bundle\PimDataGridBundle\Datasource\ResultRecord\Orm\ObjectIdHydrator;
 use Oro\Bundle\PimDataGridBundle\Extension\MassAction\Event\MassActionEvent;
@@ -51,6 +50,8 @@ class CheckReferenceDataOnRemovalSubscriber implements EventSubscriberInterface
      * @param ProductQueryBuilderFactoryInterface $pqbFactory
      * @param Registry $configRegistry
      * @param EntityManagerInterface $em
+     * @param LocaleRepositoryInterface $localeRepository
+     * @param ChannelRepositoryInterface $channelRepository
      */
     public function __construct(
         AttributeRepository $attributeRepository,
@@ -133,7 +134,6 @@ class CheckReferenceDataOnRemovalSubscriber implements EventSubscriberInterface
      */
     protected function checkProductLink($attributes, array $referenceDataCode)
     {
-
         foreach ($attributes as $attribute) {
             $channelCodes = $this->channelRepository->getChannelCodes();
             $localeCodes = $this->localeRepository->getActivatedLocaleCodes();
@@ -154,7 +154,7 @@ class CheckReferenceDataOnRemovalSubscriber implements EventSubscriberInterface
                 return;
             }
 
-            if ($attribute->isScopable() ) {
+            if ($attribute->isScopable()) {
                 //loop channels
                 foreach ($channelCodes as $channelCode) {
                     $context['scope'] = $channelCode;
