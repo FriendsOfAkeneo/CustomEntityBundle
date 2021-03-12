@@ -12,6 +12,7 @@ config:
         custom_entity/controller/edit: pimcustomentity/js/controller/custom_entity-edit
         custom_entity/fetcher: pimcustomentity/js/fetcher/custom_entity-fetcher
         custom_entity/remover/reference-data: pimcustomentity/js/remover/reference-data-remover
+        oro/datagrid/delete-action: pimcustomentity/js/datagrid/action/delete-action
 
     config:
         pim/fetcher-registry:
