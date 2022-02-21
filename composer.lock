@@ -7,8 +7,8 @@
     "content-hash": "064198f986360116d4a9767f95e5745a",
     "packages": [
         {
-            "name": "akeneo/pim-community-dev",
-            "version": "v4.0.14",
+            "name": "akeneo/pim-community-devas",
+            "version": "v5.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/akeneo/pim-community-dev.git",

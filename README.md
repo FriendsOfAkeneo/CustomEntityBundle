@@ -6,7 +6,7 @@
 Facilitates the creation of PIM reference data and related views in the PIM.
 
 For more information, please see http://docs.akeneo.com/
-
+GG.
 ## Requirements
 
 | CustomEntityBundle   | Akeneo PIM Community Edition |
