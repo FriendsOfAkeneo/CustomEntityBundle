@@ -143,28 +143,28 @@ class ConfigurationBuilderPass implements CompilerPassInterface
      */
     protected function getConfigTree()
     {
-        $treeBuilder = new TreeBuilder();
-        $root = $treeBuilder->root('custom_entities');
-        $root
+        $treeBuilder = new TreeBuilder('custom_entities');
+        $node = $treeBuilder->getRootNode();
+        $node
             ->useAttributeAsKey('name')
             ->prototype('array')
-                ->addDefaultsIfNotSet()
-                ->children()
-                    ->scalarNode('name')->end()
-                    ->scalarNode('class')->defaultNull()->end()
-                    ->scalarNode('entity_class')->defaultNull()->end()
-                    ->scalarNode('extends')->defaultValue('default')->end()
-                    ->arrayNode('options')
-                        ->prototype('variable')
-                        ->end()
-                    ->end()
-                    ->booleanNode('abstract')->defaultFalse()->end()
-                    ->arrayNode('actions')
-                        ->prototype('variable')
-                        ->end()
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->scalarNode('name')->end()
+                ->scalarNode('class')->defaultNull()->end()
+                ->scalarNode('entity_class')->defaultNull()->end()
+                ->scalarNode('extends')->defaultValue('default')->end()
+                ->arrayNode('options')
+                    ->prototype('variable')
                     ->end()
                 ->end()
-            ->end();
+                ->booleanNode('abstract')->defaultFalse()->end()
+                ->arrayNode('actions')
+                    ->prototype('variable')
+                    ->end()
+                ->end()
+            ->end()
+        ->end();
 
         return $treeBuilder->buildTree();
     }
