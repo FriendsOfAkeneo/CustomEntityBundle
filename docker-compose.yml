@@ -2,7 +2,7 @@ version: '2'
 
 services:
   fpm:
-    image: akeneo/pim-php-dev:4.0
+    image: akeneo/pim-php-dev:6.0
     environment:
       COMPOSER_HOME: /home/docker/.composer
     user: www-data
